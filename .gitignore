@@ -17,6 +17,7 @@ deployments/
 .near-credentials/
 .near-build/
 packages/contract/target/
+packages/contract/test-token/target/
 
 # Templates with variable names only (no values) are tracked.
 !.env.example
