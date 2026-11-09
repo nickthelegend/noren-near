@@ -196,7 +196,7 @@ impl NorenCredit {
         assert!(old >= amount.0, "ERR_COLLATERAL");
         self.collateral.insert(key, old - amount.0);
         let debt = self.accrued(&user).debt;
-        assert!(debt == 0 || self.power(&user, false) >= debt, "ERR_HEALTH");
+        assert!(debt == 0 || self.power(&user, true) >= debt, "ERR_HEALTH");
         let nonce = self.lock(&user);
         self.transfer(&token, &recipient, amount.0).then(self.callback("on_withdraw",
             near_sdk::serde_json::json!({"user":user,"token":token,"amount":amount,"nonce":nonce})))

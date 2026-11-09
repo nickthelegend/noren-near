@@ -70,6 +70,8 @@ async fn real_token_credit_borrow_yield_repay_withdraw() -> anyhow::Result<()> {
     assert_eq!(view_string(&s.credit, "credit_limit", json!({"borrower":s.alice.id()})).await?, "37500000000");
     call_ok(&s.alice, &s.credit, "borrow", json!({"amount":"10000000","recipient":s.alice.id()})).await?;
     assert_eq!(view_string(&s.usdc, "ft_balance_of", json!({"account_id":s.alice.id()})).await?, "10000000");
+    s._worker.fast_forward(200).await?;
+    assert!(view_string(&s.credit, "debt", json!({"borrower":s.alice.id()})).await?.parse::<u128>()? > 10_000_000);
     transfer(&s.yield_source, &s.usdc, &s.credit, 2_000_000, json!({"kind":"yield","borrower":s.alice.id()})).await?;
     let after_yield: u128 = view_string(&s.credit, "debt", json!({"borrower":s.alice.id()})).await?.parse()?;
     assert!(after_yield < 10_000_000 && after_yield >= 8_000_000);
@@ -109,6 +111,10 @@ async fn attacks_reject_on_chain() -> anyhow::Result<()> {
     price(&s, 75_000).await?;
     let too_much = s.alice.call(s.credit.id(), "borrow").args_json(json!({"amount":"90000000","recipient":s.alice.id()})).transact().await?;
     assert!(too_much.is_failure());
+    call_ok(&s.alice, &s.credit, "borrow", json!({"amount":"1000000","recipient":s.alice.id()})).await?;
+    s._worker.fast_forward(100).await?;
+    let stale_withdraw = s.alice.call(s.credit.id(), "withdraw").args_json(json!({"token":s.btc.id(),"amount":"1","recipient":s.alice.id()})).transact().await?;
+    assert!(stale_withdraw.is_failure());
     assert_eq!(view_string(&s.credit, "collateral_of", json!({"borrower":s.alice.id(),"token":s.btc.id()})).await?, "100000000");
     Ok(())
 }
