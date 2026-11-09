@@ -1,5 +1,21 @@
 # Test results
 
+## NEAR edition (2026-11-09)
+
+Run from this branch with `pnpm near:verify`. These are the counts from this branch, separate from the historical `main` figures below. The script installs project-local dependencies, builds the real Rust credit and NEP-141 token contracts, runs signed transactions in near-workspaces nearcore sandboxes, builds and tests the SDK and MCP server, builds the React app, checks it in Chrome, and runs the inherited Vitest suite. It stops the sandbox and browser processes it starts.
+
+| Verification | Result |
+| --- | --- |
+| `packages/contract/tests/sandbox.rs` against real nearcore and NEP-141 token | **3 passed, 0 failed, 0 skipped**. Lifecycle includes collateral, pool, borrow, interest, funded yield credit, repay and withdrawal. Attack transactions cover unconfirmed deposit, forged FT callback, unauthorized and stale oracle updates, stale/over-LTV borrow, stale withdrawal with debt, unauthorized callback, healthy liquidation and premature Pay in 3. |
+| `@noren/near-sdk` node tests | **4 passed, 0 failed, 0 skipped**. Quote validation, equity-symbol filtering, and projection math. |
+| `@noren/near-mcp` stdio protocol test | **1 passed, 0 failed, 0 skipped**. Four tools are listed and missing deployment configuration returns a setup error. |
+| Root `pnpm test` (inherited Vitest suite) | **157 passed, 0 failed, 0 skipped across 23 files**. Some existing tests read live services, so this is not an entirely offline suite. |
+| Headless Chrome, built app at `/#/near` | **2 viewport checks passed**: 1440px and 375px. Root text was nonempty, no uncaught page errors, no horizontal overflow, setup state rendered, and the live 1Click catalog appeared. Screenshots and raw logs are under gitignored `.near-build/`. |
+| Live 1Click API | **2 successful `dry: true` quotes**, timestamped in [`deployments/quotes-2026-11-09.json`](deployments/quotes-2026-11-09.json). Both target a public probe Intents account; neither is a borrower deposit or merchant payment. |
+| NEAR public testnet | **BLOCKED, 0 deploy transactions.** The official helper account endpoint and its testnet alias returned HTTP 429. No testnet contract address or explorer transaction is claimed. See [`BLOCKED.md`](BLOCKED.md). |
+
+The local tests use a genuine nearcore sandbox and token transfers, not stubbed RPC responses. The yield credit test transfers actual sandbox USDC from the configured source; it does not test accrued Rhea yield. No mainnet transaction was sent. The inherited Arc totals below are historical and were not rerun as a 656-test suite for this branch.
+
 ## Current totals (`main`, Nov 7 2026)
 
 **656 passed, 1 skipped, 0 failed, across 21 suites.** Forks are local Anvil nodes of Arc testnet or Robinhood Chain mainnet. "Live" suites read public networks. The skip is a SwapVM test that only runs while US markets are closed.

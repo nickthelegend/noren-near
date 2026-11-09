@@ -1,10 +1,44 @@
 # Noren (暖簾)
 
-> **Pay with your stocks without selling them, privately.**
+> **Don't sell. Spend.**
 >
-> Noren lets merchants accept **stablecoins, stocks or credit — privately**. Lock NVDA, TSLA, AAPL or ETH in Noren's 1inch Aqua pools, get up to 80% of their value as a credit limit, spend it at any Noren checkout without the shop learning who paid, and let the trading fees your stock earns pay the loan back.
+> This branch adds a NEAR credit ledger and live cross-chain quote discovery to Noren's existing Arc and Robinhood Chain work. The NEAR edition's funded yield and cross-chain settlement are still blocked; the evidence below separates working code from the intended product.
 
 ![Noren](docs/img/readme/landing.jpg)
+
+## NEAR HACKATHON edition
+
+**Track:** defi (primary), realworld (secondary). **Window:** 2026-11-01 to 2026-11-14 23:59 UTC. [Review the NEAR-only diff, main...near](https://github.com/nickthelegend/noren/compare/main...near) after Nick publishes this branch. This worktree is local only; it has not been pushed. Noren already exists on **Arc** and **Robinhood Chain**; only the integration added on this branch is the NEAR entry under [Q-002/Q-003](https://nearhackathon.com/HACKATHON.md).
+
+**What it is.** A NEAR credit ledger for verified NEP-141 collateral and a USDC lending pool, with live NEAR Intents 1Click dry quotes for inbound and outbound routes. The problem is that a cross-chain quote alone cannot safely identify who owns collateral or prove that it arrived. The contract grants credit only when a token contract invokes `ft_on_transfer` for the sender. It applies funded USDC transfers from a configured yield source to debt, but it does **not yet supply to Rhea or harvest accrued lending yield**. A working self-repaying mainnet loan is not claimed.
+
+### Reproduce and inspect
+
+1. On this machine, run `pnpm near:verify` from the repo root. It installs dependencies on the external SSD, builds both Rust contracts, starts and stops three real nearcore sandboxes via near-workspaces, runs the SDK/MCP checks, builds the web app, opens Chrome at 1440 and 375, and runs the inherited Vitest suite, which includes some live reads. The pinned toolchain is Rust 1.95, cargo-near 0.22.0, near-sdk 5.30.0-rc.1 and near-workspaces 0.24.0-rc.2. The sandbox binary is nearcore 2.14.0-rc.4. The script exits if any gate fails.
+2. Run `pnpm --filter @noren/web dev`, then open `http://localhost:5190/#/near`. **See:** “Don’t sell. Spend.”, an empty credit position, and explicit “Setup required” states. Enter a testnet account and click “Read testnet position” after `VITE_NEAR_TESTNET_CONTRACT` is configured. Forms request only live `dry: true` 1Click quotes.
+3. Run `pnpm near:quotes`. **See:** two real read-only quotes saved with timestamps in [deployments/quotes-2026-11-09.json](deployments/quotes-2026-11-09.json). They use `intents.near` as a public probe recipient and **do not** credit a borrower or pay a merchant.
+4. Run `pnpm --filter @noren/near-mcp start` to expose `credit_status`, `quote_deposit`, `quote_spend`, and `harvest_preview` over stdio. Account-dependent tools return “Setup required: NEAR_TESTNET_CONTRACT” when no deployed contract is configured.
+
+The Rust tests use a real sandbox NEP-141 token, not a mocked RPC. They sign token transfers, borrowing, repayment, LP withdrawal and liquidation, and submit attack transactions. A failed NEP-141 receiver callback returns funds through the token's standard refund path. The current [test counts and browser measurements](TESTING.md#near-edition-2026-11-09) are separate from the inherited Arc results below.
+
+### NEAR integration and evidence
+
+| Surface | Status | Evidence |
+| --- | --- | --- |
+| Rust `noren_credit` and sandbox lifecycle | **Live locally** | `packages/contract/tests/sandbox.rs`; 3/3 signed sandbox tests, including rejected unconfirmed borrow, forged deposit, unauthorized oracle update, stale price, over-LTV borrow, premature instalment and healthy liquidation |
+| 1Click mainnet quotes | **Live, read-only** | [timestamped quote responses](deployments/quotes-2026-11-09.json), [1Click token endpoint](https://1click.chaindefuser.com/v0/tokens) |
+| Testnet deployment and explorer transaction links | **BLOCKED** | The [official helper](https://helper.nearprotocol.com/account) and its [testnet alias](https://helper.testnet.near.org/account) returned HTTP 429 on 2026-11-09; [BLOCKED.md](BLOCKED.md) gives the exact funding alternative. No testnet tx ID is claimed. |
+| Rhea lending supply, yield harvest and debt paydown from earned yield | **BLOCKED** | [live Rhea rate endpoint](https://api.burrow.finance/list_token_data) and [research](docs/NEAR-RESEARCH.md) establish available markets, not an integrated position |
+| Merchant payment and return to origin chain | **BLOCKED** | Dry quotes are real; there is no funded `NEAR_MAINNET_ACCOUNT`, signed 1Click execution, or origin-chain withdrawal proof |
+| Tokenised stocks | **Unreachable in observed catalog** | 216 tokens checked; no NVDA/AAPL/TSLA/MSFT/AMZN/GOOGL/SPY/xStocks symbol; [catalog](https://1click.chaindefuser.com/v0/tokens) changes over time |
+
+**NEAR features used:** a Rust near-sdk contract on NEAR, NEP-141 transfer callbacks for authenticated collateral and USDC, NEAR account IDs for ownership, and NEAR Intents 1Click for live cross-chain quote discovery. Chain Signatures, function-call keys, meta transactions, NEP-171/245, OutLayer TEE, and Sputnik DAO are not used by this edition. The testnet deploy script can create a testnet sub-account if a funded sponsor is provided; no sub-account is claimed deployed yet. [Intents has no testnet](https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/introduction.md), so the quotes are mainnet dry runs. The confidential 1Click API has a [documented developer path](https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/confidential-swaps.md), but Noren's merchant settlement has not integrated it. Shielded ZEC may hide the source address on Zcash; Noren's NEAR-side credit position is public. The historical Arc/Robinhood privacy claims later in this README do not describe this NEAR surface.
+
+### Team and other projects
+
+Lead: <TBD by Nick>
+
+Other NEAR HACKATHON project from the same lead: <TBD by Nick; name and link, or “none”>. One person may submit at most two independent projects, and each must disclose the other ([Q-015](https://nearhackathon.com/HACKATHON.md)).
 
 ## Why the name Noren (暖簾)
 
