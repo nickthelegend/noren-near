@@ -40,7 +40,16 @@ try {
     await page.screenshot({ path: resolve(output, `near-${width}.png`), fullPage: true });
     if (metrics.rootTextLength === 0 || errors.length || metrics.scrollWidth > metrics.innerWidth || metrics.bodyScrollWidth > metrics.innerWidth || !metrics.setupVisible || !metrics.liveCatalogVisible)
       throw new Error(`Browser gate failed at ${width}: ${JSON.stringify({ ...metrics, errors })}`);
-    results.push({ width, ...metrics, pageErrors: errors.length, screenshot: `.near-build/near-${width}.png` });
+    let liveSpendQuoteVisible = false;
+    if (width === 1440) {
+      await page.getByLabel("Your NEAR account").fill("intents.near");
+      await page.getByLabel("Merchant address").fill("0x1111111111111111111111111111111111111111");
+      await page.getByRole("button", { name: /Quote USDC payment/ }).click();
+      await page.waitForSelector(".near-quote", { timeout: 20000 });
+      liveSpendQuoteVisible = (await page.locator(".near-quote").innerText()).includes('"dry": true');
+      if (!liveSpendQuoteVisible || errors.length) throw new Error(`Live browser spend quote failed: ${await page.locator(".near-alert").allInnerTexts()}`);
+    }
+    results.push({ width, ...metrics, liveSpendQuoteVisible, pageErrors: errors.length, screenshot: `.near-build/near-${width}.png` });
     await page.close();
   }
   console.log(JSON.stringify(results, null, 2));
