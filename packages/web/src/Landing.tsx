@@ -128,7 +128,7 @@ const NUMBERS: { v: string; u?: string; l: string }[] = [
   { v: "656", l: "tests passing across 21 suites, local chains and live testnets included" },
 ];
 
-function useReveal() {
+export function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const root = ref.current; if (!root) return;
@@ -155,7 +155,7 @@ function Film({ src, poster, label }: { src: string; poster: string; label: stri
 }
 
 /** A field of tiny noren marks that brightens toward a horizon, with a slow shimmer. Deterministic, cheap, pauses offscreen. */
-function GlyphField() {
+export function GlyphField() {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const c = ref.current!; const ctx = c.getContext("2d")!;
