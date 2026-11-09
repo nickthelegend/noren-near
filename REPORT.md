@@ -3,12 +3,12 @@
 ## What works live
 
 - The Rust credit contract runs against a real local nearcore sandbox and a real NEP-141 test token. Signed transactions cover collateral, USDC pool funding, LTV-limited borrowing, interest, funded USDC yield credit, repayment, withdrawal, liquidation, and an on-chain Pay in 3 schedule. The yield credit is supplied by the test source; it is not Rhea earnings.
-- The SDK and MCP server read real NEAR/1Click/Rhea endpoints. Two timestamped 1Click `dry: true` quotes are saved in `deployments/quotes-2026-11-09.json`. They do not move funds or pay a merchant.
-- The NEAR landing and dashboard render in headless Chrome at 1440px and 375px. Both show the live token catalog and honest setup states, with no page errors or horizontal overflow.
+- The SDK and MCP server read real NEAR/1Click/Rhea endpoints. Three timestamped 1Click `dry: true` quotes are saved in `deployments/quotes-2026-11-09.json`, including a Base destination route. They do not move funds or pay a merchant.
+- The NEAR landing and dashboard render in headless Chrome at 1440px and 375px. Both show the live token catalog and honest setup states, with no page errors or horizontal overflow. The 1440px app also obtains a real dry spend quote.
 
 ## Verification
 
-`pnpm near:verify` passed: **3/3** real sandbox tests, **4/4** SDK tests, **1/1** MCP protocol test, and **157/157** inherited Vitest tests across 23 files; **0 failed, 0 skipped** in this run. Both browser viewport checks passed. Two live 1Click dry quotes succeeded. Details are in `TESTING.md`.
+`pnpm near:verify` passed: **3/3** real sandbox tests, **4/4** SDK tests, **1/1** MCP protocol test, and **157/157** inherited Vitest tests across 23 files; **0 failed, 0 skipped** in this run. Both browser viewport checks passed. Three live 1Click dry quotes succeeded. Details are in `TESTING.md`.
 
 ## BLOCKED
 
