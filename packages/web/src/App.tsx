@@ -7,6 +7,7 @@ import { NorenApp } from "./app/NorenApp";
 import { TxPage } from "./tx";
 import { Icon, Logo, useRoute } from "./ui";
 import { PRIVY_APP_ID } from "./signer";
+import { NearApp } from "./NearApp";
 
 // Privy (sign-in + embedded wallet) loads only on the product surfaces, and only when VITE_PRIVY_APP_ID is set.
 const NorenPrivy = lazy(() => import("./privy"));
@@ -14,6 +15,7 @@ const WithPrivy = ({ children }: { children: ReactNode }) => (PRIVY_APP_ID ? <Su
 
 export function App() {
   const route = useRoute();
+  if (location.hash.startsWith("#/near")) return <NearApp />;
   if (route.page === "dashboard") return <WithPrivy><Dashboard tab={route.tab} sub={route.sub} /></WithPrivy>;
   // Keyed by the whole hash so an app handoff (#/pay/<id>?m=usdc) always starts on the chosen method.
   if (route.page === "pay") return <WithPrivy><Checkout key={location.hash} id={route.id} /></WithPrivy>;
@@ -33,6 +35,7 @@ function Site() {
           <a href="#/" className="hide-s">Home</a>
           <a href="#developers" className="hide-s">Developers</a>
           <a href="#/app" className="hide-s">Noren app</a>
+          <a href="#/near" className="hide-s">NEAR edition</a>
           <a href="#/dashboard">Noren Merchant</a>
           <a href="https://github.com/nickthelegend/noren" target="_blank" rel="noreferrer" className="hide-s">GitHub</a>
         </nav>
