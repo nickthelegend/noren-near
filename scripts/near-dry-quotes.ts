@@ -1,4 +1,4 @@
-// Public read-only probes. The recipient is the documented intents.near account; no funds are sent.
+// Public read-only probes. No funds are sent.
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { dryQuote, supportedTokens } from "../packages/sdk/src/index.js";
@@ -21,8 +21,13 @@ for (const pair of pairs) {
   quotes.push({ label: pair.label, requestedAt: response.timestamp, dry: true, probeRecipient: "intents.near",
     quote: response.quote });
 }
+const evmProbe = "0x1111111111111111111111111111111111111111";
+const merchantRoute = await dryQuote({ originAsset: required[2], destinationAsset: required[3], amount: "1000000",
+  recipient: evmProbe, recipientType: "DESTINATION_CHAIN", refundTo: "intents.near", refundType: "ORIGIN_CHAIN" });
+quotes.push({ label: "NEAR USDC to Base address dry route", requestedAt: merchantRoute.timestamp, dry: true,
+  probeRecipient: evmProbe, quote: merchantRoute.quote });
 const file = resolve(import.meta.dirname, "../deployments/quotes-2026-11-09.json");
 mkdirSync(resolve(import.meta.dirname, "../deployments"), { recursive: true });
 writeFileSync(file, JSON.stringify({ source: "https://1click.chaindefuser.com/v0/quote", observedAt: new Date().toISOString(), tokenCount: tokens.length,
-  note: "Read-only probes to a public account; not borrower deposits or merchant payments", quotes }, null, 2) + "\n");
+  note: "Read-only probes to public addresses; not borrower deposits or merchant payments", quotes }, null, 2) + "\n");
 console.log(`Saved ${quotes.length} real dry quotes from a ${tokens.length}-token live catalog`);
