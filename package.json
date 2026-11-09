@@ -21,7 +21,8 @@
     "near:testnet": "tsx scripts/near-testnet.ts",
     "near:browser": "node scripts/near-browser-check.mjs",
     "near:verify": "bash scripts/near-verify.sh",
-    "build:contracts": "cd packages/contracts && forge build --skip 'test/**'"
+    "build:contracts": "cd packages/contracts && forge build --skip 'test/**'",
+    "near:relay": "tsx scripts/near-relay.ts"
   },
   "devDependencies": {
     "@noren/core": "workspace:*",

@@ -1,0 +1,254 @@
+{
+  "network": "testnet",
+  "rpc": "https://test.rpc.fastnear.com",
+  "updatedAt": "2026-11-09T16:27:35.607Z",
+  "root": "noren-near-mw9h22el.testnet",
+  "accounts": {
+    "root": "noren-near-mw9h22el.testnet",
+    "credit": "credit.noren-near-mw9h22el.testnet",
+    "alice": "alice.noren-near-mw9h22el.testnet",
+    "bob": "bob.noren-near-mw9h22el.testnet",
+    "shop": "shop.noren-near-mw9h22el.testnet",
+    "tbtc": "wbtc.fakes.testnet",
+    "tusdc": "usdc.fakes.testnet"
+  },
+  "contracts": {
+    "credit": {
+      "account": "credit.noren-near-mw9h22el.testnet",
+      "wasmSha256": "a8436173b9eda1d03fe265f2c6d2369a24bb94d7503be1bf79a35eaf4c554cdc",
+      "bytes": 331411
+    }
+  },
+  "steps": [
+    {
+      "step": "create root account via testnet registrar (4 NEAR from a shared testnet funder)",
+      "account": "hako-guardian-mw984kqc.testnet",
+      "method": "create_account",
+      "hash": "Hawwvf1VeVtxaxx8htDqXdz4ponpfqXUC7rMsuPMYuJT",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/Hawwvf1VeVtxaxx8htDqXdz4ponpfqXUC7rMsuPMYuJT"
+    },
+    {
+      "step": "create credit account",
+      "account": "noren-near-mw9h22el.testnet",
+      "hash": "ArTkBK7xBt6rmsrUk3oQX1Csi7qqhcVRQri1TA4PN9Z3",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/ArTkBK7xBt6rmsrUk3oQX1Csi7qqhcVRQri1TA4PN9Z3"
+    },
+    {
+      "step": "create alice account",
+      "account": "noren-near-mw9h22el.testnet",
+      "hash": "FvUjykGz4X3KCYrHuBqrXFYRivrRNmsxbPXmAzwq8xdd",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/FvUjykGz4X3KCYrHuBqrXFYRivrRNmsxbPXmAzwq8xdd"
+    },
+    {
+      "step": "create bob account",
+      "account": "noren-near-mw9h22el.testnet",
+      "hash": "GAc73ToA4UGoxNCxFWmQWeu4c334uWPtihiQyviwx7uf",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/GAc73ToA4UGoxNCxFWmQWeu4c334uWPtihiQyviwx7uf"
+    },
+    {
+      "step": "create shop account",
+      "account": "noren-near-mw9h22el.testnet",
+      "hash": "BYK6meJZhgjWSDrVmbdvMkvxNSam1M7si7NBfXyQtTQg",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/BYK6meJZhgjWSDrVmbdvMkvxNSam1M7si7NBfXyQtTQg"
+    },
+    {
+      "step": "deploy credit",
+      "account": "credit.noren-near-mw9h22el.testnet",
+      "method": "new",
+      "hash": "FLyymNRKTERn8dmKg6VMfdiRUesyYPH43SznmPpQXty",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/FLyymNRKTERn8dmKg6VMfdiRUesyYPH43SznmPpQXty"
+    },
+    {
+      "step": "configure test WBTC collateral (50% LTV)",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "configure_asset",
+      "hash": "Dy4FhKGVZ14REmcNaGCDaBjoBQmXyZrhdcxSg81eBEnH",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/Dy4FhKGVZ14REmcNaGCDaBjoBQmXyZrhdcxSg81eBEnH"
+    },
+    {
+      "step": "register storage on wbtc.fakes.testnet",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "storage_deposit",
+      "hash": "AtB69ZxztVb8patsQcdYTQNC7YGSLQYngVVzMT9spsUC",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/AtB69ZxztVb8patsQcdYTQNC7YGSLQYngVVzMT9spsUC"
+    },
+    {
+      "step": "register storage on usdc.fakes.testnet",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "storage_deposit",
+      "hash": "5Uew3m7pZfJHjrLVss1cUXN91QZRxo2qDfTP61SmNMqh",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/5Uew3m7pZfJHjrLVss1cUXN91QZRxo2qDfTP61SmNMqh"
+    },
+    {
+      "step": "mint test collateral: 0.01 test WBTC to alice, 0.005 to bob",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "mint",
+      "hash": "GbS21wV5VdUBJAiwkdecmDFG55YPxswL7Tvx4gyzfTAJ",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/GbS21wV5VdUBJAiwkdecmDFG55YPxswL7Tvx4gyzfTAJ",
+      "note": "Public testnet WBTC (wbtc.fakes.testnet, open mint, no value) standing in for bridged BTC (nep141:btc.omft.near on mainnet)"
+    },
+    {
+      "step": "mint 1000 test USDC to the LP (root)",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "mint",
+      "hash": "CXqAQ4TnQtj9ioGtksmRNjdJXtr2Hz5LrjPL2y3nDT5d",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/CXqAQ4TnQtj9ioGtksmRNjdJXtr2Hz5LrjPL2y3nDT5d"
+    },
+    {
+      "step": "LP supplies 500 test USDC to the pool",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "CDdrv4V1WLmAeEQJYKSMaeoQrqejuf3xVEd8YGYKbHHJ",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/CDdrv4V1WLmAeEQJYKSMaeoQrqejuf3xVEd8YGYKbHHJ"
+    },
+    {
+      "step": "alice deposits 0.01 test WBTC collateral",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "FXd5ps2cY1JreqgG7SKQKdHs4Si52YQdxvGhrwK186vz",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/FXd5ps2cY1JreqgG7SKQKdHs4Si52YQdxvGhrwK186vz"
+    },
+    {
+      "step": "bob deposits 0.005 test WBTC collateral",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "B8ub2LzfJrPtXNUgViXFR3MDKZ5ndHGbwLr5vYQ337ER",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/B8ub2LzfJrPtXNUgViXFR3MDKZ5ndHGbwLr5vYQ337ER"
+    },
+    {
+      "step": "attack: forged ft_on_transfer collateral rejected",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "ft_on_transfer",
+      "hash": "3bXZ6KeZWJQmMhU1SvthuQhqb99TtmhNydq16gB8LFxc",
+      "status": "rejected",
+      "explorer": "https://testnet.nearblocks.io/txns/3bXZ6KeZWJQmMhU1SvthuQhqb99TtmhNydq16gB8LFxc"
+    },
+    {
+      "step": "attack: borrow before any price rejected",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "8tXEoS5vmZUsYnKPccm8AWp6uTGYuWcfSeZ1txLBykD6",
+      "status": "rejected",
+      "explorer": "https://testnet.nearblocks.io/txns/8tXEoS5vmZUsYnKPccm8AWp6uTGYuWcfSeZ1txLBykD6"
+    },
+    {
+      "step": "attack: forged relayer signature rejected",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "7bBbG2bcpLxRwkZSULV23y51Ryz1vkkR2ayd2ip48DCB",
+      "status": "rejected",
+      "explorer": "https://testnet.nearblocks.io/txns/7bBbG2bcpLxRwkZSULV23y51Ryz1vkkR2ayd2ip48DCB"
+    },
+    {
+      "step": "relayer posts signed BTC-USD price",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "ARsbmFh3SKvVPBHutgV39SKNCTD52LVqPUVSaBdRdCnp",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/ARsbmFh3SKvVPBHutgV39SKNCTD52LVqPUVSaBdRdCnp",
+      "note": "relayer price (testnet): Coinbase BTC-USD 74867.83 at 2026-11-09T16:26:14.144080206Z"
+    },
+    {
+      "step": "attack: forged ft_on_transfer collateral rejected (re-run)",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "ft_on_transfer",
+      "hash": "6UR9mZopPEFUy3SfP5BnNKq3fgRshDzQZzw6tj1JeKxQ",
+      "status": "rejected",
+      "explorer": "https://testnet.nearblocks.io/txns/6UR9mZopPEFUy3SfP5BnNKq3fgRshDzQZzw6tj1JeKxQ"
+    },
+    {
+      "step": "alice borrows 1 test USDC to herself",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "A9KXwLQ3ZtXAHt8xiku7hU2JhLrC6URm3mACJJLWQDEY",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/A9KXwLQ3ZtXAHt8xiku7hU2JhLrC6URm3mACJJLWQDEY",
+      "note": "A script re-run replayed the earlier attack step after a fresh relayer price was on-chain; the borrow was within LTV, so it was correctly accepted."
+    },
+    {
+      "step": "relayer posts signed BTC-USD price",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "DJqNKr8ZZWByLjbbxfLuh88JgVBACKgWFVYvjr7ZmVax",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/DJqNKr8ZZWByLjbbxfLuh88JgVBACKgWFVYvjr7ZmVax",
+      "note": "relayer price (testnet): Coinbase BTC-USD 74829.29 at 2026-11-09T16:27:00.914761102Z"
+    },
+    {
+      "step": "alice pays shop 25 test USDC on credit (borrow \u2192 merchant)",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "S66b6sCDK7eSzAgfvb8HkGU6stWiVXnsSwtY7pADS1L",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/S66b6sCDK7eSzAgfvb8HkGU6stWiVXnsSwtY7pADS1L"
+    },
+    {
+      "step": "relayer posts signed BTC-USD price (bob)",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "2f6DPQrp65KsKP6rBWQLySUgohvwZma1JE3TxVpQUr2a",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/2f6DPQrp65KsKP6rBWQLySUgohvwZma1JE3TxVpQUr2a",
+      "note": "relayer price (testnet): Coinbase BTC-USD 74848.2 at 2026-11-09T16:27:09.867240169Z"
+    },
+    {
+      "step": "bob pays shop 12 test USDC on credit (open position)",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "8WL3kBN4pnwCi88jUhgNMXoT1vHKgSYuJ8Hk23BBzha1",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/8WL3kBN4pnwCi88jUhgNMXoT1vHKgSYuJ8Hk23BBzha1"
+    },
+    {
+      "step": "faucet: alice receives 27 test USDC to repay (test token)",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "mint",
+      "hash": "9WFLEjZ6TFQPx2p9EyBZFSU2nf6rK3vQ3ZRiiPr15VE8",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/9WFLEjZ6TFQPx2p9EyBZFSU2nf6rK3vQ3ZRiiPr15VE8",
+      "note": "Test faucet. On mainnet the borrower brings USDC from any chain via 1Click."
+    },
+    {
+      "step": "alice repays in full (overpayment refunded)",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "7qmisAEcVvCVEXr6Z1nGsd5YnZnpXWcsjfBFZ4Zaw7H8",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/7qmisAEcVvCVEXr6Z1nGsd5YnZnpXWcsjfBFZ4Zaw7H8"
+    },
+    {
+      "step": "alice withdraws 0.01 test WBTC collateral",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "withdraw",
+      "hash": "7CHeCt7N6GKTniDgYMiPnkqsZf6UbjJdSoXENiJMVUcG",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/7CHeCt7N6GKTniDgYMiPnkqsZf6UbjJdSoXENiJMVUcG"
+    }
+  ],
+  "blocked": [
+    {
+      "step": "harvest",
+      "reason": "No real yield source exists on NEAR testnet for this collateral: Rhea lending and NEAR Intents (yield \u2192 USDC) are mainnet-only. No yield is credited; the harvester path (Deposit::Yield from the configured yield source) is covered only by the sandbox tests."
+    }
+  ],
+  "relayerPublicKey": "AsuM1Ql9xK+2EZqEbMwlSWtjP9H4NhLQ2uqPQrYcjkQ=",
+  "relayerPublicKeyEncoding": "base64 ed25519 public key; must equal config().relayer_key on the contract",
+  "tokens": {
+    "wbtc.fakes.testnet": "Ref Finance public testnet WBTC (open mint, no value), standing in for bridged BTC",
+    "usdc.fakes.testnet": "Ref Finance public testnet USDC.e (open mint, no value), standing in for NEAR USDC"
+  }
+}
