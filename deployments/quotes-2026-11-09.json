@@ -1,23 +1,25 @@
 {
   "source": "https://1click.chaindefuser.com/v0/quote",
-  "observedAt": "2026-11-09T15:41:50.727Z",
+  "observedAt": "2026-11-09T16:28:32.066Z",
   "tokenCount": 216,
   "note": "Read-only probes to public addresses; not borrower deposits or merchant payments",
+  "mainnetExecution": "Setup required: NEAR_MAINNET_ACCOUNT",
+  "tokenisedStocksListed": [],
   "quotes": [
     {
       "label": "BTC to NEAR NBTC Intents balance",
-      "requestedAt": "2026-11-09T15:41:48.976Z",
+      "requestedAt": "2026-11-09T16:28:28.391Z",
       "dry": true,
       "probeRecipient": "intents.near",
       "quote": {
         "quote": {
           "amountIn": "10000",
           "amountInFormatted": "0.0001",
-          "amountInUsd": "7.519200000000",
+          "amountInUsd": "7.498100000000",
           "minAmountIn": "10000",
           "amountOut": "10000",
           "amountOutFormatted": "0.0001",
-          "amountOutUsd": "7.519200000000",
+          "amountOutUsd": "7.498100000000",
           "minAmountOut": "9900",
           "timeEstimate": 805,
           "refundFee": "0",
@@ -36,31 +38,31 @@
           "refundType": "INTENTS",
           "recipient": "intents.near",
           "recipientType": "INTENTS",
-          "deadline": "2026-11-09T15:44:48.770Z",
+          "deadline": "2026-11-09T16:31:28.179Z",
           "confidentiality": "public",
           "quoteWaitingTimeMs": 0,
           "insured": false,
           "appFees": []
         },
-        "signature": "ed25519:1jnP6sHnUdAecs8r6picQWrniwjxRTp4uLjGrSxn7ivpdqYD5kccE6tMmm5SAgXCMaZtewESPofzkg7ykHNmDic",
-        "timestamp": "2026-11-09T15:41:48.931Z",
-        "correlationId": "d9ca8a62-77c4-4ab1-8ad1-328a61b0de5c"
+        "signature": "ed25519:5SykYYUh3ppZkBYwEYJiTYfvN5hUneXG221N4mf243NKUEPNAiV2rKHBjJczeQqi3tGRmNQFbmJ62kzxyGowgP9k",
+        "timestamp": "2026-11-09T16:28:28.329Z",
+        "correlationId": "21e9aa90-452b-4dcf-88a3-251a26ed8821"
       }
     },
     {
       "label": "NEAR USDC to Base USDC Intents balance",
-      "requestedAt": "2026-11-09T15:41:49.844Z",
+      "requestedAt": "2026-11-09T16:28:29.293Z",
       "dry": true,
       "probeRecipient": "intents.near",
       "quote": {
         "quote": {
           "amountIn": "1000000",
           "amountInFormatted": "1.0",
-          "amountInUsd": "0.999509000000",
+          "amountInUsd": "0.999580000000",
           "minAmountIn": "1000000",
           "amountOut": "999798",
           "amountOutFormatted": "0.999798",
-          "amountOutUsd": "0.999307099182",
+          "amountOutUsd": "0.999378084840",
           "minAmountOut": "989800",
           "timeEstimate": 20,
           "refundFee": "0",
@@ -79,7 +81,7 @@
           "refundType": "INTENTS",
           "recipient": "intents.near",
           "recipientType": "INTENTS",
-          "deadline": "2026-11-09T15:44:49.323Z",
+          "deadline": "2026-11-09T16:31:28.763Z",
           "confidentiality": "public",
           "quoteWaitingTimeMs": 0,
           "insured": false,
@@ -90,25 +92,73 @@
             }
           ]
         },
-        "signature": "ed25519:3vcREqppX8eRLYo4puuTXwXNHurPEZMuLM2JoH7gAFjXBvqLdCFKj8NTviGTcSaHQY9wpAZdnZQ5kccMsjTySdfv",
-        "timestamp": "2026-11-09T15:41:49.477Z",
-        "correlationId": "967551ef-fadb-430a-8711-52c5d8c25fba"
+        "signature": "ed25519:34XZsPwpqCCPLsn1zX35vbpWa7s3Wvnn21fDWcsFTexL2iV7Lhn3cYmwr16FeRRXhPF98rErehaZRujSqweSFkCP",
+        "timestamp": "2026-11-09T16:28:28.896Z",
+        "correlationId": "e34a5f95-d8be-4ec5-99d3-0334cad329f0"
+      }
+    },
+    {
+      "label": "ZEC to NEAR USDC Intents balance",
+      "requestedAt": "2026-11-09T16:28:30.217Z",
+      "dry": true,
+      "probeRecipient": "intents.near",
+      "quote": {
+        "quote": {
+          "amountIn": "10000000",
+          "amountInFormatted": "0.1",
+          "amountInUsd": "119.427000000000",
+          "minAmountIn": "10000000",
+          "amountOut": "118044515",
+          "amountOutFormatted": "118.044515",
+          "amountOutUsd": "117.994936303700",
+          "minAmountOut": "116864069",
+          "timeEstimate": 455,
+          "refundFee": "0",
+          "withdrawFee": "0"
+        },
+        "quoteRequest": {
+          "dry": true,
+          "depositMode": "SIMPLE",
+          "swapType": "EXACT_INPUT",
+          "slippageTolerance": 100,
+          "originAsset": "nep141:zec.omft.near",
+          "depositType": "ORIGIN_CHAIN",
+          "destinationAsset": "nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1",
+          "amount": "10000000",
+          "refundTo": "intents.near",
+          "refundType": "INTENTS",
+          "recipient": "intents.near",
+          "recipientType": "INTENTS",
+          "deadline": "2026-11-09T16:31:29.659Z",
+          "confidentiality": "public",
+          "quoteWaitingTimeMs": 0,
+          "insured": false,
+          "appFees": [
+            {
+              "recipient": "5880ad2b362620fadf759cbceb1cd5737ce8c6ed7fb8e9942881e6731f9247dd",
+              "fee": 20
+            }
+          ]
+        },
+        "signature": "ed25519:4gPE25u186y61mGBc1BDNvwcorRzkoQuhkzw9CTbjyTDakdWwDqxPfYRH1FhS7fobWvBKAJxH7HYQwX2FzBFDEc6",
+        "timestamp": "2026-11-09T16:28:29.804Z",
+        "correlationId": "52fe70c6-4ad8-4220-9ddd-c1eda3282446"
       }
     },
     {
       "label": "NEAR USDC to Base address dry route",
-      "requestedAt": "2026-11-09T15:41:50.727Z",
+      "requestedAt": "2026-11-09T16:28:31.127Z",
       "dry": true,
       "probeRecipient": "0x1111111111111111111111111111111111111111",
       "quote": {
         "quote": {
           "amountIn": "1000000",
           "amountInFormatted": "1.0",
-          "amountInUsd": "0.999509000000",
+          "amountInUsd": "0.999580000000",
           "minAmountIn": "1000000",
           "amountOut": "997398",
           "amountOutFormatted": "0.997398",
-          "amountOutUsd": "0.996908277582",
+          "amountOutUsd": "0.996979092840",
           "minAmountOut": "987424",
           "timeEstimate": 22,
           "refundFee": "0",
@@ -127,7 +177,7 @@
           "refundType": "ORIGIN_CHAIN",
           "recipient": "0x1111111111111111111111111111111111111111",
           "recipientType": "DESTINATION_CHAIN",
-          "deadline": "2026-11-09T15:44:50.192Z",
+          "deadline": "2026-11-09T16:31:30.584Z",
           "confidentiality": "public",
           "quoteWaitingTimeMs": 0,
           "insured": false,
@@ -138,9 +188,57 @@
             }
           ]
         },
-        "signature": "ed25519:5qEZtKYc5isRgcJNPzkc8Ene67wHhh9vvCEHXTmJmCtBUzxBU2er6ACiMuARzfD1t7jBWjxGEEKD16gwRgG2roMm",
-        "timestamp": "2026-11-09T15:41:50.352Z",
-        "correlationId": "63745432-a0f9-4c54-a416-7bcbc5a939de"
+        "signature": "ed25519:2PkPbvNntGdjpra23Tdg4q3JutNxfdiJCxT9b5n92D1cQNyDALYmBhquDpCyCJuyYE23Qqu6KuwCyNmcpsZfUtdY",
+        "timestamp": "2026-11-09T16:28:30.716Z",
+        "correlationId": "99410204-ad35-4446-8663-6370f08c0ebb"
+      }
+    },
+    {
+      "label": "NEAR USDC to Arbitrum address dry route",
+      "requestedAt": "2026-11-09T16:28:32.066Z",
+      "dry": true,
+      "probeRecipient": "0x1111111111111111111111111111111111111111",
+      "quote": {
+        "quote": {
+          "amountIn": "1000000",
+          "amountInFormatted": "1.0",
+          "amountInUsd": "0.999580000000",
+          "minAmountIn": "1000000",
+          "amountOut": "994498",
+          "amountOutFormatted": "0.994498",
+          "amountOutUsd": "0.994080310840",
+          "minAmountOut": "984553",
+          "timeEstimate": 19,
+          "refundFee": "0",
+          "withdrawFee": "5300"
+        },
+        "quoteRequest": {
+          "dry": true,
+          "depositMode": "SIMPLE",
+          "swapType": "EXACT_INPUT",
+          "slippageTolerance": 100,
+          "originAsset": "nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1",
+          "depositType": "ORIGIN_CHAIN",
+          "destinationAsset": "nep141:arb-0xaf88d065e77c8cc2239327c5edb3a432268e5831.omft.near",
+          "amount": "1000000",
+          "refundTo": "intents.near",
+          "refundType": "ORIGIN_CHAIN",
+          "recipient": "0x1111111111111111111111111111111111111111",
+          "recipientType": "DESTINATION_CHAIN",
+          "deadline": "2026-11-09T16:31:31.496Z",
+          "confidentiality": "public",
+          "quoteWaitingTimeMs": 0,
+          "insured": false,
+          "appFees": [
+            {
+              "recipient": "5880ad2b362620fadf759cbceb1cd5737ce8c6ed7fb8e9942881e6731f9247dd",
+              "fee": 1
+            }
+          ]
+        },
+        "signature": "ed25519:598jSzfTMA9xQfHWbm9PaXhtb77LmdifBHXnsGRerVWdBdW2Rm6xfbpSY1B2WmbvZZVJFqK5PxWyMj54zUhcV8nF",
+        "timestamp": "2026-11-09T16:28:31.641Z",
+        "correlationId": "9670a793-b1ef-410d-9771-980e4906b322"
       }
     }
   ]
