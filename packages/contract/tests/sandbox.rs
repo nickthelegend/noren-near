@@ -88,6 +88,11 @@ async fn real_token_credit_borrow_yield_repay_withdraw() -> anyhow::Result<()> {
 async fn attacks_reject_on_chain() -> anyhow::Result<()> {
     let s = setup().await?;
     transfer(&s.admin, &s.usdc, &s.credit, 100_000_000, json!({"kind":"pool"})).await?;
+    // A premature real yield transfer has no debt to repay and must refund in full.
+    transfer(&s.yield_source, &s.usdc, &s.credit, 1_000_000, json!({"kind":"yield","borrower":s.alice.id()})).await?;
+    assert_eq!(view_string(&s.usdc, "ft_balance_of", json!({"account_id":s.yield_source.id()})).await?, "10000000");
+    let pool: Value = s.credit.view("pool_status").args_json(json!({})).await?.json()?;
+    assert_eq!(pool, json!(["100000000", "100000000"]));
     // Unconfirmed quote or a plain function call cannot create collateral.
     let unconfirmed = s.alice.call(s.credit.id(), "borrow").args_json(json!({"amount":"1000000","recipient":s.alice.id()})).transact().await?;
     assert!(unconfirmed.is_failure());
@@ -103,6 +108,8 @@ async fn attacks_reject_on_chain() -> anyhow::Result<()> {
     let callback = s.attacker.call(s.credit.id(), "on_borrow").args_json(json!({"borrower":s.alice.id(),"amount":"1000000","nonce":1,"installment_id":null})).transact().await?;
     assert!(callback.is_failure());
     transfer(&s.alice, &s.btc, &s.credit, 100_000_000, json!({"kind":"collateral"})).await?;
+    let double_credit = s.attacker.call(s.credit.id(), "ft_on_transfer").args_json(json!({"sender_id":s.alice.id(),"amount":"100000000","msg":"{\"kind\":\"collateral\"}"})).transact().await?;
+    assert!(double_credit.is_failure());
     let stale = s.oracle.call(s.credit.id(), "oracle_on_call").args_json(json!({"sender_id":s.admin.id(),"data":{
         "timestamp":(now_ns()-91_000_000_000).to_string(),"prices":[{"asset_id":s.btc.id(),"price":{"multiplier":"7500000000000","decimals":8}}]},"msg":""})).transact().await?;
     assert!(stale.is_failure());
