@@ -22,34 +22,36 @@ try {
   if (!ready) throw new Error("Vite preview did not start");
   browser = await chromium.launch({ channel: "chrome", headless: true });
   const results = [];
-  for (const width of [1440, 375]) {
+  const routes = [
+    { hash: "#/near", ready: ".nl-coin strong", live: () => /\d+ assets on \d+ chains/.test(document.body.textContent ?? "") },
+    { hash: "#/near/app", ready: ".nc-hero", live: () => /\$[\d,]+\.\d\d/.test(document.querySelector(".nc-hero b")?.textContent ?? "") },
+  ];
+  for (const width of [1440, 390]) for (const route of routes) {
     const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
-    await page.goto("http://127.0.0.1:5190/#/near", { waitUntil: "domcontentloaded" });
-    await page.waitForSelector(".near-page");
-    await page.waitForFunction(() => !document.body.textContent?.includes("Live catalog: Loading"), undefined, { timeout: 15000 });
+    await page.goto(`http://127.0.0.1:5190/${route.hash}`, { waitUntil: "domcontentloaded" });
+    await page.waitForSelector(route.ready);
+    await page.waitForFunction(route.live, undefined, { timeout: 20000 });
     const metrics = await page.evaluate(() => ({
       rootTextLength: document.getElementById("root")?.textContent?.trim().length ?? 0,
-      scrollWidth: document.documentElement.scrollWidth,
-      bodyScrollWidth: document.body.scrollWidth,
-      innerWidth,
+      scrollWidth: document.documentElement.scrollWidth, bodyScrollWidth: document.body.scrollWidth, innerWidth,
       setupVisible: document.body.textContent?.includes("Setup required: NEAR_MAINNET_ACCOUNT") ?? false,
-      liveCatalogVisible: /Live catalog: \d+ assets/.test(document.body.textContent ?? ""),
     }));
-    await page.screenshot({ path: resolve(output, `near-${width}.png`), fullPage: true });
-    if (metrics.rootTextLength === 0 || errors.length || metrics.scrollWidth > metrics.innerWidth || metrics.bodyScrollWidth > metrics.innerWidth || !metrics.setupVisible || !metrics.liveCatalogVisible)
-      throw new Error(`Browser gate failed at ${width}: ${JSON.stringify({ ...metrics, errors })}`);
+    const name = route.hash.replace(/[#/]+/g, "-").replace(/^-/, "");
+    await page.screenshot({ path: resolve(output, `${name}-${width}.png`), fullPage: true });
+    if (metrics.rootTextLength === 0 || errors.length || metrics.scrollWidth > metrics.innerWidth || metrics.bodyScrollWidth > metrics.innerWidth || !metrics.setupVisible)
+      throw new Error(`Browser gate failed at ${route.hash} ${width}: ${JSON.stringify({ ...metrics, errors })}`);
     let liveSpendQuoteVisible = false;
-    if (width === 1440) {
-      await page.getByLabel("Your NEAR account").fill("intents.near");
-      await page.getByLabel("Merchant address").fill("0x1111111111111111111111111111111111111111");
-      await page.getByRole("button", { name: /Quote USDC payment/ }).click();
-      await page.waitForSelector(".near-quote", { timeout: 20000 });
-      liveSpendQuoteVisible = (await page.locator(".near-quote").innerText()).includes('"dry": true');
-      if (!liveSpendQuoteVisible || errors.length) throw new Error(`Live browser spend quote failed: ${await page.locator(".near-alert").allInnerTexts()}`);
+    if (width === 1440 && route.hash === "#/near/app") {
+      await page.getByRole("tab", { name: "Pay anyone" }).click();
+      await page.locator("#nc-to").fill("0x1111111111111111111111111111111111111111");
+      await page.getByRole("button", { name: /Get a live 1Click quote/ }).click();
+      await page.waitForSelector(".nc-receipt, .nk-err", { timeout: 30000 });
+      liveSpendQuoteVisible = (await page.locator(".nc-receipt").count()) > 0 && (await page.locator(".nc-receipt").innerText()).includes("dry: true");
+      if (!liveSpendQuoteVisible || errors.length) throw new Error(`Live browser spend quote failed: ${await page.locator(".nk-err").allInnerTexts()}`);
     }
-    results.push({ width, ...metrics, liveSpendQuoteVisible, pageErrors: errors.length, screenshot: `.near-build/near-${width}.png` });
+    results.push({ route: route.hash, width, ...metrics, liveSpendQuoteVisible, pageErrors: errors.length, screenshot: `.near-build/${name}-${width}.png` });
     await page.close();
   }
   console.log(JSON.stringify(results, null, 2));

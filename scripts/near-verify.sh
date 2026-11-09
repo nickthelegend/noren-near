@@ -31,7 +31,7 @@ fi
 pnpm --filter @noren/near-sdk build
 pnpm --filter @noren/near-sdk test
 pnpm --filter @noren/near-mcp build
-pnpm --filter @noren/near-mcp test
+NOREN_LIVE_CONTRACT=credit.noren-near-mw9h22el.testnet NOREN_LIVE_ACCOUNT=bob.noren-near-mw9h22el.testnet pnpm --filter @noren/near-mcp test
 pnpm --filter @noren/web build > .near-build/web-build.log 2>&1
 pnpm near:browser
 pnpm test
