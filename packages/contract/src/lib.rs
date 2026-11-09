@@ -1,17 +1,27 @@
+//! Noren credit on NEAR: NEP-141 collateral, a USDC pool, LTV-bounded borrowing paid to any account,
+//! repayment, withdrawal and liquidation. Prices arrive either from an oracle contract (`oracle_on_call`,
+//! the Rhea/OutLayer mainnet path) or as an ed25519-signed relayer price checked on-chain (testnet path).
 use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
-use near_sdk::json_types::U128;
+use near_sdk::json_types::{Base64VecU8, U128, U64};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{env, near, AccountId, Gas, NearToken, PanicOnDefault, Promise, PromiseOrValue};
 use std::collections::BTreeMap;
 
 const YEAR: u128 = 31_536_000;
+/// A price older than this blocks borrowing, withdrawal under debt and liquidation. Repayment always works.
 const PRICE_AGE: u64 = 90_000_000_000;
+/// A signed relayer price may be at most this far ahead of the block clock (exchange vs. chain clock skew).
+const FUTURE_SKEW: u64 = 5_000_000_000;
+/// Liquidation starts this far above the borrowing LTV, so a max borrow is not liquidatable one second later.
+const LIQ_BUFFER_BPS: u128 = 1_000;
+const LIQ_CAP_BPS: u128 = 9_000;
+const BONUS_BPS: u128 = 10_500;
 const TRANSFER_GAS: Gas = Gas::from_tgas(20);
 const CALLBACK_GAS: Gas = Gas::from_tgas(15);
 
 #[derive(BorshDeserialize, BorshSerialize)]
 #[borsh(crate = "near_sdk::borsh")]
-struct Asset { decimals: u8, ltv_bps: u16, price_usd6: u128, at_ns: u64 }
+struct Asset { decimals: u8, ltv_bps: u16, price_usd6: u128, at_ns: u64, source: String }
 #[derive(BorshDeserialize, BorshSerialize)]
 #[borsh(crate = "near_sdk::borsh")]
 struct Loan { debt: u128, at_sec: u64 }
@@ -31,10 +41,26 @@ pub struct PriceItem { pub asset_id: String, pub price: Option<OraclePrice> }
 #[serde(crate = "near_sdk::serde")]
 pub struct OraclePrice { pub multiplier: String, pub decimals: u32 }
 
+#[derive(Serialize)]
+#[serde(crate = "near_sdk::serde")]
+pub struct AssetView { pub token: AccountId, pub decimals: u8, pub ltv_bps: u16, pub liq_bps: u16, pub price_usd6: U128, pub price_at_ns: U64, pub price_fresh: bool, pub source: String }
+#[derive(Serialize)]
+#[serde(crate = "near_sdk::serde")]
+pub struct CollateralView { pub token: AccountId, pub amount: U128, pub value_usd6: U128 }
+#[derive(Serialize)]
+#[serde(crate = "near_sdk::serde")]
+pub struct PositionView {
+    pub borrower: AccountId, pub collateral: Vec<CollateralView>, pub collateral_usd6: U128,
+    pub credit_limit_usd6: U128, pub debt_usd6: U128, pub available_usd6: U128,
+    /// Σ(collateral × price × liquidation threshold) ÷ debt, in bps. None when there is no debt.
+    pub health_bps: Option<U128>, pub prices_fresh: bool, pub pending: bool, pub apr_bps: u16,
+}
+
 #[near(contract_state)]
 #[derive(PanicOnDefault)]
 pub struct NorenCredit {
     owner: AccountId, oracle: AccountId, yield_source: AccountId, usdc: AccountId, apr_bps: u16,
+    relayer_key: Option<[u8; 32]>,
     assets: BTreeMap<AccountId, Asset>,
     collateral: BTreeMap<(AccountId, AccountId), u128>,
     loans: BTreeMap<AccountId, Loan>,
@@ -45,43 +71,73 @@ pub struct NorenCredit {
     installments: BTreeMap<u64, Installment>, next_installment: u64,
 }
 
+fn price_message(contract: &AccountId, token: &AccountId, price_usd6: u128, timestamp_ns: u64, source: &str) -> String {
+    format!("noren-price:v1|{contract}|{token}|{price_usd6}|{timestamp_ns}|{source}")
+}
+fn key32(key: &Base64VecU8) -> [u8; 32] { key.0.as_slice().try_into().expect("ERR_RELAYER_KEY") }
+
 #[near]
 impl NorenCredit {
     #[init]
-    pub fn new(owner: AccountId, oracle: AccountId, yield_source: AccountId, usdc: AccountId, apr_bps: u16) -> Self {
+    pub fn new(owner: AccountId, oracle: AccountId, yield_source: AccountId, usdc: AccountId, apr_bps: u16,
+        relayer_key: Option<Base64VecU8>) -> Self {
         assert!(!env::state_exists(), "ERR_INITIALIZED");
         assert!(apr_bps <= 5_000, "ERR_APR_CAP");
-        Self { owner, oracle, yield_source, usdc, apr_bps, assets: BTreeMap::new(), collateral: BTreeMap::new(),
-            loans: BTreeMap::new(), credits: BTreeMap::new(), lp_balances: BTreeMap::new(), liquidity: 0, supplied: 0,
-            pending: BTreeMap::new(), nonce: 0, installments: BTreeMap::new(), next_installment: 0 }
+        Self { owner, oracle, yield_source, usdc, apr_bps, relayer_key: relayer_key.as_ref().map(key32),
+            assets: BTreeMap::new(), collateral: BTreeMap::new(), loans: BTreeMap::new(), credits: BTreeMap::new(),
+            lp_balances: BTreeMap::new(), liquidity: 0, supplied: 0, pending: BTreeMap::new(), nonce: 0,
+            installments: BTreeMap::new(), next_installment: 0 }
     }
 
     pub fn configure_asset(&mut self, token: AccountId, decimals: u8, ltv_bps: u16) {
-        assert_eq!(env::predecessor_account_id(), self.owner, "ERR_OWNER_ONLY");
+        self.owner_only();
         assert!(decimals <= 24 && ltv_bps > 0 && ltv_bps <= 7_000, "ERR_ASSET_CONFIG");
-        let old = self.assets.get(&token);
-        self.assets.insert(token, Asset { decimals, ltv_bps,
-            price_usd6: old.map_or(0, |x| x.price_usd6), at_ns: old.map_or(0, |x| x.at_ns) });
+        let old = self.assets.remove(&token);
+        let (price_usd6, at_ns, source) = old.map_or((0, 0, String::new()), |x| (x.price_usd6, x.at_ns, x.source));
+        self.assets.insert(token, Asset { decimals, ltv_bps, price_usd6, at_ns, source });
+    }
+    pub fn set_relayer_key(&mut self, relayer_key: Option<Base64VecU8>) {
+        self.owner_only();
+        self.relayer_key = relayer_key.as_ref().map(key32);
     }
 
-    /// The oracle contract is the only caller that may set prices.
+    /// The oracle contract is the only caller that may set prices this way (Rhea / OutLayer `oracle_call`).
     pub fn oracle_on_call(&mut self, sender_id: AccountId, data: PriceData, msg: String) {
         let _ = (sender_id, msg);
         assert_eq!(env::predecessor_account_id(), self.oracle, "ERR_ORACLE_ONLY");
         let at: u64 = data.timestamp.parse().expect("ERR_TIMESTAMP");
         let now = env::block_timestamp();
         assert!(at <= now && now - at <= PRICE_AGE, "ERR_STALE_PRICE");
+        let source = format!("oracle:{}", self.oracle);
         for item in data.prices {
             let Ok(token) = item.asset_id.parse::<AccountId>() else { continue; };
-            let Some(asset) = self.assets.get_mut(&token) else { continue; };
             let Some(price) = item.price else { continue; };
             let n: u128 = price.multiplier.parse().expect("ERR_PRICE");
             assert!(n > 0 && price.decimals <= 32, "ERR_PRICE");
             let usd6 = if price.decimals >= 6 { n / 10u128.pow(price.decimals - 6) }
                 else { n.checked_mul(10u128.pow(6 - price.decimals)).expect("ERR_OVERFLOW") };
-            assert!(usd6 > 0, "ERR_PRICE");
-            asset.price_usd6 = usd6; asset.at_ns = at;
+            if self.assets.contains_key(&token) { self.set_price(&token, usd6, at, source.clone()); }
         }
+    }
+
+    /// Anyone may submit a price signed by the configured relayer key. The signature covers this contract,
+    /// the token, the price, the exchange timestamp and the source URL, so it cannot be replayed elsewhere,
+    /// and a price can only replace an older one.
+    pub fn post_signed_price(&mut self, token: AccountId, price_usd6: U128, timestamp_ns: U64, source: String, signature: Base64VecU8) {
+        let key = self.relayer_key.expect("ERR_NO_RELAYER");
+        assert!(source.len() <= 160, "ERR_SOURCE");
+        let message = price_message(&env::current_account_id(), &token, price_usd6.0, timestamp_ns.0, &source);
+        let sig: [u8; 64] = signature.0.as_slice().try_into().expect("ERR_SIGNATURE");
+        assert!(env::ed25519_verify(&sig, env::sha256(message.as_bytes()), &key), "ERR_SIGNATURE");
+        let now = env::block_timestamp();
+        let at = timestamp_ns.0;
+        assert!(at <= now + FUTURE_SKEW && now.saturating_sub(at) <= PRICE_AGE, "ERR_STALE_PRICE");
+        assert!(at > self.assets.get(&token).expect("ERR_ASSET").at_ns, "ERR_PRICE_REPLAY");
+        self.set_price(&token, price_usd6.0, at.min(now), format!("relayer:{source}"));
+    }
+    /// The exact string the relayer signs (sha256 of it). Exposed so the relayer and auditors can check it.
+    pub fn signed_price_message(&self, token: AccountId, price_usd6: U128, timestamp_ns: U64, source: String) -> String {
+        price_message(&env::current_account_id(), &token, price_usd6.0, timestamp_ns.0, &source)
     }
 
     /// Only a genuine NEP-141 transfer callback can credit collateral.
@@ -108,31 +164,57 @@ impl NorenCredit {
             }
             Deposit::Repay => {
                 assert_eq!(token, self.usdc, "ERR_USDC_ONLY");
-                self.ensure_unlocked(&sender_id);
-                let mut loan = self.accrued(&sender_id); let paid = amount.0.min(loan.debt);
-                loan.debt -= paid; self.loans.insert(sender_id, loan);
-                self.liquidity = self.liquidity.checked_add(paid).expect("ERR_OVERFLOW"); amount.0 - paid
+                self.pay_down(sender_id, amount.0)
             }
+            // A harvester (the configured yield source) forwards earned yield, already converted to USDC.
             Deposit::Yield { borrower } => {
                 assert_eq!(token, self.usdc, "ERR_USDC_ONLY");
                 assert_eq!(sender_id, self.yield_source, "ERR_YIELD_SOURCE");
-                self.ensure_unlocked(&borrower);
-                let mut loan = self.accrued(&borrower); let paid = amount.0.min(loan.debt);
-                loan.debt -= paid; self.loans.insert(borrower, loan);
-                self.liquidity = self.liquidity.checked_add(paid).expect("ERR_OVERFLOW"); amount.0 - paid
+                self.pay_down(borrower, amount.0)
             }
         };
         PromiseOrValue::Value(U128(unused))
     }
 
+    // ------------------------------------------------------------------ views
     pub fn collateral_of(&self, borrower: AccountId, token: AccountId) -> U128 {
         U128(self.collateral.get(&(borrower, token)).copied().unwrap_or(0))
     }
     pub fn debt(&self, borrower: AccountId) -> U128 { U128(self.accrued(&borrower).debt) }
-    pub fn credit_limit(&self, borrower: AccountId) -> U128 { U128(self.power(&borrower, true)) }
+    pub fn credit_limit(&self, borrower: AccountId) -> U128 { U128(self.power(&borrower, true, false)) }
     pub fn health_bps(&self, borrower: AccountId) -> U128 {
         let debt = self.accrued(&borrower).debt;
-        U128(if debt == 0 { u128::MAX } else { self.power(&borrower, false).saturating_mul(10_000) / debt })
+        U128(if debt == 0 { u128::MAX } else { self.power(&borrower, false, true).saturating_mul(10_000) / debt })
+    }
+    /// Everything the app needs in one read. Never panics on a stale price; it reports `prices_fresh` instead.
+    pub fn position(&self, borrower: AccountId) -> PositionView {
+        let now = env::block_timestamp();
+        let mut collateral = vec![]; let mut total = 0u128; let mut fresh = true;
+        for ((user, token), amount) in self.collateral.iter() {
+            if user != &borrower || *amount == 0 { continue; }
+            let asset = self.assets.get(token).expect("ERR_ASSET");
+            fresh &= Self::is_fresh(asset, now);
+            let value = Self::value(asset, *amount);
+            total += value;
+            collateral.push(CollateralView { token: token.clone(), amount: U128(*amount), value_usd6: U128(value) });
+        }
+        let limit = self.power(&borrower, false, false);
+        let debt = self.accrued(&borrower).debt;
+        let health = (debt > 0).then(|| U128(self.power(&borrower, false, true).saturating_mul(10_000) / debt));
+        PositionView { borrower: borrower.clone(), collateral, collateral_usd6: U128(total), credit_limit_usd6: U128(limit),
+            debt_usd6: U128(debt), available_usd6: U128(limit.saturating_sub(debt).min(self.liquidity)), health_bps: health,
+            prices_fresh: fresh, pending: self.pending.contains_key(&borrower), apr_bps: self.apr_bps }
+    }
+    pub fn assets(&self) -> Vec<AssetView> {
+        let now = env::block_timestamp();
+        self.assets.iter().map(|(token, a)| AssetView { token: token.clone(), decimals: a.decimals, ltv_bps: a.ltv_bps,
+            liq_bps: Self::liq_bps(a) as u16, price_usd6: U128(a.price_usd6), price_at_ns: U64(a.at_ns),
+            price_fresh: Self::is_fresh(a, now), source: a.source.clone() }).collect()
+    }
+    pub fn config(&self) -> near_sdk::serde_json::Value {
+        near_sdk::serde_json::json!({ "owner": self.owner, "oracle": self.oracle, "yield_source": self.yield_source,
+            "usdc": self.usdc, "apr_bps": self.apr_bps, "relayer_key": self.relayer_key.map(|k| Base64VecU8(k.to_vec())),
+            "price_age_sec": PRICE_AGE / 1_000_000_000, "liq_buffer_bps": LIQ_BUFFER_BPS, "liq_bonus_bps": BONUS_BPS - 10_000 })
     }
     pub fn pool_status(&self) -> (U128, U128) { (U128(self.liquidity), U128(self.supplied)) }
     pub fn borrow_apr_bps(&self) -> u16 { self.apr_bps }
@@ -140,7 +222,16 @@ impl NorenCredit {
         if self.supplied == 0 { 0 } else { ((self.supplied.saturating_sub(self.liquidity) * 10_000) / self.supplied).min(10_000) as u16 }
     }
     pub fn lp_balance(&self, account: AccountId) -> U128 { U128(self.lp_balances.get(&account).copied().unwrap_or(0)) }
+    pub fn liquidation_credit(&self, account: AccountId) -> U128 { U128(self.credits.get(&account).copied().unwrap_or(0)) }
+    pub fn installment(&self, id: u64) -> Option<(AccountId, AccountId, U128, u64, bool)> {
+        self.installments.get(&id).map(|x| (x.owner.clone(), x.recipient.clone(), U128(x.amount), x.due_sec, x.paid))
+    }
+    pub fn installments_of(&self, owner: AccountId) -> Vec<(u64, AccountId, U128, u64, bool)> {
+        self.installments.iter().filter(|(_, x)| x.owner == owner)
+            .map(|(id, x)| (*id, x.recipient.clone(), U128(x.amount), x.due_sec, x.paid)).collect()
+    }
 
+    // ------------------------------------------------------------------ pool
     pub fn withdraw_liquidity(&mut self, amount: U128, recipient: AccountId) -> Promise {
         let user = env::predecessor_account_id(); self.ensure_unlocked(&user);
         let held = self.lp_balances.get(&user).copied().unwrap_or(0);
@@ -162,7 +253,9 @@ impl NorenCredit {
         true
     }
 
-    /// Borrow USDC to a NEAR account. Cross-chain merchant delivery requires a subsequent 1Click swap.
+    // ------------------------------------------------------------------ credit
+    /// Draw USDC from the credit line and pay it to any NEAR account: yourself, or a merchant.
+    /// Cross-chain merchant delivery is a 1Click swap of that USDC (mainnet only).
     pub fn borrow(&mut self, amount: U128, recipient: AccountId) -> Promise {
         self.borrow_for(env::predecessor_account_id(), amount.0, recipient, None)
     }
@@ -178,15 +271,13 @@ impl NorenCredit {
         }
         ids
     }
+    /// Anyone (a keeper) may execute a due instalment; it draws on the owner's credit line under the same LTV rules.
     pub fn pay_installment(&mut self, id: u64) -> Promise {
         let item = self.installments.get(&id).expect("ERR_INSTALLMENT");
         assert!(!item.paid && env::block_timestamp() / 1_000_000_000 >= item.due_sec, "ERR_NOT_DUE");
         let (owner, amount, recipient) = (item.owner.clone(), item.amount, item.recipient.clone());
         self.installments.get_mut(&id).unwrap().paid = true;
         self.borrow_for(owner, amount, recipient, Some(id))
-    }
-    pub fn installment(&self, id: u64) -> Option<(AccountId, AccountId, U128, u64, bool)> {
-        self.installments.get(&id).map(|x| (x.owner.clone(), x.recipient.clone(), U128(x.amount), x.due_sec, x.paid))
     }
 
     pub fn withdraw(&mut self, token: AccountId, amount: U128, recipient: AccountId) -> Promise {
@@ -196,7 +287,7 @@ impl NorenCredit {
         assert!(old >= amount.0, "ERR_COLLATERAL");
         self.collateral.insert(key, old - amount.0);
         let debt = self.accrued(&user).debt;
-        assert!(debt == 0 || self.power(&user, true) >= debt, "ERR_HEALTH");
+        assert!(debt == 0 || self.power(&user, true, false) >= debt, "ERR_HEALTH");
         let nonce = self.lock(&user);
         self.transfer(&token, &recipient, amount.0).then(self.callback("on_withdraw",
             near_sdk::serde_json::json!({"user":user,"token":token,"amount":amount,"nonce":nonce})))
@@ -221,16 +312,28 @@ impl NorenCredit {
         true
     }
 
+    // ------------------------------------------------------------------ liquidation
+    /// Repays part of an unhealthy loan from the caller's liquidation credit and pays out collateral
+    /// worth the repaid amount plus a 5% bonus. Credit and collateral move before the transfer and are
+    /// restored if it fails, so one credit balance cannot fund two concurrent liquidations.
     pub fn liquidate(&mut self, borrower: AccountId, token: AccountId, repay: U128) -> Promise {
-        let liquidator = env::predecessor_account_id(); self.ensure_unlocked(&borrower);
-        assert!(repay.0 > 0 && self.power(&borrower, true) < self.accrued(&borrower).debt, "ERR_HEALTHY");
-        assert!(self.credits.get(&liquidator).copied().unwrap_or(0) >= repay.0, "ERR_PAYMENT");
-        assert!(self.accrued(&borrower).debt >= repay.0, "ERR_REPAY_TOO_HIGH");
+        let liquidator = env::predecessor_account_id();
+        self.ensure_unlocked(&borrower); self.ensure_unlocked(&liquidator);
+        let mut loan = self.accrued(&borrower);
+        assert!(repay.0 > 0 && self.power(&borrower, true, true) < loan.debt, "ERR_HEALTHY");
+        assert!(loan.debt >= repay.0, "ERR_REPAY_TOO_HIGH");
+        let credit = self.credits.get(&liquidator).copied().unwrap_or(0);
+        assert!(credit >= repay.0, "ERR_PAYMENT");
         let asset = self.fresh_asset(&token);
-        let seize = repay.0.checked_mul(10_500).and_then(|n| n.checked_mul(10u128.pow(asset.decimals as u32)))
+        let seize = repay.0.checked_mul(BONUS_BPS).and_then(|n| n.checked_mul(10u128.pow(asset.decimals as u32)))
             .expect("ERR_OVERFLOW") / 10_000 / asset.price_usd6;
         let key = (borrower.clone(), token.clone());
-        assert!(seize > 0 && self.collateral.get(&key).copied().unwrap_or(0) >= seize, "ERR_COLLATERAL");
+        let held = self.collateral.get(&key).copied().unwrap_or(0);
+        assert!(seize > 0 && held >= seize, "ERR_COLLATERAL");
+        self.collateral.insert(key, held - seize);
+        self.credits.insert(liquidator.clone(), credit - repay.0);
+        loan.debt -= repay.0; self.loans.insert(borrower.clone(), loan);
+        self.liquidity += repay.0;
         let nonce = self.lock(&borrower);
         self.transfer(&token, &liquidator, seize).then(self.callback("on_liquidate",
             near_sdk::serde_json::json!({"borrower":borrower,"liquidator":liquidator,"token":token,"repay":repay,"seize":U128(seize),"nonce":nonce})))
@@ -238,19 +341,50 @@ impl NorenCredit {
     #[private]
     pub fn on_liquidate(&mut self, borrower: AccountId, liquidator: AccountId, token: AccountId, repay: U128, seize: U128, nonce: u64) -> bool {
         self.unlock(&borrower, nonce);
-        if env::promise_result_checked(0, 1024).is_err() { return false; }
-        *self.collateral.get_mut(&(borrower.clone(), token)).unwrap() -= seize.0;
-        let mut loan = self.accrued(&borrower); loan.debt -= repay.0; self.loans.insert(borrower, loan);
-        *self.credits.get_mut(&liquidator).unwrap() -= repay.0;
-        self.liquidity += repay.0; true
+        if env::promise_result_checked(0, 1024).is_ok() { return true; }
+        *self.collateral.entry((borrower.clone(), token)).or_default() += seize.0;
+        *self.credits.entry(liquidator).or_default() += repay.0;
+        self.loans.get_mut(&borrower).unwrap().debt += repay.0;
+        self.liquidity -= repay.0;
+        false
+    }
+    /// Unused liquidation credit is always withdrawable.
+    pub fn withdraw_credit(&mut self, amount: U128) -> Promise {
+        let user = env::predecessor_account_id(); self.ensure_unlocked(&user);
+        let held = self.credits.get(&user).copied().unwrap_or(0);
+        assert!(amount.0 > 0 && held >= amount.0, "ERR_CREDIT");
+        self.credits.insert(user.clone(), held - amount.0);
+        let nonce = self.lock(&user);
+        self.transfer(&self.usdc, &user, amount.0).then(self.callback("on_credit_withdraw",
+            near_sdk::serde_json::json!({"user":user,"amount":amount,"nonce":nonce})))
+    }
+    #[private]
+    pub fn on_credit_withdraw(&mut self, user: AccountId, amount: U128, nonce: u64) -> bool {
+        self.unlock(&user, nonce);
+        if env::promise_result_checked(0, 1024).is_err() { *self.credits.entry(user).or_default() += amount.0; return false; }
+        true
     }
 
+    // ------------------------------------------------------------------ internals
+    fn owner_only(&self) { assert_eq!(env::predecessor_account_id(), self.owner, "ERR_OWNER_ONLY"); }
+    fn set_price(&mut self, token: &AccountId, usd6: u128, at: u64, source: String) {
+        assert!(usd6 > 0, "ERR_PRICE");
+        let asset = self.assets.get_mut(token).expect("ERR_ASSET");
+        asset.price_usd6 = usd6; asset.at_ns = at; asset.source = source;
+    }
+    fn pay_down(&mut self, borrower: AccountId, amount: u128) -> u128 {
+        self.ensure_unlocked(&borrower);
+        let mut loan = self.accrued(&borrower); let paid = amount.min(loan.debt);
+        loan.debt -= paid; self.loans.insert(borrower, loan);
+        self.liquidity = self.liquidity.checked_add(paid).expect("ERR_OVERFLOW");
+        amount - paid
+    }
     fn borrow_for(&mut self, borrower: AccountId, amount: u128, recipient: AccountId, installment_id: Option<u64>) -> Promise {
         self.ensure_unlocked(&borrower);
         assert!(amount > 0 && amount <= self.liquidity, "ERR_LIQUIDITY");
         let mut loan = self.accrued(&borrower);
         let next = loan.debt.checked_add(amount).expect("ERR_OVERFLOW");
-        assert!(next <= self.power(&borrower, true), "ERR_LTV");
+        assert!(next <= self.power(&borrower, true, false), "ERR_LTV");
         loan.debt = next; self.loans.insert(borrower.clone(), loan); self.liquidity -= amount;
         let nonce = self.lock(&borrower);
         self.transfer(&self.usdc, &recipient, amount).then(self.callback("on_borrow",
@@ -264,16 +398,22 @@ impl NorenCredit {
             .expect("ERR_OVERFLOW") / 10_000 / YEAR;
         Loan { debt: old.debt.checked_add(interest).expect("ERR_OVERFLOW"), at_sec: now }
     }
-    fn power(&self, user: &AccountId, fresh: bool) -> u128 {
-        self.collateral.iter().filter(|((u,_),_)| u == user).fold(0u128, |total, ((_,token),amount)| {
+    fn liq_bps(a: &Asset) -> u128 { (a.ltv_bps as u128 + LIQ_BUFFER_BPS).min(LIQ_CAP_BPS) }
+    fn value(a: &Asset, amount: u128) -> u128 {
+        amount.checked_mul(a.price_usd6).expect("ERR_OVERFLOW") / 10u128.pow(a.decimals as u32)
+    }
+    fn is_fresh(a: &Asset, now: u64) -> bool { a.at_ns > 0 && a.at_ns <= now && now - a.at_ns <= PRICE_AGE }
+    /// Σ(collateral × price × LTV), or × liquidation threshold when `liquidation` is set.
+    fn power(&self, user: &AccountId, fresh: bool, liquidation: bool) -> u128 {
+        self.collateral.iter().filter(|((u, _), _)| u == user).fold(0u128, |total, ((_, token), amount)| {
             let asset = if fresh { self.fresh_asset(token) } else { self.assets.get(token).expect("ERR_ASSET") };
-            let usd6 = amount.checked_mul(asset.price_usd6).expect("ERR_OVERFLOW") / 10u128.pow(asset.decimals as u32);
-            total.checked_add(usd6.checked_mul(asset.ltv_bps as u128).expect("ERR_OVERFLOW") / 10_000).expect("ERR_OVERFLOW")
+            let bps = if liquidation { Self::liq_bps(asset) } else { asset.ltv_bps as u128 };
+            total.checked_add(Self::value(asset, *amount).checked_mul(bps).expect("ERR_OVERFLOW") / 10_000).expect("ERR_OVERFLOW")
         })
     }
     fn fresh_asset(&self, token: &AccountId) -> &Asset {
-        let a = self.assets.get(token).expect("ERR_ASSET"); let now = env::block_timestamp();
-        assert!(a.at_ns > 0 && a.at_ns <= now && now - a.at_ns <= PRICE_AGE, "ERR_STALE_PRICE"); a
+        let a = self.assets.get(token).expect("ERR_ASSET");
+        assert!(Self::is_fresh(a, env::block_timestamp()), "ERR_STALE_PRICE"); a
     }
     fn ensure_unlocked(&self, user: &AccountId) { assert!(!self.pending.contains_key(user), "ERR_PENDING"); }
     fn lock(&mut self, user: &AccountId) -> u64 { self.nonce += 1; self.pending.insert(user.clone(), self.nonce); self.nonce }

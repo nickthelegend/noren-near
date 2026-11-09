@@ -1,10 +1,22 @@
 //! Signed transactions against a real nearcore sandbox. Token transfers use a deployed NEP-141 contract.
 use near_workspaces::{network::Sandbox, types::NearToken, Account, Contract, Worker};
 use serde_json::{json, Value};
+use base64::Engine as _;
+use ed25519_dalek::{Signer, SigningKey};
+use sha2::{Digest, Sha256};
 
 const CREDIT_WASM: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/target/near/noren_credit.wasm");
 const TOKEN_WASM: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/test-token/target/near/noren_test_token.wasm");
 const YOCTO: NearToken = NearToken::from_yoctonear(1);
+const SOURCE: &str = "https://api.exchange.coinbase.com/products/BTC-USD/ticker";
+fn relayer() -> SigningKey { SigningKey::from_bytes(&[7u8; 32]) }
+fn b64(bytes: &[u8]) -> String { base64::engine::general_purpose::STANDARD.encode(bytes) }
+/// Signs exactly what the contract verifies: sha256("noren-price:v1|contract|token|price|ts|source").
+fn signed_price(key: &SigningKey, credit: &Contract, token: &Contract, usd6: u128, ts: u64) -> Value {
+    let msg = format!("noren-price:v1|{}|{}|{}|{}|{}", credit.id(), token.id(), usd6, ts, SOURCE);
+    let sig = key.sign(&Sha256::digest(msg.as_bytes()));
+    json!({"token":token.id(),"price_usd6":usd6.to_string(),"timestamp_ns":ts.to_string(),"source":SOURCE,"signature":b64(&sig.to_bytes())})
+}
 
 struct Setup {
     _worker: Worker<Sandbox>, admin: Account, alice: Account, attacker: Account, oracle: Account,
@@ -46,7 +58,8 @@ async fn setup() -> anyhow::Result<Setup> {
     call_ok(&admin, &btc, "new", json!({"owner":admin.id(),"symbol":"BTC","decimals":8})).await?;
     call_ok(&admin, &usdc, "new", json!({"owner":admin.id(),"symbol":"USDC","decimals":6})).await?;
     call_ok(&admin, &credit, "new", json!({"owner":admin.id(),"oracle":oracle.id(),
-        "yield_source":yield_source.id(),"usdc":usdc.id(),"apr_bps":1000})).await?;
+        "yield_source":yield_source.id(),"usdc":usdc.id(),"apr_bps":1000,
+        "relayer_key":b64(relayer().verifying_key().as_bytes())})).await?;
     call_ok(&admin, &credit, "configure_asset", json!({"token":btc.id(),"decimals":8,"ltv_bps":5000})).await?;
     for t in [&btc, &usdc] {
         call_ok(&admin, t, "register", json!({"account_id":credit.id()})).await?;
@@ -148,5 +161,69 @@ async fn liquidation_and_installment_schedule() -> anyhow::Result<()> {
     let after: u128 = view_string(&s.credit, "debt", json!({"borrower":s.alice.id()})).await?.parse()?;
     assert!(before > after && before - after >= 999_999);
     assert!(view_string(&s.btc, "ft_balance_of", json!({"account_id":s.liquidator.id()})).await?.parse::<u128>()? > 0);
+    Ok(())
+}
+
+#[tokio::test]
+async fn signed_relayer_price_is_verified_on_chain() -> anyhow::Result<()> {
+    let s = setup().await?;
+    transfer(&s.admin, &s.usdc, &s.credit, 100_000_000, json!({"kind":"pool"})).await?;
+    transfer(&s.alice, &s.btc, &s.credit, 100_000_000, json!({"kind":"collateral"})).await?;
+    let ts = now_ns() - 3_000_000_000;
+    // The contract's own view returns the exact message the relayer signs.
+    let msg: String = s.credit.view("signed_price_message").args_json(json!({"token":s.btc.id(),"price_usd6":"75000000000","timestamp_ns":ts.to_string(),"source":SOURCE})).await?.json()?;
+    assert_eq!(msg, format!("noren-price:v1|{}|{}|75000000000|{}|{}", s.credit.id(), s.btc.id(), ts, SOURCE));
+    // A key that is not the relayer's is rejected.
+    let wrong = SigningKey::from_bytes(&[9u8; 32]);
+    let forged = s.attacker.call(s.credit.id(), "post_signed_price").args_json(signed_price(&wrong, &s.credit, &s.btc, 750_000_000_000_000, ts)).max_gas().transact().await?;
+    assert!(forged.is_failure());
+    // A genuine signature over a different price is rejected (tampered amount).
+    let mut tampered = signed_price(&relayer(), &s.credit, &s.btc, 75_000_000_000, ts);
+    tampered["price_usd6"] = json!("750000000000000");
+    assert!(s.attacker.call(s.credit.id(), "post_signed_price").args_json(tampered).max_gas().transact().await?.is_failure());
+    // A stale genuine signature is rejected.
+    let old = signed_price(&relayer(), &s.credit, &s.btc, 75_000_000_000, now_ns() - 120_000_000_000);
+    assert!(s.attacker.call(s.credit.id(), "post_signed_price").args_json(old).max_gas().transact().await?.is_failure());
+    // Anyone may relay a genuine, fresh signature.
+    call_ok(&s.attacker, &s.credit, "post_signed_price", signed_price(&relayer(), &s.credit, &s.btc, 75_000_000_000, ts)).await?;
+    assert_eq!(view_string(&s.credit, "credit_limit", json!({"borrower":s.alice.id()})).await?, "37500000000");
+    // Replaying an equal-or-older genuine signature cannot roll the price back.
+    let replay = signed_price(&relayer(), &s.credit, &s.btc, 90_000_000_000, ts - 1_000_000_000);
+    assert!(s.attacker.call(s.credit.id(), "post_signed_price").args_json(replay).max_gas().transact().await?.is_failure());
+    let assets: Value = s.credit.view("assets").args_json(json!({})).await?.json()?;
+    assert_eq!(assets[0]["price_usd6"], json!("75000000000"));
+    assert_eq!(assets[0]["source"], json!(format!("relayer:{SOURCE}")));
+    assert_eq!(assets[0]["price_fresh"], json!(true));
+    // The position view reports everything the app shows.
+    call_ok(&s.alice, &s.credit, "borrow", json!({"amount":"5000000","recipient":s.alice.id()})).await?;
+    let p: Value = s.credit.view("position").args_json(json!({"borrower":s.alice.id()})).await?.json()?;
+    assert_eq!(p["collateral_usd6"], json!("75000000000"));
+    assert_eq!(p["credit_limit_usd6"], json!("37500000000"));
+    assert!(p["debt_usd6"].as_str().unwrap().parse::<u128>()? >= 5_000_000);
+    assert_eq!(p["prices_fresh"], json!(true));
+    Ok(())
+}
+
+#[tokio::test]
+async fn max_borrow_is_not_instantly_liquidatable_and_credit_is_withdrawable() -> anyhow::Result<()> {
+    let s = setup().await?;
+    transfer(&s.admin, &s.usdc, &s.credit, 100_000_000, json!({"kind":"pool"})).await?;
+    transfer(&s.alice, &s.btc, &s.credit, 100_000, json!({"kind":"collateral"})).await?; // 0.001 BTC
+    price(&s, 75_000).await?;
+    // 0.001 BTC at $75k = $75; 50% LTV = $37.50 limit. Borrow all of it; one more unit is over the limit.
+    assert!(s.alice.call(s.credit.id(), "borrow").args_json(json!({"amount":"37500001","recipient":s.alice.id()})).max_gas().transact().await?.is_failure());
+    call_ok(&s.alice, &s.credit, "borrow", json!({"amount":"37500000","recipient":s.alice.id()})).await?;
+    transfer(&s.liquidator, &s.usdc, &s.credit, 20_000_000, json!({"kind":"liquidation_credit"})).await?;
+    s._worker.fast_forward(20).await?;
+    price(&s, 75_000).await?;
+    // Interest accrued, but the 10-point liquidation buffer keeps a max-LTV borrower safe.
+    let early = s.liquidator.call(s.credit.id(), "liquidate").args_json(json!({"borrower":s.alice.id(),"token":s.btc.id(),"repay":"1000000"})).max_gas().transact().await?;
+    assert!(early.is_failure());
+    // Unused liquidation credit goes back to the liquidator in full.
+    call_ok(&s.liquidator, &s.credit, "withdraw_credit", json!({"amount":"20000000"})).await?;
+    assert_eq!(view_string(&s.usdc, "ft_balance_of", json!({"account_id":s.liquidator.id()})).await?, "20000000");
+    assert_eq!(view_string(&s.credit, "liquidation_credit", json!({"account":s.liquidator.id()})).await?, "0");
+    // More credit than deposited cannot be withdrawn.
+    assert!(s.liquidator.call(s.credit.id(), "withdraw_credit").args_json(json!({"amount":"1"})).max_gas().transact().await?.is_failure());
     Ok(())
 }
