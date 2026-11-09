@@ -1,7 +1,7 @@
 {
   "network": "testnet",
   "rpc": "https://test.rpc.fastnear.com",
-  "updatedAt": "2026-11-09T16:27:35.607Z",
+  "updatedAt": "2026-11-09T16:41:18.243Z",
   "root": "noren-near-mw9h22el.testnet",
   "accounts": {
     "root": "noren-near-mw9h22el.testnet",
@@ -189,7 +189,7 @@
       "note": "relayer price (testnet): Coinbase BTC-USD 74829.29 at 2026-11-09T16:27:00.914761102Z"
     },
     {
-      "step": "alice pays shop 25 test USDC on credit (borrow \u2192 merchant)",
+      "step": "alice pays shop 25 test USDC on credit (borrow → merchant)",
       "account": "alice.noren-near-mw9h22el.testnet",
       "method": "borrow",
       "hash": "S66b6sCDK7eSzAgfvb8HkGU6stWiVXnsSwtY7pADS1L",
@@ -237,12 +237,21 @@
       "hash": "7CHeCt7N6GKTniDgYMiPnkqsZf6UbjJdSoXENiJMVUcG",
       "status": "success",
       "explorer": "https://testnet.nearblocks.io/txns/7CHeCt7N6GKTniDgYMiPnkqsZf6UbjJdSoXENiJMVUcG"
+    },
+    {
+      "step": "relayer posts signed BTC-USD price",
+      "account": "noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "HndpD6NRUfghi7G86RuaJDjVPGQqB5eLWLmrvwq34VMq",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/HndpD6NRUfghi7G86RuaJDjVPGQqB5eLWLmrvwq34VMq",
+      "note": "relayer price (testnet): Coinbase BTC-USD 74760.73 at 2026-11-09T16:41:13.340130559Z"
     }
   ],
   "blocked": [
     {
       "step": "harvest",
-      "reason": "No real yield source exists on NEAR testnet for this collateral: Rhea lending and NEAR Intents (yield \u2192 USDC) are mainnet-only. No yield is credited; the harvester path (Deposit::Yield from the configured yield source) is covered only by the sandbox tests."
+      "reason": "No real yield source exists on NEAR testnet for this collateral: Rhea lending and NEAR Intents (yield → USDC) are mainnet-only. No yield is credited; the harvester path (Deposit::Yield from the configured yield source) is covered only by the sandbox tests."
     }
   ],
   "relayerPublicKey": "AsuM1Ql9xK+2EZqEbMwlSWtjP9H4NhLQ2uqPQrYcjkQ=",

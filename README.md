@@ -2,37 +2,83 @@
 
 > **Don't sell. Spend.**
 >
-> This branch adds a NEAR credit ledger and live cross-chain quote discovery to Noren's existing Arc and Robinhood Chain work. The NEAR edition's funded yield and cross-chain settlement are still blocked; the evidence below separates working code from the intended product.
-
-![Noren](docs/img/readme/landing.jpg)
+> This branch is Noren's **NEAR HACKATHON edition**: a credit line on NEAR against coins from any chain, paid out to anyone. It runs on NEAR testnet today; the mainnet-only parts are marked below. Noren's earlier Arc and Robinhood Chain work follows after that section.
 
 ## NEAR HACKATHON edition
 
-**Track:** defi (primary), realworld (secondary). **Window:** 2026-11-01 to 2026-11-14 23:59 UTC. [Review the NEAR-only diff, main...near](https://github.com/nickthelegend/noren/compare/main...near) after Nick publishes this branch. This worktree is local only; it has not been pushed. Noren already exists on **Arc** and **Robinhood Chain**; only the integration added on this branch is the NEAR entry under [Q-002/Q-003](https://nearhackathon.com/HACKATHON.md).
+> **Don't sell your Bitcoin. Spend against it, anywhere, and let it pay the debt off.**
 
-**What it is.** A NEAR credit ledger for verified NEP-141 collateral and a USDC lending pool, with live NEAR Intents 1Click dry quotes for inbound and outbound routes. The problem is that a cross-chain quote alone cannot safely identify who owns collateral or prove that it arrived. The contract grants credit only when a token contract invokes `ft_on_transfer` for the sender. It applies funded USDC transfers from a configured yield source to debt, but it does **not yet supply to Rhea or harvest accrued lending yield**. A working self-repaying mainnet loan is not claimed.
+**Track:** defi (primary), realworld (secondary). **Window:** 2026-11-01 to 2026-11-14 23:59 UTC. **What is judged:** only the NEAR integration on branch `near`. Review it as one diff: [`main...near`](https://github.com/nickthelegend/noren/compare/main...near). Noren already exists on **Arc** and **Robinhood Chain**; that earlier work is not part of this entry ([Q-002/Q-003](https://nearhackathon.com/HACKATHON.md)).
 
-### Reproduce and inspect
+![Noren on NEAR: landing](docs/img/near/landing.jpg)
 
-1. On this machine, run `pnpm near:verify` from the repo root. It installs dependencies on the external SSD, builds both Rust contracts, starts and stops three real nearcore sandboxes via near-workspaces, runs the SDK/MCP checks, builds the web app, opens Chrome at 1440 and 375, and runs the inherited Vitest suite, which includes some live reads. The pinned toolchain is Rust 1.95, cargo-near 0.22.0, near-sdk 5.30.0-rc.1 and near-workspaces 0.24.0-rc.2. The sandbox binary is nearcore 2.14.0-rc.4. The script exits if any gate fails.
-2. Run `pnpm --filter @noren/web dev`, then open `http://localhost:5190/#/near`. **See:** “Don’t sell. Spend.”, an empty credit position, and explicit “Setup required” states. Enter a testnet account and click “Read testnet position” after `VITE_NEAR_TESTNET_CONTRACT` is configured. Forms request only live `dry: true` 1Click quotes.
-3. Run `pnpm near:quotes`. **See:** three real read-only quotes saved with timestamps in [deployments/quotes-2026-11-09.json](deployments/quotes-2026-11-09.json). Two use `intents.near` and one uses a Base-format probe address. They **do not** credit a borrower or pay a merchant.
-4. Run `pnpm --filter @noren/near-mcp start` to expose `credit_status`, `quote_deposit`, `quote_spend`, and `harvest_preview` over stdio. Account-dependent tools return “Setup required: NEAR_TESTNET_CONTRACT” when no deployed contract is configured.
+**The problem.** People who hold BTC, ZEC, ETH or SOL sell it when they need to spend, and then miss its upside. A loan against it usually means moving it to one chain's lending app, spending only on that chain, and paying interest out of pocket.
 
-The Rust tests use a real sandbox NEP-141 token, not a mocked RPC. They sign token transfers, borrowing, repayment, LP withdrawal and liquidation, and submit attack transactions. A failed NEP-141 receiver callback returns funds through the token's standard refund path. The current [test counts and browser measurements](TESTING.md#near-edition-2026-11-09) are separate from the inherited Arc results below.
+**What it is.** A credit line on NEAR against any coin NEAR Intents can bring in. The contract `noren_credit` holds NEP-141 collateral, prices it, lets the borrower draw USDC up to 50% of its value and pays that USDC straight to any account (a merchant). The borrower repays, then withdraws the collateral. The yield the collateral would earn on Rhea is meant to pay the debt down (`harvest`). On mainnet, NEAR Intents 1Click carries coins in from their home chains and pays merchants out on Base or Arbitrum.
 
-### NEAR integration and evidence
+**What runs today, honestly.**
 
-| Surface | Status | Evidence |
+| Piece | Status | Evidence |
 | --- | --- | --- |
-| Rust `noren_credit` and sandbox lifecycle | **Live locally** | `packages/contract/tests/sandbox.rs`; 3/3 signed sandbox tests, including rejected unconfirmed borrow, forged and double deposit credit, premature yield refund, unauthorized oracle update, stale price, over-LTV borrow, premature instalment and healthy liquidation |
-| 1Click mainnet quotes | **Live, read-only** | [three timestamped quote responses](deployments/quotes-2026-11-09.json), including a destination-chain dry route, and [1Click token endpoint](https://1click.chaindefuser.com/v0/tokens) |
-| Testnet deployment and explorer transaction links | **BLOCKED** | The [official helper](https://helper.nearprotocol.com/account) and its [testnet alias](https://helper.testnet.near.org/account) returned HTTP 429 on 2026-11-09; [BLOCKED.md](BLOCKED.md) gives the exact funding alternative. No testnet tx ID is claimed. |
-| Rhea lending supply, yield harvest and debt paydown from earned yield | **BLOCKED** | [live Rhea rate endpoint](https://api.burrow.finance/list_token_data) and [research](docs/NEAR-RESEARCH.md) establish available markets, not an integrated position |
-| Merchant payment and return to origin chain | **BLOCKED** | Dry quotes are real; there is no funded `NEAR_MAINNET_ACCOUNT`, signed 1Click execution, or origin-chain withdrawal proof |
-| Tokenised stocks | **Unreachable in observed catalog** | 216 tokens checked; no NVDA/AAPL/TSLA/MSFT/AMZN/GOOGL/SPY/xStocks symbol; [catalog](https://1click.chaindefuser.com/v0/tokens) changes over time |
+| Credit contract on NEAR testnet: collateral, signed price, borrow paid to a merchant, repay, withdraw, attack rejections | **Live on NEAR testnet** | [`credit.noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/credit.noren-near-mw9h22el.testnet), 28 signed transactions in [deployments/testnet-2026-11-09.json](deployments/testnet-2026-11-09.json) (table below) |
+| Same contract against a real nearcore sandbox, incl. liquidation, Pay in 3, harvester path, relayer forgery/replay | **5/5 sandbox tests** | `packages/contract/tests/sandbox.rs`, [TESTING.md](TESTING.md#near-edition-2026-11-09) |
+| Price on testnet | **Relayer price (testnet)**: Coinbase BTC-USD spot, ed25519-signed, verified in the contract | `post_signed_price`; source URL and exchange timestamp are stored on-chain and shown by the `assets` view |
+| NEAR Intents 1Click: coins in, merchants paid out | **Live mainnet quotes (`dry: true`)**; sending is **Setup required: NEAR_MAINNET_ACCOUNT** | 5 timestamped quotes in [deployments/quotes-2026-11-09.json](deployments/quotes-2026-11-09.json) (BTC in, ZEC in, NEAR USDC → Base and → Arbitrum addresses); the app asks 1Click live |
+| Yield harvest that pays the debt | **BLOCKED on testnet** | No real yield source exists on testnet for this collateral (Rhea lending and Intents are mainnet-only). No yield is faked. The app shows a "debt-free on" date as a **projection** from the live position and Rhea's live WBTC supply APY |
+| Tokenised stocks as collateral | **Not offered** | The live 1Click catalog (216 assets, 39 chains on 2026-11-09) lists no tokenised stock; the app re-checks the catalog on load and prints the result |
 
-**NEAR features used:** a Rust near-sdk contract on NEAR, NEP-141 transfer callbacks for authenticated collateral and USDC, NEAR account IDs for ownership, and NEAR Intents 1Click for live cross-chain quote discovery. Chain Signatures, function-call keys, meta transactions, NEP-171/245, OutLayer TEE, and Sputnik DAO are not used by this edition. The testnet deploy script can create a testnet sub-account if a funded sponsor is provided; no sub-account is claimed deployed yet. [Intents has no testnet](https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/introduction.md), so the quotes are mainnet dry runs. The confidential 1Click API has a [documented developer path](https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/confidential-swaps.md), but Noren's merchant settlement has not integrated it. Shielded ZEC may hide the source address on Zcash; Noren's NEAR-side credit position is public. The historical Arc/Robinhood privacy claims later in this README do not describe this NEAR surface.
+**Collateral on testnet is a stand-in.** The testnet run uses `wbtc.fakes.testnet` (collateral) and `usdc.fakes.testnet` (pool), Ref Finance's public testnet NEP-141 tokens with open mint and no value. They stand in for bridged BTC (`nep141:btc.omft.near`) and NEAR USDC on mainnet. The "faucet" step in the table mints test USDC so the borrower can repay.
+
+### Do this, see that
+
+1. `pnpm install`, then `pnpm --filter @noren/web dev` and open `http://localhost:5190/#/near`. **See:** the landing; the strip under the hero links eight of the recorded testnet transactions; coin cards show live 1Click prices; "Live from the contract" reads the testnet contract (pool, utilisation, relayer BTC price and its age, health of the open demo loan).
+2. Open `#/near/app`. **See:** the credit limit of `bob.noren-near-mw9h22el.testnet` (an open 12 USDC loan) read from the contract's `position` view, the collateral meter, and his signed transactions. Click the account chip to read `alice…` (repaid and withdrawn) or any testnet account.
+3. In **Pay anyone**, pick Base, enter any 0x address and press **Get a live 1Click quote**. **See:** a real `dry: true` quote (amount out, route cost, time estimate) and a disabled **Send: Setup required: NEAR_MAINNET_ACCOUNT**. Pick NEAR to see the testnet merchant payment that already ran. The browser only reads; it does not sign (no wallet connection in this build).
+4. In **Debt-free**, see the projected payoff date and curve, both labelled Projection, and the empty Harvests card with the BLOCKED reason.
+5. `pnpm near:test` (needs Rust 1.95, cargo-near 0.22.0; `NEAR_SANDBOX_BIN` or the script's sandbox download). **See:** 5 passed against a real nearcore sandbox.
+6. `pnpm near:relay` posts a fresh signed Coinbase price (needs the gitignored `.near-credentials/` from the deploy run). `pnpm near:quotes` refreshes the 1Click dry quotes. `pnpm --filter @noren/near-mcp start` exposes `credit_status`, `quote_deposit`, `quote_spend` and `harvest_preview` over MCP stdio (set `NEAR_TESTNET_CONTRACT`).
+
+### Testnet transactions (2026-11-09)
+
+Signed by `scripts/near-testnet.ts`; root account [`noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/noren-near-mw9h22el.testnet). Contract wasm sha256 `a8436173…554cdc` (331,411 bytes).
+
+| Step | Result | Tx |
+| --- | --- | --- |
+| Deploy `noren_credit` and initialise (relayer key, 10% APR, test USDC pool) | success | [FLyymNRKTE…](https://testnet.nearblocks.io/txns/FLyymNRKTERn8dmKg6VMfdiRUesyYPH43SznmPpQXty) |
+| Configure test WBTC as collateral, 50% LTV (liquidation at 60%) | success | [Dy4FhKGVZ1…](https://testnet.nearblocks.io/txns/Dy4FhKGVZ14REmcNaGCDaBjoBQmXyZrhdcxSg81eBEnH) |
+| LP supplies 500 test USDC to the pool (`ft_transfer_call`, kind pool) | success | [CDdrv4V1WL…](https://testnet.nearblocks.io/txns/CDdrv4V1WLmAeEQJYKSMaeoQrqejuf3xVEd8YGYKbHHJ) |
+| alice deposits 0.01 test WBTC (`ft_transfer_call`, kind collateral) | success | [FXd5ps2cY1…](https://testnet.nearblocks.io/txns/FXd5ps2cY1JreqgG7SKQKdHs4Si52YQdxvGhrwK186vz) |
+| Attack: a direct `ft_on_transfer` call claiming 1 WBTC | **rejected** | [3bXZ6KeZWJ…](https://testnet.nearblocks.io/txns/3bXZ6KeZWJQmMhU1SvthuQhqb99TtmhNydq16gB8LFxc) |
+| Attack: borrow before any price exists | **rejected** | [8tXEoS5vmZ…](https://testnet.nearblocks.io/txns/8tXEoS5vmZUsYnKPccm8AWp6uTGYuWcfSeZ1txLBykD6) |
+| Attack: a price at 10× signed by the wrong key | **rejected** | [7bBbG2bcpL…](https://testnet.nearblocks.io/txns/7bBbG2bcpLxRwkZSULV23y51Ryz1vkkR2ayd2ip48DCB) |
+| Relayer price (testnet): Coinbase BTC-USD 74,829.29, signed, verified on-chain | success | [DJqNKr8ZZW…](https://testnet.nearblocks.io/txns/DJqNKr8ZZWByLjbbxfLuh88JgVBACKgWFVYvjr7ZmVax) |
+| **Spend:** alice draws 25 test USDC on credit, paid straight to `shop.…` | success | [S66b6sCDK7…](https://testnet.nearblocks.io/txns/S66b6sCDK7eSzAgfvb8HkGU6stWiVXnsSwtY7pADS1L) |
+| bob draws 12 test USDC to `shop.…` (left open for the app) | success | [8WL3kBN4pn…](https://testnet.nearblocks.io/txns/8WL3kBN4pnwCi88jUhgNMXoT1vHKgSYuJ8Hk23BBzha1) |
+| **Harvest** | **BLOCKED** | no real testnet yield source; nothing sent |
+| **Repay:** alice repays in full; NEP-141 refunds the overpayment | success | [7qmisAEcVv…](https://testnet.nearblocks.io/txns/7qmisAEcVvCVEXr6Z1nGsd5YnZnpXWcsjfBFZ4Zaw7H8) |
+| **Withdraw:** alice withdraws all 0.01 test WBTC | success | [7CHeCt7N6G…](https://testnet.nearblocks.io/txns/7CHeCt7N6GKTniDgYMiPnkqsZf6UbjJdSoXENiJMVUcG) |
+
+The JSON log also holds the account creations, storage registrations, test-token mints, a later fresh price, and one extra 1 test USDC borrow by alice ([A9KXwLQ3Zt…](https://testnet.nearblocks.io/txns/A9KXwLQ3ZtXAHt8xiku7hU2JhLrC6URm3mACJJLWQDEY)): a script re-run replayed the "borrow before any price" step after a fresh price was on-chain, so the borrow was correctly accepted. It was repaid with the rest.
+
+### How the contract works
+
+- **Collateral only through NEP-141.** `ft_on_transfer` credits the sender only when the calling token is a configured asset (`kind: collateral`), USDC for `pool`/`repay`, and the configured harvester for `yield`. A direct call cannot invent a deposit.
+- **Prices.** Mainnet: `oracle_on_call` from the configured oracle contract (the Rhea / OutLayer `oracle_call` pattern). Testnet: `post_signed_price(token, price_usd6, timestamp_ns, source, signature)`; the relayer signs `sha256("noren-price:v1|contract|token|price|ts|source")` and the contract checks it with `env::ed25519_verify`, rejects prices older than 90 s, and rejects any price not newer than the stored one (no replay). Pyth Core no longer supports NEAR, so it is not used.
+- **Credit.** Limit = Σ(collateral × price × LTV). Borrowing, withdrawing under debt and liquidation need a fresh price; repaying never does. Interest accrues per second at the configured APR. Health = Σ(collateral × price × liquidation threshold) ÷ debt, with the threshold 10 points above LTV.
+- **Cross-contract safety.** Borrow, withdraw, LP withdraw, credit withdraw and liquidation change state, then transfer, then settle in a `#[private]` callback keyed by a per-user nonce lock; a failed transfer restores the state. Liquidation takes the liquidator's credit and the seized collateral before the transfer, so one credit balance cannot fund two concurrent liquidations.
+- **Pay in 3.** `schedule_pay_in_3` stores three draws 30 days apart; anyone can execute a due one with `pay_installment`, under the same LTV and price rules.
+
+**NEAR features used, and why.** NEP-141 transfer callbacks (authenticated deposits), `ed25519_verify` in the contract (a testnet price we can verify on-chain), promises with private callbacks (atomic-feeling transfers with rollback), sub-accounts (`credit.`, `alice.`, `bob.`, `shop.` under one root), and NEAR Intents 1Click (any chain in and out, dry quotes). Not used: Chain Signatures, function-call keys, meta transactions, NEP-171/245, OutLayer TEE, Sputnik DAO.
+
+**Privacy, stated exactly.** A ZEC deposit from a shielded address hides where the coins came from on Zcash. The NEAR-side position (collateral, debt, payments) is public on NEAR. Confidential Intents has a developer path but is not integrated here.
+
+**What it would take on mainnet.** A funded `NEAR_MAINNET_ACCOUNT`; a deposit path that attributes a 1Click arrival to a borrower on-chain; a Rhea supply adapter and `harvest()` that converts earned yield to USDC through Intents; and a 1Click executor for merchant payouts and origin-chain withdrawals. See [BLOCKED.md](BLOCKED.md).
+
+![Noren on NEAR: credit app](docs/img/near/app-credit.jpg)
+
+| Pay anyone (live dry quote) | Debt-free (projection) | Phone, 390 px |
+| --- | --- | --- |
+| ![Pay anyone](docs/img/near/app-pay.jpg) | ![Debt-free](docs/img/near/app-debt-free.jpg) | ![Phone](docs/img/near/app-390.jpg) |
 
 ### Team and other projects
 

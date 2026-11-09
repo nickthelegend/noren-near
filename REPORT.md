@@ -1,28 +1,30 @@
-# Noren on NEAR — build report (2026-11-09)
+# Noren on NEAR: build report (2026-11-09)
 
-## What works live
+## What is live
 
-- The Rust credit contract runs against a real local nearcore sandbox and a real NEP-141 test token. Signed transactions cover collateral, USDC pool funding, LTV-limited borrowing, interest, funded USDC yield credit, repayment, withdrawal, liquidation, and an on-chain Pay in 3 schedule. The yield credit is supplied by the test source; it is not Rhea earnings.
-- The SDK and MCP server read real NEAR/1Click/Rhea endpoints. Three timestamped 1Click `dry: true` quotes are saved in `deployments/quotes-2026-11-09.json`, including a Base destination route. They do not move funds or pay a merchant.
-- The NEAR landing and dashboard render in headless Chrome at 1440px and 375px. Both show the live token catalog and honest setup states, with no page errors or horizontal overflow. The 1440px app also obtains a real dry spend quote.
+- **NEAR testnet.** `noren_credit` is deployed at [`credit.noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/credit.noren-near-mw9h22el.testnet). One full cycle ran with signed transactions: an LP supplies test USDC, alice deposits test WBTC, a Coinbase BTC-USD price signed by Noren's relayer is verified on-chain, alice draws 25 USDC paid straight to a merchant, repays in full and withdraws her collateral. bob's 12 USDC loan is left open so the app has a live position. Three attacks were rejected on-chain (a forged deposit callback, a borrow with no price, a price signed by the wrong key). All 28 hashes are in `deployments/testnet-2026-11-09.json` and the README.
+- **Sandbox.** 5/5 tests on a real nearcore sandbox cover the lifecycle, liquidation, Pay in 3, the harvester path and relayer forgery, tampering, staleness and replay.
+- **1Click.** 5 timestamped `dry: true` mainnet quotes, and live quotes from the app's Pay tab.
+- **App.** `#/near` (landing) and `#/near/app` (credit app) in Noren's own design system, reading the testnet contract, the 1Click catalog and Rhea's rates live. Checked in headless Chrome at 1440 and 390 px.
+- **MCP.** `credit_status`, `quote_deposit`, `quote_spend` and `harvest_preview` over stdio; the live test reads the testnet contract.
 
-## Verification
+## Fixes made in this pass (over the Codex build)
 
-`pnpm near:verify` passed: **3/3** real sandbox tests, **4/4** SDK tests, **1/1** MCP protocol test, and **157/157** inherited Vitest tests across 23 files; **0 failed, 0 skipped** in this run. Both browser viewport checks passed. Three live 1Click dry quotes succeeded. Details are in `TESTING.md`.
+- Prices: a testnet relayer path (`post_signed_price`, ed25519 verified in the contract, freshness and anti-replay) beside the mainnet oracle path.
+- Liquidation: credit, collateral and debt now move before the transfer and are restored on failure, so a liquidator's credit cannot fund two concurrent liquidations (the old callback could underflow after the collateral had left). Liquidation starts 10 points above LTV, so a max-LTV borrower is not liquidatable one second later. Unused liquidation credit can be withdrawn.
+- A `position` view that never panics on a stale price, plus `assets`, `config` and `installments_of`.
+- The Codex NEAR page (its own dark green palette and Urbanist/Space Mono on a landing) was replaced with pages built from Noren's components and styles.
 
-## BLOCKED
+## Blocked
 
-- **Public NEAR testnet:** the [account helper](https://helper.nearprotocol.com/account) and its [testnet alias](https://helper.testnet.near.org/account) returned HTTP 429. There is no deployed contract or testnet transaction hash. Retry `pnpm near:testnet` after the limit resets, or set `NEAR_TESTNET_SPONSOR_ACCOUNT` and `NEAR_TESTNET_SPONSOR_KEY` in the gitignored `.env` for a funded testnet sponsor. The script saves deployment, configuration and signed test transaction hashes with nearblocks links when it can run.
-- **Self-repaying mainnet loop:** Rhea supply and harvest, Intents conversion of earned yield to USDC, attributable contract-recipient deposits, cross-chain merchant settlement and origin-chain return are still engineering work. A funded `NEAR_MAINNET_ACCOUNT`, collateral, pool liquidity, and explicit mainnet authorization would also be needed for a live run. No mainnet transaction was sent.
-- **Stocks and privacy:** no tokenised stock appeared in the observed [1Click catalog](https://1click.chaindefuser.com/v0/tokens); [Pyth Core ended NEAR support](https://docs.pyth.network/price-feeds/core/use-real-time-data/pull-integration/near). [Confidential Intents](https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/confidential-swaps.md) is documented but not integrated. A shielded ZEC source does not hide the public NEAR credit position.
-- **Submission:** Nick must publish this local branch and fill the human fields in `HACKATHON_SUBMISSION_FORM.md` before the [2026-11-14 23:59 UTC deadline](https://nearhackathon.com/HACKATHON.md). See `BLOCKED.md` for the full list.
+Harvest on testnet (no real yield source); mainnet deposits, merchant payouts and origin-chain withdrawals (Setup required: NEAR_MAINNET_ACCOUNT); browser wallet signing (not built); tokenised stocks (none in the catalog). Details and exact unblockers: `BLOCKED.md`.
 
-## Exact demo commands
+## Commands
 
 ```sh
-pnpm near:verify
-pnpm near:quotes
-pnpm --filter @noren/web dev              # open http://localhost:5190/#/near
-pnpm --filter @noren/near-mcp start       # stdio; credit reads require NEAR_TESTNET_CONTRACT
-pnpm near:testnet                         # retry after helper limit resets, or set sponsor env vars
+pnpm near:verify                       # sandbox, SDK, MCP (live), web build, Chrome gate, vitest
+pnpm near:testnet                      # deploy + lifecycle (spends testnet NEAR), hashes saved
+pnpm near:relay                        # post one fresh signed Coinbase price
+pnpm near:quotes                       # 1Click dry: true quotes
+pnpm --filter @noren/web dev           # http://localhost:5190/#/near and #/near/app
 ```

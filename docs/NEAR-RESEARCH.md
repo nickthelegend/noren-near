@@ -23,3 +23,9 @@ The 1Click [token endpoint](https://1click.chaindefuser.com/v0/tokens) contained
 ## Mainnet boundaries
 
 1Click, `intents.near`, Rhea lending, and merchant settlement are mainnet-only. A dry quote is evidence of live API connectivity, not a swap. A full live loan loop requires a funded `NEAR_MAINNET_ACCOUNT`, collateral on its origin chain, pool USDC, a deployed and audited Noren contract, and explicit mainnet transaction authorization. No such loop is claimed here.
+
+## Testnet choices (added 2026-11-09, during deployment)
+
+- **Price on testnet.** With Pyth Core gone from NEAR and no Rhea oracle feed for test tokens, the contract accepts a relayer price: Coinbase Exchange `GET /products/BTC-USD/ticker` (price and the exchange's trade `time`), signed by an ed25519 relayer key whose public key is set at `new`. `post_signed_price` verifies `sha256("noren-price:v1|contract|token|price_usd6|timestamp_ns|source")` with `env::ed25519_verify`, rejects prices older than 90 s or more than 5 s in the future, and rejects any price not newer than the stored one. It is labelled "relayer price (testnet)" everywhere.
+- **Test tokens.** `wbtc.fakes.testnet` (8 decimals) and `usdc.fakes.testnet` (6 decimals, symbol USDC.e) are Ref Finance's public testnet NEP-141 tokens with an open `mint`. Using them kept the deployment inside a 4 NEAR testnet budget (the credit wasm alone stakes about 3.3 NEAR of storage).
+- **Yield on testnet.** `lst.ref-dev.testnet` (rNEAR) earns staking rewards on NEAR only, and there is no testnet venue that turns such yield into the pool's USDC at a real price, so no harvest is run on testnet.

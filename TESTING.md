@@ -2,19 +2,25 @@
 
 ## NEAR edition (2026-11-09)
 
-Run from this branch with `pnpm near:verify`. These are the counts from this branch, separate from the historical `main` figures below. The script installs project-local dependencies, builds the real Rust credit and NEP-141 token contracts, runs signed transactions in near-workspaces nearcore sandboxes, builds and tests the SDK and MCP server, builds the React app, checks it in Chrome, and runs the inherited Vitest suite. It stops the sandbox and browser processes it starts.
+Counts from this branch, separate from the historical `main` figures below. Nothing here uses a mocked client or a stubbed RPC: the contract tests run signed transactions on a real nearcore sandbox, and the testnet and quote checks hit the live networks.
 
-| Verification | Result |
-| --- | --- |
-| `packages/contract/tests/sandbox.rs` against real nearcore and NEP-141 token | **3 passed, 0 failed, 0 skipped**. Lifecycle includes collateral, pool, borrow, interest, funded yield credit, repay and withdrawal. Attack transactions cover unconfirmed deposit, forged and double FT credit, premature yield refund, unauthorized and stale oracle updates, stale/over-LTV borrow, stale withdrawal with debt, unauthorized callback, healthy liquidation and premature Pay in 3. |
-| `@noren/near-sdk` node tests | **4 passed, 0 failed, 0 skipped**. Quote validation, equity-symbol filtering, and projection math. |
-| `@noren/near-mcp` stdio protocol test | **1 passed, 0 failed, 0 skipped**. Four tools are listed and missing deployment configuration returns a setup error. |
-| Root `pnpm test` (inherited Vitest suite) | **157 passed, 0 failed, 0 skipped across 23 files**. Some existing tests read live services, so this is not an entirely offline suite. |
-| Headless Chrome, built app at `/#/near` | **2 viewport checks passed**: 1440px and 375px. Root text was nonempty, no uncaught page errors, no horizontal overflow, setup state rendered, and the live 1Click catalog appeared. The 1440px app also produced a live `dry: true` spend quote to a Base-format probe address. Screenshots and raw logs are under gitignored `.near-build/`. |
-| Live 1Click API | **3 successful `dry: true` quotes**, timestamped in [`deployments/quotes-2026-11-09.json`](deployments/quotes-2026-11-09.json). Two target a public probe Intents account and one a Base-format probe address; none is a borrower deposit or merchant payment. |
-| NEAR public testnet | **BLOCKED, 0 deploy transactions.** The official helper account endpoint and its testnet alias returned HTTP 429. No testnet contract address or explorer transaction is claimed. See [`BLOCKED.md`](BLOCKED.md). |
+| Verification | Command | Result |
+| --- | --- | --- |
+| Contract against a real nearcore 2.14.0-rc.4 sandbox (near-workspaces 0.24.0-rc.2) with a real NEP-141 token | `pnpm near:test` | **5 passed, 0 failed** |
+| ↳ `real_token_credit_borrow_yield_repay_withdraw` | | pool, collateral, LTV limit, borrow, interest accrual, harvester credit from the configured source, repay, withdraw, LP withdraw |
+| ↳ `attacks_reject_on_chain` | | premature yield refunded, borrow without collateral, forged `ft_on_transfer`, unauthorized oracle, attacker callback, double credit, stale oracle price, stale borrow, over-LTV borrow, stale withdrawal under debt |
+| ↳ `liquidation_and_installment_schedule` | | Pay in 3 schedule, early instalment rejected, healthy liquidation rejected, liquidation after a price drop with 5% bonus |
+| ↳ `signed_relayer_price_is_verified_on_chain` | | wrong key, tampered price, stale signature and replayed older price all rejected; a genuine signature relayed by anyone accepted; `signed_price_message`, `assets` and `position` views |
+| ↳ `max_borrow_is_not_instantly_liquidatable_and_credit_is_withdrawable` | | limit + 1 unit rejected, max borrow safe after interest (10-point liquidation buffer), unused liquidation credit withdrawn, over-withdrawal rejected |
+| Testnet lifecycle on public NEAR testnet | `pnpm near:testnet` | **28 transactions** recorded in [`deployments/testnet-2026-11-09.json`](deployments/testnet-2026-11-09.json): deploy, configure, pool, two collateral deposits, 3 attacks rejected on-chain, 4 signed relayer prices, two borrows paid to a merchant, repay, withdraw. Harvest **BLOCKED** (no testnet yield source). After the run: alice debt 0 and 0.01 test WBTC back in her account; bob 12 USDC open; pool 488 test USDC available. |
+| `@noren/near-sdk` | `pnpm --filter @noren/near-sdk test` | **4 passed, 0 failed** |
+| `@noren/near-mcp` over real stdio | `NOREN_LIVE_CONTRACT=credit.noren-near-mw9h22el.testnet NOREN_LIVE_ACCOUNT=bob.noren-near-mw9h22el.testnet pnpm --filter @noren/near-mcp test` | **2 passed, 0 failed**: tool list + Setup required without a contract; `credit_status` and `harvest_preview` against the live testnet contract |
+| 1Click mainnet API | `pnpm near:quotes` | **5 `dry: true` quotes** saved with timestamps in [`deployments/quotes-2026-11-09.json`](deployments/quotes-2026-11-09.json); catalog 216 assets, tokenised stocks listed: none |
+| Headless Chrome on the production build (`vite build`, `vite preview`) | `pnpm near:browser` | **4 checks passed**: `#/near` and `#/near/app` at 1440 and 390 px. Non-empty root, 0 page errors, `scrollWidth == innerWidth`, live 1Click catalog and contract reads rendered, `Setup required: NEAR_MAINNET_ACCOUNT` visible, and at 1440 a live `dry: true` spend quote rendered in the Pay tab |
+| Web typecheck and build | `pnpm --filter @noren/web build` | passed |
+| Inherited Vitest suite (Arc / Robinhood code, unchanged by this branch) | `pnpm test` | **157 passed, 0 failed, 23 files** (some files read live services) |
 
-The local tests use a genuine nearcore sandbox and token transfers, not stubbed RPC responses. The yield credit test transfers actual sandbox USDC from the configured source; it does not test accrued Rhea yield. No mainnet transaction was sent. The inherited Arc totals below are historical and were not rerun as a 656-test suite for this branch.
+`pnpm near:verify` runs all of the above except the testnet lifecycle, which spends testnet NEAR.
 
 ## Current totals (`main`, Nov 7 2026)
 
