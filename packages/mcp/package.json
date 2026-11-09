@@ -1,1 +1,1 @@
-{"name":"@noren/near-mcp","version":"0.1.0","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json"},"devDependencies":{"typescript":"5.9.3"}}
+{"name":"@noren/near-mcp","version":"0.1.0","private":true,"type":"module","scripts":{"build":"tsc -p tsconfig.json","start":"node dist/index.js","test":"node --test test/*.test.mjs"},"dependencies":{"@modelcontextprotocol/server":"^2.0.0","@noren/near-sdk":"workspace:*","zod":"^4.2.0"},"devDependencies":{"typescript":"5.9.3","@types/node":"24.10.1"}}
