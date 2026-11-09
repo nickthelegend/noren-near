@@ -14,6 +14,9 @@ data/
 deployments/
 .DS_Store
 .claude/
+.near-credentials/
+.near-build/
+packages/contract/target/
 
 # Templates with variable names only (no values) are tracked.
 !.env.example
