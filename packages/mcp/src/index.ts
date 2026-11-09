@@ -15,8 +15,8 @@ function createServer() {
   server.registerTool("quote_spend", { description: "Get a live dry 1Click merchant quote; no payment is made", inputSchema: z.object({
     originAsset: z.string(), destinationAsset: z.string(), amount: z.string(), merchant: z.string(), borrower: z.string(), confidential: z.boolean().optional()
   }) }, async (input) => { try { return result(await quoteSpend(input)); } catch (e) { return failure(e); } });
-  server.registerTool("harvest_preview", { description: "Project a debt-free date using a live Rhea supply rate; projected yield is not yet earned by Noren", inputSchema: z.object({
-    account: z.string(), token: z.string()
+  server.registerTool("harvest_preview", { description: "Project a debt-free date from the live position and a live Rhea supply APY; a projection, no yield is earned on testnet", inputSchema: z.object({
+    account: z.string(), rheaToken: z.string().optional()
   }) }, async (input) => { try { return result(await harvestPreview(input)); } catch (e) { return failure(e); } });
   return server;
 }
