@@ -5,7 +5,7 @@ import { configDefaults, defineConfig } from 'vitest/config';
 // node:test and run with `pnpm --dir examples/shop test`; the film recorder's wallet check runs with
 // `node film/record/wallet.test.mjs` (it needs film/record's own Playwright install).
 export default defineConfig({
-  test: { exclude: [...configDefaults.exclude, '**/*.fork.test.ts',
+  test: { exclude: [...configDefaults.exclude, '**/.pnpm-store/**', '**/node_modules/**', 'packages/sdk/test/**', 'packages/mcp/test/**', '**/*.fork.test.ts',
     ...(process.argv.some((arg) => arg.endsWith('.live.test.ts')) ? [] : ['**/*.live.test.ts']),
     '**/out/**', '**/lib/**', 'examples/shop/**', 'film/**'] },
 });

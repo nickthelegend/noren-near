@@ -15,11 +15,18 @@
     "deploy:arc": "tsx scripts/deploy-arc.ts",
     "studio:import": "sh arc-studio/import.sh",
     "test": "pnpm exec vitest run",
+    "near:build": "pnpm --dir packages/contract exec cargo near build non-reproducible-wasm --no-abi",
+    "near:test": "pnpm --dir packages/contract exec cargo test --test sandbox",
+    "near:quotes": "tsx scripts/near-dry-quotes.ts",
+    "near:testnet": "tsx scripts/near-testnet.ts",
+    "near:browser": "node scripts/near-browser-check.mjs",
+    "near:verify": "bash scripts/near-verify.sh",
     "build:contracts": "cd packages/contracts && forge build --skip 'test/**'"
   },
   "devDependencies": {
     "@noren/core": "workspace:*",
     "@types/node": "24.10.1",
+    "near-api-js": "7.3.1",
     "tsx": "4.20.6",
     "typescript": "5.9.3",
     "viem": "2.51.3",
