@@ -12,10 +12,10 @@
 
 ## BLOCKED
 
-- **Public NEAR testnet:** both official account helper URLs returned HTTP 429. There is no deployed contract or testnet transaction hash. Retry `pnpm near:testnet` after the limit resets, or set `NEAR_TESTNET_SPONSOR_ACCOUNT` and `NEAR_TESTNET_SPONSOR_KEY` in the gitignored `.env` for a funded testnet sponsor. The script saves deployment, configuration and signed test transaction hashes with nearblocks links when it can run.
+- **Public NEAR testnet:** the [account helper](https://helper.nearprotocol.com/account) and its [testnet alias](https://helper.testnet.near.org/account) returned HTTP 429. There is no deployed contract or testnet transaction hash. Retry `pnpm near:testnet` after the limit resets, or set `NEAR_TESTNET_SPONSOR_ACCOUNT` and `NEAR_TESTNET_SPONSOR_KEY` in the gitignored `.env` for a funded testnet sponsor. The script saves deployment, configuration and signed test transaction hashes with nearblocks links when it can run.
 - **Self-repaying mainnet loop:** Rhea supply and harvest, Intents conversion of earned yield to USDC, attributable contract-recipient deposits, cross-chain merchant settlement and origin-chain return are still engineering work. A funded `NEAR_MAINNET_ACCOUNT`, collateral, pool liquidity, and explicit mainnet authorization would also be needed for a live run. No mainnet transaction was sent.
-- **Stocks and privacy:** no tokenised stock appeared in the observed 1Click catalog; NEAR Pyth equity feeds are unavailable. Confidential Intents is documented but not integrated. A shielded ZEC source does not hide the public NEAR credit position.
-- **Submission:** Nick must publish this local branch and fill the human fields in `HACKATHON_SUBMISSION_FORM.md` before the 2026-11-14 23:59 UTC deadline. See `BLOCKED.md` for the full list.
+- **Stocks and privacy:** no tokenised stock appeared in the observed [1Click catalog](https://1click.chaindefuser.com/v0/tokens); [Pyth Core ended NEAR support](https://docs.pyth.network/price-feeds/core/use-real-time-data/pull-integration/near). [Confidential Intents](https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/confidential-swaps.md) is documented but not integrated. A shielded ZEC source does not hide the public NEAR credit position.
+- **Submission:** Nick must publish this local branch and fill the human fields in `HACKATHON_SUBMISSION_FORM.md` before the [2026-11-14 23:59 UTC deadline](https://nearhackathon.com/HACKATHON.md). See `BLOCKED.md` for the full list.
 
 ## Exact demo commands
 
