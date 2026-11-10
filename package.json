@@ -22,7 +22,8 @@
     "near:browser": "node scripts/near-browser-check.mjs",
     "near:verify": "bash scripts/near-verify.sh",
     "build:contracts": "cd packages/contracts && forge build --skip 'test/**'",
-    "near:relay": "tsx scripts/near-relay.ts"
+    "near:relay": "tsx scripts/near-relay.ts",
+    "near:borrow": "node scripts/live-borrow.mjs"
   },
   "devDependencies": {
     "@noren/core": "workspace:*",
