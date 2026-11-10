@@ -1,7 +1,7 @@
 {
   "network": "testnet",
   "rpc": "https://test.rpc.fastnear.com",
-  "updatedAt": "2026-11-09T16:41:18.243Z",
+  "updatedAt": "2026-11-10T08:51:09.726Z",
   "root": "noren-near-mw9h22el.testnet",
   "accounts": {
     "root": "noren-near-mw9h22el.testnet",
@@ -246,6 +246,24 @@
       "status": "success",
       "explorer": "https://testnet.nearblocks.io/txns/HndpD6NRUfghi7G86RuaJDjVPGQqB5eLWLmrvwq34VMq",
       "note": "relayer price (testnet): Coinbase BTC-USD 74760.73 at 2026-11-09T16:41:13.340130559Z"
+    },
+    {
+      "step": "live borrow: relayer posts signed BTC-USD price (pnpm near:borrow --relay)",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "3y4Awij9ixX2nMME8TeNfB7n5CqEhSarJy87yytKTp2J",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/3y4Awij9ixX2nMME8TeNfB7n5CqEhSarJy87yytKTp2J",
+      "note": "relayer price (testnet): Coinbase BTC-USD 74535.3 at 2026-11-10T08:50:59.856044924Z"
+    },
+    {
+      "step": "live borrow: bob pays shop 1 test USDC on credit (pnpm near:borrow)",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "FMVTHShc62cZdUNBBA1tg5mWmqNWT5U67DxaPLmj33RV",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/FMVTHShc62cZdUNBBA1tg5mWmqNWT5U67DxaPLmj33RV",
+      "note": "One live borrow from scripts/live-borrow.mjs at 2026-11-10T08:51:04.689Z"
     }
   ],
   "blocked": [
