@@ -36,7 +36,8 @@
 3. In **Pay anyone**, pick Base, enter any 0x address and press **Get a live 1Click quote**. **See:** a real `dry: true` quote (amount out, route cost, time estimate) and a disabled **Send: Setup required: NEAR_MAINNET_ACCOUNT**. Pick NEAR to see the testnet merchant payment that already ran. The browser only reads; it does not sign (no wallet connection in this build).
 4. In **Debt-free**, see the projected payoff date and curve, both labelled Projection, and the empty Harvests card with the BLOCKED reason.
 5. `pnpm near:test` (needs Rust 1.95, cargo-near 0.22.0; `NEAR_SANDBOX_BIN` or the script's sandbox download). **See:** 5 passed against a real nearcore sandbox.
-6. `pnpm near:relay` posts a fresh signed Coinbase price (needs the gitignored `.near-credentials/` from the deploy run). `pnpm near:quotes` refreshes the 1Click dry quotes. `pnpm --filter @noren/near-mcp start` exposes `credit_status`, `quote_deposit`, `quote_spend` and `harvest_preview` over MCP stdio (set `NEAR_TESTNET_CONTRACT`).
+6. `pnpm near:borrow --relay` does one live borrow on testnet (needs the gitignored `.near-credentials/` from the deploy run). **See:** the signed price checked (and re-posted if older than 90 s), bob's position before, a 1 test USDC `borrow` paid straight to `shop.…`, the position and the shop's balance after, and both NearBlocks links. `--dry` prints the plan and sends nothing. Details in [One live borrow](#one-live-borrow-pnpm-nearborrow).
+7. `pnpm near:relay` posts a fresh signed Coinbase price (needs the gitignored `.near-credentials/` from the deploy run). `pnpm near:quotes` refreshes the 1Click dry quotes. `pnpm --filter @noren/near-mcp start` exposes `credit_status`, `quote_deposit`, `quote_spend` and `harvest_preview` over MCP stdio (set `NEAR_TESTNET_CONTRACT`).
 
 ### Testnet transactions (2026-11-09)
 
@@ -59,6 +60,26 @@ Signed by `scripts/near-testnet.ts`; root account [`noren-near-mw9h22el.testnet`
 | **Withdraw:** alice withdraws all 0.01 test WBTC | success | [7CHeCt7N6G…](https://testnet.nearblocks.io/txns/7CHeCt7N6GKTniDgYMiPnkqsZf6UbjJdSoXENiJMVUcG) |
 
 The JSON log also holds the account creations, storage registrations, test-token mints, a later fresh price, and one extra 1 test USDC borrow by alice ([A9KXwLQ3Zt…](https://testnet.nearblocks.io/txns/A9KXwLQ3ZtXAHt8xiku7hU2JhLrC6URm3mACJJLWQDEY)): a script re-run replayed the "borrow before any price" step after a fresh price was on-chain, so the borrow was correctly accepted. It was repaid with the rest.
+
+### One live borrow (`pnpm near:borrow`)
+
+`scripts/live-borrow.mjs` runs one real borrow in one command, for a demo on camera. It reads the signer from `--key-file` (default: the gitignored `.near-credentials/testnet.json`; a near-cli `{account_id, private_key}` file also works) in code and never prints it.
+
+1. **Price check.** Reads the contract's `assets` view. If the signed BTC price is older than 75 s (the contract refuses borrows past 90 s) it stops with "run pnpm near:relay first", or with `--relay` it fetches Coinbase BTC-USD, signs it with the relayer key and sends `post_signed_price` from the borrower's account.
+2. **Position before** from the `position` view: collateral, credit limit, debt, available, health.
+3. **Borrow** `borrow(amount, recipient)`: the contract draws test USDC from the pool and pays it straight to the shop in the same transaction (`ft_transfer` from `credit.…` to `shop.…`). The script waits for `FINAL` and treats a `false` callback (transfer failed, debt rolled back) as a failure.
+4. **Position after** plus the shop's test USDC balance before and after; it fails if the shop did not receive exactly the amount.
+
+Options: `--account bob|alice|<id>` (default bob, the open demo loan), `--amount 1` (test USDC, at most 25), `--to <account>` (default shop), `--relay`, `--dry`. Failures print the contract's own reason (`ERR_STALE_PRICE`, `ERR_LTV`, `ERR_LIQUIDITY`, `ERR_PENDING`, …) without a stack trace. Each transaction it sends is appended to [deployments/testnet-2026-11-09.json](deployments/testnet-2026-11-09.json), so the app's activity list and transaction count include it after a reload.
+
+First run, 2026-11-10 08:51 UTC (`pnpm near:borrow --relay`):
+
+| Step | Result | Tx |
+| --- | --- | --- |
+| bob posts a fresh signed price: Coinbase BTC-USD 74,535.30 at 08:50:59 UTC | success | [3y4Awij9ix…](https://testnet.nearblocks.io/txns/3y4Awij9ixX2nMME8TeNfB7n5CqEhSarJy87yytKTp2J) |
+| bob borrows 1 test USDC, paid straight to `shop.…` (debt 12.00 → 13.00, available 174.34 → 173.34, health 18.63× → 17.20×, shop 37.00 → 38.00 test USDC) | success | [FMVTHShc62…](https://testnet.nearblocks.io/txns/FMVTHShc62cZdUNBBA1tg5mWmqNWT5U67DxaPLmj33RV) |
+
+bob's open loan is now about 13 test USDC (it was 12 after the Nov 9 run), and every further run adds its amount.
 
 ### How the contract works
 
