@@ -1,5 +1,14 @@
 # Test results
 
+## NEAR-only web entry (2026-11-11)
+
+- The production entry imports only NEAR screens. `/` and all inherited or unknown hash routes canonicalize to `#/near/app`. The informational page remains `#/near`; payment and projection tabs are `#/near/app/pay` and `#/near/app/melt`.
+- The existing component styling is unchanged. Only NEAR payout controls and NEAR-side catalog representations render. No merchant backend or other-chain RPC is required. Inherited code stays in git; unrelated public assets are excluded from the output.
+- Final typecheck/build passed with a 1536 MB Node heap; free swap was 1045 MB before building. Eight credit-call/runtime tests and the wallet-cycle dry run passed. No additional NEAR was spent; the earlier real shared-call proof remains the financial integration evidence.
+- Chrome under the shared lock, 1440/375: 64 route/error captures, 26 wallet state captures, actual Meteor testnet popup/closed/blocked checks, catalog label and delayed-price checks. Normal route views had no page exceptions, console errors, failed requests, forbidden-chain requests or horizontal overflow. The outage check deliberately injected HTTP 503. Financial browser state checks use Meteor/position fixtures replaying the real proof's receipts; human wallet approval is manual.
+- Literal case-sensitive scan of the complete production output: `Arc`, `Robinhood`, `CCTP`, `arc.io` each **0** matches. `rg -n 'Arc|Robinhood|CCTP|arc\.io' packages/web/dist` also found none. No CSS or artwork changed.
+- Current flow, limits, before/after screenshots and raw evidence: [FLOW-QA.md](FLOW-QA.md#near-only-entry-2026-11-11). The older multi-chain sections below are historical, excluded from this NEAR entry.
+
 ## Meteor wallet addition (2026-11-11)
 
 - **Build:** production web typecheck/build passed with `NODE_OPTIONS=--max-old-space-size=1536 pnpm --filter @noren/web build`. A 1024 MB heap attempt exhausted its heap; the bounded 1536 MB build passed. Swap was checked before builds.
