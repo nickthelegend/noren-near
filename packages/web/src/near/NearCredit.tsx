@@ -4,6 +4,9 @@ import { Icon, Logo } from "../ui";
 import { Mark } from "../logos";
 import { MeltChart } from "./Melt";
 import { useNearWallet, type NearWallet } from "./wallet";
+import { runCreditAction } from "./credit-runtime";
+import { tokenUnits, walletError, type CreditAction } from "./credit-calls";
+import { CreditActionSheet, CreditReceipt, type Receipt, type RunAction } from "./CreditActions";
 import {
   COLLATERAL, CONTRACT, DEMO, HOME_COINS, NEAR_USDC, RECORD, SAVED_QUOTES, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
   short, shortHash, units, usd6, useAssets, usePool, usePosition, useRates, useTokens, type Position,
@@ -27,11 +30,29 @@ export function NearCredit() {
   const [account, setAccount] = useState(() => store.get("noren-near-account") || DEMO.open);
   const [picking, setPicking] = useState(false);
   const wallet = useNearWallet();
+  const [manage, setManage] = useState<Exclude<CreditAction, "borrow"> | null>(null);
+  const [receipt, setReceipt] = useState<Receipt | null>(null);
+  const [working, setWorking] = useState(false);
+  const locked = useRef(false);
   useEffect(() => { if (wallet.account) { setAccount(wallet.account); store.set("noren-near-account", wallet.account); } }, [wallet.account]);
   const pos = usePosition(account), pool = usePool(), assets = useAssets(), tokens = useTokens(), rates = useRates();
   const btc = assets.data?.find((a) => a.token === COLLATERAL);
   const go = (t: Tab) => { setTab(t); history.replaceState(null, "", `#/near/app${t === "credit" ? "" : `/${t}`}`); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const choose = (a: string) => { setAccount(a); store.set("noren-near-account", a); setPicking(false); };
+  const openAction = (action: Exclude<CreditAction, "borrow">) => { if (wallet.account) choose(wallet.account); setPicking(false); setReceipt(null); setManage(action); };
+  const run: RunAction = async (action, amount, recipient) => {
+    if (locked.current) return false;
+    if (!wallet.account) { setPicking(true); return false; }
+    locked.current = true; setWorking(true); setReceipt({ action, state: 'approval', hashes: [] });
+    try {
+      await runCreditAction(action, { credit: CONTRACT, collateral: COLLATERAL, usdc: RECORD.accounts.tusdc }, amount, recipient ?? wallet.account, {
+        account: wallet.account, sign: wallet.sign,
+        onEvent: event => setReceipt(old => ({ action, state: event.state, hashes: event.hash && !old?.hashes.includes(event.hash) ? [...(old?.hashes ?? []), event.hash] : old?.hashes ?? [] })),
+      });
+      return true;
+    } catch (error) { setReceipt(old => ({ action, state: 'error', hashes: old?.hashes ?? [], error: walletError(error) })); return false; }
+    finally { locked.current = false; setWorking(false); pos.reload(); pool.reload(); assets.reload(); }
+  };
 
   return (
     <div className="nk nc">
@@ -53,8 +74,8 @@ export function NearCredit() {
       <main className="nk-main">
         <div className="nk-home">
           <div className="nk-home-main">
-            {tab === "credit" && <CreditView account={account} pos={pos} btc={btc} go={go} tokens={tokens} />}
-            {tab === "pay" && <PayView account={account} pos={pos.data} tokens={tokens} />}
+            {tab === "credit" && <CreditView account={account} pos={pos} btc={btc} go={go} tokens={tokens} deposit={() => openAction("deposit")} />}
+            {tab === "pay" && <PayView account={account} pos={pos.data} tokens={tokens} wallet={wallet} connect={() => setPicking(true)} chooseOwn={() => choose(wallet.account)} run={run} working={working} receipt={receipt?.action === "borrow" ? receipt : null} />}
             {tab === "melt" && <MeltView account={account} pos={pos.data} posError={pos.error} aprBps={pool.data?.aprBps} rates={rates} />}
           </div>
           <aside className="nk-home-side">
@@ -65,11 +86,12 @@ export function NearCredit() {
       </main>
       <p className="nk-foot">NEAR testnet only. Collateral is wbtc.fakes.testnet and the pool is usdc.fakes.testnet, public test tokens with no value that stand in for bridged BTC and NEAR USDC. Mainnet deposits, payouts and harvests: {SAVED_QUOTES.mainnetExecution}. <a href="#/near">About the NEAR edition</a></p>
 
+      {manage && <CreditActionSheet key={manage} action={manage} wallet={wallet} busy={working} receipt={receipt} run={run} close={() => setManage(null)} />}
       {picking && (
         <div className="nk-modal" role="dialog" aria-modal="true" aria-label="Choose a NEAR account" onClick={(e) => e.target === e.currentTarget && setPicking(false)}>
           <div className="nk-sheet">
             <div className="nk-sheet-h"><b>Read any account</b><button className="nk-x" onClick={() => setPicking(false)} aria-label="Close">×</button></div>
-            <AccountForm current={account} onPick={choose} wallet={wallet} />
+            <AccountForm current={account} onPick={choose} wallet={wallet} onAction={openAction} busy={working} />
           </div>
         </div>
       )}
@@ -77,28 +99,32 @@ export function NearCredit() {
   );
 }
 
-function AccountForm({ current, onPick, wallet }: { current: string; onPick: (a: string) => void; wallet: NearWallet }) {
+function AccountForm({ current, onPick, wallet, onAction, busy }: { current: string; onPick: (a: string) => void; wallet: NearWallet; onAction: (a: Exclude<CreditAction, "borrow">) => void; busy: boolean }) {
   const [v, setV] = useState(current);
   const ok = /^[a-z0-9_.-]{2,64}$/.test(v);
   return (
     <form style={{ overflowY: "auto" }} onSubmit={(e) => { e.preventDefault(); if (ok) onPick(v); }}>
       <input className="nk-search" value={v} onChange={(e) => setV(e.target.value.trim().toLowerCase())} placeholder="you.testnet" aria-label="NEAR testnet account" autoFocus />
       <ul className="nk-list">
-        {[{ id: DEMO.open, l: "Demo borrower with an open loan" }, { id: DEMO.repaid, l: "Demo borrower who repaid and withdrew" }].map((x) => (
+        {wallet.account && <>
+          <li><button type="button" onClick={() => onPick(wallet.account)}><span className="nk-ava" /><span><b>Your wallet position</b><small>{short(wallet.account)}</small></span></button></li>
+          {([['deposit', 'Deposit collateral'], ['repay', 'Repay credit'], ['withdraw', 'Withdraw collateral']] as const).map(([action, title]) => <li key={action}><button type="button" disabled={busy} onClick={() => onAction(action)}><span className="nk-ava" /><span><b>{title}</b><small>Signed by your Meteor wallet</small></span></button></li>)}
+        </>}
+        {!wallet.account && [{ id: DEMO.open, l: "Demo borrower with an open loan" }, { id: DEMO.repaid, l: "Demo borrower who repaid and withdrew" }].map((x) => (
           <li key={x.id}><button type="button" onClick={() => onPick(x.id)} aria-selected={current === x.id}><span className="nk-ava" aria-hidden /><span><b>{x.id.split(".")[0]}</b><small>{x.l}</small></span></button></li>
         ))}
       </ul>
       <button className="nk-cta" disabled={!ok}>Read position</button>
-      {wallet.account ? <button type="button" className="nk-btn" onClick={wallet.disconnect}>Sign out of Meteor</button> : <button type="button" className="nk-cta" disabled={!wallet.ready || wallet.connecting} onClick={wallet.connect}>{wallet.connecting ? "Opening Meteor…" : !wallet.ready ? "Loading wallet…" : "Connect Meteor Wallet"}</button>}
+      {wallet.account ? <button type="button" className="nk-btn" disabled={busy} onClick={wallet.disconnect}>Sign out of Meteor</button> : <button type="button" className="nk-cta" disabled={!wallet.ready || wallet.connecting} onClick={wallet.connect}>{wallet.connecting ? "Opening Meteor…" : !wallet.ready ? "Loading wallet…" : "Connect Meteor Wallet"}</button>}
       {wallet.error && <p className="nk-err" role="alert">{wallet.error}</p>}
-      <p className="nc-fine">{wallet.account ? `Connected: ${wallet.account}. You can still read demo accounts.` : "Read demo positions or connect your own NEAR testnet wallet with Meteor."}</p>
+      <p className="nc-fine" style={{ overflowWrap: "anywhere" }}>{wallet.account ? `Connected: ${wallet.account}. You can still read demo accounts.` : "Read demo positions or connect your own NEAR testnet wallet with Meteor."}</p>
     </form>
   );
 }
 
 // ------------------------------------------------------------------ credit
 type Live<T> = { data?: T; error?: string; loading: boolean; reload: () => void; at?: number };
-function CreditView({ account, pos, btc, go, tokens }: { account: string; pos: Live<Position>; btc?: { price_usd6: string; price_at_ns: string; price_fresh: boolean; ltv_bps: number; liq_bps: number }; go: (t: Tab) => void; tokens: Live<import("@noren/near-sdk").Token[]> }) {
+function CreditView({ account, pos, btc, go, tokens, deposit }: { deposit: () => void; account: string; pos: Live<Position>; btc?: { price_usd6: string; price_at_ns: string; price_fresh: boolean; ltv_bps: number; liq_bps: number }; go: (t: Tab) => void; tokens: Live<import("@noren/near-sdk").Token[]> }) {
   const p = pos.data;
   const wbtc = p?.collateral.find((c) => c.token === COLLATERAL);
   const debt = n6(p?.debt_usd6), coll = n6(p?.collateral_usd6), limit = n6(p?.credit_limit_usd6);
@@ -122,7 +148,7 @@ function CreditView({ account, pos, btc, go, tokens }: { account: string; pos: L
 
       <div className="nk-actions nc-actions">
         <button className="primary" onClick={() => go("pay")}><i><Icon.arrow /></i><b>Pay anyone</b><small>On credit, any chain</small></button>
-        <button onClick={() => document.getElementById("coins")?.scrollIntoView({ behavior: "smooth" })}><i><Icon.layers /></i><b>Bring coins</b><small>BTC, ZEC, ETH, SOL</small></button>
+        <button onClick={deposit}><i><Icon.layers /></i><b>Bring coins</b><small>BTC, ZEC, ETH, SOL</small></button>
         <button onClick={() => go("melt")}><i><Icon.chart /></i><b>Debt-free date</b><small>Yield vs interest</small></button>
         <a href={explorerAccount(account)} target="_blank" rel="noreferrer"><i><Icon.ext /></i><b>Explorer</b><small>{short(account)}</small></a>
       </div>
@@ -169,7 +195,7 @@ function Meter({ debt, coll, limit, liqBps, fresh }: { debt: number; coll: numbe
 
 // ------------------------------------------------------------------ pay
 type Dest = "near" | "base" | "arb";
-function PayView({ account, pos, tokens }: { account: string; pos?: Position; tokens: Live<import("@noren/near-sdk").Token[]> }) {
+function PayView({ account, pos, tokens, wallet, connect, chooseOwn, run, working, receipt }: { account: string; pos?: Position; tokens: Live<import("@noren/near-sdk").Token[]>; wallet: NearWallet; connect: () => void; chooseOwn: () => void; run: RunAction; working: boolean; receipt: Receipt | null }) {
   const [dest, setDest] = useState<Dest>("base");
   const [amount, setAmount] = useState("1");
   const [to, setTo] = useState("");
@@ -203,11 +229,11 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
   const q = quote?.r.quote as { quote?: { amountOutFormatted?: string; amountInFormatted?: string; timeEstimate?: number; amountOutUsd?: string; minAmountOut?: string } } | undefined;
   return (
     <section className="nk-card">
-      <div className="nk-card-h"><div><b>Pay anyone, anywhere</b><p>View the testnet merchant payment or get a dry quote to Base or Arbitrum. Browser signing is not built.</p></div><span className="nk-pill">{short(account)}</span></div>
+      <div className="nk-card-h"><div><b>Pay anyone, anywhere</b><p>Pay a shop from credit on NEAR testnet, or get an any-chain dry quote to Base or Arbitrum.</p></div><span className="nk-pill">{short(account)}</span></div>
       <div className="nk-band" role="radiogroup" aria-label="Where the merchant gets paid">
         <span>Merchant is on</span>
         {([["near", "NEAR"], ["base", "Base"], ["arb", "Arbitrum"]] as [Dest, string][]).map(([k, l]) => (
-          <button key={k} type="button" role="radio" aria-checked={dest === k} aria-pressed={dest === k} onClick={() => { setDest(k); clearQuote(); setTo(""); }}>{l}</button>
+          <button key={k} type="button" role="radio" aria-checked={dest === k} aria-pressed={dest === k} onClick={() => { setDest(k); clearQuote(); setTo(k === "near" ? DEMO.merchant : ""); }}>{l}</button>
         ))}
       </div>
       <div className="nk-pad">
@@ -228,10 +254,11 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
 
         {dest === "near" ? (
           <>
-            <button className="nk-cta" disabled>Wallet signing: not in this build</button>
+            <button className="nk-cta" disabled={working || (!!wallet.account && wallet.account === account && (!valid || !recipientOk || in3 || !pos || pos.pending))} onClick={() => !wallet.account ? connect() : wallet.account !== account ? chooseOwn() : run('borrow', tokenUnits(amount, 6), to)}>{working ? 'Waiting for confirmation…' : !wallet.account ? 'Connect Meteor to pay' : wallet.account !== account ? 'Read your wallet position' : in3 ? 'Pay in 3 is a preview' : 'Borrow and pay shop'}</button>
+            <CreditReceipt receipt={receipt} />
             <div className="nc-proof">
               <b>This exact payment has run on testnet</b>
-              <p>alice drew 25 test USDC from her line and the contract paid it straight to {short(DEMO.merchant)}. The browser app only reads the contract; the testnet transactions were signed by <span className="mono">scripts/near-testnet.ts</span>.</p>
+              <p>alice drew 25 test USDC from her line and the contract paid it straight to {short(DEMO.merchant)}. Connect your wallet to make your own payment above. This recorded example was signed by <span className="mono">scripts/near-testnet.ts</span>.</p>
               {paid && <a className="nk-btn" href={paid.explorer} target="_blank" rel="noreferrer">Open {shortHash(paid.hash)} <Icon.ext /></a>}
             </div>
           </>
@@ -312,7 +339,7 @@ function Activity({ account }: { account: string }) {
   const mine = RECORD.steps.filter((s) => s.account === account || (account.endsWith(RECORD.root) && s.step.startsWith(`${name} `)));
   return (
     <section className="nk-card">
-      <div className="nk-card-h"><div><b>Activity</b><p>Signed on testnet by the lifecycle script</p></div><span className="nk-pill">{mine.length}</span></div>
+      <div className="nk-card-h"><div><b>Activity</b><p>Recorded on NEAR testnet</p></div><span className="nk-pill">{mine.length}</span></div>
       {mine.length ? (
         <ul className="nk-acts nc-acts">
           {mine.slice().reverse().map((s) => (

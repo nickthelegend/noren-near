@@ -1,0 +1,82 @@
+{
+  "network": "testnet",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "observedAt": "2026-11-11T15:32:13.977Z",
+  "upperBoundNear": 0.0395,
+  "calls": [
+    {
+      "action": "deposit",
+      "receiverId": "wbtc.fakes.testnet",
+      "methodName": "ft_transfer_call",
+      "args": {
+        "receiver_id": "credit.noren-near-mw9h22el.testnet",
+        "amount": "10000",
+        "msg": "{\"kind\":\"collateral\"}"
+      },
+      "gas": "80000000000000",
+      "deposit": "1",
+      "hash": "E9qUeuzRDSWCt2AjWLmw63BwWZo1PTrw3nKCC1FWPLoi"
+    },
+    {
+      "action": "borrow",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "methodName": "borrow",
+      "args": {
+        "amount": "10000",
+        "recipient": "shop.noren-near-mw9h22el.testnet"
+      },
+      "gas": "80000000000000",
+      "deposit": "0",
+      "hash": "BK8YbY2iq9NVgt1C6peSsGbFKP3QxkSo97ondDcK41yZ"
+    },
+    {
+      "action": "repay",
+      "receiverId": "usdc.fakes.testnet",
+      "methodName": "ft_transfer_call",
+      "args": {
+        "receiver_id": "credit.noren-near-mw9h22el.testnet",
+        "amount": "20000",
+        "msg": "{\"kind\":\"repay\"}"
+      },
+      "gas": "80000000000000",
+      "deposit": "1",
+      "hash": "GcHa5CT9yYA7dHVfcN1LyEAxyeYeUpWGnk2sxb9Xkj4Q"
+    },
+    {
+      "action": "withdraw",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "methodName": "withdraw",
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "amount": "10000",
+        "recipient": "alice.noren-near-mw9h22el.testnet"
+      },
+      "gas": "60000000000000",
+      "deposit": "0",
+      "hash": "8FBuYRoDqAwiCWm3T6K5i31o5hTBXnvNQJu8LEJD5bXR"
+    }
+  ],
+  "before": {
+    "collateral": "1000000",
+    "usdc": "1989999",
+    "shop": "40010000"
+  },
+  "after": {
+    "collateral": "1000000",
+    "shop": "40020000",
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "status": "PASS",
+  "totalNearSpent": 0.0028015588173587003
+}

@@ -1,7 +1,7 @@
 {
   "network": "testnet",
   "rpc": "https://test.rpc.fastnear.com",
-  "updatedAt": "2026-11-11T13:32:14.613Z",
+  "updatedAt": "2026-11-11T15:32:43.767Z",
   "root": "noren-near-mw9h22el.testnet",
   "accounts": {
     "root": "noren-near-mw9h22el.testnet",
@@ -342,6 +342,46 @@
       "hash": "DTjayqRHKZAWaGhYumTVXousbyq7qYuvP5CN5vKanNYX",
       "status": "success",
       "explorer": "https://testnet.nearblocks.io/txns/DTjayqRHKZAWaGhYumTVXousbyq7qYuvP5CN5vKanNYX"
+    },
+    {
+      "step": "Wallet call-path QA: alice deposit",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "E9qUeuzRDSWCt2AjWLmw63BwWZo1PTrw3nKCC1FWPLoi",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/E9qUeuzRDSWCt2AjWLmw63BwWZo1PTrw3nKCC1FWPLoi"
+    },
+    {
+      "step": "Wallet call-path QA: fresh signed BTC price",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "BMwssRYqitpUX9WZFv966obrDSaqmrswyAfXTanDUmFi",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/BMwssRYqitpUX9WZFv966obrDSaqmrswyAfXTanDUmFi"
+    },
+    {
+      "step": "Wallet call-path QA: alice borrow",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "BK8YbY2iq9NVgt1C6peSsGbFKP3QxkSo97ondDcK41yZ",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/BK8YbY2iq9NVgt1C6peSsGbFKP3QxkSo97ondDcK41yZ"
+    },
+    {
+      "step": "Wallet call-path QA: alice repay",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "GcHa5CT9yYA7dHVfcN1LyEAxyeYeUpWGnk2sxb9Xkj4Q",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/GcHa5CT9yYA7dHVfcN1LyEAxyeYeUpWGnk2sxb9Xkj4Q"
+    },
+    {
+      "step": "Wallet call-path QA: alice withdraw",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "withdraw",
+      "hash": "8FBuYRoDqAwiCWm3T6K5i31o5hTBXnvNQJu8LEJD5bXR",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/8FBuYRoDqAwiCWm3T6K5i31o5hTBXnvNQJu8LEJD5bXR"
     }
   ],
   "blocked": [
