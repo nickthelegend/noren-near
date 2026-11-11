@@ -3,6 +3,7 @@ import { dryQuote, type QuoteResponse } from "@noren/near-sdk";
 import { Icon, Logo } from "../ui";
 import { Mark } from "../logos";
 import { MeltChart } from "./Melt";
+import { useNearWallet, type NearWallet } from "./wallet";
 import {
   COLLATERAL, CONTRACT, DEMO, HOME_COINS, NEAR_USDC, RECORD, SAVED_QUOTES, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
   short, shortHash, units, usd6, useAssets, usePool, usePosition, useRates, useTokens, type Position,
@@ -25,6 +26,8 @@ export function NearCredit() {
   useEffect(() => { const onHash = () => setTab(tabFromHash()); addEventListener("hashchange", onHash); return () => removeEventListener("hashchange", onHash); }, []);
   const [account, setAccount] = useState(() => store.get("noren-near-account") || DEMO.open);
   const [picking, setPicking] = useState(false);
+  const wallet = useNearWallet();
+  useEffect(() => { if (wallet.account) { setAccount(wallet.account); store.set("noren-near-account", wallet.account); } }, [wallet.account]);
   const pos = usePosition(account), pool = usePool(), assets = useAssets(), tokens = useTokens(), rates = useRates();
   const btc = assets.data?.find((a) => a.token === COLLATERAL);
   const go = (t: Tab) => { setTab(t); history.replaceState(null, "", `#/near/app${t === "credit" ? "" : `/${t}`}`); window.scrollTo({ top: 0, behavior: "smooth" }); };
@@ -66,7 +69,7 @@ export function NearCredit() {
         <div className="nk-modal" role="dialog" aria-modal="true" aria-label="Choose a NEAR account" onClick={(e) => e.target === e.currentTarget && setPicking(false)}>
           <div className="nk-sheet">
             <div className="nk-sheet-h"><b>Read any account</b><button className="nk-x" onClick={() => setPicking(false)} aria-label="Close">×</button></div>
-            <AccountForm current={account} onPick={choose} />
+            <AccountForm current={account} onPick={choose} wallet={wallet} />
           </div>
         </div>
       )}
@@ -74,11 +77,11 @@ export function NearCredit() {
   );
 }
 
-function AccountForm({ current, onPick }: { current: string; onPick: (a: string) => void }) {
+function AccountForm({ current, onPick, wallet }: { current: string; onPick: (a: string) => void; wallet: NearWallet }) {
   const [v, setV] = useState(current);
   const ok = /^[a-z0-9_.-]{2,64}$/.test(v);
   return (
-    <form onSubmit={(e) => { e.preventDefault(); if (ok) onPick(v); }}>
+    <form style={{ overflowY: "auto" }} onSubmit={(e) => { e.preventDefault(); if (ok) onPick(v); }}>
       <input className="nk-search" value={v} onChange={(e) => setV(e.target.value.trim().toLowerCase())} placeholder="you.testnet" aria-label="NEAR testnet account" autoFocus />
       <ul className="nk-list">
         {[{ id: DEMO.open, l: "Demo borrower with an open loan" }, { id: DEMO.repaid, l: "Demo borrower who repaid and withdrew" }].map((x) => (
@@ -86,7 +89,9 @@ function AccountForm({ current, onPick }: { current: string; onPick: (a: string)
         ))}
       </ul>
       <button className="nk-cta" disabled={!ok}>Read position</button>
-      <p className="nc-fine">Views only: Noren reads the contract’s position view. Nothing is signed.</p>
+      {wallet.account ? <button type="button" className="nk-btn" onClick={wallet.disconnect}>Sign out of Meteor</button> : <button type="button" className="nk-cta" disabled={!wallet.ready || wallet.connecting} onClick={wallet.connect}>{wallet.connecting ? "Opening Meteor…" : !wallet.ready ? "Loading wallet…" : "Connect Meteor Wallet"}</button>}
+      {wallet.error && <p className="nk-err" role="alert">{wallet.error}</p>}
+      <p className="nc-fine">{wallet.account ? `Connected: ${wallet.account}. You can still read demo accounts.` : "Read demo positions or connect your own NEAR testnet wallet with Meteor."}</p>
     </form>
   );
 }
