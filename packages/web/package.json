@@ -20,6 +20,8 @@
     "@noren/robinhood": "workspace:*",
     "@noren/world-id": "workspace:*",
     "@noren/xchain-aqua": "workspace:*",
+    "@near-wallet-selector/core": "10.1.4",
+    "@near-wallet-selector/meteor-wallet": "10.1.4",
     "@privy-io/react-auth": "3.50.0",
     "@solana/kit": "8.6.0",
     "assert": "2.1.0",

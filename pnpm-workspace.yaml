@@ -1,2 +1,13 @@
 packages:
   - 'packages/*'
+
+# Same isolation as Kotoba 6aba9ce: Meteor needs near-api-js 6's utils.serialize;
+# Wallet Selector's @near-js 2.x peers must not borrow the root script SDK's utils.
+packageExtensions:
+  "@near-wallet-selector/core@10.1.4":
+    dependencies:
+      "@near-js/utils": 2.5.1
+  "@near-wallet-selector/meteor-wallet@10.1.4":
+    dependencies:
+      "@near-js/utils": 2.5.1
+      near-api-js: 6.2.5
