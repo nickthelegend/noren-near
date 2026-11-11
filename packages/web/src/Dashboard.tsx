@@ -70,6 +70,7 @@ export function Dashboard({ tab, sub }: { tab: Tab; sub?: string }) {
   const [menu, setMenu] = useState(false);
   const [palette, setPalette] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [finishingOnboard, setFinishingOnboard] = useState(false);
   const [net] = useNet();
   const setToken = (t: string) => { setTokenState(t); try { localStorage.setItem(TOKEN_KEY, t); } catch { /* private mode */ } };
 
@@ -97,11 +98,11 @@ export function Dashboard({ tab, sub }: { tab: Tab; sub?: string }) {
     addEventListener("keydown", k); return () => removeEventListener("keydown", k);
   }, []);
 
-  const firstRun = !!baseCfg && !err && (tab === "onboard" || (!devToken && !session && tab === "home") || (!!session && stores !== null && stores.length === 0 && tab === "home"));
+  const firstRun = !!baseCfg && !err && (tab === "onboard" || (finishingOnboard && tab === "home") || (!devToken && !session && tab === "home") || (!!session && stores !== null && stores.length === 0 && tab === "home"));
   if (firstRun && baseCfg) return (
     <div className="ob-page">
       <div className="sd-testbar">{HOSTED ? "Noren Merchant · Test mode: Arc testnet and a Robinhood Chain mainnet snapshot. No real funds." : "Noren Merchant · Test mode: payments settle on an Arc testnet fork and a Robinhood Chain mainnet snapshot. No real funds."}</div>
-      <Onboard cfg={baseCfg} session={session} onSession={setSession} onStore={(st) => { setStores((l) => [...(l ?? []), st]); setStoreId(st.id); }} onDone={() => go("#/dashboard")} />
+      <Onboard cfg={baseCfg} session={session} onSession={setSession} onStore={(st) => { setFinishingOnboard(true); setStores((l) => [...(l ?? []), st]); setStoreId(st.id); }} onDone={() => { setFinishingOnboard(false); go("#/dashboard"); }} />
       <Toasts />
     </div>
   );
