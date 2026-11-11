@@ -138,6 +138,8 @@ The pre-NEAR baseline is `d91b739f84fbbf6fd72a626d183c64afbaf72c01` (Nov 7). Rev
 
 **AI-assisted code.** Built with AI coding agents (Claude Code, Codex) under human direction; all code reviewed and tested by the team.
 
+**Art.** 3D art generated with ChatGPT (the indigo-lacquer objects in the NEAR pages; kit and placements in [docs/ART-3D.md](docs/ART-3D.md)).
+
 **Other projects by the same team in this hackathon:**
 
 Lead: &lt;TBD by Nick&gt;
