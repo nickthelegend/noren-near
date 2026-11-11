@@ -14,6 +14,8 @@ The NEAR demo runs locally and reads public services. Use Node 22+ and pnpm 10.2
 4. Choose **Pay anyone**, select Base, enter a destination `0x` address and click **Get a live 1Click quote** - see a `dry: true` quote and the disabled **Send: Setup required: NEAR_MAINNET_ACCOUNT** button. Select NEAR - see the recorded testnet merchant payment. The browser does not sign transactions.
 5. Choose **Debt-free** - see a payoff **Projection** based on the position and Rhea's live WBTC supply rate, plus an empty Harvests card explaining the missing yield integration. If a live service fails, see its error and inspect the saved evidence below.
 
+See [FLOW-QA.md](FLOW-QA.md) for the full route checks, screenshots, live testnet cycle and remaining blockers. The account picker reads positions; Meteor wallet connection and browser signing are not implemented.
+
 ## Live on NEAR testnet
 
 Credit contract: [`credit.noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/credit.noren-near-mw9h22el.testnet). Collateral: `wbtc.fakes.testnet`. Pool token: `usdc.fakes.testnet`. Both tokens are public test tokens with no value.
@@ -52,6 +54,8 @@ Mainnet cross-chain transfers and yield harvesting are unfinished. 1Click integr
 **Collateral on testnet is a stand-in.** The testnet run uses `wbtc.fakes.testnet` (collateral) and `usdc.fakes.testnet` (pool), Ref Finance's public testnet NEP-141 tokens with open mint and no value. They stand in for bridged BTC (`nep141:btc.omft.near`) and NEAR USDC on mainnet. The "faucet" step in the table mints test USDC so the borrower can repay.
 
 ### Developer commands
+
+For a production preview, run `pnpm --filter @noren/web build`, then `pnpm --filter @noren/web exec vite preview --host 127.0.0.1 --port 5395 --strictPort` on a free port. Open `http://127.0.0.1:5395/#/near`. The inherited Arc/merchant screens also need a backend: `NOREN_DEV_ORIGINS=http://127.0.0.1:5395 pnpm dev:stack` allows that preview origin for local API calls and sign-in. The full inherited credit flow needs `dev:all` and the Robinhood snapshot described below.
 
 - `pnpm near:verify` builds the contracts and runs the sandbox, SDK, MCP, web and inherited checks. It needs Rust 1.95.0 and cargo-near 0.22.0; its script downloads the sandbox if `NEAR_SANDBOX_BIN` is unset and no local copy is available. See [TESTING.md](TESTING.md#near-edition-2026-11-09) for the recorded results.
 - `pnpm near:borrow --relay` sends a live testnet borrow with the deploy operator's credentials. It refreshes the price if older than 75 seconds, checks the positions and merchant balance, and prints the transaction links. It spends testnet NEAR and adds debt. Details: [One live borrow](#one-live-borrow-pnpm-nearborrow).

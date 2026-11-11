@@ -1,7 +1,7 @@
 {
   "network": "testnet",
   "rpc": "https://test.rpc.fastnear.com",
-  "updatedAt": "2026-11-10T09:29:13.821Z",
+  "updatedAt": "2026-11-11T13:32:14.613Z",
   "root": "noren-near-mw9h22el.testnet",
   "accounts": {
     "root": "noren-near-mw9h22el.testnet",
@@ -300,6 +300,48 @@
       "status": "success",
       "explorer": "https://testnet.nearblocks.io/txns/A884QjnsojonWdQ4G2nUmAGrtDECsgV8hfaDHVTMMBUD",
       "note": "One live borrow from scripts/live-borrow.mjs at 2026-11-10T09:29:08.376Z"
+    },
+    {
+      "step": "QA: alice deposits 0.0001 test WBTC",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "D4ZdhXDAd9FV67uCuhpQdHNS2nqk1KcTKw41RAq46Rwa",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/D4ZdhXDAd9FV67uCuhpQdHNS2nqk1KcTKw41RAq46Rwa"
+    },
+    {
+      "step": "live borrow: relayer posts signed BTC-USD price (pnpm near:borrow --relay)",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "DPYwHxMN64QUnju26QmEBjmc5uYRnWGMJnJBDfAwgWtr",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/DPYwHxMN64QUnju26QmEBjmc5uYRnWGMJnJBDfAwgWtr",
+      "note": "relayer price (testnet): Coinbase BTC-USD 73752.79 at 2026-11-11T13:31:51.603989920Z"
+    },
+    {
+      "step": "live borrow: alice pays shop 0.01 test USDC on credit (pnpm near:borrow)",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "C8Xixu2fA6QKcxLdgC67ZtoqhTxm3gjRjQKeihYTu4yr",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/C8Xixu2fA6QKcxLdgC67ZtoqhTxm3gjRjQKeihYTu4yr",
+      "note": "One live borrow from scripts/live-borrow.mjs at 2026-11-11T13:31:58.085Z"
+    },
+    {
+      "step": "QA: alice repays the 0.01 test USDC draw (excess refunded)",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "hash": "Ej4oS6mnqseWan1T2LUpQWVaM2wVQwXX75uQy9uY41os",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/Ej4oS6mnqseWan1T2LUpQWVaM2wVQwXX75uQy9uY41os"
+    },
+    {
+      "step": "QA: alice withdraws 0.0001 test WBTC",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "method": "withdraw",
+      "hash": "DTjayqRHKZAWaGhYumTVXousbyq7qYuvP5CN5vKanNYX",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/DTjayqRHKZAWaGhYumTVXousbyq7qYuvP5CN5vKanNYX"
     }
   ],
   "blocked": [
