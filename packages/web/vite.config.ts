@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 const require = createRequire(import.meta.url);
@@ -23,6 +23,10 @@ export default defineConfig({
       // Keep inherited screenshots, proving artifacts and chain logos out of this entry.
       for (const fileName of ["favicon.png", "art/mark.png", "logos/usdc.svg", "logos/eth.svg"]) {
         this.emitFile({ type: "asset", fileName, source: readFileSync(resolve(root, "packages/web/public", fileName)) });
+      }
+      // The NEAR edition's 3D objects (docs/ART-3D.md).
+      for (const name of readdirSync(resolve(root, "packages/web/public/art/3d")).filter((f) => f.endsWith(".webp"))) {
+        this.emitFile({ type: "asset", fileName: `art/3d/${name}`, source: readFileSync(resolve(root, "packages/web/public/art/3d", name)) });
       }
     },
   }],
