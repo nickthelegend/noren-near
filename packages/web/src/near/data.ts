@@ -22,19 +22,21 @@ export type Pool = { liquidity: bigint; supplied: bigint; utilizationBps: number
 
 export type Load<T> = { data?: T; error?: string; loading: boolean; at?: number };
 function useLive<T>(fn: () => Promise<T>, deps: unknown[], everyMs = 0): Load<T> & { reload: () => void } {
-  const [s, set] = useState<Load<T>>({ loading: true });
+  const key = JSON.stringify(deps);
+  const [s, set] = useState<Load<T> & { key: string }>({ loading: true, key });
   const [n, setN] = useState(0);
   const reload = useCallback(() => setN((x) => x + 1), []);
   useEffect(() => {
     let alive = true;
-    set((p) => ({ ...p, loading: true }));
-    fn().then((data) => alive && set({ data, loading: false, at: Date.now() }))
-      .catch((e) => alive && set({ error: e instanceof Error ? e.message : String(e), loading: false }));
+    set((p) => ({ ...(p.key === key ? p : {}), key, loading: true }));
+    fn().then((data) => alive && set({ data, loading: false, at: Date.now(), key }))
+      .catch((e) => alive && set({ error: e instanceof Error ? e.message : String(e), loading: false, key }));
     const t = everyMs ? setInterval(reload, everyMs) : undefined;
     return () => { alive = false; if (t) clearInterval(t); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, n]);
-  return { ...s, reload };
+  // A new account must never render the previous account's position while its request is pending.
+  return { ...(s.key === key ? s : { loading: true }), reload };
 }
 
 export const useAssets = () => useLive(() => nearView<AssetView[]>(CONTRACT, "assets", {}), [], 30_000);
