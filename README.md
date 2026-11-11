@@ -19,7 +19,7 @@ The NEAR demo runs locally. Use Node 22+ and pnpm 10.29.2. Reading positions nee
 9. Open the account chip → **Withdraw collateral**, confirm the amount and approve - see final confirmation, collateral returned to your wallet and the updated position.
 10. Open **Debt-free** - see a labelled Projection and the empty Harvests card. Real yield harvesting is unfinished.
 
-See [FLOW-QA.md](FLOW-QA.md) for before/after screenshots, wallet popup/error checks and the exact shared-call proof. Human Meteor approval is manual. The NEAR position and payments are public. The browser exposes only NEAR destinations; any-chain execution and private payments are future work for this entry.
+See [FLOW-QA.md](FLOW-QA.md) for before/after screenshots, wallet popup/error checks and the exact shared-call proof. Automated real browser signing is available through the isolated QA signer with `pnpm test:e2e`; see [TESTING.md](TESTING.md#real-browser-qa-signer-e2e). Ordinary builds still use Meteor. Human Meteor approval is manual. The NEAR position and payments are public. The browser exposes only NEAR destinations; any-chain execution and private payments are future work for this entry.
 
 ## Live on NEAR testnet
 

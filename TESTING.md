@@ -1,5 +1,34 @@
 # Test results
 
+## Real browser QA signer e2e
+
+Run on macOS with Node 22.22.2+, pnpm 10.29.2, installed Google Chrome and the shared Chrome-lock module at the path used in `scripts/near-browser-e2e.mjs`. No browser download is required; Playwright uses `channel: 'chrome'`.
+
+```sh
+pnpm install
+pnpm --filter @noren/near-sdk build
+pnpm test:e2e --key-file .near-credentials/testnet.json
+```
+
+The path is an existing local credential file, never a key value. Default is `.near-credentials/testnet.json`; it must provide the existing demo sub-account signer and relayer key. Alice must start debt-free with no collateral locked, at least 0.0001 test WBTC, 0.04 test USDC and 0.09 usable testnet NEAR. Low funding stops the test before signing. Do not reset/delete the dated QA ledgers to bypass the aggregate 0.3 NEAR cap.
+
+The runner checks swap before each build, waits two minutes if free swap is below 500 MB, builds ordinary production plus an isolated QA output, and finds a free loopback port in 5300-5999 using lsof. It never uses 8787. The same browser is used under `withChromeLock`; all started previews, pages and the browser close in finally blocks. `--skip-build` is available only for reusing already-built outputs; both output audits still run.
+
+The QA build needs both `--mode qa` and `VITE_QA_SIGNER=1`. A normal production build cannot include the adapter even if that flag is accidentally set. To inspect it without signing:
+
+```sh
+VITE_QA_SIGNER=1 pnpm --filter @noren/web build
+rg -n 'qa-signer|__NOREN_QA_SIGNER__|__norenQaAuthorize' packages/web/dist
+```
+
+Expected grep result: no matches (exit 1). The e2e runner asserts this itself, then builds QA mode into `.near-build/qa-web`, outside the production `dist`. Do not publish that QA directory. The adapter rejects non-loopback pages, non-`.testnet` accounts, mainnet RPC, other receivers, non-function-call actions and excessive gas/deposits. It supports wallet-selector-style `getAccounts`, `signAndSendTransaction` and sequential `signAndSendTransactions`.
+
+Node injects the demo key through `page.addInitScript`; signing happens in the browser. The injection is consumed/deleted and the SDK signer stays in memory. The separate relayer key stays in Node for price signatures and Node-signed price refreshes. No key is printed, copied, committed, recorded in browser storage or passed through the environment. No Playwright trace/HAR/video/persistent profile is enabled. Only public transaction metadata and screenshots are saved.
+
+**Recorded result (2026-11-11 UTC): PASS at 1440 and 375.** Both complete cycles used real transactions: connect, deposit 0.0001 test WBTC, borrow/pay the shop 0.01 test USDC, repay 0.02 (excess refunded), withdraw, check restored zero-debt position and sign out. Pending/final receipts and NearBlocks links passed. The shop gained exactly 0.02 test USDC. The clean run finalized eight browser calls plus two price refreshes and spent **0.0056031176347174005 NEAR**. Including the earlier failed post-flow diagnostic attempt: **0.0084046764520761 NEAR**. The clean run had zero page exceptions, console/HTTP errors, failed requests and horizontal overflow.
+
+Ten unit tests passed: `pnpm exec vitest run packages/web/src/near/qa-signer.test.ts packages/web/src/near/credit-calls.test.ts packages/web/src/near/credit-runtime.test.ts`. Production and QA builds passed. Public hashes, receipt fees and balances: [deployments/qa-browser-2026-11-11.json](deployments/qa-browser-2026-11-11.json). Screenshots, audit details, the initial attempt and the remaining manual Meteor approval check: [FLOW-QA.md](FLOW-QA.md#qa-signer-real-browser-transactions-2026-11-11-utc).
+
 ## NEAR-only web entry (2026-11-11)
 
 - The production entry imports only NEAR screens. `/` and all inherited or unknown hash routes canonicalize to `#/near/app`. The informational page remains `#/near`; payment and projection tabs are `#/near/app/pay` and `#/near/app/melt`.
