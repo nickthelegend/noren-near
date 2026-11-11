@@ -183,3 +183,49 @@
   .nc-in3 b { font-size: 15px; }
   .nm-chart svg { height: 180px; }
 }
+
+/* ============================================================== 3D objects (docs/ART-3D.md) */
+/* Added objects only: each sits in space the layout already had, with a fixed box and a gentle float. */
+.n3d { display: block; flex: none; object-fit: contain; pointer-events: none; user-select: none; animation: n3d-float 6s ease-in-out infinite; }
+@keyframes n3d-float { 50% { transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .n3d { animation: none; } }
+
+/* app: feature tiles */
+.nc-actions > * { position: relative; }
+.nc-actions .n3d { position: absolute; top: 10px; right: 10px; width: 56px; height: 56px; }
+/* app: card headers carrying an object on the left */
+.nc-h3d { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.nc-h3d .n3d { width: 56px; height: 56px; }
+/* app: empty, setup-required and receipt states */
+.nk-empty .n3d { margin: -4px auto 8px; }
+.nc-receipt-h .n3d { width: 44px; height: 44px; margin: -6px 10px -6px -4px; }
+.nc-receipt-h b { flex: 1; min-width: 0; }
+.nc-sheet-3d { display: flex; align-items: center; gap: 12px; margin: 4px 6px 10px; padding: 12px 14px; border-radius: 18px; background: var(--nk-box); }
+.nc-sheet-3d .n3d { width: 52px; height: 52px; }
+.nc-sheet-3d p { margin: 0; font: 500 13.5px/1.45 var(--nk-sans); color: var(--nk-dim); }
+/* app: debt-free projection header */
+.nc-date-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
+.nc-date-row .nc-date { margin: 0; }
+.nc-date-row .n3d { width: 96px; height: 96px; margin: -10px 0 -10px auto; }
+
+/* landing: how-it-works steps, section heads, the debt card and the closing call */
+.nl-how .nl-step-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.nl-how .n3d { width: 88px; height: 88px; margin: -6px 0 -30px; }
+.nl-head-3d { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
+.nl-head-3d > .n3d { width: 128px; height: 128px; margin-bottom: -6px; }
+.nx-built .nl-head-3d > .n3d { background: radial-gradient(closest-side, rgba(127, 168, 255, .22), transparent); border-radius: 50%; }
+.nl-melt-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: -8px 0 -6px; }
+.nl-melt-top .n3d { width: 84px; height: 84px; background: radial-gradient(closest-side, rgba(127, 168, 255, .2), transparent); border-radius: 50%; }
+.nl .nx-cta img.n3d { width: 150px; height: 150px; margin: -36px auto 18px; -webkit-mask-image: none; mask-image: none; background: radial-gradient(closest-side, rgba(127, 168, 255, .22), transparent); border-radius: 50%; }
+
+@media (max-width: 760px) {
+  .nl-how .n3d { width: 64px; height: 64px; margin: -4px 0 -28px; }
+  .nl-head-3d > .n3d { display: none; }
+  .nl-melt-top .n3d { width: 68px; height: 68px; }
+  .nl .nx-cta img.n3d { width: 120px; height: 120px; margin-top: -28px; }
+}
+@media (max-width: 720px) {
+  .nc-actions .n3d { display: none; }
+  .nc-h3d .n3d { width: 44px; height: 44px; }
+  .nc-date-row .n3d { width: 72px; height: 72px; }
+}

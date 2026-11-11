@@ -4,11 +4,12 @@ import type { NearWallet } from './wallet';
 import { tokenUnits, type CreditAction } from './credit-calls';
 import { COLLATERAL, RECORD, shortHash, units } from './data';
 import { Icon } from '../brand';
+import { Art3d } from './Art3d';
 export type Receipt = { action: string; state: 'approval' | 'pending' | 'final' | 'error'; hashes: string[]; error?: string };
 export function CreditReceipt({ receipt }: { receipt: Receipt | null }) {
   if (!receipt) return null;
   return <div className="nc-receipt" role="status" aria-live="polite">
-    <div className="nc-receipt-h"><b>{receipt.state === 'approval' ? 'Waiting for Meteor Wallet' : receipt.state === 'pending' ? 'Pending on NEAR testnet…' : receipt.state === 'final' ? 'Final on NEAR testnet' : 'Action not completed'}</b></div>
+    <div className="nc-receipt-h"><Art3d k={receipt.state === 'final' ? 'success' : receipt.state === 'error' ? 'warning' : receipt.state === 'pending' ? 'hourglass' : 'shield'} size={44} /><b>{receipt.state === 'approval' ? 'Waiting for Meteor Wallet' : receipt.state === 'pending' ? 'Pending on NEAR testnet…' : receipt.state === 'final' ? 'Final on NEAR testnet' : 'Action not completed'}</b></div>
     {receipt.error && <p className="nk-err" role="alert">{receipt.error}</p>}
     {receipt.state === 'approval' && <p className="nc-fine">Approve any request in Meteor. Previously allowed calls may sign without another popup.</p>}
     {receipt.hashes.map(hash => <a key={hash} className="nk-btn" href={`https://testnet.nearblocks.io/txns/${hash}`} target="_blank" rel="noreferrer">Open {shortHash(hash)} <Icon.ext /></a>)}
@@ -42,7 +43,7 @@ export function CreditActionSheet({ action, wallet, busy, receipt, run, close }:
     <div className="nk-sheet">
       <div className="nk-sheet-h"><b>{title}</b><button className="nk-x" onClick={close} aria-label="Close">×</button></div>
       <div style={{ overflowY: 'auto' }}>
-        <p className="nc-fine" style={{ overflowWrap: "anywhere" }}>{wallet.account || 'Connect Meteor Wallet to use your own NEAR testnet position.'}</p>
+        {wallet.account ? <p className="nc-fine" style={{ overflowWrap: "anywhere" }}>{wallet.account}</p> : <div className="nc-sheet-3d"><Art3d k="shield" size={52} /><p>Connect Meteor Wallet to use your own NEAR testnet position.</p></div>}
         <div className="nk-box"><label htmlFor="nc-action-amount"><span>Amount in {action === 'repay' ? 'test USDC' : 'test WBTC'}</span></label><input id="nc-action-amount" className="nk-search" inputMode="decimal" value={amount} onChange={e => { edited.current = true; setAmount(e.target.value); }} aria-label={action === 'repay' ? 'Test USDC amount' : 'Test WBTC amount'} /></div>
         <p className="nc-fine">{balance === undefined ? wallet.account ? balanceError || 'Reading your test token balance…' : 'Public test tokens only; no real value.' : `In your wallet: ${units(balance, decimals, decimals)} ${action === 'repay' ? 'test USDC' : 'test WBTC'}.`}</p>
         {wallet.account ? <>

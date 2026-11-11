@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon, Logo } from "../brand";
 import { Mark } from "./marks";
+import { Art3d } from "./Art3d";
 import { MeltChart } from "./Melt";
 import { useNearWallet, type NearWallet } from "./wallet";
 import { runCreditAction } from "./credit-runtime";
@@ -147,10 +148,10 @@ function CreditView({ account, pos, btc, go, tokens, deposit }: { deposit: () =>
       {p && coll > 0 && <Meter debt={debt} coll={coll} limit={limit} liqBps={btc?.liq_bps ?? 6000} fresh={p.prices_fresh} />}
 
       <div className="nk-actions nc-actions">
-        <button className="primary" onClick={() => go("pay")}><i><Icon.arrow /></i><b>Pay anyone</b><small>On credit, any chain</small></button>
-        <button onClick={deposit}><i><Icon.layers /></i><b>Bring coins</b><small>Test WBTC on NEAR</small></button>
-        <button onClick={() => go("melt")}><i><Icon.chart /></i><b>Debt-free date</b><small>Yield vs interest</small></button>
-        <a href={explorerAccount(account)} target="_blank" rel="noreferrer"><i><Icon.ext /></i><b>Explorer</b><small>{short(account)}</small></a>
+        <button className="primary" onClick={() => go("pay")}><i><Icon.arrow /></i><b>Pay anyone</b><small>On credit, any chain</small><Art3d k="card" size={56} alt="" /></button>
+        <button onClick={deposit}><i><Icon.layers /></i><b>Bring coins</b><small>Test WBTC on NEAR</small><Art3d k="btc-coin" size={56} alt="" /></button>
+        <button onClick={() => go("melt")}><i><Icon.chart /></i><b>Debt-free date</b><small>Yield vs interest</small><Art3d k="calendar" size={56} alt="" /></button>
+        <a href={explorerAccount(account)} target="_blank" rel="noreferrer"><i><Icon.ext /></i><b>Explorer</b><small>{short(account)}</small><Art3d k="receipt" size={56} alt="" /></a>
       </div>
 
       <section className="nk-card" id="coins">
@@ -182,7 +183,7 @@ function Meter({ debt, coll, limit, liqBps, fresh }: { debt: number; coll: numbe
   const pct = (x: number) => `${Math.min(100, (x / coll) * 100).toFixed(2)}%`;
   return (
     <section className="nk-card nc-meter">
-      <div className="nk-card-h"><div><b>How much of your coin is spoken for</b><p>{usd6(BigInt(Math.round(debt * 1e6)))} owed of {usd6(BigInt(Math.round(limit * 1e6)))} limit. Liquidation starts at {liqBps / 100}% of collateral value.</p></div><span className={`nk-pill ${fresh ? "live" : "warn"}`}>{fresh ? "Price fresh" : "Price stale"}</span></div>
+      <div className="nk-card-h"><div className="nc-h3d"><Art3d k="gauge" size={56} /><div><b>How much of your coin is spoken for</b><p>{usd6(BigInt(Math.round(debt * 1e6)))} owed of {usd6(BigInt(Math.round(limit * 1e6)))} limit. Liquidation starts at {liqBps / 100}% of collateral value.</p></div></div><span className={`nk-pill ${fresh ? "live" : "warn"}`}>{fresh ? "Price fresh" : "Price stale"}</span></div>
       <div className="nc-bar" role="img" aria-label={`Debt is ${((debt / coll) * 100).toFixed(1)}% of collateral value`}>
         <span className="fill" style={{ width: pct(debt) }} />
         <span className="mark ltv" style={{ left: pct(limit) }}><em>Limit</em></span>
@@ -208,7 +209,7 @@ function PayView({ account, pos, wallet, connect, chooseOwn, run, working, recei
 
   return (
     <section className="nk-card">
-      <div className="nk-card-h"><div><b>Pay anyone, anywhere</b><p>Pay a shop from credit on NEAR testnet. Any-chain payouts are future work.</p></div><span className="nk-pill">{short(account)}</span></div>
+      <div className="nk-card-h"><div className="nc-h3d"><Art3d k="stall" size={56} /><div><b>Pay anyone, anywhere</b><p>Pay a shop from credit on NEAR testnet. Any-chain payouts are future work.</p></div></div><span className="nk-pill">{short(account)}</span></div>
       <div className="nk-band" role="radiogroup" aria-label="Where the merchant gets paid">
         <span>Merchant is on</span>
         <button type="button" role="radio" aria-checked="true" aria-pressed="true">NEAR</button>
@@ -257,7 +258,7 @@ function MeltView({ account, pos, posError, aprBps, rates }: { account: string; 
       <section className="nk-card nc-melt">
         <div className="nk-card-h"><div><b>Debt-free on</b><p>{short(account)}, if the collateral earned Rhea’s live WBTC supply rate and every harvest paid the loan down.</p></div><span className="nk-pill warn">Projection</span></div>
         <div className="nk-pad">
-          <strong className="nc-date">{posError || rates.error || (rates.data && apy === undefined) ? "Unavailable" : !ready ? "Reading…" : debt === 0 ? "Already debt-free" : m?.payoff ? m.payoff.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "Not at today’s rates"}</strong>
+          <div className="nc-date-row"><strong className="nc-date">{posError || rates.error || (rates.data && apy === undefined) ? "Unavailable" : !ready ? "Reading…" : debt === 0 ? "Already debt-free" : m?.payoff ? m.payoff.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "Not at today’s rates"}</strong><Art3d k="calendar" size={96} /></div>
           {posError && <p className="nk-err">{posError}</p>}
           {rates.error && <p className="nk-err">Rhea rates: {rates.error}</p>}
           {ready && debt > 0 && <MeltChart debtUsd={debt} collateralUsd={coll} supplyApy={Number(apy)} aprBps={aprBps!} />}
@@ -269,7 +270,7 @@ function MeltView({ account, pos, posError, aprBps, rates }: { account: string; 
       </section>
       <section className="nk-card">
         <div className="nk-card-h"><div><b>Harvests</b><p>Each harvest() would turn earned yield into USDC and apply it to the debt.</p></div><span className="nk-pill bad">Blocked</span></div>
-        <div className="nk-pad"><div className="nk-empty"><b>No harvests on-chain</b><p>{blocked?.reason ?? "No yield source on testnet."}</p></div></div>
+        <div className="nk-pad"><div className="nk-empty"><Art3d k="warning" size={72} /><b>No harvests on-chain</b><p>{blocked?.reason ?? "No yield source on testnet."}</p></div></div>
       </section>
     </>
   );
@@ -279,7 +280,7 @@ function MeltView({ account, pos, posError, aprBps, rates }: { account: string; 
 function ContractCard({ pool, btc, assetsError }: { pool: Live<import("./data").Pool>; btc?: { price_usd6: string; price_at_ns: string; price_fresh: boolean; source: string }; assetsError?: string }) {
   return (
     <section className="nk-card">
-      <div className="nk-card-h"><div><b>The contract</b><p><a className="mono" href={explorerAccount(CONTRACT)} target="_blank" rel="noreferrer">{short(CONTRACT)}</a></p></div><span className={`nk-pill ${pool.error ? "bad" : "live"}`}>{pool.error ? "Read error" : pool.loading && !pool.data ? "Loading" : "Live"}</span></div>
+      <div className="nk-card-h"><div className="nc-h3d"><Art3d k="price-tag" size={56} /><div><b>The contract</b><p><a className="mono" href={explorerAccount(CONTRACT)} target="_blank" rel="noreferrer">{short(CONTRACT)}</a></p></div></div><span className={`nk-pill ${pool.error ? "bad" : "live"}`}>{pool.error ? "Read error" : pool.loading && !pool.data ? "Loading" : "Live"}</span></div>
       {pool.error && <p className="nk-err">{pool.error}</p>}
       <div className="nk-stats nc-side-stats">
         <div className="nk-stat"><small>Pool available</small><b>{pool.data ? usd6(pool.data.liquidity, 0) : "—"}</b></div>
@@ -309,7 +310,7 @@ function Activity({ account }: { account: string }) {
           ))}
         </ul>
       ) : (
-        <div className="nk-pad"><div className="nk-empty"><b>Nothing recorded for this account</b><p>This build’s log covers the demo accounts. See every transaction on the explorer.</p><a className="nk-btn" href={explorerAccount(account)} target="_blank" rel="noreferrer">Open on nearblocks <Icon.ext /></a></div></div>
+        <div className="nk-pad"><div className="nk-empty"><Art3d k="empty" size={80} /><b>Nothing recorded for this account</b><p>This build’s log covers the demo accounts. See every transaction on the explorer.</p><a className="nk-btn" href={explorerAccount(account)} target="_blank" rel="noreferrer">Open on nearblocks <Icon.ext /></a></div></div>
       )}
     </section>
   );

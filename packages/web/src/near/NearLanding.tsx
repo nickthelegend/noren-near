@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { GlyphField, useReveal } from "../ambient";
 import { Icon, Logo } from "../brand";
 import { Mark } from "./marks";
+import { Art3d, type Art3dKey } from "./Art3d";
 import { MeltChart } from "./Melt";
 import {
   CONTRACT, COLLATERAL, DEMO, HOME_COINS, RECORD, STOCK_RE, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
@@ -116,13 +117,13 @@ export function NearLanding() {
         <div className="nx-head" data-reveal><Tag>How it works</Tag><h2>Four steps. <span>Lock, draw, pay, and let the yield melt the debt.</span></h2></div>
         <ol className="nl-how">
           {[
-            { n: "01", t: "Lock test WBTC", s: ["testnet", "key"] as Status[], d: "Collateral counts only when a token contract calls ft_on_transfer on Noren. Testnet uses public test WBTC. Mainnet deposits through 1Click still need an attribution adapter." },
-            { n: "02", t: "See your limit", s: ["testnet"] as Status[], d: "Limit = collateral × price × 50% LTV. The testnet price is a Coinbase spot signed by Noren’s relayer and verified with ed25519 inside the contract. Stale for 90 s means no borrowing." },
-            { n: "03", t: "Pay anyone, anywhere", s: ["testnet", "key"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. Any-chain execution still needs a funded mainnet account and a payout adapter." },
-            { n: "04", t: "The debt melts", s: ["proj", "blocked"] as Status[], d: "A future Rhea adapter would turn earned yield into USDC for repayment. Today, only the contract’s yield input is sandbox-tested; the debt-free date is a projection." },
+            { n: "01", a: "btc-coin" as Art3dKey, t: "Lock test WBTC", s: ["testnet", "key"] as Status[], d: "Collateral counts only when a token contract calls ft_on_transfer on Noren. Testnet uses public test WBTC. Mainnet deposits through 1Click still need an attribution adapter." },
+            { n: "02", a: "gauge" as Art3dKey, t: "See your limit", s: ["testnet"] as Status[], d: "Limit = collateral × price × 50% LTV. The testnet price is a Coinbase spot signed by Noren’s relayer and verified with ed25519 inside the contract. Stale for 90 s means no borrowing." },
+            { n: "03", a: "card" as Art3dKey, t: "Pay anyone, anywhere", s: ["testnet", "key"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. Any-chain execution still needs a funded mainnet account and a payout adapter." },
+            { n: "04", a: "hourglass" as Art3dKey, t: "The debt melts", s: ["proj", "blocked"] as Status[], d: "A future Rhea adapter would turn earned yield into USDC for repayment. Today, only the contract’s yield input is sandbox-tested; the debt-free date is a projection." },
           ].map((x, i) => (
             <li key={x.n} data-reveal style={{ transitionDelay: `${i * 70}ms` }}>
-              <span className="nx-num mono">{x.n}</span>
+              <div className="nl-step-top"><span className="nx-num mono">{x.n}</span><Art3d k={x.a} size={88} /></div>
               <h3>{x.t}</h3>
               <p>{x.d}</p>
               <div className="nl-chips">{x.s.map((s) => <Chip key={s} s={s} />)}</div>
@@ -135,7 +136,7 @@ export function NearLanding() {
       <section className="nx-sec" id="melt">
         <div className="nl-melt" data-reveal>
           <div className="nl-melt-copy">
-            <Tag>Debt-free on</Tag>
+            <div className="nl-melt-top"><Tag>Debt-free on</Tag><Art3d k="calendar" size={84} /></div>
             <h2>{melt?.payoff ? <>{melt.payoff.toLocaleDateString("en-US", { month: "long", year: "numeric" })}</> : melt ? "Not at today’s rates" : bob.error || rates.error || (rates.data && wbtcApy === undefined) ? "Unavailable" : "Reading…"}</h2>
             <p>The open demo loan on testnet, <a className="mono" href={explorerAccount(DEMO.open)} target="_blank" rel="noreferrer">{short(DEMO.open)}</a>: {usd6(pos?.debt_usd6)} owed against {usd6(pos?.collateral_usd6)} of test WBTC, at the contract’s {pool.data ? pool.data.aprBps / 100 : "…"}% APR.</p>
             <p>If that collateral earned Rhea’s live WBTC supply rate ({wbtcApy !== undefined ? `${wbtcApy}%` : rates.error ? "unavailable" : "…"}), monthly harvests would clear it on the date above.</p>
@@ -165,7 +166,7 @@ export function NearLanding() {
       {/* ---------------------------------------------------------------- NEAR tech */}
       <section className="nx-built">
         <div className="nx-built-in">
-          <div className="nx-head" data-reveal><Tag dark>What NEAR does here</Tag><h2>The NEAR features doing the work. <span>Named, with what each one is for.</span></h2></div>
+          <div className="nx-head nl-head-3d" data-reveal><div><Tag dark>What NEAR does here</Tag><h2>The NEAR features doing the work. <span>Named, with what each one is for.</span></h2></div><Art3d k="shield" size={128} /></div>
           <ul className="nx-built-list">
             {[
               { b: "NEP-141 transfer callbacks", p: "Collateral, pool deposits and repayments arrive only through ft_on_transfer from the token contract, so a direct call cannot invent a deposit.", s: "testnet" as Status },
@@ -184,6 +185,7 @@ export function NearLanding() {
 
       {/* ---------------------------------------------------------------- cta */}
       <section className="nx-cta">
+        <Art3d k="stall" size={150} />
         <h2>Run the cycle yourself.</h2>
         <p>Five sandbox tests on a real nearcore node, the testnet lifecycle with every hash saved, a fresh signed Coinbase price, and the NEAR-side token catalog.</p>
         <pre className="mono">{`pnpm near:test\npnpm near:testnet\npnpm near:relay\npnpm near:quotes`}</pre>
