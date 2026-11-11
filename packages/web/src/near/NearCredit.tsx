@@ -193,7 +193,7 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
   const q = quote?.r.quote as { quote?: { amountOutFormatted?: string; amountInFormatted?: string; timeEstimate?: number; amountOutUsd?: string; minAmountOut?: string } } | undefined;
   return (
     <section className="nk-card">
-      <div className="nk-card-h"><div><b>Pay anyone, anywhere</b><p>Draw USDC from your line and send it to a merchant on NEAR, Base or Arbitrum.</p></div><span className="nk-pill">{short(account)}</span></div>
+      <div className="nk-card-h"><div><b>Pay anyone, anywhere</b><p>View the testnet merchant payment or get a dry quote to Base or Arbitrum. Browser signing is not built.</p></div><span className="nk-pill">{short(account)}</span></div>
       <div className="nk-band" role="radiogroup" aria-label="Where the merchant gets paid">
         <span>Merchant is on</span>
         {([["near", "NEAR"], ["base", "Base"], ["arb", "Arbitrum"]] as [Dest, string][]).map(([k, l]) => (
@@ -211,7 +211,7 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
           <input id="nc-to" className="nc-addr" value={to} onChange={(e) => { setTo(e.target.value.trim()); setQuote(null); }} placeholder={dest === "near" ? DEMO.merchant : "0x…"} spellCheck={false} />
         </div>
         <div className={`nk-toggle ${in3 ? "on" : ""}`}>
-          <div className="nk-toggle-l"><span><b>Pay in 3</b><small>schedule_pay_in_3 stores three draws on-chain, 30 days apart</small></span></div>
+          <div className="nk-toggle-l"><span><b>Pay in 3</b><small>Preview three draws, 30 days apart. No schedule is submitted here.</small></span></div>
           <button type="button" className="nk-switch" role="switch" aria-checked={in3} aria-label="Pay in 3" onClick={() => setIn3(!in3)}><i style={{ transform: in3 ? "translateX(22px)" : undefined }} /></button>
         </div>
         {in3 && valid && <ol className="nc-in3">{schedule.map((s, i) => <li key={i}><span>{i === 0 ? "Today" : s.d.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span><b>{usd6(BigInt(s.v))}</b></li>)}</ol>}

@@ -62,7 +62,7 @@ export function NearLanding() {
         <div className="lx-hero-in">
           <span className="lx-pill mono"><i />NEAR Hackathon edition · live on NEAR testnet</span>
           <h1>Don’t sell your Bitcoin. <em>Spend against it,</em> anywhere.</h1>
-          <p>Lock BTC, ZEC, ETH or SOL from its own chain through NEAR Intents, draw a credit line, pay anyone on any chain, and let the yield your coins earn pay the debt off.</p>
+          <p>Borrow test USDC against test WBTC on NEAR testnet and pay a merchant directly. Cross-chain routes are dry quotes; using yield to repay debt is a projection.</p>
           <div className="lx-ctas">
             <a className="lx-btn light" href="#/near/app">Open the credit app</a>
             <a className="lx-btn dark" href="#proof">See the testnet run</a>
@@ -117,10 +117,10 @@ export function NearLanding() {
         <div className="nx-head" data-reveal><Tag>How it works</Tag><h2>Four steps. <span>Lock, draw, pay, and let the yield melt the debt.</span></h2></div>
         <ol className="nl-how">
           {[
-            { n: "01", t: "Lock any coin", s: ["testnet", "key"] as Status[], d: "Collateral counts only when a token contract calls ft_on_transfer on Noren. On mainnet, 1Click brings BTC, ZEC, ETH or SOL from its own chain; on testnet a public test WBTC stands in." },
+            { n: "01", t: "Lock test WBTC", s: ["testnet", "key"] as Status[], d: "Collateral counts only when a token contract calls ft_on_transfer on Noren. Testnet uses public test WBTC. Mainnet deposits through 1Click still need an attribution adapter." },
             { n: "02", t: "See your limit", s: ["testnet"] as Status[], d: "Limit = collateral × price × 50% LTV. The testnet price is a Coinbase spot signed by Noren’s relayer and verified with ed25519 inside the contract. Stale for 90 s means no borrowing." },
-            { n: "03", t: "Pay anyone, anywhere", s: ["testnet", "quotes"] as Status[], d: "A draw pays USDC straight to the merchant’s NEAR account. To Base or Arbitrum, 1Click quotes the hop live; sending it needs a funded mainnet account." },
-            { n: "04", t: "The debt melts", s: ["proj", "blocked"] as Status[], d: "Collateral supplied to Rhea earns yield; harvest() converts it to USDC and pays the loan down. Rhea and Intents are mainnet-only, so on testnet this stays a projection." },
+            { n: "03", t: "Pay anyone, anywhere", s: ["testnet", "quotes"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. 1Click quotes Base or Arbitrum routes live; execution needs a funded mainnet account and a payout adapter." },
+            { n: "04", t: "The debt melts", s: ["proj", "blocked"] as Status[], d: "A future Rhea adapter would turn earned yield into USDC for repayment. Today, only the contract’s yield input is sandbox-tested; the debt-free date is a projection." },
           ].map((x, i) => (
             <li key={x.n} data-reveal style={{ transitionDelay: `${i * 70}ms` }}>
               <span className="nx-num mono">{x.n}</span>
@@ -174,7 +174,7 @@ export function NearLanding() {
               { b: "Promises with a per-user lock", p: "Borrow, withdraw and liquidation move state first, transfer, then settle in a private callback keyed by a nonce; a failed transfer restores everything.", s: "testnet" as Status },
               { b: "Sub-accounts", p: "credit., alice., bob. and shop. live under one root account, so the whole demo is one namespace on the explorer.", s: "testnet" as Status },
               { b: "NEAR Intents 1Click", p: `Any-chain in and out. ${SAVED_QUOTES.quotes.length} dry: true quotes saved at ${new Date(SAVED_QUOTES.observedAt).toUTCString().slice(5, 22)} UTC, including ZEC in and Base and Arbitrum out.`, s: "quotes" as Status },
-              { b: "Rhea lending as the yield source", p: "Supply APY per market is read live from Rhea. Supplying and harvesting needs mainnet and NEAR_MAINNET_ACCOUNT.", s: "key" as Status },
+              { b: "Rhea lending as the yield source", p: "Supply APY per market is read live from Rhea. Supplying and harvesting still need a mainnet yield adapter and a funded account.", s: "key" as Status },
             ].map((x) => (
               <li key={x.b} data-reveal><b>{x.b}</b><p>{x.p}</p><Chip s={x.s} /></li>
             ))}
