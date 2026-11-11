@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { dryQuote, type QuoteResponse } from "@noren/near-sdk";
 import { Icon, Logo } from "../ui";
 import { Mark } from "../logos";
@@ -15,12 +15,14 @@ import "./near.css";
 
 type Tab = "credit" | "pay" | "melt";
 const TABS: { k: Tab; l: string }[] = [{ k: "credit", l: "Credit" }, { k: "pay", l: "Pay anyone" }, { k: "melt", l: "Debt-free" }];
+const tabFromHash = (): Tab => (/#\/near\/app\/(pay|melt)(?:[/?]|$)/.exec(location.hash)?.[1] as Tab) ?? "credit";
 const WBTC_RHEA = "2260fac5e5542a773aa44fbcfedf7c193bc2c599.factory.bridge.near";
 const n6 = (raw?: string) => raw === undefined ? 0 : Number(BigInt(raw)) / 1e6;
 const store = { get: (k: string) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* storage blocked */ } } };
 
 export function NearCredit() {
-  const [tab, setTab] = useState<Tab>(() => (/#\/near\/app\/(pay|melt)/.exec(location.hash)?.[1] as Tab) ?? "credit");
+  const [tab, setTab] = useState<Tab>(tabFromHash);
+  useEffect(() => { const onHash = () => setTab(tabFromHash()); addEventListener("hashchange", onHash); return () => removeEventListener("hashchange", onHash); }, []);
   const [account, setAccount] = useState(() => store.get("noren-near-account") || DEMO.open);
   const [picking, setPicking] = useState(false);
   const pos = usePosition(account), pool = usePool(), assets = useAssets(), tokens = useTokens(), rates = useRates();
