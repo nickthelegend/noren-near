@@ -11,7 +11,7 @@ import "../landing.css";
 import "./near.css";
 
 type Status = "testnet" | "quotes" | "proj" | "blocked" | "key";
-const LABEL: Record<Status, string> = { testnet: "Live on NEAR testnet", quotes: "Live mainnet quotes", proj: "Projection", blocked: "Blocked on testnet", key: "Setup required" };
+const LABEL: Record<Status, string> = { testnet: "Live on NEAR testnet", quotes: "Live NEAR catalog", proj: "Projection", blocked: "Blocked on testnet", key: "Setup required" };
 const Chip = ({ s }: { s: Status }) => <span className={`nx-chip ${s === "testnet" ? "testnet" : s === "quotes" ? "quotes" : s === "key" ? "key" : "wip"} mono`}><i />{LABEL[s]}</span>;
 const Tag = ({ children, dark }: { children: string; dark?: boolean }) => <span className={`lx-tag mono ${dark ? "dark" : ""}`}>■ {children}</span>;
 
@@ -118,7 +118,7 @@ export function NearLanding() {
           {[
             { n: "01", t: "Lock test WBTC", s: ["testnet", "key"] as Status[], d: "Collateral counts only when a token contract calls ft_on_transfer on Noren. Testnet uses public test WBTC. Mainnet deposits through 1Click still need an attribution adapter." },
             { n: "02", t: "See your limit", s: ["testnet"] as Status[], d: "Limit = collateral × price × 50% LTV. The testnet price is a Coinbase spot signed by Noren’s relayer and verified with ed25519 inside the contract. Stale for 90 s means no borrowing." },
-            { n: "03", t: "Pay anyone, anywhere", s: ["testnet", "quotes"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. Any-chain execution still needs a funded mainnet account and a payout adapter." },
+            { n: "03", t: "Pay anyone, anywhere", s: ["testnet", "key"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. Any-chain execution still needs a funded mainnet account and a payout adapter." },
             { n: "04", t: "The debt melts", s: ["proj", "blocked"] as Status[], d: "A future Rhea adapter would turn earned yield into USDC for repayment. Today, only the contract’s yield input is sandbox-tested; the debt-free date is a projection." },
           ].map((x, i) => (
             <li key={x.n} data-reveal style={{ transitionDelay: `${i * 70}ms` }}>
@@ -159,7 +159,7 @@ export function NearLanding() {
           <div><b>{pos ? healthLabel(pos.health_bps) : "—"}</b><span>health of the open demo loan (1.00× = liquidatable)</span></div>
           <div><b>{RECORD.steps.length}</b><span>signed testnet transactions recorded, attacks included</span></div>
         </div>
-        <p className="nx-note mono" data-reveal>{pool.error || assets.error || bob.error ? `Read error: ${pool.error ?? assets.error ?? bob.error}` : btc && !btc.price_fresh ? "The relayer price is older than 90 s, so borrowing is paused until the next post (pnpm near:relay). Repaying always works." : "Prices fresh: borrowing open."}</p>
+        <p className="nx-note mono" data-reveal>{pool.error || assets.error || bob.error ? `Read error: ${pool.error ?? assets.error ?? bob.error}` : btc && !btc.price_fresh ? "The relayer price is older than 90 s, so borrowing is paused until the next post (pnpm near:relay). Repaying always works." : btc ? "Prices fresh: borrowing open." : "Reading the signed price…"}</p>
       </section>
 
       {/* ---------------------------------------------------------------- NEAR tech */}
