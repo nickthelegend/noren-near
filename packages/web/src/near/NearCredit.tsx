@@ -101,6 +101,7 @@ export function NearCredit() {
 
 function AccountForm({ current, onPick, wallet, onAction, busy }: { current: string; onPick: (a: string) => void; wallet: NearWallet; onAction: (a: Exclude<CreditAction, "borrow">) => void; busy: boolean }) {
   const [v, setV] = useState(current);
+  useEffect(() => setV(current), [current]);
   const ok = /^[a-z0-9_.-]{2,64}$/.test(v);
   return (
     <form style={{ overflowY: "auto" }} onSubmit={(e) => { e.preventDefault(); if (ok) onPick(v); }}>
