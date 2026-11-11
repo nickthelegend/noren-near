@@ -1,7 +1,7 @@
 {
   "network": "testnet",
   "rpc": "https://test.rpc.fastnear.com",
-  "updatedAt": "2026-11-10T08:51:09.726Z",
+  "updatedAt": "2026-11-10T09:29:13.821Z",
   "root": "noren-near-mw9h22el.testnet",
   "accounts": {
     "root": "noren-near-mw9h22el.testnet",
@@ -264,6 +264,42 @@
       "status": "success",
       "explorer": "https://testnet.nearblocks.io/txns/FMVTHShc62cZdUNBBA1tg5mWmqNWT5U67DxaPLmj33RV",
       "note": "One live borrow from scripts/live-borrow.mjs at 2026-11-10T08:51:04.689Z"
+    },
+    {
+      "step": "live borrow: relayer posts signed BTC-USD price (pnpm near:borrow --relay)",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "5QzqyovkQuJSmBzTTF8sawmCrtDPtoL3VGsXNo22ShAR",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/5QzqyovkQuJSmBzTTF8sawmCrtDPtoL3VGsXNo22ShAR",
+      "note": "relayer price (testnet): Coinbase BTC-USD 74303.88 at 2026-11-10T09:17:01.113736699Z"
+    },
+    {
+      "step": "live borrow: bob pays shop 1 test USDC on credit (pnpm near:borrow)",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "8NNHC5Fo211umy96Kjtsk5T12sjwiXNiayHLvyLtWs7",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/8NNHC5Fo211umy96Kjtsk5T12sjwiXNiayHLvyLtWs7",
+      "note": "One live borrow from scripts/live-borrow.mjs at 2026-11-10T09:17:06.640Z"
+    },
+    {
+      "step": "live borrow: relayer posts signed BTC-USD price (pnpm near:borrow --relay)",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "hash": "Ag6he7rMTJ8RC1xcLb4TiABVz1DC3jAc7krSEuLjaGMz",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/Ag6he7rMTJ8RC1xcLb4TiABVz1DC3jAc7krSEuLjaGMz",
+      "note": "relayer price (testnet): Coinbase BTC-USD 74357.09 at 2026-11-10T09:29:02.593326285Z"
+    },
+    {
+      "step": "live borrow: bob pays shop 1 test USDC on credit (pnpm near:borrow)",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "hash": "A884QjnsojonWdQ4G2nUmAGrtDECsgV8hfaDHVTMMBUD",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/A884QjnsojonWdQ4G2nUmAGrtDECsgV8hfaDHVTMMBUD",
+      "note": "One live borrow from scripts/live-borrow.mjs at 2026-11-10T09:29:08.376Z"
     }
   ],
   "blocked": [

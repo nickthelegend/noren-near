@@ -1,28 +1,36 @@
-# NEAR HACKATHON submission worksheet — Noren on NEAR
+# NEAR HACKATHON submission worksheet
 
-Source: [live event rules](https://nearhackathon.com/HACKATHON.md), re-read 2026-11-09. This is a draft, not a submitted application. The human decides the fields below and confirms the exact JSON payload before a single POST. No mainnet transaction, publication or post is authorized by this file.
+Draft for Nick to review and enter in the [official form](https://nearhackathon.com/#apply). Checked against [HACKATHON.md](https://nearhackathon.com/HACKATHON.md) on 2026-11-11. Deadline: **2026-11-14 23:59 UTC**. This worksheet has not been submitted.
 
-| Human decision required | Draft value |
+| Field | Value / rule |
 | --- | --- |
-| Project name (2–80 chars) | TBD by Nick |
-| Team lead name (2–80 chars) | TBD by Nick |
-| Contact email (≤160 chars) | TBD by Nick |
-| Team size | TBD by Nick (1, 2 - 4, 4 - 6, 6 - 8, or 8+) |
-| Tracks | defi, realworld (requested; Nick confirms) |
-| NEAR mainnet prize account | TBD by Nick |
-| Public repository URL | TBD by Nick after he makes this repo public |
-| Public X demo post URL | TBD by Nick after he publishes the post |
-| Consent notice | TBD by Nick after reading the exact text below |
+| projectName | Noren on NEAR (13 characters; allowed: 2-80) |
+| leadName | TBD Nick (2-80 characters) |
+| email | TBD Nick (valid email, max 160 characters; max 2 submissions per email) |
+| size | TBD Nick: one of `1`, `2 - 4`, `4 - 6`, `6 - 8`, `8+` |
+| tracks | Proposed, best first: `["defi", "realworld"]`.<br>`defi` - Collateral-backed lending on NEAR, with repayment, withdrawal, liquidation and cross-chain dry quotes.<br>`realworld` - Borrowed test USDC is paid straight to a merchant's NEAR account; cross-chain merchant payouts are dry quotes only. |
+| nearAddress | TBD Nick: NEAR MAINNET payout account (2-64 characters, lowercase named or 64-character implicit account; not the testnet contract) |
+| projectUrl | TBD: public GitHub repo URL after push (http(s), max 300 characters; each repository may be submitted once) |
+| demoUrl | TBD: the public X post URL (http(s), max 300 characters) |
+| idea | Crypto holders who need spending money may have to sell assets they want to keep. Noren on NEAR explores paying a merchant from a collateral-backed credit line. Its Rust contract runs on NEAR testnet: borrowers deposit test WBTC through NEP-141 transfer callbacks, borrow test USDC up to 50% of collateral value, pay a merchant's NEAR account directly, repay and withdraw. The contract verifies signed Coinbase BTC prices and uses private callbacks to restore state after failed transfers. Recorded testnet transactions show the lifecycle and rejected attacks; sandbox tests also cover liquidation and Pay in 3. A local web app reads positions and requests live NEAR Intents 1Click dry quotes for cross-chain routes. Mainnet execution, browser signing and a real yield adapter remain unfinished. The debt-free date is a projection using Rhea's live supply rate, not earned yield. Arc and Robinhood Chain features are inherited work excluded from this NEAR entry. |
+| consent | Nick ticks after agreeing: "I agree that the organizers may use these details to review our submission and contact us about this hackathon." |
 
-**Consent text to read verbatim:** “I agree that the organizers may use these details to review our submission and contact us about this hackathon.”
+Idea character count: **962** (plain text in the `idea` row; allowed: 20-2000).
 
-## What they built (draft; Nick approves)
+## X post draft
 
-Don't sell your Bitcoin: spend against it, anywhere, and let it pay the debt off. Noren on NEAR is a credit line against coins from any chain. The Rust contract `noren_credit` takes NEP-141 collateral only through transfer callbacks, prices it (on testnet with a Coinbase BTC-USD price signed by Noren's relayer and verified with ed25519 inside the contract), lets the borrower draw USDC up to 50% LTV paid straight to any account, accrues interest per second, and handles repay, withdraw, liquidation with a 5% bonus, and an on-chain Pay in 3 schedule. It is deployed on NEAR testnet (credit.noren-near-mw9h22el.testnet), where a full cycle ran with recorded transactions: deposit, signed price, a 25 USDC payment to a merchant on credit, full repayment and withdrawal, plus three attacks rejected on-chain. NEAR Intents 1Click provides the any-chain side (BTC and ZEC in, USDC out to Base and Arbitrum) as live dry quotes; sending them needs a funded mainnet account. The yield harvest that pays the debt down is blocked on testnet (Rhea and Intents are mainnet-only), so the app shows the "debt-free on" date as a labelled projection from the live position and Rhea's live supply rate. Tokenised stocks are not offered: the 1Click catalog lists none. Noren also exists on Arc and Robinhood Chain; only the NEAR integration on branch `near` is entered.
+The human posts this with the video attached. Draft text: **236 characters**, within 280.
 
-## Pre-submission checks
+```text
+need spending money without selling your crypto? noren's NEAR testnet credit line pays a merchant against test WBTC. built at NEAR HACKATHON @NEARProtocol #NEARHackathon. cross-chain routes are dry quotes. watch the demo + send feedback
+```
 
-- Nick publishes the repository before **2026-11-14 23:59 UTC**, and supplies the exact public URL. The README links the main...near diff and names the other NEAR submission if there is one.
-- Nick records and publishes an X post saying the project was built at NEAR HACKATHON, tags @NEARProtocol and #NEARHackathon, and attaches a demo video or screenshots.
-- Nick confirms the JSON payload for the single POST /api/applications; use a UUID requestId exactly once and reuse it for a network retry. A saved application is corrected at [request changes](https://nearhackathon.com/request-changes), not resubmitted.
-- The contract and README must be updated if the blocked integrations become live. The current draft must not be submitted with claims of a working self-repaying mainnet loan.
+attach: /Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/noren-near-film-share.mp4
+
+## Before submission
+
+- Nick fills the personal fields, confirms the project name and tracks, and replaces the README's other-projects placeholder with the names and links (or confirms none). Each independent entry must disclose the others; one person may enter at most two projects.
+- Publish the repository with its MIT LICENSE before the deadline. The hosted Arc/Robinhood links in the README describe the inherited edition; the NEAR demo is local. Its X post needs the demo video; screenshots alone do not satisfy the local-only rule.
+- Recheck the live rules. Q-001 currently allows work since the Oct 19 announcement; this pack uses the requested stricter Nov 1 baseline and excludes the inherited Arc/Robinhood work anyway.
+- Submit once after Nick confirms the completed fields and consent. For an API submission, generate `requestId` once at submission time and reuse it on retries; it is an API field, not a human form field. Keep the personal payload out of git. Leave the form's hidden `website` spam trap empty.
+- If a saved submission needs correction, use [request changes](https://nearhackathon.com/request-changes).

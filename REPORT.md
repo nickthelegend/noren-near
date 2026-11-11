@@ -2,7 +2,9 @@
 
 ## What is live
 
-- **NEAR testnet.** `noren_credit` is deployed at [`credit.noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/credit.noren-near-mw9h22el.testnet). One full cycle ran with signed transactions: an LP supplies test USDC, alice deposits test WBTC, a Coinbase BTC-USD price signed by Noren's relayer is verified on-chain, alice draws 25 USDC paid straight to a merchant, repays in full and withdraws her collateral. bob's 12 USDC loan is left open so the app has a live position. Three attacks were rejected on-chain (a forged deposit callback, a borrow with no price, a price signed by the wrong key). All 28 hashes are in `deployments/testnet-2026-11-09.json` and the README.
+This is the Nov 9 build report. Counts and balances below describe that run. Later demo borrows append transactions to the deployment log and change bob's debt; read the app for the current position.
+
+- **NEAR testnet.** `noren_credit` is deployed at [`credit.noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/credit.noren-near-mw9h22el.testnet). One full cycle ran with signed transactions: an LP supplies test USDC, alice deposits test WBTC, a Coinbase BTC-USD price signed by Noren's relayer is verified on-chain, alice draws 25 USDC paid straight to a merchant, repays in full and withdraws her collateral. bob's 12 USDC loan is left open so the app has a live position. Three attacks were rejected on-chain (a forged deposit callback, a borrow with no price, a price signed by the wrong key). The original run has 28 recorded steps in `deployments/testnet-2026-11-09.json`; selected transactions are linked in the README.
 - **Sandbox.** 5/5 tests on a real nearcore sandbox cover the lifecycle, liquidation, Pay in 3, the harvester path and relayer forgery, tampering, staleness and replay.
 - **1Click.** 5 timestamped `dry: true` mainnet quotes, and live quotes from the app's Pay tab.
 - **App.** `#/near` (landing) and `#/near/app` (credit app) in Noren's own design system, reading the testnet contract, the 1Click catalog and Rhea's rates live. Checked in headless Chrome at 1440 and 390 px.
