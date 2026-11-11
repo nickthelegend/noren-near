@@ -173,12 +173,13 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
   const amt = Number(amount);
-  const valid = Number.isFinite(amt) && amt > 0;
+  // USDC has six decimals. Keep installment arithmetic within exact integer units.
+  const valid = /^\d+(?:\.\d{1,6})?$/.test(amount) && amt > 0 && Number.isSafeInteger(Math.round(amt * 1e6));
   const avail = n6(pos?.available_usd6);
   const out = tokens.data?.find((t) => t.symbol === "USDC" && t.blockchain === dest);
   const recipientOk = dest === "near" ? /^[a-z0-9_.-]{2,64}$/.test(to) : /^0x[0-9a-fA-F]{40}$/.test(to);
   const paid = RECORD.steps.find((s) => s.step.startsWith("alice pays shop"));
-  const schedule = useMemo(() => { const third = Math.floor((amt * 1e6) / 3); return [third, third, Math.round(amt * 1e6) - third * 2].map((v, i) => ({ v, d: new Date(Date.now() + i * 30 * 86_400_000) })); }, [amt]);
+  const schedule = useMemo(() => { if (!valid) return []; const third = Math.floor((amt * 1e6) / 3); return [third, third, Math.round(amt * 1e6) - third * 2].map((v, i) => ({ v, d: new Date(Date.now() + i * 30 * 86_400_000) })); }, [amt, valid]);
 
   async function getQuote() {
     setErr(""); setQuote(null); setBusy(true);
