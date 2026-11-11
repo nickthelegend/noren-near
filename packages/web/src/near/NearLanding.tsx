@@ -1,10 +1,10 @@
 import { useMemo } from "react";
-import { GlyphField, useReveal } from "../Landing";
-import { Icon, Logo } from "../ui";
-import { Mark } from "../logos";
+import { GlyphField, useReveal } from "../ambient";
+import { Icon, Logo } from "../brand";
+import { Mark } from "./marks";
 import { MeltChart } from "./Melt";
 import {
-  CONTRACT, COLLATERAL, DEMO, HOME_COINS, RECORD, SAVED_QUOTES, STOCK_RE, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
+  CONTRACT, COLLATERAL, DEMO, HOME_COINS, RECORD, STOCK_RE, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
   short, shortHash, usd6, useAssets, usePool, usePosition, useRates, useTokens,
 } from "./data";
 import "../landing.css";
@@ -32,7 +32,6 @@ export function NearLanding() {
   const tokens = useTokens(), rates = useRates(), assets = useAssets(), pool = usePool(), bob = usePosition(DEMO.open);
   const steps = useMemo(() => PROOF.map((p) => ({ ...p, s: RECORD.steps.find((s) => s.step.startsWith(p.match)) })).filter((p) => p.s), []);
   const btc = assets.data?.find((a) => a.token === COLLATERAL);
-  const chains = useMemo(() => new Set((tokens.data ?? []).map((t) => t.blockchain)).size, [tokens.data]);
   const stocks = useMemo(() => (tokens.data ?? []).filter((t) => STOCK_RE.test(t.symbol)), [tokens.data]);
   const wbtcApy = rates.data?.find((r) => r.token === "2260fac5e5542a773aa44fbcfedf7c193bc2c599.factory.bridge.near")?.supply_apy;
   const pos = bob.data;
@@ -51,7 +50,7 @@ export function NearLanding() {
           <a href="#coins">Coins</a>
           <a href="#how">How it works</a>
           <a href="#proof">Testnet proof</a>
-          <a href="#/">Noren on Arc</a>
+          <a href="#/near/app">Credit app</a>
         </nav>
         <a className="lx-btn light sm" href="#/near/app">Open app <Icon.arrow /></a>
       </header>
@@ -62,7 +61,7 @@ export function NearLanding() {
         <div className="lx-hero-in">
           <span className="lx-pill mono"><i />NEAR Hackathon edition · live on NEAR testnet</span>
           <h1>Don’t sell your Bitcoin. <em>Spend against it,</em> anywhere.</h1>
-          <p>Borrow test USDC against test WBTC on NEAR testnet and pay a merchant directly. Cross-chain routes are dry quotes; using yield to repay debt is a projection.</p>
+          <p>Borrow test USDC against test WBTC on NEAR testnet and pay a merchant directly. Any-chain routes are future work; using yield to repay debt is a projection.</p>
           <div className="lx-ctas">
             <a className="lx-btn light" href="#/near/app">Open the credit app</a>
             <a className="lx-btn dark" href="#proof">See the testnet run</a>
@@ -91,16 +90,16 @@ export function NearLanding() {
       <section className="nx-sec" id="coins">
         <div className="nx-head split" data-reveal>
           <div><Tag>Your coins on every chain</Tag><h2>Keep the coin. <span>Borrow against what it’s worth today.</span></h2></div>
-          <p>Prices below are NEAR Intents 1Click’s live mainnet catalog. Credit is shown at the contract’s 50% LTV, so one coin opens half its value as a line.</p>
+          <p>Prices below are NEAR-side assets from the live 1Click catalog. Credit is a 50% LTV preview. Only test WBTC can be deposited in this demo.</p>
         </div>
         <div className="nl-coins" data-reveal>
           {HOME_COINS.map((c) => {
             const t = tokens.data?.find((x) => x.symbol === c.symbol && x.blockchain === c.chain);
             return (
               <article key={c.symbol} className="nl-coin">
-                <header><Mark id={c.symbol} size={36} /><span><b>{c.name}</b><small className="mono">{c.symbol} · on {c.name}</small></span></header>
+                <header><Mark id={c.symbol} size={36} /><span><b>{c.name}</b><small className="mono">{c.symbol} · on NEAR</small></span></header>
                 <strong>{t?.price ? t.price.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: t.price > 100 ? 0 : 2 }) : tokens.error ? "Unavailable" : "Loading…"}</strong>
-                <p>{t?.price ? <>1 {c.symbol} opens <b>{(t.price / 2).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })}</b> of credit</> : tokens.error ? tokens.error : "Reading the 1Click catalog"}</p>
+                <p>{t?.price ? <>1 {c.symbol} previews <b>{(t.price / 2).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })}</b> of credit</> : tokens.error ? tokens.error : "Reading the 1Click catalog"}</p>
                 <footer className="mono">{t ? <span className="mono">{t.assetId.replace("nep141:", "")}</span> : "—"}</footer>
               </article>
             );
@@ -108,7 +107,7 @@ export function NearLanding() {
         </div>
         <p className="nx-legend" data-reveal>
           <Chip s="quotes" />
-          {tokens.data ? <span>{tokens.data.length} assets on {chains} chains in the 1Click catalog right now. Tokenised stocks listed: {stocks.length ? stocks.map((s) => s.symbol).join(", ") : "none"}, so Noren on NEAR does not offer stock collateral.</span> : <span>{tokens.error ?? "Loading the live catalog…"}</span>}
+          {tokens.data ? <span>{tokens.data.length} NEAR-side assets in the 1Click catalog right now. Tokenised stocks listed: {stocks.length ? stocks.map((s) => s.symbol).join(", ") : "none"}, so Noren on NEAR does not offer stock collateral.</span> : <span>{tokens.error ?? "Loading the live catalog…"}</span>}
         </p>
       </section>
 
@@ -119,7 +118,7 @@ export function NearLanding() {
           {[
             { n: "01", t: "Lock test WBTC", s: ["testnet", "key"] as Status[], d: "Collateral counts only when a token contract calls ft_on_transfer on Noren. Testnet uses public test WBTC. Mainnet deposits through 1Click still need an attribution adapter." },
             { n: "02", t: "See your limit", s: ["testnet"] as Status[], d: "Limit = collateral × price × 50% LTV. The testnet price is a Coinbase spot signed by Noren’s relayer and verified with ed25519 inside the contract. Stale for 90 s means no borrowing." },
-            { n: "03", t: "Pay anyone, anywhere", s: ["testnet", "quotes"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. 1Click quotes Base or Arbitrum routes live; execution needs a funded mainnet account and a payout adapter." },
+            { n: "03", t: "Pay anyone, anywhere", s: ["testnet", "quotes"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. Any-chain execution still needs a funded mainnet account and a payout adapter." },
             { n: "04", t: "The debt melts", s: ["proj", "blocked"] as Status[], d: "A future Rhea adapter would turn earned yield into USDC for repayment. Today, only the contract’s yield input is sandbox-tested; the debt-free date is a projection." },
           ].map((x, i) => (
             <li key={x.n} data-reveal style={{ transitionDelay: `${i * 70}ms` }}>
@@ -173,23 +172,23 @@ export function NearLanding() {
               { b: "ed25519_verify in the contract", p: "The relayer signs contract | token | price | exchange timestamp | source URL. The contract checks the key, the 90 s age and that each price is newer than the last.", s: "testnet" as Status },
               { b: "Promises with a per-user lock", p: "Borrow, withdraw and liquidation move state first, transfer, then settle in a private callback keyed by a nonce; a failed transfer restores everything.", s: "testnet" as Status },
               { b: "Sub-accounts", p: "credit., alice., bob. and shop. live under one root account, so the whole demo is one namespace on the explorer.", s: "testnet" as Status },
-              { b: "NEAR Intents 1Click", p: `Any-chain in and out. ${SAVED_QUOTES.quotes.length} dry: true quotes saved at ${new Date(SAVED_QUOTES.observedAt).toUTCString().slice(5, 22)} UTC, including ZEC in and Base and Arbitrum out.`, s: "quotes" as Status },
+              { b: "NEAR Intents 1Click", p: "Live NEAR-side token catalog for any-chain planning. The hackathon build sends payments only on NEAR testnet; mainnet execution is unfinished.", s: "quotes" as Status },
               { b: "Rhea lending as the yield source", p: "Supply APY per market is read live from Rhea. Supplying and harvesting still need a mainnet yield adapter and a funded account.", s: "key" as Status },
             ].map((x) => (
               <li key={x.b} data-reveal><b>{x.b}</b><p>{x.p}</p><Chip s={x.s} /></li>
             ))}
           </ul>
-          <p className="nx-built-foot mono">Noren also exists on Arc and Robinhood Chain. Only this NEAR integration (branch near) is the hackathon entry.</p>
+          <p className="nx-built-foot mono">This entry runs on NEAR testnet. Contract calls, positions and payments are public.</p>
         </div>
       </section>
 
       {/* ---------------------------------------------------------------- cta */}
       <section className="nx-cta">
         <h2>Run the cycle yourself.</h2>
-        <p>Five sandbox tests on a real nearcore node, the testnet lifecycle with every hash saved, a fresh signed Coinbase price, and 1Click dry quotes.</p>
+        <p>Five sandbox tests on a real nearcore node, the testnet lifecycle with every hash saved, a fresh signed Coinbase price, and the NEAR-side token catalog.</p>
         <pre className="mono">{`pnpm near:test\npnpm near:testnet\npnpm near:relay\npnpm near:quotes`}</pre>
         <div className="lx-ctas"><a className="lx-btn light" href="#/near/app">Open the credit app</a><a className="lx-btn dark" href="https://github.com/nickthelegend/noren/compare/main...near">Read the diff</a></div>
-        <p className="nl-setup mono">Mainnet deposits, merchant payouts and harvests: {SAVED_QUOTES.mainnetExecution}</p>
+        <p className="nl-setup mono">Mainnet deposits, merchant payouts and harvests are unfinished.</p>
       </section>
     </div>
   );

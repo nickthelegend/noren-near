@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { dryQuote, type QuoteResponse } from "@noren/near-sdk";
-import { Icon, Logo } from "../ui";
-import { Mark } from "../logos";
+import { Icon, Logo } from "../brand";
+import { Mark } from "./marks";
 import { MeltChart } from "./Melt";
 import { useNearWallet, type NearWallet } from "./wallet";
 import { runCreditAction } from "./credit-runtime";
 import { tokenUnits, walletError, type CreditAction } from "./credit-calls";
 import { CreditActionSheet, CreditReceipt, type Receipt, type RunAction } from "./CreditActions";
 import {
-  COLLATERAL, CONTRACT, DEMO, HOME_COINS, NEAR_USDC, RECORD, SAVED_QUOTES, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
+  COLLATERAL, CONTRACT, DEMO, HOME_COINS, RECORD, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
   short, shortHash, units, usd6, useAssets, usePool, usePosition, useRates, useTokens, type Position,
 } from "./data";
 import "@fontsource-variable/urbanist";
@@ -75,7 +74,7 @@ export function NearCredit() {
         <div className="nk-home">
           <div className="nk-home-main">
             {tab === "credit" && <CreditView account={account} pos={pos} btc={btc} go={go} tokens={tokens} deposit={() => openAction("deposit")} />}
-            {tab === "pay" && <PayView account={account} pos={pos.data} tokens={tokens} wallet={wallet} connect={() => setPicking(true)} chooseOwn={() => choose(wallet.account)} run={run} working={working} receipt={receipt?.action === "borrow" ? receipt : null} />}
+            {tab === "pay" && <PayView account={account} pos={pos.data} wallet={wallet} connect={() => setPicking(true)} chooseOwn={() => choose(wallet.account)} run={run} working={working} receipt={receipt?.action === "borrow" ? receipt : null} />}
             {tab === "melt" && <MeltView account={account} pos={pos.data} posError={pos.error} aprBps={pool.data?.aprBps} rates={rates} />}
           </div>
           <aside className="nk-home-side">
@@ -84,7 +83,7 @@ export function NearCredit() {
           </aside>
         </div>
       </main>
-      <p className="nk-foot">NEAR testnet only. Collateral is wbtc.fakes.testnet and the pool is usdc.fakes.testnet, public test tokens with no value that stand in for bridged BTC and NEAR USDC. Mainnet deposits, payouts and harvests: {SAVED_QUOTES.mainnetExecution}. <a href="#/near">About the NEAR edition</a></p>
+      <p className="nk-foot">NEAR testnet only. Collateral is wbtc.fakes.testnet and the pool is usdc.fakes.testnet, public test tokens with no value that stand in for bridged BTC and NEAR USDC. Mainnet deposits, payouts and harvests are unfinished. <a href="#/near">About the NEAR edition</a></p>
 
       {manage && <CreditActionSheet key={manage} action={manage} wallet={wallet} busy={working} receipt={receipt} run={run} close={() => setManage(null)} />}
       {picking && (
@@ -149,13 +148,13 @@ function CreditView({ account, pos, btc, go, tokens, deposit }: { deposit: () =>
 
       <div className="nk-actions nc-actions">
         <button className="primary" onClick={() => go("pay")}><i><Icon.arrow /></i><b>Pay anyone</b><small>On credit, any chain</small></button>
-        <button onClick={deposit}><i><Icon.layers /></i><b>Bring coins</b><small>BTC, ZEC, ETH, SOL</small></button>
+        <button onClick={deposit}><i><Icon.layers /></i><b>Bring coins</b><small>Test WBTC on NEAR</small></button>
         <button onClick={() => go("melt")}><i><Icon.chart /></i><b>Debt-free date</b><small>Yield vs interest</small></button>
         <a href={explorerAccount(account)} target="_blank" rel="noreferrer"><i><Icon.ext /></i><b>Explorer</b><small>{short(account)}</small></a>
       </div>
 
       <section className="nk-card" id="coins">
-        <div className="nk-card-h"><div><b>Your coins on every chain</b><p>Live 1Click mainnet prices. Credit at the contract’s 50% LTV.</p></div><span className="nk-pill live">1Click</span></div>
+        <div className="nk-card-h"><div><b>Your coins on every chain</b><p>NEAR-side catalog prices. Preview at 50% LTV; only test WBTC is accepted here.</p></div><span className="nk-pill live">1Click</span></div>
         <ul className="nc-coins">
           <li className="here">
             <Mark id="BTC" size={36} />
@@ -173,7 +172,7 @@ function CreditView({ account, pos, btc, go, tokens, deposit }: { deposit: () =>
             );
           })}
         </ul>
-        <p className="nc-setup"><Icon.lock /> Deposit addresses come from 1Click on mainnet. Setup required: NEAR_MAINNET_ACCOUNT. Shielded ZEC hides where a deposit came from, not the NEAR-side position.</p>
+        <p className="nc-setup"><Icon.lock /> The any-chain collateral catalog is a preview. Bring coins deposits test WBTC on NEAR testnet. NEAR positions and payments are public.</p>
       </section>
     </>
   );
@@ -195,57 +194,34 @@ function Meter({ debt, coll, limit, liqBps, fresh }: { debt: number; coll: numbe
 }
 
 // ------------------------------------------------------------------ pay
-type Dest = "near" | "base" | "arb";
-function PayView({ account, pos, tokens, wallet, connect, chooseOwn, run, working, receipt }: { account: string; pos?: Position; tokens: Live<import("@noren/near-sdk").Token[]>; wallet: NearWallet; connect: () => void; chooseOwn: () => void; run: RunAction; working: boolean; receipt: Receipt | null }) {
-  const [dest, setDest] = useState<Dest>("base");
+function PayView({ account, pos, wallet, connect, chooseOwn, run, working, receipt }: { account: string; pos?: Position; wallet: NearWallet; connect: () => void; chooseOwn: () => void; run: RunAction; working: boolean; receipt: Receipt | null }) {
   const [amount, setAmount] = useState("1");
-  const [to, setTo] = useState("");
+  const [to, setTo] = useState(DEMO.merchant);
   const [in3, setIn3] = useState(false);
-  const [quote, setQuote] = useState<{ r: QuoteResponse; dest: Dest } | null>(null);
-  const [err, setErr] = useState("");
-  const [busy, setBusy] = useState(false);
-  const quoteRequest = useRef(0);
-  const clearQuote = () => { quoteRequest.current++; setQuote(null); setErr(""); setBusy(false); };
-  useEffect(() => () => { quoteRequest.current++; }, []);
   const amt = Number(amount);
   // USDC has six decimals. Keep installment arithmetic within exact integer units.
   const valid = /^\d+(?:\.\d{1,6})?$/.test(amount) && amt > 0 && Number.isSafeInteger(Math.round(amt * 1e6));
   const avail = n6(pos?.available_usd6);
-  const out = tokens.data?.find((t) => t.symbol === "USDC" && t.blockchain === dest);
-  const recipientOk = dest === "near" ? /^[a-z0-9_.-]{2,64}$/.test(to) : /^0x[0-9a-fA-F]{40}$/.test(to);
+  const recipientOk = /^[a-z0-9_.-]{2,64}$/.test(to);
   const paid = RECORD.steps.find((s) => s.step.startsWith("alice pays shop"));
   const schedule = useMemo(() => { if (!valid) return []; const third = Math.floor((amt * 1e6) / 3); return [third, third, Math.round(amt * 1e6) - third * 2].map((v, i) => ({ v, d: new Date(Date.now() + i * 30 * 86_400_000) })); }, [amt, valid]);
 
-  async function getQuote() {
-    const request = ++quoteRequest.current;
-    setErr(""); setQuote(null); setBusy(true);
-    try {
-      if (!out) throw new Error(`USDC on ${dest} is not in the live 1Click catalog`);
-      const r = await dryQuote({ originAsset: NEAR_USDC, destinationAsset: out.assetId, amount: String(Math.round(amt * 1e6)), recipient: to,
-        recipientType: "DESTINATION_CHAIN", refundTo: "intents.near", refundType: "ORIGIN_CHAIN" });
-      if (request === quoteRequest.current) setQuote({ r, dest });
-    } catch (e) { if (request === quoteRequest.current) setErr(e instanceof Error ? e.message : String(e)); }
-    finally { if (request === quoteRequest.current) setBusy(false); }
-  }
-  const q = quote?.r.quote as { quote?: { amountOutFormatted?: string; amountInFormatted?: string; timeEstimate?: number; amountOutUsd?: string; minAmountOut?: string } } | undefined;
   return (
     <section className="nk-card">
-      <div className="nk-card-h"><div><b>Pay anyone, anywhere</b><p>Pay a shop from credit on NEAR testnet, or get an any-chain dry quote to Base or Arbitrum.</p></div><span className="nk-pill">{short(account)}</span></div>
+      <div className="nk-card-h"><div><b>Pay anyone, anywhere</b><p>Pay a shop from credit on NEAR testnet. Any-chain payouts are future work.</p></div><span className="nk-pill">{short(account)}</span></div>
       <div className="nk-band" role="radiogroup" aria-label="Where the merchant gets paid">
         <span>Merchant is on</span>
-        {([["near", "NEAR"], ["base", "Base"], ["arb", "Arbitrum"]] as [Dest, string][]).map(([k, l]) => (
-          <button key={k} type="button" role="radio" aria-checked={dest === k} aria-pressed={dest === k} onClick={() => { setDest(k); clearQuote(); setTo(k === "near" ? DEMO.merchant : ""); }}>{l}</button>
-        ))}
+        <button type="button" role="radio" aria-checked="true" aria-pressed="true">NEAR</button>
       </div>
       <div className="nk-pad">
         <div className="nk-box" style={{ marginTop: 10 }}>
           <label htmlFor="nc-amt"><span>Amount</span><span className="mono">{pos ? `${usd6(pos.available_usd6)} available` : "—"}</span></label>
-          <div className="nk-row"><input id="nc-amt" inputMode="decimal" value={amount} onChange={(e) => { setAmount(e.target.value.replace(/[^0-9.]/g, "")); clearQuote(); }} aria-label="Amount in USDC" /><span className="nk-token" data-static="true"><Mark id="USDC" size={28} />USDC</span></div>
-          <div className="nk-sub"><span>{dest === "near" ? "Paid as test USDC on NEAR testnet" : `Arrives as USDC on ${dest === "base" ? "Base" : "Arbitrum"}`}</span>{valid && pos && amt > avail ? <span className="nc-over">Over your available credit</span> : <span />}</div>
+          <div className="nk-row"><input id="nc-amt" inputMode="decimal" value={amount} onChange={(e) => { setAmount(e.target.value.replace(/[^0-9.]/g, "")); }} aria-label="Amount in USDC" /><span className="nk-token" data-static="true"><Mark id="USDC" size={28} />USDC</span></div>
+          <div className="nk-sub"><span>Paid as test USDC on NEAR testnet</span>{valid && pos && amt > avail ? <span className="nc-over">Over your available credit</span> : <span />}</div>
         </div>
         <div className="nk-box">
-          <label htmlFor="nc-to"><span>Merchant</span><span className="mono">{dest === "near" ? "NEAR account" : "0x address"}</span></label>
-          <input id="nc-to" className="nc-addr" value={to} onChange={(e) => { setTo(e.target.value.trim()); clearQuote(); }} placeholder={dest === "near" ? DEMO.merchant : "0x…"} spellCheck={false} />
+          <label htmlFor="nc-to"><span>Merchant</span><span className="mono">NEAR account</span></label>
+          <input id="nc-to" className="nc-addr" value={to} onChange={(e) => { setTo(e.target.value.trim()); }} placeholder={DEMO.merchant} spellCheck={false} />
         </div>
         <div className={`nk-toggle ${in3 ? "on" : ""}`}>
           <div className="nk-toggle-l"><span><b>Pay in 3</b><small>Preview three draws, 30 days apart. No schedule is submitted here.</small></span></div>
@@ -253,8 +229,7 @@ function PayView({ account, pos, tokens, wallet, connect, chooseOwn, run, workin
         </div>
         {in3 && valid && <ol className="nc-in3">{schedule.map((s, i) => <li key={i}><span>{i === 0 ? "Today" : s.d.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span><b>{usd6(BigInt(s.v))}</b></li>)}</ol>}
 
-        {dest === "near" ? (
-          <>
+        <>
             <button className="nk-cta" disabled={working || (!!wallet.account && wallet.account === account && (!valid || !recipientOk || in3 || !pos || pos.pending))} onClick={() => !wallet.account ? connect() : wallet.account !== account ? chooseOwn() : run('borrow', tokenUnits(amount, 6), to)}>{working ? 'Waiting for confirmation…' : !wallet.account ? 'Connect Meteor to pay' : wallet.account !== account ? 'Read your wallet position' : in3 ? 'Pay in 3 is a preview' : 'Borrow and pay shop'}</button>
             <CreditReceipt receipt={receipt} />
             <div className="nc-proof">
@@ -263,25 +238,7 @@ function PayView({ account, pos, tokens, wallet, connect, chooseOwn, run, workin
               {paid && <a className="nk-btn" href={paid.explorer} target="_blank" rel="noreferrer">Open {shortHash(paid.hash)} <Icon.ext /></a>}
             </div>
           </>
-        ) : (
-          <>
-            <button className="nk-cta" disabled={!valid || !recipientOk || busy || !tokens.data} onClick={getQuote}>{busy ? <><span className="spin" /> Asking 1Click…</> : !recipientOk ? "Enter the merchant’s 0x address" : "Get a live 1Click quote"}</button>
-            {err && <p className="nk-err" role="alert">{err}</p>}
-            {quote && q?.quote && (
-              <div className="nc-receipt" aria-live="polite">
-                <div className="nc-receipt-h"><span className="nk-pill live">dry: true</span><span className="mono">{new Date(quote.r.timestamp).toLocaleTimeString()}</span></div>
-                <dl>
-                  <div><dt>You draw</dt><dd>{q.quote.amountInFormatted} USDC <small>on NEAR</small></dd></div>
-                  <div><dt>Merchant receives</dt><dd>{q.quote.amountOutFormatted} USDC <small>on {quote.dest === "base" ? "Base" : "Arbitrum"}</small></dd></div>
-                  <div><dt>Route cost</dt><dd>{(amt - Number(q.quote.amountOutFormatted)).toFixed(4)} USDC</dd></div>
-                  <div><dt>Time estimate</dt><dd>{q.quote.timeEstimate ?? "—"} s</dd></div>
-                </dl>
-                <button className="nk-cta kaki" disabled>Send: Setup required: NEAR_MAINNET_ACCOUNT</button>
-              </div>
-            )}
-            {!quote && !err && <p className="nc-fine">A real quote from 1click.chaindefuser.com with dry: true. Nothing moves. Last saved route: {SAVED_QUOTES.quotes.find((x) => x.label.includes("Base address"))?.quote.quote.amountOutFormatted} USDC out per 1.00 in, {new Date(SAVED_QUOTES.observedAt).toUTCString().slice(5, 22)} UTC.</p>}
-          </>
-        )}
+
       </div>
     </section>
   );

@@ -4,11 +4,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { nearView, rheaRates, supportedTokens, type Rate, type Token } from "@noren/near-sdk";
 import record from "../../../../deployments/testnet-2026-11-09.json";
-import quotes from "../../../../deployments/quotes-2026-11-09.json";
 
 export type Step = { step: string; account: string; method?: string; hash: string; status: "success" | "rejected"; explorer: string; note?: string };
 export const RECORD = record as unknown as { root: string; updatedAt: string; accounts: Record<string, string>; contracts: Record<string, { account: string; wasmSha256: string; bytes: number }>; steps: Step[]; blocked: { step: string; reason: string }[]; relayerPublicKey: string };
-export const SAVED_QUOTES = quotes as unknown as { observedAt: string; tokenCount: number; mainnetExecution: string; tokenisedStocksListed: string[]; quotes: { label: string; requestedAt: string; quote: { quote: { amountInFormatted: string; amountOutFormatted: string; amountOutUsd?: string; timeEstimate?: number } } }[] };
+
 
 export const CONTRACT = (import.meta.env.VITE_NEAR_TESTNET_CONTRACT as string | undefined) || RECORD.accounts.credit;
 export const COLLATERAL = RECORD.accounts.tbtc; // wbtc.fakes.testnet: public testnet WBTC standing in for bridged BTC
@@ -47,7 +46,7 @@ export const usePool = () => useLive(async (): Promise<Pool> => {
   return { liquidity: BigInt(liq), supplied: BigInt(sup), utilizationBps: util, aprBps: apr };
 }, [], 30_000);
 export const usePosition = (account: string) => useLive(() => nearView<Position>(CONTRACT, "position", { borrower: account }), [account], 30_000);
-export const useTokens = () => useLive<Token[]>(() => supportedTokens(), []);
+export const useTokens = () => useLive<Token[]>(async () => (await supportedTokens()).filter((token) => token.blockchain === "near"), []);
 export const useRates = () => useLive<Rate[]>(() => rheaRates(), []);
 
 // ------------------------------------------------------------------ formatting
@@ -64,12 +63,12 @@ export function ago(ms: number) {
 export const nsToMs = (ns: string) => Number(BigInt(ns) / 1_000_000n);
 export const healthLabel = (bps: string | null) => bps === null ? "No debt" : `${(Number(bps) / 1e4).toFixed(2)}×`;
 
-/** The coins Noren targets as collateral, as the live 1Click catalog lists them on their home chains. */
+/** NEAR-side representations in the live catalog; only test WBTC is accepted as collateral. */
 export const HOME_COINS = [
-  { symbol: "BTC", chain: "btc", name: "Bitcoin", rhea: "nbtc.bridge.near" },
-  { symbol: "ZEC", chain: "zec", name: "Zcash", rhea: "zec.omft.near" },
-  { symbol: "ETH", chain: "eth", name: "Ethereum", rhea: "eth.bridge.near" },
-  { symbol: "SOL", chain: "sol", name: "Solana", rhea: undefined },
+  { symbol: "BTC", chain: "near", name: "Bitcoin", rhea: "nbtc.bridge.near" },
+  { symbol: "ZEC", chain: "near", name: "Zcash", rhea: "zec.omft.near" },
+  { symbol: "ETH", chain: "near", name: "Ether", rhea: "eth.bridge.near" },
+  { symbol: "wNEAR", chain: "near", name: "Wrapped NEAR", rhea: "wrap.near" },
 ] as const;
 export const STOCK_RE = /^x?(NVDA|AAPL|TSLA|MSFT|AMZN|GOOGL|GOOG|SPY|META|QQQ)x?$/i;
 

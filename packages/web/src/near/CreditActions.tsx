@@ -3,7 +3,7 @@ import { nearView } from '@noren/near-sdk';
 import type { NearWallet } from './wallet';
 import { tokenUnits, type CreditAction } from './credit-calls';
 import { COLLATERAL, RECORD, shortHash, units } from './data';
-import { Icon } from '../ui';
+import { Icon } from '../brand';
 export type Receipt = { action: string; state: 'approval' | 'pending' | 'final' | 'error'; hashes: string[]; error?: string };
 export function CreditReceipt({ receipt }: { receipt: Receipt | null }) {
   if (!receipt) return null;
