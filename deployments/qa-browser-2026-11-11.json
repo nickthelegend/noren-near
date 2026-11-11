@@ -1,0 +1,694 @@
+{
+  "network": "testnet",
+  "budgetNear": 0.3,
+  "runs": [
+    {
+      "startedAt": "2026-11-11T18:44:43.997Z",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "status": "FAILED",
+      "reservedYocto": "66000000000000000000002",
+      "before": {
+        "collateral": "1000000",
+        "usdc": "1979999",
+        "shop": "40020000"
+      },
+      "builds": {
+        "production": {
+          "files": 42,
+          "markers": {
+            "qa-signer": false,
+            "__NOREN_QA_SIGNER__": false,
+            "__norenQaAuthorize": false
+          },
+          "chainMatches": {
+            "Arc": false,
+            "Robinhood": false,
+            "CCTP": false,
+            "arc.io": false
+          }
+        },
+        "qa": {
+          "files": 43,
+          "markers": {
+            "qa-signer": true,
+            "__NOREN_QA_SIGNER__": true,
+            "__norenQaAuthorize": true
+          },
+          "chainMatches": {
+            "Arc": false,
+            "Robinhood": false,
+            "CCTP": false,
+            "arc.io": false
+          }
+        }
+      },
+      "attempts": [
+        {
+          "stage": "deposit 1440",
+          "receiverId": "wbtc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "price refresh 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "30000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "6000000000000000000000"
+        },
+        {
+          "stage": "borrow 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "80000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "16000000000000000000000"
+        },
+        {
+          "stage": "repay 1440",
+          "receiverId": "usdc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "withdraw 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "60000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "12000000000000000000000"
+        }
+      ],
+      "transactions": [
+        {
+          "source": "browser",
+          "stage": "deposit 1440",
+          "width": 1440,
+          "hash": "3Lwo6w84xsJmFXWiypbkGRqPaMKy5s4kYnhet8P98zrG",
+          "explorer": "https://testnet.nearblocks.io/txns/3Lwo6w84xsJmFXWiypbkGRqPaMKy5s4kYnhet8P98zrG",
+          "final": true,
+          "action": "deposit",
+          "tokensBurntYocto": "635157818798500000000"
+        },
+        {
+          "source": "node price relayer",
+          "width": 1440,
+          "action": "price",
+          "hash": "5SZyT6GdZ7PjMwt9dBzpBUQeGhMbw6trWA1qU3fFvrAz",
+          "final": true,
+          "explorer": "https://testnet.nearblocks.io/txns/5SZyT6GdZ7PjMwt9dBzpBUQeGhMbw6trWA1qU3fFvrAz",
+          "tokensBurntYocto": "216656375926600000000"
+        },
+        {
+          "source": "browser",
+          "stage": "borrow 1440",
+          "width": 1440,
+          "hash": "BmRrSjTEQnBYVqC4hCStAQBmFpRMaViRrEKjHA3F77N9",
+          "explorer": "https://testnet.nearblocks.io/txns/BmRrSjTEQnBYVqC4hCStAQBmFpRMaViRrEKjHA3F77N9",
+          "final": true,
+          "action": "borrow",
+          "tokensBurntYocto": "633512045387900000000"
+        },
+        {
+          "source": "browser",
+          "stage": "repay 1440",
+          "width": 1440,
+          "hash": "4UXtyWfNZ27GS42Lh63HsXb4MX94w7LLFAncJFEAWX4J",
+          "explorer": "https://testnet.nearblocks.io/txns/4UXtyWfNZ27GS42Lh63HsXb4MX94w7LLFAncJFEAWX4J",
+          "final": true,
+          "action": "repay",
+          "tokensBurntYocto": "678782908575000000000"
+        },
+        {
+          "source": "browser",
+          "stage": "withdraw 1440",
+          "width": 1440,
+          "hash": "BDiA3szbMegHPdXeDCsRVMmdgxgXBijXQvf8Sp817gwU",
+          "explorer": "https://testnet.nearblocks.io/txns/BDiA3szbMegHPdXeDCsRVMmdgxgXBijXQvf8Sp817gwU",
+          "final": true,
+          "action": "withdraw",
+          "tokensBurntYocto": "637449668670700000000"
+        }
+      ],
+      "screenshots": [
+        {
+          "name": "before-credit",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-credit-1440.png"
+        },
+        {
+          "name": "before-account",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-account-1440.png"
+        },
+        {
+          "name": "before-pay",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-pay-1440.png"
+        },
+        {
+          "name": "before-credit",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-credit-375.png"
+        },
+        {
+          "name": "before-account",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-account-375.png"
+        },
+        {
+          "name": "before-pay",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-pay-375.png"
+        },
+        {
+          "name": "connected",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/connected-1440.png"
+        },
+        {
+          "name": "deposit",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-1440.png"
+        },
+        {
+          "name": "deposit-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-pending-1440.png"
+        },
+        {
+          "name": "deposit-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-final-1440.png"
+        },
+        {
+          "name": "position-deposited",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-deposited-1440.png"
+        },
+        {
+          "name": "borrow-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/borrow-pending-1440.png"
+        },
+        {
+          "name": "borrow-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/borrow-final-1440.png"
+        },
+        {
+          "name": "position-borrowed",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-borrowed-1440.png"
+        },
+        {
+          "name": "repay-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/repay-pending-1440.png"
+        },
+        {
+          "name": "repay-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/repay-final-1440.png"
+        },
+        {
+          "name": "withdraw-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/withdraw-pending-1440.png"
+        },
+        {
+          "name": "withdraw-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/withdraw-final-1440.png"
+        },
+        {
+          "name": "position-restored",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-restored-1440.png"
+        },
+        {
+          "name": "debt-free",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/debt-free-1440.png"
+        }
+      ],
+      "viewports": [],
+      "error": "Stopped at withdraw 1440; no raw provider or credential details are recorded.",
+      "totalNearSpentYocto": "2801558817358700000002",
+      "totalNearSpent": 0.0028015588173587003,
+      "finishedAt": "2026-11-11T18:45:52.937Z",
+      "budgetChargedYocto": "2801558817358700000002"
+    },
+    {
+      "startedAt": "2026-11-11T18:47:17.152Z",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "status": "PASS",
+      "reservedYocto": "132000000000000000000004",
+      "before": {
+        "collateral": "1000000",
+        "usdc": "1969999",
+        "shop": "40030000"
+      },
+      "builds": {
+        "production": {
+          "files": 42,
+          "markers": {
+            "qa-signer": false,
+            "__NOREN_QA_SIGNER__": false,
+            "__norenQaAuthorize": false
+          },
+          "chainMatches": {
+            "Arc": false,
+            "Robinhood": false,
+            "CCTP": false,
+            "arc.io": false
+          }
+        },
+        "qa": {
+          "files": 43,
+          "markers": {
+            "qa-signer": true,
+            "__NOREN_QA_SIGNER__": true,
+            "__norenQaAuthorize": true
+          },
+          "chainMatches": {
+            "Arc": false,
+            "Robinhood": false,
+            "CCTP": false,
+            "arc.io": false
+          }
+        }
+      },
+      "attempts": [
+        {
+          "stage": "deposit 1440",
+          "receiverId": "wbtc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "price refresh 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "30000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "6000000000000000000000"
+        },
+        {
+          "stage": "borrow 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "80000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "16000000000000000000000"
+        },
+        {
+          "stage": "repay 1440",
+          "receiverId": "usdc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "withdraw 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "60000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "12000000000000000000000"
+        },
+        {
+          "stage": "deposit 375",
+          "receiverId": "wbtc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "price refresh 375",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "30000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "6000000000000000000000"
+        },
+        {
+          "stage": "borrow 375",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "80000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "16000000000000000000000"
+        },
+        {
+          "stage": "repay 375",
+          "receiverId": "usdc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "withdraw 375",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "60000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "12000000000000000000000"
+        }
+      ],
+      "transactions": [
+        {
+          "source": "browser",
+          "stage": "deposit 1440",
+          "width": 1440,
+          "hash": "AEmh2WSLEUaXYGCWfScawcoLjDQrhXNQJ8t2gEvJJfWw",
+          "explorer": "https://testnet.nearblocks.io/txns/AEmh2WSLEUaXYGCWfScawcoLjDQrhXNQJ8t2gEvJJfWw",
+          "final": true,
+          "action": "deposit",
+          "tokensBurntYocto": "635157818798500000000"
+        },
+        {
+          "source": "node price relayer",
+          "width": 1440,
+          "action": "price",
+          "hash": "AVdVdZqjruhr9XEJeUbr1Kon97vdABMEaupM7EynAj9w",
+          "final": true,
+          "explorer": "https://testnet.nearblocks.io/txns/AVdVdZqjruhr9XEJeUbr1Kon97vdABMEaupM7EynAj9w",
+          "tokensBurntYocto": "216656375926600000000"
+        },
+        {
+          "source": "browser",
+          "stage": "borrow 1440",
+          "width": 1440,
+          "hash": "5gdrLSwiHNGxY5aP1bbuUTGqUfn8Vw8LSRHFTU8bBiFc",
+          "explorer": "https://testnet.nearblocks.io/txns/5gdrLSwiHNGxY5aP1bbuUTGqUfn8Vw8LSRHFTU8bBiFc",
+          "final": true,
+          "action": "borrow",
+          "tokensBurntYocto": "633512045387900000000"
+        },
+        {
+          "source": "browser",
+          "stage": "repay 1440",
+          "width": 1440,
+          "hash": "HaMKaXsceeYCPfy4PAkovojgrwoh5cfoyPvqHeZEQCaZ",
+          "explorer": "https://testnet.nearblocks.io/txns/HaMKaXsceeYCPfy4PAkovojgrwoh5cfoyPvqHeZEQCaZ",
+          "final": true,
+          "action": "repay",
+          "tokensBurntYocto": "678782908575000000000"
+        },
+        {
+          "source": "browser",
+          "stage": "withdraw 1440",
+          "width": 1440,
+          "hash": "6g1ZLC4sjRJbQX43kDnvYqTqd7BdoV2voZRi6WGx98PH",
+          "explorer": "https://testnet.nearblocks.io/txns/6g1ZLC4sjRJbQX43kDnvYqTqd7BdoV2voZRi6WGx98PH",
+          "final": true,
+          "action": "withdraw",
+          "tokensBurntYocto": "637449668670700000000"
+        },
+        {
+          "source": "browser",
+          "stage": "deposit 375",
+          "width": 375,
+          "hash": "H4ipAeyjwkGgaSf8yimzU2y8eV36cxgpUVPHY6MWUFZ2",
+          "explorer": "https://testnet.nearblocks.io/txns/H4ipAeyjwkGgaSf8yimzU2y8eV36cxgpUVPHY6MWUFZ2",
+          "final": true,
+          "action": "deposit",
+          "tokensBurntYocto": "635157818798500000000"
+        },
+        {
+          "source": "node price relayer",
+          "width": 375,
+          "action": "price",
+          "hash": "EneAgxh6XgeMn9AUZpzda7edA5sQZ2e5NxNuDA7zKP6u",
+          "final": true,
+          "explorer": "https://testnet.nearblocks.io/txns/EneAgxh6XgeMn9AUZpzda7edA5sQZ2e5NxNuDA7zKP6u",
+          "tokensBurntYocto": "216656375926600000000"
+        },
+        {
+          "source": "browser",
+          "stage": "borrow 375",
+          "width": 375,
+          "hash": "9ZVkBJWL2kTauiLRnvi9ZEggLKYTHmpEWQvnKsor1769",
+          "explorer": "https://testnet.nearblocks.io/txns/9ZVkBJWL2kTauiLRnvi9ZEggLKYTHmpEWQvnKsor1769",
+          "final": true,
+          "action": "borrow",
+          "tokensBurntYocto": "633512045387900000000"
+        },
+        {
+          "source": "browser",
+          "stage": "repay 375",
+          "width": 375,
+          "hash": "5aB7c7ZZv1xhoNLH9iV57B4qVK6PcsTC1fRqtmS44S9Z",
+          "explorer": "https://testnet.nearblocks.io/txns/5aB7c7ZZv1xhoNLH9iV57B4qVK6PcsTC1fRqtmS44S9Z",
+          "final": true,
+          "action": "repay",
+          "tokensBurntYocto": "678782908575000000000"
+        },
+        {
+          "source": "browser",
+          "stage": "withdraw 375",
+          "width": 375,
+          "hash": "EQqVw6eiZHcPTbPhgYwmviL6jw6ezFyfUFdHr23KH1nj",
+          "explorer": "https://testnet.nearblocks.io/txns/EQqVw6eiZHcPTbPhgYwmviL6jw6ezFyfUFdHr23KH1nj",
+          "final": true,
+          "action": "withdraw",
+          "tokensBurntYocto": "637449668670700000000"
+        }
+      ],
+      "screenshots": [
+        {
+          "name": "before-credit",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-credit-1440.png"
+        },
+        {
+          "name": "before-account",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-account-1440.png"
+        },
+        {
+          "name": "before-pay",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-pay-1440.png"
+        },
+        {
+          "name": "before-credit",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-credit-375.png"
+        },
+        {
+          "name": "before-account",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-account-375.png"
+        },
+        {
+          "name": "before-pay",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/before-pay-375.png"
+        },
+        {
+          "name": "connected",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/connected-1440.png"
+        },
+        {
+          "name": "deposit",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-1440.png"
+        },
+        {
+          "name": "deposit-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-pending-1440.png"
+        },
+        {
+          "name": "deposit-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-final-1440.png"
+        },
+        {
+          "name": "position-deposited",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-deposited-1440.png"
+        },
+        {
+          "name": "borrow-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/borrow-pending-1440.png"
+        },
+        {
+          "name": "borrow-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/borrow-final-1440.png"
+        },
+        {
+          "name": "position-borrowed",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-borrowed-1440.png"
+        },
+        {
+          "name": "repay-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/repay-pending-1440.png"
+        },
+        {
+          "name": "repay-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/repay-final-1440.png"
+        },
+        {
+          "name": "withdraw-pending",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/withdraw-pending-1440.png"
+        },
+        {
+          "name": "withdraw-final",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/withdraw-final-1440.png"
+        },
+        {
+          "name": "position-restored",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-restored-1440.png"
+        },
+        {
+          "name": "debt-free",
+          "width": 1440,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/debt-free-1440.png"
+        },
+        {
+          "name": "connected",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/connected-375.png"
+        },
+        {
+          "name": "deposit",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-375.png"
+        },
+        {
+          "name": "deposit-pending",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-pending-375.png"
+        },
+        {
+          "name": "deposit-final",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/deposit-final-375.png"
+        },
+        {
+          "name": "position-deposited",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-deposited-375.png"
+        },
+        {
+          "name": "borrow-pending",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/borrow-pending-375.png"
+        },
+        {
+          "name": "borrow-final",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/borrow-final-375.png"
+        },
+        {
+          "name": "position-borrowed",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-borrowed-375.png"
+        },
+        {
+          "name": "repay-pending",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/repay-pending-375.png"
+        },
+        {
+          "name": "repay-final",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/repay-final-375.png"
+        },
+        {
+          "name": "withdraw-pending",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/withdraw-pending-375.png"
+        },
+        {
+          "name": "withdraw-final",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/withdraw-final-375.png"
+        },
+        {
+          "name": "position-restored",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/position-restored-375.png"
+        },
+        {
+          "name": "debt-free",
+          "width": 375,
+          "path": "/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad/flow-qa/noren-near/qa-signer/debt-free-375.png"
+        }
+      ],
+      "viewports": [
+        {
+          "width": 1440,
+          "status": "PASS",
+          "failures": [],
+          "httpErrors": [],
+          "pageExceptions": 0,
+          "consoleErrors": 0,
+          "failedRequests": 0,
+          "overflow": false,
+          "position": {
+            "borrower": "alice.noren-near-mw9h22el.testnet",
+            "collateral": [],
+            "collateral_usd6": "0",
+            "credit_limit_usd6": "0",
+            "debt_usd6": "0",
+            "available_usd6": "0",
+            "health_bps": null,
+            "prices_fresh": true,
+            "pending": false,
+            "apr_bps": 1000
+          }
+        },
+        {
+          "width": 375,
+          "status": "PASS",
+          "failures": [],
+          "httpErrors": [],
+          "pageExceptions": 0,
+          "consoleErrors": 0,
+          "failedRequests": 0,
+          "overflow": false,
+          "position": {
+            "borrower": "alice.noren-near-mw9h22el.testnet",
+            "collateral": [],
+            "collateral_usd6": "0",
+            "credit_limit_usd6": "0",
+            "debt_usd6": "0",
+            "available_usd6": "0",
+            "health_bps": null,
+            "prices_fresh": true,
+            "pending": false,
+            "apr_bps": 1000
+          }
+        }
+      ],
+      "after": {
+        "collateral": "1000000",
+        "shop": "40050000",
+        "position": {
+          "borrower": "alice.noren-near-mw9h22el.testnet",
+          "collateral": [],
+          "collateral_usd6": "0",
+          "credit_limit_usd6": "0",
+          "debt_usd6": "0",
+          "available_usd6": "0",
+          "health_bps": null,
+          "prices_fresh": true,
+          "pending": false,
+          "apr_bps": 1000
+        }
+      },
+      "totalNearSpentYocto": "5603117634717400000004",
+      "totalNearSpent": 0.0056031176347174005,
+      "finishedAt": "2026-11-11T18:48:29.227Z",
+      "budgetChargedYocto": "5603117634717400000004"
+    }
+  ]
+}
