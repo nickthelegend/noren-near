@@ -15,12 +15,20 @@ export type Rate = { symbol: string; token: string; supply_apy: string; borrow_a
 async function jsonResponse(response: Response): Promise<unknown> {
   const raw = await response.text();
   let parsed: unknown;
-  try { parsed = JSON.parse(raw); } catch { throw new Error(`HTTP ${response.status}: non-JSON response`); }
-  if (!response.ok) throw new Error(`HTTP ${response.status}: ${JSON.stringify(parsed)}`);
+  try { parsed = JSON.parse(raw); } catch { throw new Error(`The service returned an unreadable response (HTTP ${response.status}). Try again.`); }
+  if (!response.ok) {
+    const body = parsed as { message?: unknown; error?: unknown } | null;
+    const detail = body?.message ?? body?.error;
+    throw new Error(typeof detail === "string" ? `${detail.replace(/\s+/g, " ").slice(0, 180)} (HTTP ${response.status}). Try again.` : `The service is unavailable (HTTP ${response.status}). Try again.`);
+  }
   return parsed;
 }
+async function fetchResponse(url: string, init: RequestInit, fetcher: typeof fetch): Promise<Response> {
+  try { return await fetcher(url, { ...init, signal: AbortSignal.timeout(15_000) }); }
+  catch { throw new Error("The service could not be reached. Check your connection and try again."); }
+}
 export async function supportedTokens(fetcher: typeof fetch = fetch): Promise<Token[]> {
-  const result = await jsonResponse(await fetcher(`${ONECLICK_URL}/v0/tokens`));
+  const result = await jsonResponse(await fetchResponse(`${ONECLICK_URL}/v0/tokens`, {}, fetcher));
   if (!Array.isArray(result)) throw new Error("1Click token response is not an array");
   return result as Token[];
 }
@@ -43,7 +51,7 @@ export async function dryQuote(request: QuoteRequest, jwt?: string, fetcher: typ
   };
   const headers: Record<string, string> = { "content-type": "application/json" };
   if (jwt) headers.authorization = `Bearer ${jwt}`;
-  const quote = await jsonResponse(await fetcher(`${ONECLICK_URL}/v0/quote`, { method: "POST", headers, body: JSON.stringify(body) }));
+  const quote = await jsonResponse(await fetchResponse(`${ONECLICK_URL}/v0/quote`, { method: "POST", headers, body: JSON.stringify(body) }, fetcher));
   return { quote, timestamp: new Date().toISOString() };
 }
 export async function quoteDeposit(originAsset: string, destinationAsset: string, amount: string, nearAccount: string, originRefund: string, jwt?: string): Promise<QuoteResponse> {
@@ -55,7 +63,7 @@ export async function quoteSpend(originAsset: string, destinationAsset: string, 
     refundTo: borrower, refundType: "ORIGIN_CHAIN", confidentiality: confidential ? "basic" : undefined }, jwt);
 }
 export async function rheaRates(fetcher: typeof fetch = fetch): Promise<Rate[]> {
-  const result = await jsonResponse(await fetcher(RHEA_RATES_URL)) as { code?: string; data?: Rate[] };
+  const result = await jsonResponse(await fetchResponse(RHEA_RATES_URL, {}, fetcher)) as { code?: string; data?: Rate[] };
   if (result.code !== "0" || !Array.isArray(result.data)) throw new Error("Rhea rates unavailable");
   return result.data;
 }
@@ -74,8 +82,9 @@ export async function nearView<T>(contractId: string, method: string, args: obje
   const bytes = new TextEncoder().encode(JSON.stringify(args));
   const base64 = btoa(String.fromCharCode(...bytes));
   const payload = { jsonrpc: "2.0", id: "noren", method: "query", params: { request_type: "call_function", finality: "final", account_id: contractId, method_name: method, args_base64: base64 } };
-  const response = await jsonResponse(await fetcher(rpc, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) })) as { error?: unknown; result?: { result?: number[] } };
-  if (response.error) throw new Error(JSON.stringify(response.error));
+  const response = await jsonResponse(await fetchResponse(rpc, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) }, fetcher)) as { error?: { data?: { cause?: { name?: string } } }; result?: { result?: number[]; error?: unknown } };
+  if (response.error?.data?.cause?.name === "UNKNOWN_ACCOUNT") throw new Error("The NEAR account could not be found. Check the account and try again.");
+  if (response.error || response.result?.error) throw new Error("The NEAR contract could not be read. Try again shortly.");
   if (!response.result?.result) throw new Error("NEAR RPC omitted call result");
   return JSON.parse(new TextDecoder().decode(new Uint8Array(response.result.result))) as T;
 }

@@ -137,7 +137,7 @@ export function NearLanding() {
         <div className="nl-melt" data-reveal>
           <div className="nl-melt-copy">
             <Tag>Debt-free on</Tag>
-            <h2>{melt?.payoff ? <>{melt.payoff.toLocaleDateString("en-US", { month: "long", year: "numeric" })}</> : melt ? "Not at today’s rates" : bob.error ? "Unavailable" : "Reading…"}</h2>
+            <h2>{melt?.payoff ? <>{melt.payoff.toLocaleDateString("en-US", { month: "long", year: "numeric" })}</> : melt ? "Not at today’s rates" : bob.error || rates.error || (rates.data && wbtcApy === undefined) ? "Unavailable" : "Reading…"}</h2>
             <p>The open demo loan on testnet, <a className="mono" href={explorerAccount(DEMO.open)} target="_blank" rel="noreferrer">{short(DEMO.open)}</a>: {usd6(pos?.debt_usd6)} owed against {usd6(pos?.collateral_usd6)} of test WBTC, at the contract’s {pool.data ? pool.data.aprBps / 100 : "…"}% APR.</p>
             <p>If that collateral earned Rhea’s live WBTC supply rate ({wbtcApy !== undefined ? `${wbtcApy}%` : rates.error ? "unavailable" : "…"}), monthly harvests would clear it on the date above.</p>
             <div className="nl-chips"><Chip s="proj" /><Chip s="blocked" /></div>

@@ -262,7 +262,7 @@ function MeltView({ account, pos, posError, aprBps, rates }: { account: string; 
       <section className="nk-card nc-melt">
         <div className="nk-card-h"><div><b>Debt-free on</b><p>{short(account)}, if the collateral earned Rhea’s live WBTC supply rate and every harvest paid the loan down.</p></div><span className="nk-pill warn">Projection</span></div>
         <div className="nk-pad">
-          <strong className="nc-date">{posError ? "Unavailable" : !ready ? "Reading…" : debt === 0 ? "Already debt-free" : m?.payoff ? m.payoff.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "Not at today’s rates"}</strong>
+          <strong className="nc-date">{posError || rates.error || (rates.data && apy === undefined) ? "Unavailable" : !ready ? "Reading…" : debt === 0 ? "Already debt-free" : m?.payoff ? m.payoff.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "Not at today’s rates"}</strong>
           {posError && <p className="nk-err">{posError}</p>}
           {rates.error && <p className="nk-err">Rhea rates: {rates.error}</p>}
           {ready && debt > 0 && <MeltChart debtUsd={debt} collateralUsd={coll} supplyApy={Number(apy)} aprBps={aprBps!} />}
