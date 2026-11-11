@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { dryQuote, type QuoteResponse } from "@noren/near-sdk";
 import { Icon, Logo } from "../ui";
 import { Mark } from "../logos";
@@ -172,6 +172,9 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
   const [quote, setQuote] = useState<{ r: QuoteResponse; dest: Dest } | null>(null);
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  const quoteRequest = useRef(0);
+  const clearQuote = () => { quoteRequest.current++; setQuote(null); setErr(""); setBusy(false); };
+  useEffect(() => () => { quoteRequest.current++; }, []);
   const amt = Number(amount);
   // USDC has six decimals. Keep installment arithmetic within exact integer units.
   const valid = /^\d+(?:\.\d{1,6})?$/.test(amount) && amt > 0 && Number.isSafeInteger(Math.round(amt * 1e6));
@@ -182,13 +185,15 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
   const schedule = useMemo(() => { if (!valid) return []; const third = Math.floor((amt * 1e6) / 3); return [third, third, Math.round(amt * 1e6) - third * 2].map((v, i) => ({ v, d: new Date(Date.now() + i * 30 * 86_400_000) })); }, [amt, valid]);
 
   async function getQuote() {
+    const request = ++quoteRequest.current;
     setErr(""); setQuote(null); setBusy(true);
     try {
       if (!out) throw new Error(`USDC on ${dest} is not in the live 1Click catalog`);
       const r = await dryQuote({ originAsset: NEAR_USDC, destinationAsset: out.assetId, amount: String(Math.round(amt * 1e6)), recipient: to,
         recipientType: "DESTINATION_CHAIN", refundTo: "intents.near", refundType: "ORIGIN_CHAIN" });
-      setQuote({ r, dest });
-    } catch (e) { setErr(e instanceof Error ? e.message : String(e)); } finally { setBusy(false); }
+      if (request === quoteRequest.current) setQuote({ r, dest });
+    } catch (e) { if (request === quoteRequest.current) setErr(e instanceof Error ? e.message : String(e)); }
+    finally { if (request === quoteRequest.current) setBusy(false); }
   }
   const q = quote?.r.quote as { quote?: { amountOutFormatted?: string; amountInFormatted?: string; timeEstimate?: number; amountOutUsd?: string; minAmountOut?: string } } | undefined;
   return (
@@ -197,18 +202,18 @@ function PayView({ account, pos, tokens }: { account: string; pos?: Position; to
       <div className="nk-band" role="radiogroup" aria-label="Where the merchant gets paid">
         <span>Merchant is on</span>
         {([["near", "NEAR"], ["base", "Base"], ["arb", "Arbitrum"]] as [Dest, string][]).map(([k, l]) => (
-          <button key={k} type="button" role="radio" aria-checked={dest === k} aria-pressed={dest === k} onClick={() => { setDest(k); setQuote(null); setErr(""); setTo(""); }}>{l}</button>
+          <button key={k} type="button" role="radio" aria-checked={dest === k} aria-pressed={dest === k} onClick={() => { setDest(k); clearQuote(); setTo(""); }}>{l}</button>
         ))}
       </div>
       <div className="nk-pad">
         <div className="nk-box" style={{ marginTop: 10 }}>
           <label htmlFor="nc-amt"><span>Amount</span><span className="mono">{pos ? `${usd6(pos.available_usd6)} available` : "—"}</span></label>
-          <div className="nk-row"><input id="nc-amt" inputMode="decimal" value={amount} onChange={(e) => { setAmount(e.target.value.replace(/[^0-9.]/g, "")); setQuote(null); }} aria-label="Amount in USDC" /><span className="nk-token" data-static="true"><Mark id="USDC" size={28} />USDC</span></div>
+          <div className="nk-row"><input id="nc-amt" inputMode="decimal" value={amount} onChange={(e) => { setAmount(e.target.value.replace(/[^0-9.]/g, "")); clearQuote(); }} aria-label="Amount in USDC" /><span className="nk-token" data-static="true"><Mark id="USDC" size={28} />USDC</span></div>
           <div className="nk-sub"><span>{dest === "near" ? "Paid as test USDC on NEAR testnet" : `Arrives as USDC on ${dest === "base" ? "Base" : "Arbitrum"}`}</span>{valid && pos && amt > avail ? <span className="nc-over">Over your available credit</span> : <span />}</div>
         </div>
         <div className="nk-box">
           <label htmlFor="nc-to"><span>Merchant</span><span className="mono">{dest === "near" ? "NEAR account" : "0x address"}</span></label>
-          <input id="nc-to" className="nc-addr" value={to} onChange={(e) => { setTo(e.target.value.trim()); setQuote(null); }} placeholder={dest === "near" ? DEMO.merchant : "0x…"} spellCheck={false} />
+          <input id="nc-to" className="nc-addr" value={to} onChange={(e) => { setTo(e.target.value.trim()); clearQuote(); }} placeholder={dest === "near" ? DEMO.merchant : "0x…"} spellCheck={false} />
         </div>
         <div className={`nk-toggle ${in3 ? "on" : ""}`}>
           <div className="nk-toggle-l"><span><b>Pay in 3</b><small>Preview three draws, 30 days apart. No schedule is submitted here.</small></span></div>
