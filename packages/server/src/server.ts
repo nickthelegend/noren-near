@@ -9,6 +9,7 @@ import { checkoutAbi, encodeInvoiceData, invoiceMatches, jsonBigints, localFork,
 import { CURRENCIES, DEFAULT_PRICE_RPC, quoteUsdc, type UsdcQuote } from '@noren/core/pricing';
 import { assertRobinhoodFork, creditDrawProblem, ensureUniswapOnFork, gatewayAbi, robinhoodFaucet, watchCreditDraws, watchStockPayments } from './credit.ts';
 import { AuthState } from './auth.ts';
+import { devOrigins } from './dev-origins.ts';
 import { createPrivyVerifier } from './privy.ts';
 import { createPrivateRelay, type PrivateRelayOptions } from './private.ts';
 import { findStoreBySecret, mayAct, newSecretKey, publicStore, validName, validPayout, validateRedirect, validateMetadata, type Principal, type Store } from './stores.ts';
@@ -90,7 +91,8 @@ export function createMerchantServer(options: ServerOptions): Server {
   const chain = localFork(options.rpcUrl);
   const publicClient: any = createPublicClient({ chain, transport: http(options.rpcUrl), cacheTime: 0 });
   const privy = createPrivyVerifier(options.privyAppId ?? process.env.PRIVY_APP_ID ?? undefined);
-  const auth = new AuthState(publicClient, options.deployment.chainId, ['localhost:5190', '127.0.0.1:5190', ...(process.env.NOREN_SIWE_DOMAINS ?? '').split(',').map(s => s.trim()).filter(Boolean)]);
+  const localOrigins = devOrigins();
+  const auth = new AuthState(publicClient, options.deployment.chainId, ['localhost:5190', '127.0.0.1:5190', ...(options.dev ? [...localOrigins].map((o) => new URL(o).host) : []), ...(process.env.NOREN_SIWE_DOMAINS ?? '').split(',').map(s => s.trim()).filter(Boolean)]);
   if (options.dev && (!loopback(options.rpcUrl) || options.deployment.chainId !== 5042002)) throw new Error('Setup required: dev endpoints require loopback RPC and fork chain 5042002');
   const devReady = options.dev ? assertLocalFork(options.rpcUrl) : Promise.resolve();
   void devReady.catch(() => {});
@@ -201,8 +203,12 @@ export function createMerchantServer(options: ServerOptions): Server {
       await ready; await devReady;
       const url = new URL(req.url ?? '/', 'http://localhost');
       const path = url.pathname;
-      if (options.dev && req.method === 'OPTIONS') { res.writeHead(204, { 'access-control-allow-origin': req.headers.origin === 'http://localhost:5190' || req.headers.origin === 'http://127.0.0.1:5190' ? req.headers.origin : '', 'access-control-allow-methods': 'GET, POST, PATCH, DELETE, OPTIONS', 'access-control-allow-headers': 'content-type, authorization' }); res.end(); return; }
-      if (options.dev) { const origin = req.headers.origin; if (origin === 'http://localhost:5190' || origin === 'http://127.0.0.1:5190') res.setHeader('access-control-allow-origin', origin); }
+      if (options.dev) {
+        res.setHeader('vary', 'Origin');
+        const origin = req.headers.origin;
+        if (origin && localOrigins.has(origin)) res.setHeader('access-control-allow-origin', origin);
+        if (req.method === 'OPTIONS') { res.writeHead(204, { 'access-control-allow-methods': 'GET, POST, PATCH, DELETE, OPTIONS', 'access-control-allow-headers': 'content-type, authorization' }); res.end(); return; }
+      }
       (req as any).norenMerchantAllowed = (address: string) => mayAct(principal(req), address, stores);
       (req as any).norenAuthenticated = () => !!principal(req);
       for (const mount of options.mounts ?? []) if (await mount(req, res)) return;

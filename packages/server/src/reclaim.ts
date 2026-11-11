@@ -148,11 +148,11 @@ export async function startReclaimRequest(o: { env: ReclaimEnv; providers?: Recl
   return { sessionId, session, reply, done };
 }
 
-const ORIGINS = new Set(['http://localhost:5190', 'http://127.0.0.1:5190']);
+import { devOrigins } from './dev-origins.ts';
 function send(req: IncomingMessage, res: ServerResponse, status: number, value: unknown) {
   const origin = req.headers.origin;
   const headers: Record<string, string> = { 'content-type': 'application/json' };
-  if (origin && ORIGINS.has(origin)) Object.assign(headers, { 'access-control-allow-origin': origin, 'access-control-allow-methods': 'GET, POST, OPTIONS', 'access-control-allow-headers': 'content-type' });
+  if (origin && devOrigins().has(origin)) Object.assign(headers, { 'access-control-allow-origin': origin, 'access-control-allow-methods': 'GET, POST, OPTIONS', 'access-control-allow-headers': 'content-type' });
   res.writeHead(status, headers);
   res.end(status === 204 ? undefined : JSON.stringify(value));
 }

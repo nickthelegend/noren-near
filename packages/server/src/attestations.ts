@@ -67,10 +67,10 @@ export async function attestationsFor(t: OnchainTarget & { fromBlock?: bigint },
   return logs.map((l) => ({ kind: Number(l.args.kind), kindName: KIND_NAMES.find((k) => KIND[k] === Number(l.args.kind)) ?? `kind ${l.args.kind}`, tx: l.transactionHash as Hex, commitment: l.args.commitment as Hex }));
 }
 
-const ORIGINS = new Set(['http://localhost:5190', 'http://127.0.0.1:5190']);
+import { devOrigins } from './dev-origins.ts';
 function send(req: IncomingMessage, res: ServerResponse, status: number, value: unknown) {
   const headers: Record<string, string> = { 'content-type': 'application/json' };
-  if (req.headers.origin && ORIGINS.has(req.headers.origin)) Object.assign(headers, { 'access-control-allow-origin': req.headers.origin, 'access-control-allow-methods': 'GET, POST, OPTIONS', 'access-control-allow-headers': 'content-type' });
+  if (req.headers.origin && devOrigins().has(req.headers.origin)) Object.assign(headers, { 'access-control-allow-origin': req.headers.origin, 'access-control-allow-methods': 'GET, POST, OPTIONS', 'access-control-allow-headers': 'content-type' });
   res.writeHead(status, headers);
   res.end(status === 204 ? undefined : JSON.stringify(value));
 }
