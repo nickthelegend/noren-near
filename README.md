@@ -6,15 +6,21 @@ Noren on NEAR lets borrowers pay a merchant from a credit line backed by test WB
 
 ## Try it
 
-The NEAR demo runs locally and reads public services. Use Node 22+ and pnpm 10.29.2. No wallet or credentials are needed for these steps.
+The NEAR demo runs locally. Use Node 22+ and pnpm 10.29.2. Reading positions and dry quotes needs no wallet. Signing needs a funded **NEAR testnet** account in **Meteor Wallet**; the browser never loads the operator's credential file.
 
-1. In this checkout, run `pnpm install`, then `pnpm --filter @noren/near-sdk build`, then `pnpm --filter @noren/web dev` - see Vite serve the app at `http://localhost:5190`.
-2. Open `http://localhost:5190/#/near` - see the NEAR landing page, recorded transaction links and live contract reads. The signed BTC price may be stale; its age is shown.
-3. Open `http://localhost:5190/#/near/app` - see bob's open loan, collateral, debt and health read from the contract. Click the account chip and choose alice - see the account that repaid and withdrew its collateral. Balances can change after further demo runs.
-4. Choose **Pay anyone**, select Base, enter a destination `0x` address and click **Get a live 1Click quote** - see a `dry: true` quote and the disabled **Send: Setup required: NEAR_MAINNET_ACCOUNT** button. Select NEAR - see the recorded testnet merchant payment. The browser does not sign transactions.
-5. Choose **Debt-free** - see a payoff **Projection** based on the position and Rhea's live WBTC supply rate, plus an empty Harvests card explaining the missing yield integration. If a live service fails, see its error and inspect the saved evidence below.
+1. Run `pnpm install`, `pnpm --filter @noren/near-sdk build`, then `pnpm --filter @noren/web dev` - see Vite serve `http://localhost:5190`.
+2. Open `http://localhost:5190/#/near` - see the landing, live data and recorded testnet transactions. The signed BTC price has a 90-second limit; its age is shown.
+3. Open `http://localhost:5190/#/near/app` - see bob's demo position. The account chip still lets you read alice or another account.
+4. Click the account chip, then **Connect Meteor Wallet** - see Meteor's testnet popup. Approve sign-in to `credit.noren-near-mw9h22el.testnet` - see your own account and position. Allow popups if blocked; closing the window shows a readable cancellation message.
+5. Click **Bring coins** (or account chip → **Deposit collateral**), then **Get test WBTC (no value)** if needed - see a wallet-approved test-token mint, with storage registration if required. Deposit `0.0001` test WBTC - see pending → final, NearBlocks links and refreshed collateral.
+6. Have the demo operator run `pnpm near:relay` just before borrowing - see a fresh signed price. This command needs the existing operator credential file. A stale price stops new borrowing and tells you to refresh; it never silently submits against an old price.
+7. Open **Pay anyone**, select **NEAR**, use the prefilled demo shop or another testnet merchant and enter `0.01` USDC. Click **Borrow and pay shop**, approve any Meteor request - see final confirmation and a NearBlocks link. The shop receives test USDC directly from your credit line. Pay in 3 remains a preview.
+8. Open the account chip → **Repay credit**. Use **Get test USDC (no value)** if needed, then repay the prefilled debt plus a small interest buffer - see final confirmation and updated debt. Excess is refunded by the token contract.
+9. Open the account chip → **Withdraw collateral**, confirm the amount and approve - see final confirmation, collateral returned to your wallet and the updated position.
+10. Select Base or Arbitrum in **Pay anyone**, enter a destination address and get a live 1Click quote - see a `dry: true` result. Cross-chain sending still requires the unfinished mainnet adapter.
+11. Open **Debt-free** - see a labelled Projection and the empty Harvests card. Real yield harvesting is unfinished.
 
-See [FLOW-QA.md](FLOW-QA.md) for the full route checks, screenshots, live testnet cycle and remaining blockers. The account picker reads positions; Meteor wallet connection and browser signing are not implemented.
+See [FLOW-QA.md](FLOW-QA.md) for before/after screenshots, wallet popup/error checks and the exact shared-call proof. Human Meteor approval is manual. The NEAR position and payments are public; Noren's inherited private merchant checkout is documented below.
 
 ## Live on NEAR testnet
 
@@ -59,6 +65,7 @@ For a production preview, run `pnpm --filter @noren/web build`, then `pnpm --fil
 
 - `pnpm near:verify` builds the contracts and runs the sandbox, SDK, MCP, web and inherited checks. It needs Rust 1.95.0 and cargo-near 0.22.0; its script downloads the sandbox if `NEAR_SANDBOX_BIN` is unset and no local copy is available. See [TESTING.md](TESTING.md#near-edition-2026-11-09) for the recorded results.
 - `pnpm near:borrow --relay` sends a live testnet borrow with the deploy operator's credentials. It refreshes the price if older than 75 seconds, checks the positions and merchant balance, and prints the transaction links. It spends testnet NEAR and adds debt. Details: [One live borrow](#one-live-borrow-pnpm-nearborrow).
+- `pnpm near:wallet-cycle --key-file .near-credentials/testnet.json` proves the browser's shared deposit/borrow/repay/withdraw pipeline with the demo key by file path, under a 0.3 testnet NEAR cap. `--dry` prints the calls without reading credentials or signing. Evidence: [wallet cycle](deployments/wallet-cycle-2026-11-11.json).
 - `pnpm near:relay` posts a signed Coinbase price with the deploy operator's credentials. `pnpm near:quotes` refreshes the saved 1Click dry quotes.
 - After `pnpm --filter @noren/near-sdk build` and `pnpm --filter @noren/near-mcp build`, run `pnpm --filter @noren/near-mcp start` with `NEAR_TESTNET_CONTRACT` set to the credit contract above - see `credit_status`, `quote_deposit`, `quote_spend` and `harvest_preview` exposed over MCP stdio.
 

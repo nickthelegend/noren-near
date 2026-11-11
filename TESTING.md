@@ -1,5 +1,13 @@
 # Test results
 
+## Meteor wallet addition (2026-11-11)
+
+- **Build:** production web typecheck/build passed with `NODE_OPTIONS=--max-old-space-size=1536 pnpm --filter @noren/web build`. A 1024 MB heap attempt exhausted its heap; the bounded 1536 MB build passed. Swap was checked before builds.
+- **8 tests passed:** `pnpm exec vitest run packages/web/src/near/credit-calls.test.ts packages/web/src/near/credit-runtime.test.ts`. They cover exact token units/receivers, signer-only withdrawals, testnet restrictions, popup/balance/stale-price messages, FINAL polling and rejection of refunded/rolled-back transfers.
+- **Real testnet proof passed:** `pnpm near:wallet-cycle --key-file .near-credentials/testnet.json` imports the browser's exact `runCreditAction` pipeline. Five transactions finalized: deposit 0.0001 test WBTC, post a fresh signed price, borrow 0.01 test USDC directly to the shop, repay and withdraw. Alice ended with debt 0 and restored collateral; the shop gained exactly 0.01 test USDC. Measured spend: **0.00280155882 NEAR**, below 0.3. [Raw calls, hashes and postconditions](deployments/wallet-cycle-2026-11-11.json).
+- **Wallet packages:** Wallet Selector core and Meteor module are pinned to 10.1.4. The Kotoba-style package extensions isolate near-api-js 6.2.5 and @near-js/utils 2.5.1; root script SDK remains 7.3.1. A pnpm patch removes the pinned Meteor SDK's generated access-key console log from both entry points.
+- **Browser:** 20 financial/error state captures at 1440/375 had zero page exceptions and horizontal overflow; a final account-input sync regression also passed at both widths. Actual Meteor testnet popup, closed-window and blocked-popup behavior checked at 1440/375 under the shared Chrome lock. Financial UI state tests use a test-only Meteor transport/position fixture and replay the real proof's FINAL receipts; no browser transaction is broadcast by these fixtures. Human Meteor login/approval remains manual. Screenshot and protocol evidence: [FLOW-QA.md](FLOW-QA.md#meteor-wallet-addition-2026-11-11).
+
 ## NEAR edition (2026-11-09)
 
 Recorded results from this branch, separate from the historical `main` figures below. These are dated runs, not current balance or transaction totals; later demo runs append to the deployment log. Nothing here uses a mocked client or a stubbed RPC: the contract tests run signed transactions on a real nearcore sandbox, and the testnet and quote checks hit the live networks.
