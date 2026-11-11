@@ -900,6 +900,8 @@ h1, h2, h3, .kpi b, .drawer-amt b, .co-amt, .lp-co-amt, .money.big input, .co-ba
 .tx-err { padding: 18px 20px; border-radius: 14px; background: var(--rust-wash); border: 1px solid rgba(179, 65, 44, .2); color: var(--ink); }
 .tx-err p { margin: 6px 0 0; font-size: 14px; overflow-wrap: anywhere; }
 .tx-err pre { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--white); font: 13px var(--mono); overflow-x: auto; }
+.setup { min-width: 0; overflow-wrap: anywhere; }
+.setup pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .tx-skel { display: grid; gap: 12px; }
 .tx-skel i { display: block; height: 16px; border-radius: 6px; background: linear-gradient(90deg, var(--cloth), var(--paper), var(--cloth)); background-size: 200% 100%; animation: txsk 1.2s linear infinite; }
 .tx-skel i:nth-child(2n) { width: 70%; }
