@@ -1,6 +1,0 @@
-*.env
-.env*
-cctp-relay/node_modules/
-cctp-relay/.cre_build_tmp.js
-*.wasm
-binary.wasm

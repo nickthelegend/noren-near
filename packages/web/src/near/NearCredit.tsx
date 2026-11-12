@@ -14,7 +14,7 @@ import {
 import "@fontsource-variable/urbanist";
 import "@fontsource/space-mono/400.css";
 import "@fontsource/space-mono/700.css";
-import "../app/app.css";
+import "./app-base.css";
 import "./near.css";
 
 type Tab = "credit" | "pay" | "melt";

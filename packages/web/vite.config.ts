@@ -1,13 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-const require = createRequire(import.meta.url);
 
-// VITE_* keys (VITE_PRIVY_APP_ID) come from the repo's gitignored .env, as scripts/dev-all.ts does for the server:
+// Public VITE_* configuration comes from the checkout or shared worktree environment:
 // this checkout's .env, else the main checkout's when this is a git worktree. Only VITE_-prefixed values reach the app.
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 function envDir() {
@@ -15,7 +13,6 @@ function envDir() {
   try { return resolve(execFileSync("git", ["rev-parse", "--path-format=absolute", "--git-common-dir"], { cwd: root, encoding: "utf8" }).trim(), ".."); } catch { return root; }
 }
 
-// See packages/core/BROWSER.md: maci-crypto imports Node's `assert`; snarkjs and Kohaku are CommonJS-heavy.
 export default defineConfig({
   plugins: [react(), {
     name: "near-public-assets",
@@ -31,7 +28,7 @@ export default defineConfig({
     },
   }],
   envDir: envDir(),
-  resolve: { dedupe: ["react", "react-dom", "viem"], alias: { assert: require.resolve("assert/") } },
+  resolve: { dedupe: ["react", "react-dom"] },
   define: { "process.env": {}, global: "globalThis" },
   optimizeDeps: { esbuildOptions: { target: "es2022" } },
   build: { copyPublicDir: false, target: "es2022", chunkSizeWarningLimit: 4000 },

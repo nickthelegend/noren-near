@@ -1,6 +1,0 @@
-.fork/
-contracts/out/
-contracts/cache/
-contracts/broadcast/
-contracts/deployments/*.local.json
-.fork-anvil.log

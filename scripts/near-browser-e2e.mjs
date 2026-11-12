@@ -8,9 +8,9 @@ import { chromium } from 'playwright-core';
 import { actions } from 'near-api-js';
 import { accountFor, loadDeployment, view, provider, fetchBtcSpot, signPrice } from './near-lib.ts';
 const root = resolve(import.meta.dirname, '..');
-const scratch = '/private/tmp/claude-501/-Volumes-Extreme-SSD-Projects-grokbot/0f121b7c-0081-4ec0-81a9-0ccb4f7f8b48/scratchpad';
-const { withChromeLock } = await import(`${scratch}/chrome-lock.mjs`);
-const screenshots = join(scratch, 'flow-qa/noren-near/qa-signer');
+const orchestration = resolve(root, '../../orchestration');
+const { withChromeLock } = await import(resolve(orchestration, 'chrome-lock.mjs'));
+const screenshots = join(orchestration, 'shots/noren-near/r3/qa-signer');
 const qaDir = join(root, '.near-build/qa-web');
 const RPC = 'https://test.rpc.fastnear.com', CAP = 300_000_000_000_000_000_000_000n;
 const args = process.argv.slice(2), keyIndex = args.indexOf('--key-file');
@@ -48,13 +48,14 @@ async function serve(dir, port) {
   }
   throw Error('Preview startup timeout.');
 }
+async function resources() {
+  const memoryFree = () => Number(/free percentage: (\d+)%/.exec(execFileSync('memory_pressure', { encoding: 'utf8' }))?.[1] ?? 0);
+  while (memoryFree() < 30) { console.log('Waiting for 30% free memory.'); await sleep(30000); }
+  const disk = execFileSync('df', ['-k', '/System/Volumes/Data'], { encoding: 'utf8' }).trim().split('\n').at(-1).trim().split(/\s+/);
+  check(Number(disk[3]) >= 5 * 1024 * 1024, 'Less than 5 GB free; stopped before build/browser.');
+}
 async function build(label, command, env) {
-  const swap = execFileSync('sysctl', ['vm.swapusage'], { encoding: 'utf8' });
-  if (Number(/free = ([\d.]+)M/.exec(swap)?.[1] ?? 0) < 500) {
-    console.log('Swap free is below 500 MB; waiting two minutes before the build.');
-    await sleep(60000); await sleep(60000);
-    check(Number(/free = ([\d.]+)M/.exec(execFileSync('sysctl', ['vm.swapusage'], { encoding: 'utf8' }))?.[1] ?? 0) >= 500, 'Swap remains too low; build skipped.');
-  }
+  await resources();
   const log = openSync(join(screenshots, `${label}-build.log`), 'w');
   try { const child = spawn('pnpm', command, { cwd: root, env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=1536', ...env }, stdio: ['ignore', log, log] }); const [code] = await once(child, 'exit'); check(code === 0, `${label} build failed.`); }
   finally { closeSync(log); }
@@ -120,6 +121,7 @@ async function main() {
     const path = join(captureDir, `${name}-${width}.png`); await p.screenshot({ path, fullPage: true }); run.screenshots.push({ name, width, path }); save();
   }
   await withChromeLock(async () => {
+    await resources();
     browser = await chromium.launch({ channel: 'chrome', headless: true });
     try {
       stage = 'production baseline'; const productionOrigin = await serve(join(root, 'packages/web/dist'), port);

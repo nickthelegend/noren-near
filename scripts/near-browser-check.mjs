@@ -1,61 +1,56 @@
-import { spawn } from "node:child_process";
-import { createRequire } from "node:module";
-import { mkdirSync } from "node:fs";
-import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-
-const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
-const require = createRequire(import.meta.url);
-const { chromium } = require("/Volumes/Extreme SSD/Projects/tasteprobe/node_modules/playwright-core");
-const output = resolve(root, ".near-build");
-mkdirSync(output, { recursive: true });
-const server = spawn(resolve(root, "packages/web/node_modules/.bin/vite"), ["preview", "--host", "127.0.0.1", "--port", "5190", "--strictPort"], {
-  cwd: resolve(root, "packages/web"), stdio: "ignore",
-});
-let browser;
-try {
-  let ready = false;
-  for (let i = 0; i < 40; i++) {
-    try { const r = await fetch("http://127.0.0.1:5190/"); if (r.ok) { ready = true; break; } } catch {}
-    await new Promise(r => setTimeout(r, 250));
+// Read-only production UI gate. No wallet, credentials or transaction broadcasts.
+import { spawn, spawnSync, execFileSync } from 'node:child_process';
+import { once } from 'node:events';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { chromium } from 'playwright-core';
+const root = resolve(import.meta.dirname, '..');
+const { withChromeLock } = await import(resolve(root, '../../orchestration/chrome-lock.mjs'));
+const output = resolve(root, '../../orchestration/shots/noren-near/r3');
+async function memoryReady() {
+  while (Number(/free percentage: (\d+)%/.exec(execFileSync('memory_pressure', { encoding: 'utf8' }))?.[1] ?? 0) < 30) {
+    console.log('Waiting for 30% free memory before Chrome.');
+    await new Promise(r => setTimeout(r, 30000));
   }
-  if (!ready) throw new Error("Vite preview did not start");
-  browser = await chromium.launch({ channel: "chrome", headless: true });
-  const results = [];
-  const routes = [
-    { hash: "#/near", ready: ".nl-coin strong", live: () => /\d+ assets on \d+ chains/.test(document.body.textContent ?? "") },
-    { hash: "#/near/app", ready: ".nc-hero", live: () => /\$[\d,]+\.\d\d/.test(document.querySelector(".nc-hero b")?.textContent ?? "") },
-  ];
-  for (const width of [1440, 390]) for (const route of routes) {
-    const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
-    const errors = [];
-    page.on("pageerror", error => errors.push(error.message));
-    await page.goto(`http://127.0.0.1:5190/${route.hash}`, { waitUntil: "domcontentloaded" });
-    await page.waitForSelector(route.ready);
-    await page.waitForFunction(route.live, undefined, { timeout: 20000 });
-    const metrics = await page.evaluate(() => ({
-      rootTextLength: document.getElementById("root")?.textContent?.trim().length ?? 0,
-      scrollWidth: document.documentElement.scrollWidth, bodyScrollWidth: document.body.scrollWidth, innerWidth,
-      setupVisible: document.body.textContent?.includes("Setup required: NEAR_MAINNET_ACCOUNT") ?? false,
-    }));
-    const name = route.hash.replace(/[#/]+/g, "-").replace(/^-/, "");
-    await page.screenshot({ path: resolve(output, `${name}-${width}.png`), fullPage: true });
-    if (metrics.rootTextLength === 0 || errors.length || metrics.scrollWidth > metrics.innerWidth || metrics.bodyScrollWidth > metrics.innerWidth || !metrics.setupVisible)
-      throw new Error(`Browser gate failed at ${route.hash} ${width}: ${JSON.stringify({ ...metrics, errors })}`);
-    let liveSpendQuoteVisible = false;
-    if (width === 1440 && route.hash === "#/near/app") {
-      await page.getByRole("tab", { name: "Pay anyone" }).click();
-      await page.locator("#nc-to").fill("0x1111111111111111111111111111111111111111");
-      await page.getByRole("button", { name: /Get a live 1Click quote/ }).click();
-      await page.waitForSelector(".nc-receipt, .nk-err", { timeout: 30000 });
-      liveSpendQuoteVisible = (await page.locator(".nc-receipt").count()) > 0 && (await page.locator(".nc-receipt").innerText()).includes("dry: true");
-      if (!liveSpendQuoteVisible || errors.length) throw new Error(`Live browser spend quote failed: ${await page.locator(".nk-err").allInnerTexts()}`);
-    }
-    results.push({ route: route.hash, width, ...metrics, liveSpendQuoteVisible, pageErrors: errors.length, screenshot: `.near-build/${name}-${width}.png` });
-    await page.close();
-  }
-  console.log(JSON.stringify(results, null, 2));
-} finally {
-  if (browser) await browser.close();
-  server.kill("SIGTERM");
 }
+await memoryReady();
+mkdirSync(output, { recursive: true });
+const port = Array.from({ length: 700 }, (_, i) => 5300 + i).find(p => spawnSync('lsof', ['-nP', `-iTCP:${p}`, '-sTCP:LISTEN'], { stdio: 'ignore' }).status === 1);
+if (!port) throw Error('No free preview port in 5300-5999.');
+let server;
+try {
+  server = spawn(resolve(root, 'packages/web/node_modules/.bin/vite'), ['preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort'], { cwd: resolve(root, 'packages/web'), stdio: 'ignore' });
+  const origin = `http://127.0.0.1:${port}`;
+  let ready = false;
+  for (let i = 0; i < 50; i++) { try { if ((await fetch(origin)).ok) { ready = true; break; } } catch {} await new Promise(r => setTimeout(r, 200)); }
+  if (!ready) throw Error('Preview did not start.');
+  await withChromeLock(async () => {
+    await memoryReady();
+    const browser = await chromium.launch({ channel: 'chrome', headless: true });
+    const rows = [];
+    try {
+      for (const width of [1440, 375]) {
+        const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
+        const errors = [], failed = [];
+        page.on('pageerror', () => errors.push('page exception'));
+        page.on('requestfailed', r => failed.push(new URL(r.url()).origin));
+        await page.route('https://test.rpc.fastnear.com', route => { const request = route.request().postDataJSON(); if (/send|broadcast/i.test(request.method)) throw Error('Read-only gate refuses writes.'); return route.continue(); });
+        for (const [name, hash, wait] of [['credit', '#/near/app', '.nc-hero'], ['pay', '#/near/app/pay', '#nc-to'], ['debt-free', '#/near/app/melt', '.nm-date'], ['about', '#/near', '.nl-coin']]) {
+          await page.goto(origin + '/' + hash);
+          // The projection view can be empty while live data loads; its tab is still present.
+          await page.locator(name === 'debt-free' ? '[role="tab"][aria-selected="true"]' : wait).first().waitFor();
+          await page.waitForTimeout(1800); await page.evaluate(() => document.fonts.ready);
+          const overflow = await page.evaluate(() => Math.max(document.body.scrollWidth, document.documentElement.scrollWidth) > innerWidth);
+          const text = await page.locator('body').innerText();
+          if (errors.length || overflow || /undefined|NaN|\bArc\b|Robinhood|CCTP|CCIP/.test(text)) throw Error(`UI failed at ${name}, ${width}.`);
+          const file = `${name}-gate-${width}.png`;
+          await page.screenshot({ path: resolve(output, file), fullPage: true });
+          rows.push({ name, width, pageErrors: errors.length, failedRequests: [...failed], overflow, screenshot: file });
+        }
+        await page.close();
+      }
+      writeFileSync(resolve(output, 'browser-gate.json'), JSON.stringify(rows, null, 2) + '\n');
+      console.log(`${rows.length} read-only production browser checks passed; 0 NEAR spent.`);
+    } finally { await browser.close(); }
+  });
+} finally { if (server && server.exitCode === null) { server.kill('SIGTERM'); await once(server, 'exit'); } }

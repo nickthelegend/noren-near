@@ -1,5 +1,7 @@
 packages:
-  - packages/*
+  - packages/sdk
+  - packages/mcp
+  - packages/web
 
 packageExtensions:
   '@near-wallet-selector/core@10.1.4':

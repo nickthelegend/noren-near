@@ -5,36 +5,24 @@
   "license": "MIT",
   "packageManager": "pnpm@10.29.2",
   "scripts": {
-    "postinstall": "node patches/apply-kohaku.mjs",
-    "spike": "sh scripts/spike.sh",
-    "e2e": "sh scripts/e2e-fork.sh",
-    "e2e:credit": "tsx scripts/e2e-credit.ts",
-    "dev:stack": "sh scripts/dev-stack.sh",
-    "dev:all": "sh scripts/dev-all.sh",
-    "deploy:arc:dry": "tsx scripts/deploy-arc.ts --dry-run",
-    "deploy:arc": "tsx scripts/deploy-arc.ts",
-    "studio:import": "sh arc-studio/import.sh",
     "test": "pnpm exec vitest run",
     "near:build": "cd packages/contract && cargo near build non-reproducible-wasm --no-abi",
-    "near:test": "cd packages/contract && cargo test --test sandbox",
+    "near:test": "cd packages/contract && cargo test --test sandbox -- --test-threads=1",
     "near:quotes": "tsx scripts/near-dry-quotes.ts",
     "near:testnet": "tsx scripts/near-testnet.ts",
     "near:browser": "node scripts/near-browser-check.mjs",
     "near:verify": "bash scripts/near-verify.sh",
-    "build:contracts": "cd packages/contracts && forge build --skip 'test/**'",
     "near:relay": "tsx scripts/near-relay.ts",
     "near:borrow": "node scripts/live-borrow.mjs",
     "near:wallet-cycle": "node scripts/near-wallet-cycle.mjs",
     "test:e2e": "node scripts/near-browser-e2e.mjs"
   },
   "devDependencies": {
-    "@noren/core": "workspace:*",
     "@types/node": "24.10.1",
     "near-api-js": "7.3.1",
     "playwright-core": "1.63.0",
     "tsx": "4.20.6",
     "typescript": "5.9.3",
-    "viem": "2.51.3",
     "vitest": "3.2.4"
   }
 }

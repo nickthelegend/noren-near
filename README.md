@@ -60,7 +60,7 @@ Mainnet cross-chain transfers and yield harvesting are unfinished. 1Click integr
 
 For a production preview, run `pnpm --filter @noren/web build`, then `pnpm --filter @noren/web exec vite preview --host 127.0.0.1 --port 5395 --strictPort` on a free port. Open `http://127.0.0.1:5395/`. No merchant backend or other-chain RPC is needed. The production entry imports only NEAR screens and ships an allowlist of static assets.
 
-- `pnpm near:verify` builds the contracts and runs the sandbox, SDK, MCP, web and inherited checks. It needs Rust 1.95.0 and cargo-near 0.22.0; its script downloads the sandbox if `NEAR_SANDBOX_BIN` is unset and no local copy is available. See [TESTING.md](TESTING.md#near-edition-2026-11-09) for the recorded results.
+- `pnpm near:verify` builds the contracts and runs the sandbox, SDK, MCP and web checks. It needs Rust 1.95.0 and cargo-near 0.22.0; its script downloads the sandbox if `NEAR_SANDBOX_BIN` is unset and no local copy is available. See [TESTING.md](TESTING.md#near-edition-2026-11-09) for the recorded results.
 - `pnpm near:borrow --relay` sends a live testnet borrow with the deploy operator's credentials. It refreshes the price if older than 75 seconds, checks the positions and merchant balance, and prints the transaction links. It spends testnet NEAR and adds debt. Details: [One live borrow](#one-live-borrow-pnpm-nearborrow).
 - `pnpm near:wallet-cycle --key-file .near-credentials/testnet.json` proves the browser's shared deposit/borrow/repay/withdraw pipeline with the demo key by file path, under a 0.3 testnet NEAR cap. `--dry` prints the calls without reading credentials or signing. Evidence: [wallet cycle](deployments/wallet-cycle-2026-11-11.json).
 - `pnpm near:relay` posts a signed Coinbase price with the deploy operator's credentials. `pnpm near:quotes` refreshes the saved 1Click dry quotes.
@@ -128,13 +128,13 @@ Current before/after screenshots at 1440 and 375 are linked in [FLOW-QA.md](FLOW
 
 **Event.** Built for NEAR HACKATHON 2026 (Nov 1-14). Only the NEAR integration is entered.
 
-**Prior work.** Treat code from before Nov 1, 2026 as baseline. The available git history has no Noren commits before that date; its first commit is `5e6448e` on Nov 5, 2026 UTC. This does not establish when upstream libraries were written. The inherited Arc/Robinhood product was built Nov 5-7, before this NEAR port, and is excluded from this entry. It includes private checkout, merchant tooling, EVM credit, stock collateral, Aqua and Chainlink integrations, hosted demos and the earlier film. Its source remains in the repository and git history, but it is excluded from NEAR navigation, routing and the production bundle.
+**Prior work.** Treat code from before Nov 1, 2026 as baseline. The available git history has no Noren commits before that date; its first commit is `5e6448e` on Nov 5, 2026 UTC. This does not establish when upstream libraries were written. The inherited Arc/Robinhood product was built Nov 5-7, before this NEAR port, and is excluded from this entry. It includes private checkout, merchant tooling, EVM credit, stock collateral, Aqua and Chainlink integrations, hosted demos and the earlier film. Its source remains on branch `main` and in git history. This branch contains only the NEAR edition and its shared visual components.
 
 **Built in the window.** The Nov 9-11 NEAR work adds the Rust credit contract, signed testnet prices, NEP-141 collateral and merchant payouts, repayment and withdrawal, liquidation and Pay in 3, sandbox tests, the testnet deployment, 1Click dry quotes, the NEAR SDK/MCP tools, the NEAR pages, the live-borrow script, Meteor sign-in, browser credit actions and the NEAR-only entry. Yield harvesting is tested as a contract input in the sandbox; a real yield adapter is unfinished.
 
 The pre-NEAR baseline is `d91b739f84fbbf6fd72a626d183c64afbaf72c01` (Nov 7). Review locally with `git diff d91b739f84fbbf6fd72a626d183c64afbaf72c01...HEAD`, or use the [`main...near` comparison](https://github.com/nickthelegend/noren/compare/main...near) after the branch is published.
 
-**Reused libraries.** [NOTICE](NOTICE) records 0xbow Privacy Pools, the lean-imt helper, Kohaku and the proving circuits used by the inherited edition. The vendored Aqua and SwapVM code retain their own [Aqua license](packages/aqua/aqua-official/LICENSE) and [SwapVM license](packages/aqua/swapvm-ext/LICENSE). The NEAR contract uses near-sdk and near-workspaces; package manifests and lockfiles record the dependencies.
+**Reused libraries.** The NEAR contract uses near-sdk and near-workspaces. The web app uses React, Wallet Selector and Meteor; manifests and lockfiles record the versions. [NOTICE](NOTICE) records the current third-party attributions. Dependencies and licenses for the earlier product remain on branch `main`.
 
 **AI-assisted code.** Built with AI coding agents (Claude Code, Codex) under human direction; all code reviewed and tested by the team.
 

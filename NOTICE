@@ -1,18 +1,15 @@
 Noren
 Copyright (c) 2026 Nivesh Gajengi. Noren-authored code is MIT licensed.
 
-This repository vendors selected Solidity contracts from 0xbow's
-privacy-pools-core (commit df4bf730214bf9d0c717a9258f7a74861758c269):
-https://github.com/0xbow-io/privacy-pools-core
-Copyright and attribution remain with 0xbow and the original contributors.
-Those files retain their Apache-2.0 SPDX headers. The complete Apache-2.0
-license is at packages/contracts/lib/privacy-pools-core/licenses/LICENSE.
+The NEAR edition uses near-sdk, near-workspaces, near-api-js, NEAR Wallet
+Selector, Meteor Wallet, React and the MCP SDK under their upstream licenses.
+Exact versions are recorded in package manifests and dependency lockfiles.
 
-The vendored lean-imt Solidity helper is from @zk-kit/lean-imt.sol 2.0.0.
-Its license is at packages/contracts/lib/lean-imt/LICENSE.
+Geist, Geist Mono, Urbanist, Instrument Serif and Space Mono are bundled
+through Fontsource. Their font packages retain their SIL Open Font Licenses.
 
-The spike uses @kohaku-eth/privacy-pools 0.1.0-alpha.27 from
-https://github.com/ethereum/kohaku (MIT). A minimal local patch under
-patches/ lets its existing prover generate a direct custom-processooor
-withdrawal. The proving artifacts come from
-@fatsolutions/privacy-pools-core-circuits 1.0.5 (Apache-2.0).
+The USDC and Ether marks belong to their respective owners and identify the
+NEAR-side asset representations only; no endorsement is implied. Sources are
+recorded in packages/web/public/logos/SOURCES.md.
+
+Earlier-product third-party notices and vendored code remain on branch main.
