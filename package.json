@@ -18,7 +18,8 @@
     "test:e2e": "node scripts/near-browser-e2e.mjs",
     "near:stock-prices": "tsx scripts/near-stock-prices.ts",
     "near:stocks:setup": "node scripts/near-stock-setup.mjs",
-    "near:stock-payment": "node scripts/near-stock-payment.mjs"
+    "near:stock-payment": "node scripts/near-stock-payment.mjs",
+    "test:equity-source": "node --test scripts/test/equity-source.test.mjs"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

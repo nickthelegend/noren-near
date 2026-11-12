@@ -43,6 +43,7 @@ wait_resources
 wait_resources
 pnpm --filter @noren/near-sdk build
 pnpm --filter @noren/near-sdk test
+pnpm test:equity-source
 wait_resources
 pnpm --filter @noren/near-mcp build
 NOREN_LIVE_CONTRACT=credit.noren-near-mw9h22el.testnet NOREN_LIVE_ACCOUNT=bob.noren-near-mw9h22el.testnet pnpm --filter @noren/near-mcp test
