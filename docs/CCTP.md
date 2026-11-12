@@ -210,7 +210,9 @@ cd cre && cre workflow simulate cctp-relay --target staging-settings --trigger-i
 
 - The deployer key comes from the gitignored `.env.arc-deployer` (`NOREN_DEPLOYER_KEY`) and is never printed.
 - The key is shared by several Noren agents, so every Arc and Robinhood tx runs under
-  `/private/tmp/noren-arc-deployer.lock` with the pending nonce.
+  `noren-arc-deployer.lock` with the pending nonce.
+
+Screenshots were captured locally during QA and are not committed.
 
 ## Tests
 

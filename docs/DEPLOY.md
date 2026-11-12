@@ -49,7 +49,9 @@ Each script records what it deployed:
 - `scripts/live/private-deployments.json`
 - `scripts/live/private-credit-runs.json`
 
-Every deployer transaction takes the shared nonce lock `/private/tmp/noren-arc-deployer.lock`.
+Every deployer transaction takes the shared nonce lock `noren-arc-deployer.lock`.
+
+Screenshots were captured locally during QA and are not committed.
 
 ## Environment
 

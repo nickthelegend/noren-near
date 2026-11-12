@@ -220,14 +220,14 @@ Browser QA at 1440 and 375 px (landing, Noren Merchant home/payments/payment/bal
 
 `pnpm test`: **9 passed, 0 failed** across 2 Vitest files. The server tests cover draft binding, dev config, merchant token protection, invoice listing, faucet rate limiting, and exact payment validation. `pnpm exec tsc --noEmit`: passed. `pnpm e2e`: **9 Foundry tests passed, 0 failed, 0 skipped** against the real pool and verifiers; the HTTP invoice flow now creates a draft and binds customer commitments before proving. The e2e summary reported 5 attack reverts and 41.03 s total.
 
-`pnpm dev:stack` started the Anvil fork, deployed the contracts, printed RPC/server/ASP URLs and one merchant token, and served `/config`. A live faucet request returned both gas and USDC transaction hashes; a repeated request for the same address was rejected. Ctrl-C stopped the server and the fork. A throwaway Vite 7.2.2 production build under `/private/tmp` succeeded with the `assert` alias in [packages/core/BROWSER.md](packages/core/BROWSER.md); browser proving itself was not run.
+`pnpm dev:stack` started the Anvil fork, deployed the contracts, printed RPC/server/ASP URLs and one merchant token, and served `/config`. A live faucet request returned both gas and USDC transaction hashes; a repeated request for the same address was rejected. Ctrl-C stopped the server and the fork. A throwaway Vite 7.2.2 production build under `tmp` succeeded with the `assert` alias in [packages/core/BROWSER.md](packages/core/BROWSER.md); browser proving itself was not run.
 
 The earlier baseline measurements follow.
 
 Run on 2026-11-06 (local Arc testnet fork at chain 5042002; no public transactions). Commands:
 
 ```sh
-pnpm install --store-dir '/Volumes/Extreme SSD/Projects/grokbot/projects/noren/.pnpm-store'
+pnpm install --store-dir `.pnpm-store`
 pnpm test
 pnpm exec tsc --noEmit
 pnpm e2e
@@ -253,6 +253,8 @@ Selected local-fork transaction hashes from this run:
 | Refund ASP root | `0xf46913daf1026ea0bda460e94fa5f9bad9cdbcbbf68709d4c0e7fc6a3e3779da` |
 
 The Anvil-only USDC shim is necessary because stock Anvil cannot execute Arc's native USDC bridge; the pool, Entrypoint, and verifiers were not mocked. These hashes disappear when the fork exits. Live Arc gas and browser proving time remain unmeasured. Arc testnet deployment was intentionally not attempted.
+
+Screenshots were captured locally during QA and are not committed.
 
 ## Browser flow (packages/web, Nov 6 2026)
 

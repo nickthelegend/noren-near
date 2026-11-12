@@ -133,9 +133,11 @@ pnpm exec tsx scripts/live/aqua-live.ts status           # addresses, strategy, 
 ```
 
 - **Keys.** `NOREN_DEPLOYER_KEY` is read from the main checkout's gitignored `.env.arc-deployer`, and the customer key from `.keys-live-arc.json`. Neither is printed. The CRE CLI gets the key only through a temporary 0600 env file that is deleted after the run. Its output is scrubbed before it is saved to `packages/xchain-aqua/live/*.log`.
-- **Shared deployer.** Every batch of deployer transactions, on Arc and on the source chains, runs under `/private/tmp/noren-arc-deployer.lock` (stale after 10 min). viem sends with the pending nonce.
+- **Shared deployer.** Every batch of deployer transactions, on Arc and on the source chains, runs under `noren-arc-deployer.lock` (stale after 10 min). viem sends with the pending nonce.
 - **Resumable.** `live/arc-testnet.json` records each step: a deployed contract, a shipped strategy, a burn, an attestation, a mint and a fill are never repeated. A new `xchain` run needs a new label, which also gives the router order a new `ref`.
 - **The CRE workflows** run as `cre workflow simulate --broadcast` (CRE CLI v1.39): `packages/cctp/cre` target `staging-settings` for the relay, and `packages/xchain-aqua/cre` target `arc-live-settings` ([config](../packages/xchain-aqua/cre/xchain-aqua/config.arc-live.json)) for the ROUTER_ORDER report.
+
+Screenshots were captured locally during QA and are not committed.
 
 ## Tests
 

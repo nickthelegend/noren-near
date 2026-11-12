@@ -247,10 +247,13 @@ pnpm exec tsx scripts/live/private-live.ts     # the run above (resumable; --rel
 ```
 
 - **Keys.** The scripts read `NOREN_DEPLOYER_KEY` from the main checkout's `.env.arc-deployer`. They make the traveller, Kohaku seed and friend keys once in `.keys-live-private.json` (gitignored, 0600). No key is printed.
-- **Locking.** Every operator tx, on every chain, runs under `/private/tmp/noren-arc-deployer.lock`.
+- **Locking.** Every operator tx, on every chain, runs under `noren-arc-deployer.lock`.
 - **Ports.** 8850 is the merchant server with the private relayer; 8851 is the ASP tree.
 
 Server API:
 - `GET /private/relayer` returns `{ relayer, feeRecipient, feeBps, maxRelayFeeBps, entrypoint, pool, scope }`.
 - `POST /private/send` takes `{ withdrawal, proof, scope }` and returns `{ tx, recipient, amount, fee, received }`.
 - Enable both with `createMerchantServer({ privateRelay: { relayerKey, feeBps } })`. On the dev stack (`dev` options, loopback fork) they are on by default, with Anvil's published dev account #9 as the relayer.
+
+Screenshots were captured locally during QA and are not committed.
+

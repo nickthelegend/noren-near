@@ -118,9 +118,11 @@ Agents may not create accounts, so these steps are Nick's:
 2. Enable **World ID 4.0** for the app ("Configure World ID"). Copy the `app_id` and `rp_id`. The **signing key** is shown only once: paste it straight into the `.env`.
 3. Create the action **`noren-credit`** in **production** (real phones, Selfie Check). For the World ID Simulator, also create a **staging** action `noren-credit`. The simulator may only offer Proof of Human; in that case use `WORLD_CREDENTIAL=proof_of_human` with `WORLD_ENVIRONMENT=staging`.
 4. Wait until the app's World ID registration shows **registered**.
-5. In the main checkout's gitignored `.env` (`/Volumes/Extreme SSD/Projects/grokbot/projects/noren/.env`), set these by name: `WORLD_APP_ID`, `WORLD_RP_ID`, `WORLD_RP_SIGNING_KEY`, and optionally `WORLD_ENVIRONMENT` and `WORLD_CREDENTIAL`. All names are listed in `packages/world-id/env.example`.
+5. In the main checkout's gitignored `.env` (`.env`), set these by name: `WORLD_APP_ID`, `WORLD_RP_ID`, `WORLD_RP_SIGNING_KEY`, and optionally `WORLD_ENVIRONMENT` and `WORLD_CREDENTIAL`. All names are listed in `packages/world-id/env.example`.
 6. Run `pnpm --filter @noren/world-id live`. Both lines should say `PASS`.
 7. Run `pnpm --filter @noren/world-id harness`, open http://127.0.0.1:8750/react and complete a Selfie Check. Then try a second wallet to see `already_used`.
+
+Screenshots were captured locally during QA and are not committed.
 
 ## What the bridge contract must accept
 

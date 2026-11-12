@@ -15,4 +15,7 @@ export default defineConfig({
 });
 ```
 
-`pnpm add assert --store-dir '/Volumes/Extreme SSD/Projects/grokbot/projects/noren/.pnpm-store'` installs the polyfill for this workspace. The `optimizeDeps` entries help Vite's dev server prebundle the CommonJS packages; the alias is needed for production too. A temporary Vite 7.2.2 entry importing `customer.ts` built successfully with this config (1,108 transformed modules). The resulting main chunk was about 2.2 MB minified, so load the customer module lazily in a web app. This checks bundling, not in-browser proving.
+`pnpm add assert --store-dir .pnpm-store` installs the polyfill for this workspace. The `optimizeDeps` entries help Vite's dev server prebundle the CommonJS packages; the alias is needed for production too. A temporary Vite 7.2.2 entry importing `customer.ts` built successfully with this config (1,108 transformed modules). The resulting main chunk was about 2.2 MB minified, so load the customer module lazily in a web app. This checks bundling, not in-browser proving.
+
+Screenshots were captured locally during QA and are not committed.
+
