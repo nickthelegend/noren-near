@@ -88,3 +88,5 @@ export async function nearView<T>(contractId: string, method: string, args: obje
   if (!response.result?.result) throw new Error("NEAR RPC omitted call result");
   return JSON.parse(new TextDecoder().decode(new Uint8Array(response.result.result))) as T;
 }
+
+export * from "./stocks.js";
