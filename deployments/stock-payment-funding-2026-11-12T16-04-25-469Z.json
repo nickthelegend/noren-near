@@ -1,0 +1,24 @@
+{
+  "network": "testnet",
+  "budgetGroup": "equity-source-2026-11-12",
+  "status": "PASS",
+  "reservedYocto": "4000000000000000000000",
+  "before": "26939999",
+  "transactions": [
+    {
+      "stage": "Mint public test USDC for final browser regression",
+      "receiverId": "usdc.fakes.testnet",
+      "args": {
+        "account_id": "alice.noren-near-mw9h22el.testnet",
+        "amount": "100000000"
+      },
+      "hash": "C38qb8oAo9YpoYFPv8o2xHx4BPXwdwCqdY6WKdRgg8wZ",
+      "final": true,
+      "feeYocto": "204665120834200000000",
+      "explorer": "https://testnet.nearblocks.io/txns/C38qb8oAo9YpoYFPv8o2xHx4BPXwdwCqdY6WKdRgg8wZ"
+    }
+  ],
+  "budgetChargedYocto": "204665120834200000000",
+  "feesYocto": "204665120834200000000",
+  "after": "126939999"
+}

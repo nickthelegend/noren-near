@@ -1,0 +1,690 @@
+{
+  "network": "testnet",
+  "budgetNear": 0.5,
+  "runs": [
+    {
+      "stockMode": true,
+      "budgetGroup": "equity-source-2026-11-12",
+      "stockPriceSource": {
+        "error": null,
+        "observations": [
+          {
+            "symbol": "tTSLA",
+            "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+            "priceUsd6": "391740000",
+            "timestampNs": "1794500078000000000",
+            "publishTime": 1794500078,
+            "ageSeconds": 68,
+            "fresh": true,
+            "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d",
+            "provider": "Yahoo Finance"
+          }
+        ]
+      },
+      "startedAt": "2026-11-12T16:04:33.718Z",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "status": "PASS",
+      "reservedYocto": "194000000000000000000006",
+      "before": {
+        "stock": "10000000000",
+        "collateral": "1000000",
+        "usdc": "126939999",
+        "shop": "115060000"
+      },
+      "builds": {
+        "production": {
+          "files": 56,
+          "markers": {
+            "qa-signer": false,
+            "__NOREN_QA_SIGNER__": false,
+            "__norenQaAuthorize": false
+          },
+          "chainMatches": {
+            "Arc": false,
+            "Robinhood": false,
+            "CCTP": false,
+            "arc.io": false
+          }
+        },
+        "qa": {
+          "files": 57,
+          "markers": {
+            "qa-signer": true,
+            "__NOREN_QA_SIGNER__": true,
+            "__norenQaAuthorize": true
+          },
+          "chainMatches": {
+            "Arc": false,
+            "Robinhood": false,
+            "CCTP": false,
+            "arc.io": false
+          }
+        }
+      },
+      "attempts": [
+        {
+          "stage": "deposit 1440",
+          "receiverId": "wbtc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "stock deposit 1440",
+          "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "price refresh 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "30000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "6000000000000000000000"
+        },
+        {
+          "stage": "price refresh 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "30000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "6000000000000000000000"
+        },
+        {
+          "stage": "borrow 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "80000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "16000000000000000000000"
+        },
+        {
+          "stage": "repay 1440",
+          "receiverId": "usdc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "stock withdraw 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "60000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "12000000000000000000000"
+        },
+        {
+          "stage": "withdraw 1440",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "60000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "12000000000000000000000"
+        },
+        {
+          "stage": "deposit 375",
+          "receiverId": "wbtc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "stock deposit 375",
+          "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "price refresh 375",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "30000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "6000000000000000000000"
+        },
+        {
+          "stage": "borrow 375",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "80000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "16000000000000000000000"
+        },
+        {
+          "stage": "repay 375",
+          "receiverId": "usdc.fakes.testnet",
+          "gas": "80000000000000",
+          "deposit": "1",
+          "maximumCostYocto": "16000000000000000000001"
+        },
+        {
+          "stage": "stock withdraw 375",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "60000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "12000000000000000000000"
+        },
+        {
+          "stage": "withdraw 375",
+          "receiverId": "credit.noren-near-mw9h22el.testnet",
+          "gas": "60000000000000",
+          "deposit": "0",
+          "maximumCostYocto": "12000000000000000000000"
+        }
+      ],
+      "transactions": [
+        {
+          "source": "browser",
+          "stage": "deposit 1440",
+          "width": 1440,
+          "hash": "2gQr3fZoQFvypJvTK2ZYV6MsBPzpCJ7X3eQ5dy5MPiLC",
+          "explorer": "https://testnet.nearblocks.io/txns/2gQr3fZoQFvypJvTK2ZYV6MsBPzpCJ7X3eQ5dy5MPiLC",
+          "final": true,
+          "action": "deposit",
+          "tokensBurntYocto": "641965906710600000000"
+        },
+        {
+          "source": "browser",
+          "stage": "stock deposit 1440",
+          "width": 1440,
+          "hash": "9PeQQJpkqvuSsmSzPs4hawXC7K2YFBsPPibWHzk1FPR5",
+          "explorer": "https://testnet.nearblocks.io/txns/9PeQQJpkqvuSsmSzPs4hawXC7K2YFBsPPibWHzk1FPR5",
+          "final": true,
+          "action": "stock-deposit",
+          "tokensBurntYocto": "588946072850300000000"
+        },
+        {
+          "source": "node price relayer",
+          "width": 1440,
+          "action": "price",
+          "hash": "6zY35koxfYjtZ8nbef8RcajqSRDdMhnbpXBDSg6NmHgX",
+          "final": true,
+          "explorer": "https://testnet.nearblocks.io/txns/6zY35koxfYjtZ8nbef8RcajqSRDdMhnbpXBDSg6NmHgX",
+          "tokensBurntYocto": "223337923965900000000"
+        },
+        {
+          "source": "node equity relayer",
+          "width": 1440,
+          "action": "stock-price",
+          "hash": "ChnmvRgYCNnyA7SynQRz6MwHpKnQbrwJ6UHqSHxus29p",
+          "final": true,
+          "explorer": "https://testnet.nearblocks.io/txns/ChnmvRgYCNnyA7SynQRz6MwHpKnQbrwJ6UHqSHxus29p",
+          "tokensBurntYocto": "223720847127600000000"
+        },
+        {
+          "source": "browser",
+          "stage": "borrow 1440",
+          "width": 1440,
+          "hash": "5hJfhARrHy8fVUUcXMPY7ewPVvaGQ2D6Dw9UAgQv1mpB",
+          "explorer": "https://testnet.nearblocks.io/txns/5hJfhARrHy8fVUUcXMPY7ewPVvaGQ2D6Dw9UAgQv1mpB",
+          "final": true,
+          "action": "borrow",
+          "tokensBurntYocto": "647458484863200000000"
+        },
+        {
+          "source": "browser",
+          "stage": "repay 1440",
+          "width": 1440,
+          "hash": "FF6LqsLmwR4Kw1sAEUR5BhJDsvojE92tRJg3o748t9E5",
+          "explorer": "https://testnet.nearblocks.io/txns/FF6LqsLmwR4Kw1sAEUR5BhJDsvojE92tRJg3o748t9E5",
+          "final": true,
+          "action": "repay",
+          "tokensBurntYocto": "685756944306500000000"
+        },
+        {
+          "source": "browser",
+          "stage": "stock withdraw 1440",
+          "width": 1440,
+          "hash": "DFPRDJJChNMdpFx3sQRECmHwTcZkoSYF9Gr1gmgwAmue",
+          "explorer": "https://testnet.nearblocks.io/txns/DFPRDJJChNMdpFx3sQRECmHwTcZkoSYF9Gr1gmgwAmue",
+          "final": true,
+          "action": "stock-withdraw",
+          "tokensBurntYocto": "625356859103800000000"
+        },
+        {
+          "source": "browser",
+          "stage": "withdraw 1440",
+          "width": 1440,
+          "hash": "13rNJoxwRh1cka8zKdrqcbJfjgp2qGE2iyZ7McAX46ar",
+          "explorer": "https://testnet.nearblocks.io/txns/13rNJoxwRh1cka8zKdrqcbJfjgp2qGE2iyZ7McAX46ar",
+          "final": true,
+          "action": "withdraw",
+          "tokensBurntYocto": "650835966468500000000"
+        },
+        {
+          "source": "browser",
+          "stage": "deposit 375",
+          "width": 375,
+          "hash": "4H9WCJdyb83osWSGGhsLdPKLLweBNGiYmgr5NeQaq6RA",
+          "explorer": "https://testnet.nearblocks.io/txns/4H9WCJdyb83osWSGGhsLdPKLLweBNGiYmgr5NeQaq6RA",
+          "final": true,
+          "action": "deposit",
+          "tokensBurntYocto": "641965906710600000000"
+        },
+        {
+          "source": "browser",
+          "stage": "stock deposit 375",
+          "width": 375,
+          "hash": "3t1CpZa5ZbCNKP1JKAD5qWBuDkLcjjf1ga3QEs36sXcJ",
+          "explorer": "https://testnet.nearblocks.io/txns/3t1CpZa5ZbCNKP1JKAD5qWBuDkLcjjf1ga3QEs36sXcJ",
+          "final": true,
+          "action": "stock-deposit",
+          "tokensBurntYocto": "588946072850300000000"
+        },
+        {
+          "source": "node price relayer",
+          "width": 375,
+          "action": "price",
+          "hash": "6eHhPnRio1k4aDeMwbmgcVdZez9g595e7HyK7JD8TENU",
+          "final": true,
+          "explorer": "https://testnet.nearblocks.io/txns/6eHhPnRio1k4aDeMwbmgcVdZez9g595e7HyK7JD8TENU",
+          "tokensBurntYocto": "223337923965900000000"
+        },
+        {
+          "source": "browser",
+          "stage": "borrow 375",
+          "width": 375,
+          "hash": "J9YJiFxvNyj2ZCh1P6Y9W92RBVu7daYt4akQgteo5BYE",
+          "explorer": "https://testnet.nearblocks.io/txns/J9YJiFxvNyj2ZCh1P6Y9W92RBVu7daYt4akQgteo5BYE",
+          "final": true,
+          "action": "borrow",
+          "tokensBurntYocto": "647458484863200000000"
+        },
+        {
+          "source": "browser",
+          "stage": "repay 375",
+          "width": 375,
+          "hash": "B12iStqefZqmJ5Y8Gi3Y4fYNadrfPX4bSBgrCS7YnuXL",
+          "explorer": "https://testnet.nearblocks.io/txns/B12iStqefZqmJ5Y8Gi3Y4fYNadrfPX4bSBgrCS7YnuXL",
+          "final": true,
+          "action": "repay",
+          "tokensBurntYocto": "685756944306500000000"
+        },
+        {
+          "source": "browser",
+          "stage": "stock withdraw 375",
+          "width": 375,
+          "hash": "9GZNQHwSD6NUC1vuu6TdSjQp7egMxDvx4BdguEb8ai7h",
+          "explorer": "https://testnet.nearblocks.io/txns/9GZNQHwSD6NUC1vuu6TdSjQp7egMxDvx4BdguEb8ai7h",
+          "final": true,
+          "action": "stock-withdraw",
+          "tokensBurntYocto": "625356859103800000000"
+        },
+        {
+          "source": "browser",
+          "stage": "withdraw 375",
+          "width": 375,
+          "hash": "FJTocNHrCAJmzo9APZCxogTAtUtyyVrnXYjw8FTh5DTF",
+          "explorer": "https://testnet.nearblocks.io/txns/FJTocNHrCAJmzo9APZCxogTAtUtyyVrnXYjw8FTh5DTF",
+          "final": true,
+          "action": "withdraw",
+          "tokensBurntYocto": "650835966468500000000"
+        }
+      ],
+      "screenshots": [
+        {
+          "name": "before-credit",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/before-credit-1440.png"
+        },
+        {
+          "name": "before-account",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/before-account-1440.png"
+        },
+        {
+          "name": "before-pay",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/before-pay-1440.png"
+        },
+        {
+          "name": "before-credit",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/before-credit-375.png"
+        },
+        {
+          "name": "before-account",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/before-account-375.png"
+        },
+        {
+          "name": "before-pay",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/before-pay-375.png"
+        },
+        {
+          "name": "connected",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/connected-1440.png"
+        },
+        {
+          "name": "deposit",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/deposit-1440.png"
+        },
+        {
+          "name": "deposit-pending",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/deposit-pending-1440.png"
+        },
+        {
+          "name": "deposit-final",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/deposit-final-1440.png"
+        },
+        {
+          "name": "position-deposited",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-deposited-1440.png"
+        },
+        {
+          "name": "stock-deposit-pending",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-deposit-pending-1440.png"
+        },
+        {
+          "name": "stock-deposit-final",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-deposit-final-1440.png"
+        },
+        {
+          "name": "position-mixed",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-mixed-1440.png"
+        },
+        {
+          "name": "stock-no-yield",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-no-yield-1440.png"
+        },
+        {
+          "name": "borrow-pending",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/borrow-pending-1440.png"
+        },
+        {
+          "name": "borrow-final",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/borrow-final-1440.png"
+        },
+        {
+          "name": "position-borrowed",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-borrowed-1440.png"
+        },
+        {
+          "name": "repay-pending",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/repay-pending-1440.png"
+        },
+        {
+          "name": "repay-final",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/repay-final-1440.png"
+        },
+        {
+          "name": "stock-withdraw-pending",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-withdraw-pending-1440.png"
+        },
+        {
+          "name": "stock-withdraw-final",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-withdraw-final-1440.png"
+        },
+        {
+          "name": "withdraw-pending",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/withdraw-pending-1440.png"
+        },
+        {
+          "name": "withdraw-final",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/withdraw-final-1440.png"
+        },
+        {
+          "name": "position-restored",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-restored-1440.png"
+        },
+        {
+          "name": "debt-free",
+          "width": 1440,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/debt-free-1440.png"
+        },
+        {
+          "name": "connected",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/connected-375.png"
+        },
+        {
+          "name": "deposit",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/deposit-375.png"
+        },
+        {
+          "name": "deposit-pending",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/deposit-pending-375.png"
+        },
+        {
+          "name": "deposit-final",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/deposit-final-375.png"
+        },
+        {
+          "name": "position-deposited",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-deposited-375.png"
+        },
+        {
+          "name": "stock-deposit-pending",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-deposit-pending-375.png"
+        },
+        {
+          "name": "stock-deposit-final",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-deposit-final-375.png"
+        },
+        {
+          "name": "position-mixed",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-mixed-375.png"
+        },
+        {
+          "name": "stock-no-yield",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-no-yield-375.png"
+        },
+        {
+          "name": "borrow-pending",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/borrow-pending-375.png"
+        },
+        {
+          "name": "borrow-final",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/borrow-final-375.png"
+        },
+        {
+          "name": "position-borrowed",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-borrowed-375.png"
+        },
+        {
+          "name": "repay-pending",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/repay-pending-375.png"
+        },
+        {
+          "name": "repay-final",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/repay-final-375.png"
+        },
+        {
+          "name": "stock-withdraw-pending",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-withdraw-pending-375.png"
+        },
+        {
+          "name": "stock-withdraw-final",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/stock-withdraw-final-375.png"
+        },
+        {
+          "name": "withdraw-pending",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/withdraw-pending-375.png"
+        },
+        {
+          "name": "withdraw-final",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/withdraw-final-375.png"
+        },
+        {
+          "name": "position-restored",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/position-restored-375.png"
+        },
+        {
+          "name": "debt-free",
+          "width": 375,
+          "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z/debt-free-375.png"
+        }
+      ],
+      "viewports": [
+        {
+          "width": 1440,
+          "status": "PASS",
+          "failures": [],
+          "httpErrors": [],
+          "expectedPriceFailures": [],
+          "borrowedPosition": {
+            "borrower": "alice.noren-near-mw9h22el.testnet",
+            "collateral": [
+              {
+                "token": "ttsla.noren-near-mw9h22el.testnet",
+                "amount": "100000000",
+                "value_usd6": "391740000"
+              },
+              {
+                "token": "wbtc.fakes.testnet",
+                "amount": "10000",
+                "value_usd6": "7190642"
+              }
+            ],
+            "collateral_usd6": "398930642",
+            "credit_limit_usd6": "160291321",
+            "debt_usd6": "25000000",
+            "available_usd6": "135291321",
+            "health_bps": "80073",
+            "prices_fresh": true,
+            "pending": false,
+            "apr_bps": 1000
+          },
+          "pageExceptions": 0,
+          "consoleErrors": 0,
+          "failedRequests": 0,
+          "overflow": false,
+          "position": {
+            "borrower": "alice.noren-near-mw9h22el.testnet",
+            "collateral": [],
+            "collateral_usd6": "0",
+            "credit_limit_usd6": "0",
+            "debt_usd6": "0",
+            "available_usd6": "0",
+            "health_bps": null,
+            "prices_fresh": true,
+            "pending": false,
+            "apr_bps": 1000
+          }
+        },
+        {
+          "width": 375,
+          "status": "PASS",
+          "failures": [],
+          "httpErrors": [],
+          "expectedPriceFailures": [],
+          "borrowedPosition": {
+            "borrower": "alice.noren-near-mw9h22el.testnet",
+            "collateral": [
+              {
+                "token": "ttsla.noren-near-mw9h22el.testnet",
+                "amount": "100000000",
+                "value_usd6": "391740000"
+              },
+              {
+                "token": "wbtc.fakes.testnet",
+                "amount": "10000",
+                "value_usd6": "7185478"
+              }
+            ],
+            "collateral_usd6": "398925478",
+            "credit_limit_usd6": "160288739",
+            "debt_usd6": "25000000",
+            "available_usd6": "135288739",
+            "health_bps": "80072",
+            "prices_fresh": true,
+            "pending": false,
+            "apr_bps": 1000
+          },
+          "pageExceptions": 0,
+          "consoleErrors": 0,
+          "failedRequests": 0,
+          "overflow": false,
+          "position": {
+            "borrower": "alice.noren-near-mw9h22el.testnet",
+            "collateral": [],
+            "collateral_usd6": "0",
+            "credit_limit_usd6": "0",
+            "debt_usd6": "0",
+            "available_usd6": "0",
+            "health_bps": null,
+            "prices_fresh": true,
+            "pending": false,
+            "apr_bps": 1000
+          }
+        }
+      ],
+      "reusedPrices": [
+        {
+          "width": 375,
+          "stage": "before draw",
+          "symbol": "tTSLA",
+          "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+          "priceUsd6": "391740000",
+          "timestampNs": "1794500078000000000",
+          "publishTime": 1794500078,
+          "ageSeconds": 68,
+          "fresh": true,
+          "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d",
+          "provider": "Yahoo Finance"
+        },
+        {
+          "width": 375,
+          "token": "ttsla.noren-near-mw9h22el.testnet",
+          "timestampNs": "1794500078000000000",
+          "source": "relayer:https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+        }
+      ],
+      "after": {
+        "stock": "10000000000",
+        "collateral": "1000000",
+        "shop": "165060000",
+        "position": {
+          "borrower": "alice.noren-near-mw9h22el.testnet",
+          "collateral": [],
+          "collateral_usd6": "0",
+          "credit_limit_usd6": "0",
+          "debt_usd6": "0",
+          "available_usd6": "0",
+          "health_bps": null,
+          "prices_fresh": true,
+          "pending": false,
+          "apr_bps": 1000
+        }
+      },
+      "totalNearSpentYocto": "8351037163665200000006",
+      "totalNearSpent": 0.0083510371636652,
+      "budgetChargedYocto": "8351037163665200000006",
+      "finishedAt": "2026-11-12T16:16:22.362Z"
+    }
+  ]
+}
