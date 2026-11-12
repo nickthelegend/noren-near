@@ -10,7 +10,7 @@ The original deployment counts and balances below describe the Nov 9 run. Browse
 - **App.** `/` opens `#/near/app`; `#/near` explains the NEAR edition. The approved indigo components read NEAR testnet positions, the NEAR-side 1Click catalog and Rhea rates. Inherited routes redirect to the NEAR app.
 - **MCP.** `credit_status`, `quote_deposit`, `quote_spend` and `harvest_preview` over stdio; the live test reads the testnet contract.
 
-The Nov 12 upgrade preserves v1 state and adds schema version 2. TEST tTSLA/tNVDA/tAAPL are configured at 40% LTV / 50% liquidation; BTC remains 50% / 60%. Mixed-collateral, stale-price, forgery, over-borrow and liquidation checks pass. See [stock setup](deployments/stock-demo-2026-11-12.json). No real stock-backed shop payment is claimed while Pyth is unavailable.
+The Nov 12 upgrade preserves v1 state and adds schema version 2. TEST tTSLA/tNVDA/tAAPL are configured at 40% LTV / 50% liquidation; BTC remains 50% / 60%. Mixed-collateral, stale-price, forgery, over-borrow and liquidation checks pass. See [stock setup](deployments/stock-demo-2026-11-12.json). Yahoo Finance is now the no-key equity source; an authorized Pyth key is optional. A native tTSLA-only cycle paid 25 test USDC to the shop and restored the stock after repayment. Mixed stock/BTC browser cycles at 1440 and 375 also paid 25 each; fresh signed prices, original publication times and FINAL receipts were checked. See the latest section of [FLOW-QA.md](FLOW-QA.md#yahoo-stock-payment-completion-2026-11-12).
 
 ## Browser signing and repository scope
 
@@ -27,7 +27,7 @@ The `near` tree now retains only the NEAR contract, SDK, MCP server, web app and
 
 ## Blocked
 
-Harvest on testnet (no real yield source); mainnet deposits, merchant payouts and origin-chain withdrawals (Setup required: NEAR_MAINNET_ACCOUNT); stock-backed borrowing (Hermes public latest-price endpoints return HTTP 401; native TEST stocks are deployed but have no fresh signed price). Details and exact unblockers: `BLOCKED.md`.
+Harvest on testnet (no real yield source); mainnet deposits, merchant payouts and origin-chain withdrawals (Setup required: NEAR_MAINNET_ACCOUNT); new equity borrowing outside fresh regular-market quotes. Unauthenticated Pyth still returns HTTP 401, but Yahoo Finance removes that blocker for the testnet stock demo. Details and exact unblockers: `BLOCKED.md`.
 
 ## Commands
 

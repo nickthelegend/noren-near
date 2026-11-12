@@ -12,23 +12,23 @@ Draft for Nick to review and enter in the [official form](https://nearhackathon.
 | nearAddress | TBD Nick: NEAR MAINNET payout account (2-64 characters, lowercase named or 64-character implicit account; not the testnet contract) |
 | projectUrl | TBD: public GitHub repo URL after push (http(s), max 300 characters; each repository may be submitted once) |
 | demoUrl | TBD: the public X post URL (http(s), max 300 characters) |
-| idea | Keep your stocks. Spend against them. Noren on NEAR lets a borrower keep NEP-141 collateral while its Rust credit contract pays borrowed test USDC straight to a merchant's NEAR account. The NEAR-only demo now has native TEST tTSLA, tNVDA and tAAPL tokens, explicitly not real shares, alongside test WBTC. Credit sums each asset's value times its LTV: stocks 40%, BTC 50%, with health and liquidation thresholds. A state migration preserves existing positions. The relayer keeps Coinbase BTC and Pyth US-equity source timestamps and the contract verifies ed25519 signatures, freshness and replay protection. Stock borrowing is currently blocked because unauthenticated Pyth Hermes latest-price reads return HTTP 401; no substitute price or timestamp is used. Earlier real BTC merchant cycles work, and sandbox tests cover mixed collateral, stale stocks, forgery, over-borrowing and liquidation. Meteor and the isolated QA signer share browser credit actions and final receipts. BTC/ETH/SOL/ZEC Bring-coins controls request real NEAR Intents 1Click mainnet dry quotes; nothing moves on testnet. Positions and payments are public; real stock shares, private payments, mainnet execution and yield harvesting are unfinished. Earlier-chain work is excluded. |
+| idea | Selling assets you want to keep just to buy something is frustrating. Noren on NEAR explores keeping collateral and spending against it. Native TEST tTSLA, tNVDA and tAAPL tokens are explicitly not real shares; test WBTC is also supported. The Rust contract sums each asset's priced value times its LTV (stocks 40%, BTC 50%) and pays borrowed test USDC directly to the shop's NEAR account. A real tTSLA-only cycle paid 25 test USDC, then repaid and withdrew the same stock. Mixed stock/BTC browser cycles passed at 1440 and 375 with wallet-signed transactions, FINAL receipts and healthy positions. Yahoo Finance supplies no-key equity quotes; an authorized Pyth key selects Hermes instead. Noren's relayer preserves publication times and signs the existing price format; the contract checks its ed25519 signature, freshness and replay protection. Quotes expire after 90 seconds; closed-market or unavailable prices are never re-timestamped. Sandbox tests cover mixed LTV, stale prices, forged signatures, over-borrowing and liquidation. Meteor and the isolated QA signer share the credit actions. BTC/ETH/SOL/ZEC Bring-coins controls use NEAR Intents 1Click mainnet dry quotes; nothing moves on testnet. Positions and payments are public. Real shares, private payments, mainnet execution and yield harvesting remain unfinished. Earlier-chain work is excluded. |
 | consent | Nick ticks after agreeing: "I agree that the organizers may use these details to review our submission and contact us about this hackathon." |
 
-Idea character count: **1251** (plain text in the `idea` row; allowed: 20-2000).
+Idea character count: **1360** (plain text in the `idea` row; allowed: 20-2000).
 
 ## Risks / disclosures
 
 Noren's [Avalanche edition](https://noren-avax.vercel.app/) was built on Nov 12, 2026. Only NEAR-specific code built during Nov 1-14, 2026 is submitted here; Avalanche work is excluded.
 
-Stock tokens are deployed and depositable; fresh-price stock borrowing and its real merchant-payment run remain blocked by unauthenticated Hermes HTTP 401. The app refuses stale/unavailable collateral prices. Test stocks are not issuer shares. Human Meteor approval is manual; earlier BTC browser cycles used the isolated QA signer. Mainnet ZEC deposits need funding, settlement/withdrawal and a tested NEP-141 attribution adapter.
+The Yahoo-priced tTSLA payment and mixed stock/BTC browser cycles are recorded with real testnet transactions. Pyth remains an optional key-gated source. The contract trusts Noren’s relayer signature, not a native Yahoo/Pyth proof. Test stocks are not issuer shares. Quotes keep their source timestamp and expire after 90 seconds. Human Meteor approval is manual; browser automation uses the isolated QA signer. Mainnet ZEC deposits need funding, settlement/withdrawal and a tested NEP-141 attribution adapter.
 
 ## X post draft
 
-The human posts this with the video attached. Draft text: **219 characters**, within 280.
+The human posts this with the video attached. Update the attached film to include the stock run before posting this revised draft. Draft text: **232 characters**, within 280.
 
 ```text
-keep your tesla. buy the thing. noren on NEAR testnet keeps TEST stocks + BTC as collateral. test stocks aren't real shares; stock borrowing awaits Pyth price access. built at NEAR HACKATHON @NEARProtocol #NEARHackathon
+keep your tesla. buy the thing. noren's NEAR testnet demo keeps TEST tTSLA + BTC as collateral and pays the shop with borrowed test USDC. no selling. test tokens, not real shares. built at NEAR HACKATHON @NEARProtocol #NEARHackathon
 ```
 
 attach: /Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/noren-near-film-share.mp4

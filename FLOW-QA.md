@@ -1,6 +1,79 @@
 # Full-flow QA — Noren on NEAR
 
+## Yahoo stock payment completion (2026-11-12)
+
+**PASS: native stock-only payment plus a clean combined 1440/375 browser run.** “Keep your Tesla. Buy the thing.” is backed by real NEAR testnet transactions. Alice keeps 1 TEST tTSLA as collateral; the contract pays borrowed test USDC straight to the shop. Test stocks are not real shares.
+
+The native cycle posted a Yahoo Finance quote, deposited 1 tTSLA, paid the shop **25 test USDC**, checked health **7.7869×**, repaid and withdrew the same stock. [Native record](deployments/stock-payment-2026-11-12T15-48-19-050Z.json). The clean browser run used 1 tTSLA **plus 0.0001 test WBTC**, paid **25 per width** (shop gain 50 total), repaid 25.01 with the excess refunded, and withdrew both. Debt and locked collateral ended at zero, original collateral wallet balances were restored, and borrowed health was **1440: 8.0073×, 375: 8.0072×**. [Final combined record](deployments/qa-browser-equities-2026-11-12T16-04-32-144Z.json).
+
+### Source and 90-second rule
+
+The Node relayer uses authenticated Pyth Hermes only when `PYTH_API_KEY` is set by environment-variable name; otherwise it reads Yahoo's chart endpoint with a normal browser User-Agent. This run used **Yahoo Finance**, no Pyth key. It signs the original `meta.regularMarketPrice` / `meta.regularMarketTime` through the existing signature format. The contract verifies Noren's relayer signature, not a Yahoo attestation or native Pyth proof. Signature, anti-replay and **90-second freshness checks did not change**.
+
+The app reads signed NEAR state and labels the quote “Yahoo Finance quote, signed by Noren’s relayer — testnet”, with its age and freshness. It makes no browser Yahoo/Pyth requests. Outside regular hours the last quote keeps its age; no fresh timestamp is invented. An upstream outage can reuse only a still-valid on-chain publication. Source reads occur after the shared Chrome lock is acquired; the test never treats an expired preflight quote as current.
+
+### Ordered flow
+
+| Step | Judge / test action | Status and evidence |
+| --- | --- | --- |
+| 1 | Open `/` → `#/near/app`; read the Tesla hero and stock/BTC rows | **PASS**; signed source, age, TEST/not-real-share labels, stocks 40% / BTC 50% LTV; before/after captures below |
+| 2 | Account chip → connect → own position | **PASS with QA signer**; `connected-1440.png`, `connected-375.png`. Human Meteor approval remains manual. |
+| 3 | Deposit 0.0001 test WBTC and 1 tTSLA using the existing controls | **PASS, real browser signatures**; `deposit-pending-*`, `deposit-final-*`, `stock-deposit-pending-*`, `stock-deposit-final-*` |
+| 4 | Read the mixed position and the stock-held Debt-free view | **PASS**; `position-mixed-*`, `stock-no-yield-*`; no stock yield model or invented APY |
+| 5 | Refresh / reuse a valid original quote; Pay anyone → Borrow and pay shop, 25 test USDC | **PASS**; real price calls or recorded unexpired-price reuse; `borrow-pending-*`, `borrow-final-*`; exact shop balance gain checked |
+| 6 | Open receipt and read the borrowed position | **PASS**; FINAL receipts have matching NearBlocks hashes; `position-borrowed-*` shows $25 owed and healthy mixed collateral |
+| 7 | Repay 25.01 test USDC | **PASS**; `repay-pending-*`, `repay-final-*`; excess refunded and debt cleared |
+| 8 | Withdraw both collateral assets and verify the position | **PASS**; `stock-withdraw-final-*`, `withdraw-final-*`, `position-restored-*`; same token balances restored, no debt/pending/locked collateral |
+| 9 | About, account controls, deposit sheet, Pay and Debt-free | **PASS**; six production screens captured at both widths, no page exceptions, console/HTTP errors, failed requests or overflow in the after pass |
+| 10 | Bring BTC/ETH/SOL/ZEC | **Unchanged dry quote feature**; the earlier four real dry-quote results below remain dated evidence. Real ZEC funding/withdrawal/attribution is still [mainnet work](BLOCKED.md#exact-requirement-for-a-real-zec-deposit). |
+
+`*` means `1440.png` and `375.png`. The final transaction screenshots are in the orchestration shots directory under `noren-near/yahoo/qa-signer/2026-11-12T16-04-33-718Z`. Production comparison images are under `noren-near/yahoo`. Screenshots were captured locally during QA and are not committed.
+
+### Final combined transaction hashes
+
+| Width | Action | FINAL transaction |
+| --- | --- | --- |
+| 1440 | deposit | [2gQr3fZoQFvypJvTK2ZYV6MsBPzpCJ7X3eQ5dy5MPiLC](https://testnet.nearblocks.io/txns/2gQr3fZoQFvypJvTK2ZYV6MsBPzpCJ7X3eQ5dy5MPiLC) |
+| 1440 | stock-deposit | [9PeQQJpkqvuSsmSzPs4hawXC7K2YFBsPPibWHzk1FPR5](https://testnet.nearblocks.io/txns/9PeQQJpkqvuSsmSzPs4hawXC7K2YFBsPPibWHzk1FPR5) |
+| 1440 | price | [6zY35koxfYjtZ8nbef8RcajqSRDdMhnbpXBDSg6NmHgX](https://testnet.nearblocks.io/txns/6zY35koxfYjtZ8nbef8RcajqSRDdMhnbpXBDSg6NmHgX) |
+| 1440 | stock-price | [ChnmvRgYCNnyA7SynQRz6MwHpKnQbrwJ6UHqSHxus29p](https://testnet.nearblocks.io/txns/ChnmvRgYCNnyA7SynQRz6MwHpKnQbrwJ6UHqSHxus29p) |
+| 1440 | borrow | [5hJfhARrHy8fVUUcXMPY7ewPVvaGQ2D6Dw9UAgQv1mpB](https://testnet.nearblocks.io/txns/5hJfhARrHy8fVUUcXMPY7ewPVvaGQ2D6Dw9UAgQv1mpB) |
+| 1440 | repay | [FF6LqsLmwR4Kw1sAEUR5BhJDsvojE92tRJg3o748t9E5](https://testnet.nearblocks.io/txns/FF6LqsLmwR4Kw1sAEUR5BhJDsvojE92tRJg3o748t9E5) |
+| 1440 | stock-withdraw | [DFPRDJJChNMdpFx3sQRECmHwTcZkoSYF9Gr1gmgwAmue](https://testnet.nearblocks.io/txns/DFPRDJJChNMdpFx3sQRECmHwTcZkoSYF9Gr1gmgwAmue) |
+| 1440 | withdraw | [13rNJoxwRh1cka8zKdrqcbJfjgp2qGE2iyZ7McAX46ar](https://testnet.nearblocks.io/txns/13rNJoxwRh1cka8zKdrqcbJfjgp2qGE2iyZ7McAX46ar) |
+| 375 | deposit | [4H9WCJdyb83osWSGGhsLdPKLLweBNGiYmgr5NeQaq6RA](https://testnet.nearblocks.io/txns/4H9WCJdyb83osWSGGhsLdPKLLweBNGiYmgr5NeQaq6RA) |
+| 375 | stock-deposit | [3t1CpZa5ZbCNKP1JKAD5qWBuDkLcjjf1ga3QEs36sXcJ](https://testnet.nearblocks.io/txns/3t1CpZa5ZbCNKP1JKAD5qWBuDkLcjjf1ga3QEs36sXcJ) |
+| 375 | price | [6eHhPnRio1k4aDeMwbmgcVdZez9g595e7HyK7JD8TENU](https://testnet.nearblocks.io/txns/6eHhPnRio1k4aDeMwbmgcVdZez9g595e7HyK7JD8TENU) |
+| 375 | borrow | [J9YJiFxvNyj2ZCh1P6Y9W92RBVu7daYt4akQgteo5BYE](https://testnet.nearblocks.io/txns/J9YJiFxvNyj2ZCh1P6Y9W92RBVu7daYt4akQgteo5BYE) |
+| 375 | repay | [B12iStqefZqmJ5Y8Gi3Y4fYNadrfPX4bSBgrCS7YnuXL](https://testnet.nearblocks.io/txns/B12iStqefZqmJ5Y8Gi3Y4fYNadrfPX4bSBgrCS7YnuXL) |
+| 375 | stock-withdraw | [9GZNQHwSD6NUC1vuu6TdSjQp7egMxDvx4BdguEb8ai7h](https://testnet.nearblocks.io/txns/9GZNQHwSD6NUC1vuu6TdSjQp7egMxDvx4BdguEb8ai7h) |
+| 375 | withdraw | [FJTocNHrCAJmzo9APZCxogTAtUtyyVrnXYjw8FTh5DTF](https://testnet.nearblocks.io/txns/FJTocNHrCAJmzo9APZCxogTAtUtyyVrnXYjw8FTh5DTF) |
+
+### Retry / recovery and budget audit
+
+The first 1440 cycle passed. In the old 375 error test, a Yahoo 429 was mistaken for an expired on-chain price; its 0.01 test USDC borrow correctly succeeded against the still-fresh contract quote, so the overall test FAILED. That failure is retained, not rewritten. Recovery repaid the small debt and returned both deposits through the same call pipeline. A local recovery gas-query adapter error sent no transaction before the corrected recovery. A focused 375 rerun then passed. A combined preflight subsequently stopped without signing because repayment test USDC was low; one public fake-USDC mint supplied the final regression. No mainnet asset was used.
+
+| Public evidence file | Recorded status | Transactions |
+| --- | --- | --- |
+| [qa-browser-equities-2026-11-12T15-50-26-940Z.json](deployments/qa-browser-equities-2026-11-12T15-50-26-940Z.json) | FAILED | 11 |
+| [qa-browser-equities-2026-11-12T15-57-37-872Z.json](deployments/qa-browser-equities-2026-11-12T15-57-37-872Z.json) | PASS | 8 |
+| [qa-browser-equities-2026-11-12T16-04-32-144Z.json](deployments/qa-browser-equities-2026-11-12T16-04-32-144Z.json) | PASS | 15 |
+| [stock-payment-2026-11-12T15-48-19-050Z.json](deployments/stock-payment-2026-11-12T15-48-19-050Z.json) | PASS | 6 |
+| [stock-payment-funding-2026-11-12T16-04-25-469Z.json](deployments/stock-payment-funding-2026-11-12T16-04-25-469Z.json) | PASS | 1 |
+| [stock-payment-recovery-2026-11-12T15-55-24-031Z.json](deployments/stock-payment-recovery-2026-11-12T15-55-24-031Z.json) | FAILED | 0 |
+| [stock-payment-recovery-2026-11-12T15-55-46-536Z.json](deployments/stock-payment-recovery-2026-11-12T15-55-46-536Z.json) | PASS | 4 |
+
+Across this continuation, **45 submitted transactions**, including the unintended 0.01 test-USDC draw, every recovery/funding call and both successful retries, are recorded. Actual fees: **0.0239850436194411 testnet NEAR**. An additional **0.04 NEAR** was transferred between owned demo accounts and counted conservatively. The shared budget charge, retaining full reservations for failed attempts, is **0.205824392749403300000017 NEAR < 0.5**. No external helper or mainnet funding was used. Older setup and Nov 11 evidence files were not changed.
+
+### Validation and approved UI
+
+**24 tests passed in this continuation:** 12 SDK, 10 web, 2 Node quote-reuse regression tests. The unchanged contract's earlier 3 unit + 6 sandbox cases and 2 MCP cases are dated results below, not reruns. SDK and production/QA web builds passed. The production audit excludes all QA module/injection markers even with the flag set; only QA mode includes them. Production JS/HTML/CSS scans have no `Arc`, `Robinhood`, `CCTP` or `arc.io` matches. All financial screenshots check visible text for `undefined`/`NaN`, page exceptions, errors, failed requests and horizontal overflow; the final run has none.
+
+Before/after production comparison: `before-credit-*` / `after-credit-*`, `before-account-*` / `after-account-*`, `before-deposit-*` / `after-deposit-*`, `before-pay-*` / `after-pay-*`, `before-debt-free-*` / `after-debt-free-*`, `before-about-*` / `after-about-*`: 12 before + 12 after images. Financial attempts/retries add 104 screenshots, all outside the repo. Source labels and stale-market copy use the existing list/card components. No CSS, fonts, colors, layout rules or artwork changed. The final browser run closes its contexts/browser and sequential previews in finally blocks; no push was performed.
+
 ## Native test stock flow (2026-11-12)
+
+**Historical pass before Yahoo integration.** Its blocked result is superseded by [Yahoo completion](#yahoo-stock-payment-completion-2026-11-12).
 
 **PARTIAL: native stock setup and real browser deposit/withdraw PASS; stock-backed borrowing/shop payment BLOCKED by the price source.** TEST tTSLA, tNVDA and tAAPL are deployed NEP-141 tokens, not real shares. The credit account was upgraded in place with a v1 → v2 migration. Stocks use 40% LTV / 50% liquidation; BTC uses 50% / 60%. No earlier-chain packages or RPCs were restored.
 

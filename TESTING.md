@@ -1,8 +1,56 @@
 # Test results
 
+## Yahoo stock payment continuation (2026-11-12)
+
+**Stock-backed credit is live on NEAR testnet.** The native script deposited 1 TEST tTSLA, borrowed 25 test USDC directly to the shop, showed health 7.7869×, repaid and withdrew the same token. Mixed stock/BTC browser cycles also paid 25 at 1440 and 375 with real signatures, FINAL receipts and restored zero-debt positions. Test stocks are not real shares. Exact hashes and the final combined run are in [FLOW-QA.md](FLOW-QA.md#yahoo-stock-payment-completion-2026-11-12).
+
+**Executed in this continuation: 24 automated tests passed** — 12 SDK, 10 web and 2 Node source-reuse regression tests. SDK and production web typecheck/build passed; production excludes the QA signer even with its flag set. No contract code or Wasm changed: the earlier Nov 12 result of 3 contract unit + 6 sandbox tests, and 2 MCP tests, remains dated evidence below; these 11 tests were not rerun for the quote-source change.
+
+```sh
+pnpm --filter @noren/near-sdk build
+pnpm --filter @noren/near-sdk test
+pnpm test
+pnpm test:equity-source
+pnpm --filter @noren/web build
+# Public read; --symbol avoids requesting unrelated equities:
+pnpm near:stock-prices --check --symbol=tTSLA
+# Operator signing, original publication time, only newer prices:
+pnpm near:stock-prices --symbol=tTSLA
+# Real stock-only cycle using the existing demo credential file:
+pnpm near:stock-payment
+# Real mixed-collateral browser cycles:
+pnpm test:e2e --stocks
+# Focused retry at one width; same budgets and evidence:
+pnpm test:e2e --stocks --width=375
+```
+
+The native stock cycle seeds public fake USDC if repayment balances are low, posts the source-signed price, deposits tTSLA and pays the shop 25 test USDC through the browser's shared `runCreditAction` pipeline. The e2e runner uses 1 tTSLA plus 0.0001 test WBTC, pays 25, repays 25.01 (excess refunded), withdraws both and checks wallet balances, exact merchant gain, healthy debt and no remaining debt/collateral. The live stock-held Debt-free view says “No stock yield model”. Low NEAR or repayment-token balances stop the run; a final combined preflight correctly stopped with no transaction until fake USDC was replenished.
+
+**Final combined run: PASS at 1440 and 375**, `pnpm test:e2e --stocks --skip-build`, after audited production/QA builds. Both complete mixed-collateral cycles paid the shop 25 test USDC and restored both collateral balances and zero debt. Health: 1440: 8.0073×, 375: 8.0072×. [Exact hashes/receipts](deployments/qa-browser-equities-2026-11-12T16-04-32-144Z.json). The final run has no page exceptions, console/HTTP errors, failed requests or horizontal overflow. Across every continuation attempt and recovery: 45 transactions, **0.0239850436194411 NEAR fees**, **0.04 NEAR owned-account transfer**, conservative shared budget charge **0.205824392749403300000017 NEAR < 0.5**. Every record is retained in [FLOW-QA.md](FLOW-QA.md#yahoo-stock-payment-completion-2026-11-12).
+
+### Source selection and freshness
+
+`scripts/equity-source.ts` reads **PYTH_API_KEY by environment-variable name only**. When set, it sends Pyth an Authorization header in Node; otherwise it reads Yahoo chart metadata with a normal browser User-Agent. A configured but invalid Pyth key fails explicitly. No key enters Vite, URLs, the app, logs or evidence. The Pyth authenticated transport is unit-tested; no live Pyth key was used in this run.
+
+Yahoo validation checks the requested ticker, USD currency, positive price, original `meta.regularMarketTime`, regular trading period and future timestamps. The contract's signed-price format, replay protection and **90-second freshness rule are unchanged**. After market close, the last price retains its age; new posts are refused outside regular trading, and old quotes cannot keep borrowing open. The app reads signed NEAR state and labels it “Yahoo Finance quote, signed by Noren’s relayer — testnet”; it makes no browser Yahoo/Pyth requests.
+
+The Node regression tests cover an upstream outage with a still-fresh on-chain price, rejecting stale (91 seconds), future, unverified, malformed, mismatched-ticker and unknown-source inputs. Reuse copies the exact on-chain price and timestamp, never the local time. Reposting the same publication is skipped to respect contract anti-replay checks. Quote reads happen under the Chrome lock immediately before a viewport's actions, avoiding an expired preflight quote after a long build/lock wait.
+
+### Retry and recovery evidence
+
+The first 1440 cycle passed. During 375, Yahoo returned 429; the old harness wrongly expected a stale-price error while the contract still held a fresh signed quote. Its 0.01 test USDC error probe therefore paid the shop, as the contract allowed. The overall run remains FAILED with every hash retained. The position was repaid and both collateral deposits returned via the same call pipeline. A 0.04 NEAR transfer from the owned root replenished the demo signer's gas reserve; no external helper or mainnet funding was used. One initial local recovery gas-query adapter error produced no transaction and remains recorded separately.
+
+The corrected harness prefers an original, verified on-chain quote while it is within 90 seconds, never sends a borrow as an error probe against fresh prices, and supports `--width=375` / `--width=1440`. The targeted 375 rerun passed. All failed and successful records remain in deployments; none was rewritten as a pass.
+
+The continuation uses unique ledger filenames tagged `equity-source-2026-11-12`. `scripts/equity-budget.mjs` enforces a shared **0.5 testnet NEAR cap** across native calls, recovery/funding and stock browser runs. Completed runs charge actual fees/allocations; failed or in-flight runs retain their full gas reservation. The BTC-only runner retains its previous 0.3 cap. No keys are copied or printed; browser signing uses only the existing gated localhost injection, without trace/HAR/video.
+
+Before/after production checks captured six existing screens at both sizes: **12 before + 12 after**, no page exceptions, console/HTTP errors, failed requests or horizontal overflow in the after pass. CSS, fonts, colors, layout rules and artwork are unchanged. Paid-flow captures additionally show the signed source, borrowed health, receipts, stock yield guard and restored positions. Screenshots were captured locally during QA and are not committed.
+
 ## Test stock demo (2026-11-12)
 
-Latest results supersede the dated counts below. **30 tests passed:** 3 contract unit tests, 6 real nearcore sandbox tests, 9 SDK tests, 2 MCP tests (read-only live testnet contract) and 10 web tests. Credit Wasm, SDK, MCP and production web builds passed. Rust remains pinned to 1.95.0. The full final sandbox run used one test thread and passed all 6 cases in 95.46 seconds. The earlier new-case attempt exposed an underfunded test fixture; after correcting the fixture, the complete suite passed.
+**Historical pass before the Yahoo fallback.** Its price-source blocker is superseded by the continuation above.
+
+These results describe the earlier native-stock pass, before the Yahoo continuation. **30 tests passed:** 3 contract unit tests, 6 real nearcore sandbox tests, 9 SDK tests, 2 MCP tests (read-only live testnet contract) and 10 web tests. Credit Wasm, SDK, MCP and production web builds passed. Rust remains pinned to 1.95.0. The full final sandbox run used one test thread and passed all 6 cases in 95.46 seconds. The earlier new-case attempt exposed an underfunded test fixture; after correcting the fixture, the complete suite passed.
 
 - `pnpm near:test`: migration preserves v1 assets, collateral, loans, credits, LP balances, locks, installments and relayer key. Zero-amount withdrawn stock entries no longer poison fresh BTC credit. Mixed collateral gives $65 credit from $50 BTC at 50% plus $100 stock at 40%; over-borrow and forged prices fail, stale stock blocks a new draw, and a stock price drop makes health < 1 and liquidation succeed.
 - `pnpm --filter @noren/near-sdk build` and `pnpm --filter @noren/near-sdk test`: US-equity feed IDs, exact integer price scaling, original publication timestamps, closed-market staleness and explicit 401/429 failures. No timestamp is replaced with the local clock.
