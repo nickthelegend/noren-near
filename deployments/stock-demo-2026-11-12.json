@@ -1,0 +1,369 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-12T14:56:10.999Z",
+  "budgetNear": 1,
+  "template": {
+    "hash": "3vaopJ7aRoivvzZLngPQRBEd8VJr2zPLTxQfnRCoFgNX",
+    "source": "https://github.com/near-examples/factory-rust"
+  },
+  "tokens": [
+    {
+      "symbol": "tTSLA",
+      "ticker": "TSLA",
+      "name": "TEST Tesla — not real shares",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "account": "ttsla.noren-near-mw9h22el.testnet",
+      "decimals": 8,
+      "ltvBps": 4000,
+      "liquidationBps": 5000,
+      "totalSupply": "10000000000",
+      "metadata": {
+        "spec": "ft-1.0.0",
+        "name": "TEST Tesla — not real shares",
+        "symbol": "tTSLA",
+        "icon": null,
+        "reference": null,
+        "reference_hash": null,
+        "decimals": 8
+      },
+      "demoBalance": "10000000000"
+    },
+    {
+      "symbol": "tNVDA",
+      "ticker": "NVDA",
+      "name": "TEST NVIDIA — not real shares",
+      "feedId": "b1073854ed24cbc755dc527418f52b7d271f6cc967bbf8d8129112b18860a593",
+      "account": "tnvda.noren-near-mw9h22el.testnet",
+      "decimals": 8,
+      "ltvBps": 4000,
+      "liquidationBps": 5000,
+      "totalSupply": "10000000000",
+      "metadata": {
+        "spec": "ft-1.0.0",
+        "name": "TEST NVIDIA — not real shares",
+        "symbol": "tNVDA",
+        "icon": null,
+        "reference": null,
+        "reference_hash": null,
+        "decimals": 8
+      },
+      "demoBalance": "10000000000"
+    },
+    {
+      "symbol": "tAAPL",
+      "ticker": "AAPL",
+      "name": "TEST Apple — not real shares",
+      "feedId": "49f6b65cb1de6b10eaf75e7c03ca029c306d0357e91b5311b175084a5ad55688",
+      "account": "taapl.noren-near-mw9h22el.testnet",
+      "decimals": 8,
+      "ltvBps": 4000,
+      "liquidationBps": 5000,
+      "totalSupply": "10000000000",
+      "metadata": {
+        "spec": "ft-1.0.0",
+        "name": "TEST Apple — not real shares",
+        "symbol": "tAAPL",
+        "icon": null,
+        "reference": null,
+        "reference_hash": null,
+        "decimals": 8
+      },
+      "demoBalance": "10000000000"
+    }
+  ],
+  "steps": [
+    {
+      "step": "Upgrade credit and migrate v1 state",
+      "account": "credit.noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "H6UvUZdJMNHJRfkkwiKkQj22eZEv3KYbT7fiRD1c9T8b",
+      "status": "rejected",
+      "explorer": "https://testnet.nearblocks.io/txns/H6UvUZdJMNHJRfkkwiKkQj22eZEv3KYbT7fiRD1c9T8b",
+      "feeYocto": "2624613155707700000000",
+      "allocatedYocto": "0"
+    },
+    {
+      "step": "Reserve storage and prepaid gas for credit upgrade",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "A8btsFtd8N4aJLjyPMtq2L7Wp4iz4qhgfbukXfTmti6C",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/A8btsFtd8N4aJLjyPMtq2L7Wp4iz4qhgfbukXfTmti6C",
+      "feeYocto": "44636512500000000000",
+      "allocatedYocto": "90000000000000000000000"
+    },
+    {
+      "step": "Upgrade credit and migrate v1 state",
+      "account": "credit.noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "3fRfXVsqbKm8o3k83z24KCp9Gac8ZQxiAFg8ADGfzxMd",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/3fRfXVsqbKm8o3k83z24KCp9Gac8ZQxiAFg8ADGfzxMd",
+      "feeYocto": "2624613155707700000000",
+      "allocatedYocto": "0"
+    },
+    {
+      "step": "Create tTSLA (TEST, not real shares)",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+      "hash": "EnU3dzg2VhPkHRp9prC91yRomXwA6D3Z2kMxuaKm896E",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/EnU3dzg2VhPkHRp9prC91yRomXwA6D3Z2kMxuaKm896E",
+      "feeYocto": "7356840682973300000000",
+      "allocatedYocto": "10000000000000000000000"
+    },
+    {
+      "step": "Register credit for tTSLA",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+      "hash": "kK1Avt5gw6nvMBM61vj51dwVHGCUt8NSHT9EyA3ey4S",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/kK1Avt5gw6nvMBM61vj51dwVHGCUt8NSHT9EyA3ey4S",
+      "feeYocto": "184911501739000000000",
+      "allocatedYocto": "1250000000000000000000"
+    },
+    {
+      "step": "Configure tTSLA at 40% LTV",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "FEkfTCzoDoVTpsfBjmwfK5ZjFnrnPJjUa7z2kZru5Dk6",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/FEkfTCzoDoVTpsfBjmwfK5ZjFnrnPJjUa7z2kZru5Dk6",
+      "feeYocto": "190285157036600000000",
+      "allocatedYocto": "0"
+    },
+    {
+      "step": "Create tNVDA (TEST, not real shares)",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "tnvda.noren-near-mw9h22el.testnet",
+      "hash": "HMyRHM9m3tR9rBNQ4QSXFNNZrtpFuQSXAAQgeYRgsgRv",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/HMyRHM9m3tR9rBNQ4QSXFNNZrtpFuQSXAAQgeYRgsgRv",
+      "feeYocto": "7355930939386400000000",
+      "allocatedYocto": "10000000000000000000000"
+    },
+    {
+      "step": "Register credit for tNVDA",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "tnvda.noren-near-mw9h22el.testnet",
+      "hash": "CKA8HXkq8tJAsBdY3ufu3FG5D7gGzqn98PGu8PppsMhz",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/CKA8HXkq8tJAsBdY3ufu3FG5D7gGzqn98PGu8PppsMhz",
+      "feeYocto": "184455501739000000000",
+      "allocatedYocto": "1250000000000000000000"
+    },
+    {
+      "step": "Configure tNVDA at 40% LTV",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "1KWaVrtp5uBZrTwFxLqJ4XRfdr8Nms1tuKRTtXJcbUU",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/1KWaVrtp5uBZrTwFxLqJ4XRfdr8Nms1tuKRTtXJcbUU",
+      "feeYocto": "191451717490200000000",
+      "allocatedYocto": "0"
+    },
+    {
+      "step": "Return unused upgrade gas reserve to owned root",
+      "account": "credit.noren-near-mw9h22el.testnet",
+      "receiverId": "noren-near-mw9h22el.testnet",
+      "hash": "CReHPPyhWDXStN7kdbkZuhocTATtZLYnkpfR1T6APmm1",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/CReHPPyhWDXStN7kdbkZuhocTATtZLYnkpfR1T6APmm1",
+      "feeYocto": "44636512500000000000",
+      "allocatedYocto": "60000000000000000000000"
+    },
+    {
+      "step": "Create tAAPL (TEST, not real shares)",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "taapl.noren-near-mw9h22el.testnet",
+      "hash": "D8uGYpouna8vNbNXrbbsTAfRC7WusQjiic5kRt3wsiyE",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/D8uGYpouna8vNbNXrbbsTAfRC7WusQjiic5kRt3wsiyE",
+      "feeYocto": "7356840682973300000000",
+      "allocatedYocto": "10000000000000000000000"
+    },
+    {
+      "step": "Register credit for tAAPL",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "taapl.noren-near-mw9h22el.testnet",
+      "hash": "6v2zAE4yixSGfNYCp96dQNMPNsBUpd6UGETxPbbvsWCW",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/6v2zAE4yixSGfNYCp96dQNMPNsBUpd6UGETxPbbvsWCW",
+      "feeYocto": "185367501739000000000",
+      "allocatedYocto": "1250000000000000000000"
+    },
+    {
+      "step": "Configure tAAPL at 40% LTV",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "Coqri28xx21EiK5DXAFycUeDtkxVHpJxBp2dJAnvpn4v",
+      "status": "success",
+      "explorer": "https://testnet.nearblocks.io/txns/Coqri28xx21EiK5DXAFycUeDtkxVHpJxBp2dJAnvpn4v",
+      "feeYocto": "192651764113000000000",
+      "allocatedYocto": "0"
+    }
+  ],
+  "before": {
+    "config": {
+      "owner": "noren-near-mw9h22el.testnet",
+      "oracle": "price-oracle-wrapper.testnet",
+      "yield_source": "noren-near-mw9h22el.testnet",
+      "usdc": "usdc.fakes.testnet",
+      "apr_bps": 1000,
+      "relayer_key": "AsuM1Ql9xK+2EZqEbMwlSWtjP9H4NhLQ2uqPQrYcjkQ=",
+      "price_age_sec": 90,
+      "liq_buffer_bps": 1000,
+      "liq_bonus_bps": 500
+    },
+    "pool": [
+      "485000001",
+      "500000000"
+    ],
+    "alice": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "bob": {
+      "borrower": "bob.noren-near-mw9h22el.testnet",
+      "collateral": [
+        {
+          "token": "wbtc.fakes.testnet",
+          "amount": "500000",
+          "value_usd6": "372225900"
+        }
+      ],
+      "collateral_usd6": "372225900",
+      "credit_limit_usd6": "186112950",
+      "debt_usd6": "15011495",
+      "available_usd6": "171101455",
+      "health_bps": "148776",
+      "prices_fresh": false,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "reservedYocto": "861790000000000000000000",
+  "status": "SETUP_READY_PRICES_REQUIRED",
+  "error": "Stopped during Create tAAPL (TEST, not real shares). No credential or raw provider details are recorded.",
+  "submissionError": {
+    "stage": "Create tTSLA (TEST, not real shares)",
+    "type": "Error",
+    "message": "Array length 22 does not match schema length 32 at value.actions.useGlobalContract.contractIdentifier.CodeHash"
+  },
+  "clientRejected": [
+    {
+      "stage": "Create tTSLA",
+      "attempt": 1,
+      "reason": "Local SDK serialization: base58 hash was incorrectly treated as hex; no broadcast or fee.",
+      "releasedReservationYocto": "90000000000000000000000"
+    },
+    {
+      "stage": "Create tTSLA",
+      "attempt": 2,
+      "reason": "Local SDK serialization: base58 hash was incorrectly treated as hex; no broadcast or fee.",
+      "releasedReservationYocto": "90000000000000000000000"
+    }
+  ],
+  "creditCodeSha256": "3eb19fbcb542b53fb7f244f419c88022af6699576ddaf67eaaf24e4594719112",
+  "after": {
+    "config": {
+      "schema_version": 2,
+      "owner": "noren-near-mw9h22el.testnet",
+      "oracle": "price-oracle-wrapper.testnet",
+      "yield_source": "noren-near-mw9h22el.testnet",
+      "usdc": "usdc.fakes.testnet",
+      "apr_bps": 1000,
+      "relayer_key": "AsuM1Ql9xK+2EZqEbMwlSWtjP9H4NhLQ2uqPQrYcjkQ=",
+      "price_age_sec": 90,
+      "liq_buffer_bps": 1000,
+      "liq_bonus_bps": 500
+    },
+    "pool": [
+      "485000001",
+      "500000000"
+    ],
+    "assets": [
+      {
+        "token": "taapl.noren-near-mw9h22el.testnet",
+        "decimals": 8,
+        "ltv_bps": 4000,
+        "liq_bps": 5000,
+        "price_usd6": "0",
+        "price_at_ns": "0",
+        "price_fresh": false,
+        "source": ""
+      },
+      {
+        "token": "tnvda.noren-near-mw9h22el.testnet",
+        "decimals": 8,
+        "ltv_bps": 4000,
+        "liq_bps": 5000,
+        "price_usd6": "0",
+        "price_at_ns": "0",
+        "price_fresh": false,
+        "source": ""
+      },
+      {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "decimals": 8,
+        "ltv_bps": 4000,
+        "liq_bps": 5000,
+        "price_usd6": "0",
+        "price_at_ns": "0",
+        "price_fresh": false,
+        "source": ""
+      },
+      {
+        "token": "wbtc.fakes.testnet",
+        "decimals": 8,
+        "ltv_bps": 5000,
+        "liq_bps": 6000,
+        "price_usd6": "74445180000",
+        "price_at_ns": "1794422881264000000",
+        "price_fresh": false,
+        "source": "relayer:https://api.exchange.coinbase.com/products/BTC-USD/ticker"
+      }
+    ],
+    "alice": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "bob": {
+      "borrower": "bob.noren-near-mw9h22el.testnet",
+      "collateral": [
+        {
+          "token": "wbtc.fakes.testnet",
+          "amount": "500000",
+          "value_usd6": "372225900"
+        }
+      ],
+      "collateral_usd6": "372225900",
+      "credit_limit_usd6": "186112950",
+      "debt_usd6": "15011531",
+      "available_usd6": "171101419",
+      "health_bps": "148775",
+      "prices_fresh": false,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "totalFeesYocto": "28537234785605200000000",
+  "allocatedYocto": "183750000000000000000000",
+  "finishedAt": "2026-11-12T15:08:49.410Z"
+}
