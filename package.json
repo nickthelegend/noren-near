@@ -17,7 +17,8 @@
     "near:wallet-cycle": "node scripts/near-wallet-cycle.mjs",
     "test:e2e": "node scripts/near-browser-e2e.mjs",
     "near:stock-prices": "tsx scripts/near-stock-prices.ts",
-    "near:stocks:setup": "node scripts/near-stock-setup.mjs"
+    "near:stocks:setup": "node scripts/near-stock-setup.mjs",
+    "near:stock-payment": "node scripts/near-stock-payment.mjs"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

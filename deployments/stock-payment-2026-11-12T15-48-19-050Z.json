@@ -1,0 +1,163 @@
+{
+  "network": "testnet",
+  "budgetGroup": "equity-source-2026-11-12",
+  "budgetNear": 0.5,
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-12T15:48:20.020Z",
+  "status": "PASS",
+  "quote": {
+    "symbol": "tTSLA",
+    "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+    "priceUsd6": "389345000",
+    "timestampNs": "1794498492000000000",
+    "publishTime": 1794498492,
+    "ageSeconds": 7,
+    "fresh": true,
+    "marketOpen": true,
+    "provider": "Yahoo Finance",
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+  },
+  "before": {
+    "stock": "10000000000",
+    "usdc": "1949999",
+    "shop": "40050000",
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "reservedYocto": "70000000000000000000002",
+  "transactions": [
+    {
+      "stage": "mint public test USDC for three repayments",
+      "receiverId": "usdc.fakes.testnet",
+      "method": "mint",
+      "args": {
+        "account_id": "alice.noren-near-mw9h22el.testnet",
+        "amount": "100000000"
+      },
+      "hash": "4HuDsrJ6sWQZbb6yTNbjSBGeiVZ5m3HuPe5ySaSct9X4",
+      "final": true,
+      "feeYocto": "204665120834200000000",
+      "explorer": "https://testnet.nearblocks.io/txns/4HuDsrJ6sWQZbb6yTNbjSBGeiVZ5m3HuPe5ySaSct9X4"
+    },
+    {
+      "stage": "post fresh stock price",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "method": "post_signed_price",
+      "args": {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "price_usd6": "389345000",
+        "timestamp_ns": "1794498492000000000",
+        "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d",
+        "signature": "BH7DQueNhz6VAyfAm5vQhpSAwvxSZWrT1vSsLXOxvUdWr7rGKIno1uQvFAW0kvLvtV9RsXqxk2PKxaEeQb/pAQ=="
+      },
+      "hash": "BfmjrfTvabaffvUNnwA7hFCfwcHTd7Vs3YkVsm1deLnn",
+      "final": true,
+      "feeYocto": "223193561356100000000",
+      "explorer": "https://testnet.nearblocks.io/txns/BfmjrfTvabaffvUNnwA7hFCfwcHTd7Vs3YkVsm1deLnn"
+    },
+    {
+      "stage": "deposit 1 tTSLA",
+      "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+      "method": "ft_transfer_call",
+      "args": {
+        "receiver_id": "credit.noren-near-mw9h22el.testnet",
+        "amount": "100000000",
+        "msg": "{\"kind\":\"collateral\"}"
+      },
+      "hash": "GkoZCBkXUyv33fEFAftv5ptPgdTKBmYq6Y6nEWqskdHY",
+      "final": true,
+      "feeYocto": "588946072850300000000",
+      "explorer": "https://testnet.nearblocks.io/txns/GkoZCBkXUyv33fEFAftv5ptPgdTKBmYq6Y6nEWqskdHY"
+    },
+    {
+      "stage": "borrow 25 test USDC and pay shop",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "method": "borrow",
+      "args": {
+        "amount": "25000000",
+        "recipient": "shop.noren-near-mw9h22el.testnet"
+      },
+      "hash": "CBaApGYvBD8JgPDJhsEjNrbD1ZWTVRoU8L4EM8JCriyd",
+      "final": true,
+      "feeYocto": "647227619529600000000",
+      "explorer": "https://testnet.nearblocks.io/txns/CBaApGYvBD8JgPDJhsEjNrbD1ZWTVRoU8L4EM8JCriyd"
+    },
+    {
+      "stage": "repay stock credit",
+      "receiverId": "usdc.fakes.testnet",
+      "method": "ft_transfer_call",
+      "args": {
+        "receiver_id": "credit.noren-near-mw9h22el.testnet",
+        "amount": "25010000",
+        "msg": "{\"kind\":\"repay\"}"
+      },
+      "hash": "38dfNdoGxwgycbbnB1PUFwDkx9zZTZNhBDn7M3BUF5Kr",
+      "final": true,
+      "feeYocto": "685756944306500000000",
+      "explorer": "https://testnet.nearblocks.io/txns/38dfNdoGxwgycbbnB1PUFwDkx9zZTZNhBDn7M3BUF5Kr"
+    },
+    {
+      "stage": "withdraw 1 tTSLA",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "method": "withdraw",
+      "args": {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "amount": "100000000",
+        "recipient": "alice.noren-near-mw9h22el.testnet"
+      },
+      "hash": "3wKXRsrWL984N2M35YhUXL87LZL7pm3XbZskiw9Dp96k",
+      "final": true,
+      "feeYocto": "625356859103800000000",
+      "explorer": "https://testnet.nearblocks.io/txns/3wKXRsrWL984N2M35YhUXL87LZL7pm3XbZskiw9Dp96k"
+    }
+  ],
+  "drawn": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [
+      {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "amount": "100000000",
+        "value_usd6": "389345000"
+      }
+    ],
+    "collateral_usd6": "389345000",
+    "credit_limit_usd6": "155738000",
+    "debt_usd6": "25000000",
+    "available_usd6": "130738000",
+    "health_bps": "77869",
+    "prices_fresh": true,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "shopAfterPayment": "65050000",
+  "after": {
+    "stock": "10000000000",
+    "usdc": "76949999",
+    "shop": "65050000",
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "finishedAt": "2026-11-12T15:48:54.482Z",
+  "feesYocto": "2975146177980500000000",
+  "budgetChargedYocto": "2975146177980500000002"
+}
