@@ -7,7 +7,7 @@
   "scripts": {
     "test": "pnpm exec vitest run",
     "near:build": "cd packages/contract && cargo near build non-reproducible-wasm --no-abi",
-    "near:test": "cd packages/contract && cargo test --test sandbox -- --test-threads=1",
+    "near:test": "cd packages/contract && cargo test -- --test-threads=1",
     "near:quotes": "tsx scripts/near-dry-quotes.ts",
     "near:testnet": "tsx scripts/near-testnet.ts",
     "near:browser": "node scripts/near-browser-check.mjs",
@@ -15,7 +15,8 @@
     "near:relay": "tsx scripts/near-relay.ts",
     "near:borrow": "node scripts/live-borrow.mjs",
     "near:wallet-cycle": "node scripts/near-wallet-cycle.mjs",
-    "test:e2e": "node scripts/near-browser-e2e.mjs"
+    "test:e2e": "node scripts/near-browser-e2e.mjs",
+    "near:stock-prices": "tsx scripts/near-stock-prices.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

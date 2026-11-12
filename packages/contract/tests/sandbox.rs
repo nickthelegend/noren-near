@@ -227,3 +227,34 @@ async fn max_borrow_is_not_instantly_liquidatable_and_credit_is_withdrawable() -
     assert!(s.liquidator.call(s.credit.id(), "withdraw_credit").args_json(json!({"amount":"1"})).max_gas().transact().await?.is_failure());
     Ok(())
 }
+
+#[tokio::test]
+async fn mixed_stocks_ltv_staleness_forgery_and_liquidation() -> anyhow::Result<()> {
+    let s = setup().await?;
+    let stock = s._worker.dev_create_account().await?.deploy(&std::fs::read(TOKEN_WASM)?).await?.into_result()?;
+    call_ok(&s.admin,&stock,"new",json!({"owner":s.admin.id(),"symbol":"tTSLA (TEST, not shares)","decimals":8})).await?;
+    for who in [s.alice.id(),s.credit.id(),s.liquidator.id()] { call_ok(&s.admin,&stock,"register",json!({"account_id":who})).await?; }
+    call_ok(&s.admin,&stock,"mint",json!({"account_id":s.alice.id(),"amount":"100000000"})).await?;
+    call_ok(&s.admin,&s.credit,"configure_asset",json!({"token":stock.id(),"decimals":8,"ltv_bps":4000})).await?;
+    transfer(&s.admin,&s.usdc,&s.credit,100_000_000,json!({"kind":"pool"})).await?;
+    transfer(&s.alice,&s.btc,&s.credit,100_000,json!({"kind":"collateral"})).await?; // .001 BTC = $50
+    transfer(&s.alice,&stock,&s.credit,100_000_000,json!({"kind":"collateral"})).await?;
+    price(&s,50_000).await?;
+    let ts=now_ns()-2_000_000_000;
+    let wrong=SigningKey::from_bytes(&[9;32]);
+    assert!(s.attacker.call(s.credit.id(),"post_signed_price").args_json(signed_price(&wrong,&s.credit,&stock,100_000_000,ts)).max_gas().transact().await?.is_failure());
+    call_ok(&s.attacker,&s.credit,"post_signed_price",signed_price(&relayer(),&s.credit,&stock,100_000_000,ts)).await?;
+    let p:Value=s.credit.view("position").args_json(json!({"borrower":s.alice.id()})).await?.json()?;
+    assert_eq!(p["credit_limit_usd6"],json!("65000000")); // BTC $50*.5 + TSLA $100*.4
+    assert!(s.alice.call(s.credit.id(),"borrow").args_json(json!({"amount":"65000001","recipient":s.alice.id()})).max_gas().transact().await?.is_failure());
+    call_ok(&s.alice,&s.credit,"borrow",json!({"amount":"60000000","recipient":s.alice.id()})).await?;
+    // A genuine stale stock update is refused instead of being re-timestamped.
+    assert!(s.attacker.call(s.credit.id(),"post_signed_price").args_json(signed_price(&relayer(),&s.credit,&stock,100_000_000,now_ns()-120_000_000_000)).max_gas().transact().await?.is_failure());
+    call_ok(&s.attacker,&s.credit,"post_signed_price",signed_price(&relayer(),&s.credit,&stock,30_000_000,now_ns()-1_000_000_000)).await?;
+    let p:Value=s.credit.view("position").args_json(json!({"borrower":s.alice.id()})).await?.json()?;
+    assert!(p["health_bps"].as_str().unwrap().parse::<u128>()?<10_000); // $30 BTC threshold + $15 stock threshold < $60 debt
+    transfer(&s.liquidator,&s.usdc,&s.credit,10_000_000,json!({"kind":"liquidation_credit"})).await?;
+    call_ok(&s.liquidator,&s.credit,"liquidate",json!({"borrower":s.alice.id(),"token":stock.id(),"repay":"1000000"})).await?;
+    assert!(view_string(&stock,"ft_balance_of",json!({"account_id":s.liquidator.id()})).await?.parse::<u128>()?>0);
+    Ok(())
+}

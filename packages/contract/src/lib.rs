@@ -69,6 +69,23 @@ pub struct NorenCredit {
     liquidity: u128, supplied: u128,
     pending: BTreeMap<AccountId, u64>, nonce: u64,
     installments: BTreeMap<u64, Installment>, next_installment: u64,
+    schema_version: u8,
+}
+
+// Exact deployed v1 layout. Kept only for the private, one-way migration.
+#[derive(BorshDeserialize, BorshSerialize)]
+#[borsh(crate = "near_sdk::borsh")]
+struct LegacyCredit {
+    owner: AccountId, oracle: AccountId, yield_source: AccountId, usdc: AccountId, apr_bps: u16,
+    relayer_key: Option<[u8; 32]>,
+    assets: BTreeMap<AccountId, Asset>,
+    collateral: BTreeMap<(AccountId, AccountId), u128>,
+    loans: BTreeMap<AccountId, Loan>,
+    credits: BTreeMap<AccountId, u128>,
+    lp_balances: BTreeMap<AccountId, u128>,
+    liquidity: u128, supplied: u128,
+    pending: BTreeMap<AccountId, u64>, nonce: u64,
+    installments: BTreeMap<u64, Installment>, next_installment: u64,
 }
 
 fn price_message(contract: &AccountId, token: &AccountId, price_usd6: u128, timestamp_ns: u64, source: &str) -> String {
@@ -86,7 +103,35 @@ impl NorenCredit {
         Self { owner, oracle, yield_source, usdc, apr_bps, relayer_key: relayer_key.as_ref().map(key32),
             assets: BTreeMap::new(), collateral: BTreeMap::new(), loans: BTreeMap::new(), credits: BTreeMap::new(),
             lp_balances: BTreeMap::new(), liquidity: 0, supplied: 0, pending: BTreeMap::new(), nonce: 0,
-            installments: BTreeMap::new(), next_installment: 0 }
+            installments: BTreeMap::new(), next_installment: 0, schema_version: 2 }
+    }
+
+    /// Deploy and call atomically from the contract account's existing full-access key.
+    #[init(ignore_state)]
+    #[private]
+    pub fn migrate() -> Self {
+        assert_eq!(env::predecessor_account_id(), env::current_account_id(), "ERR_SELF_ONLY");
+        let old: LegacyCredit = env::state_read().expect("ERR_V1_STATE");
+        Self {
+            owner: old.owner,
+            oracle: old.oracle,
+            yield_source: old.yield_source,
+            usdc: old.usdc,
+            apr_bps: old.apr_bps,
+            relayer_key: old.relayer_key,
+            assets: old.assets,
+            collateral: old.collateral,
+            loans: old.loans,
+            credits: old.credits,
+            lp_balances: old.lp_balances,
+            liquidity: old.liquidity,
+            supplied: old.supplied,
+            pending: old.pending,
+            nonce: old.nonce,
+            installments: old.installments,
+            next_installment: old.next_installment,
+            schema_version: 2,
+        }
     }
 
     pub fn configure_asset(&mut self, token: AccountId, decimals: u8, ltv_bps: u16) {
@@ -212,7 +257,7 @@ impl NorenCredit {
             price_fresh: Self::is_fresh(a, now), source: a.source.clone() }).collect()
     }
     pub fn config(&self) -> near_sdk::serde_json::Value {
-        near_sdk::serde_json::json!({ "owner": self.owner, "oracle": self.oracle, "yield_source": self.yield_source,
+        near_sdk::serde_json::json!({ "schema_version": self.schema_version, "owner": self.owner, "oracle": self.oracle, "yield_source": self.yield_source,
             "usdc": self.usdc, "apr_bps": self.apr_bps, "relayer_key": self.relayer_key.map(|k| Base64VecU8(k.to_vec())),
             "price_age_sec": PRICE_AGE / 1_000_000_000, "liq_buffer_bps": LIQ_BUFFER_BPS, "liq_bonus_bps": BONUS_BPS - 10_000 })
     }
@@ -405,7 +450,7 @@ impl NorenCredit {
     fn is_fresh(a: &Asset, now: u64) -> bool { a.at_ns > 0 && a.at_ns <= now && now - a.at_ns <= PRICE_AGE }
     /// Σ(collateral × price × LTV), or × liquidation threshold when `liquidation` is set.
     fn power(&self, user: &AccountId, fresh: bool, liquidation: bool) -> u128 {
-        self.collateral.iter().filter(|((u, _), _)| u == user).fold(0u128, |total, ((_, token), amount)| {
+        self.collateral.iter().filter(|((u, _), amount)| u == user && **amount > 0).fold(0u128, |total, ((_, token), amount)| {
             let asset = if fresh { self.fresh_asset(token) } else { self.assets.get(token).expect("ERR_ASSET") };
             let bps = if liquidation { Self::liq_bps(asset) } else { asset.ltv_bps as u128 };
             total.checked_add(Self::value(asset, *amount).checked_mul(bps).expect("ERR_OVERFLOW") / 10_000).expect("ERR_OVERFLOW")
@@ -426,5 +471,60 @@ impl NorenCredit {
     fn callback(&self, method: &str, args: near_sdk::serde_json::Value) -> Promise {
         Promise::new(env::current_account_id()).function_call(method,
             near_sdk::serde_json::to_vec(&args).unwrap(), NearToken::from_yoctonear(0), CALLBACK_GAS)
+    }
+}
+
+#[cfg(test)]
+mod migration_tests {
+    use super::*;
+    use near_sdk::{test_utils::VMContextBuilder, testing_env};
+    #[test]
+    fn migration_preserves_v1_loans_assets_balances_and_locks() {
+        let id: AccountId = "credit.testnet".parse().unwrap();
+        let user: AccountId = "alice.testnet".parse().unwrap();
+        let token: AccountId = "ttsla.testnet".parse().unwrap();
+        testing_env!(VMContextBuilder::new().current_account_id(id.clone()).predecessor_account_id(id).build());
+        let old = LegacyCredit {
+            owner: user.clone(), oracle: user.clone(), yield_source: user.clone(), usdc: "usdc.testnet".parse().unwrap(), apr_bps: 1000, relayer_key: Some([7;32]),
+            assets: BTreeMap::from([(token.clone(), Asset { decimals: 8, ltv_bps: 4000, price_usd6: 100_000_000, at_ns: 1, source: "pyth:test".into() })]),
+            collateral: BTreeMap::from([((user.clone(),token.clone()),100_000_000)]), loans: BTreeMap::from([(user.clone(),Loan { debt: 20_000_000, at_sec: 1 })]),
+            credits: BTreeMap::from([(user.clone(),3)]), lp_balances: BTreeMap::from([(user.clone(),400)]), liquidity: 380, supplied: 400,
+            pending: BTreeMap::from([(user.clone(),9)]), nonce: 9, installments: BTreeMap::from([(4,Installment{owner:user.clone(),recipient:user.clone(),amount:3,due_sec:2,paid:false})]), next_installment: 5,
+        };
+        env::state_write(&old);
+        let migrated = NorenCredit::migrate();
+        assert_eq!(migrated.schema_version,2); assert_eq!(migrated.loans[&user].debt,20_000_000);
+        assert_eq!(migrated.collateral[&(user.clone(),token.clone())],100_000_000);
+        assert_eq!(migrated.assets[&token].ltv_bps,4000);assert_eq!(migrated.credits[&user],3);
+        assert_eq!(migrated.lp_balances[&user],400);assert_eq!(migrated.pending[&user],9);
+        assert_eq!(migrated.liquidity,380);assert_eq!(migrated.supplied,400);assert_eq!(migrated.nonce,9);
+        assert_eq!(migrated.next_installment,5);assert_eq!(migrated.installments[&4].amount,3);assert_eq!(migrated.relayer_key,Some([7;32]));
+    }
+}
+
+#[cfg(test)]
+mod stock_freshness_tests {
+    use super::*;
+    use near_sdk::{test_utils::VMContextBuilder, testing_env};
+    fn position_state(stock_amount: u128) -> NorenCredit {
+        let user:AccountId="alice.testnet".parse().unwrap();
+        let id:AccountId="credit.testnet".parse().unwrap();
+        testing_env!(VMContextBuilder::new().current_account_id(id).predecessor_account_id(user.clone()).block_timestamp(200_000_000_000).build());
+        let btc:AccountId="btc.testnet".parse().unwrap();let stock:AccountId="ttsla.testnet".parse().unwrap();
+        NorenCredit { owner:user.clone(),oracle:user.clone(),yield_source:user.clone(),usdc:"usdc.testnet".parse().unwrap(),apr_bps:1000,relayer_key:Some([7;32]),
+            assets:BTreeMap::from([(btc.clone(),Asset{decimals:8,ltv_bps:5000,price_usd6:50_000_000_000,at_ns:200_000_000_000,source:"test".into()}),(stock.clone(),Asset{decimals:8,ltv_bps:4000,price_usd6:100_000_000,at_ns:100_000_000_000,source:"test".into()})]),
+            collateral:BTreeMap::from([((user.clone(),btc),100_000),((user,stock),stock_amount)]),loans:BTreeMap::new(),credits:BTreeMap::new(),lp_balances:BTreeMap::new(),liquidity:500_000_000,supplied:500_000_000,pending:BTreeMap::new(),nonce:0,installments:BTreeMap::new(),next_installment:0,schema_version:2 }
+    }
+    #[test]
+    #[should_panic(expected="ERR_STALE_PRICE")]
+    fn stale_stock_blocks_new_borrow_even_with_fresh_btc() {
+        let mut c=position_state(100_000_000);let user:AccountId="alice.testnet".parse().unwrap();
+        assert!(!c.position(user.clone()).prices_fresh);
+        c.borrow(U128(1),user);
+    }
+    #[test]
+    fn withdrawn_zero_stock_does_not_poison_fresh_btc_credit() {
+        let c=position_state(0);let user:AccountId="alice.testnet".parse().unwrap();
+        assert!(c.position(user.clone()).prices_fresh);assert_eq!(c.credit_limit(user).0,25_000_000);
     }
 }

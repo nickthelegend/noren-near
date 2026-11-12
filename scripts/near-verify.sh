@@ -39,7 +39,7 @@ if [ -z "${NEAR_SANDBOX_BIN:-}" ]; then
 fi
 
 wait_resources
-(cd packages/contract && cargo test --test sandbox -- --test-threads=1)
+(cd packages/contract && cargo test -- --test-threads=1)
 wait_resources
 pnpm --filter @noren/near-sdk build
 pnpm --filter @noren/near-sdk test
