@@ -1,12 +1,12 @@
 # Noren (暖簾)
 
-Noren explores private merchant payments and credit against your coins, any-chain. This entry runs on NEAR testnet.
+Noren is a credit line on NEAR testnet that pays the shop's NEAR account in the same transaction.
 
 **The problem.** Crypto holders who need spending money may have to sell assets they want to keep. Noren explores borrowing against those assets and sending the borrowed stablecoins straight to a merchant. The NEAR demo uses test tokens; its positions and payments are public.
 
 ## Try it
 
-The NEAR demo runs locally. Use Node 22+ and pnpm 10.29.2. Reading positions needs no wallet. Signing needs a funded **NEAR testnet** account in **Meteor Wallet**; the browser never loads the operator's credential file.
+The NEAR demo runs locally. Use Node 22.22.2+ and pnpm 10.29.2. Reading positions needs no wallet. Signing needs a funded **NEAR testnet** account in **Meteor Wallet**; the browser never loads the operator's credential file.
 
 1. Run `pnpm install`, `pnpm --filter @noren/near-sdk build`, then `pnpm --filter @noren/web dev` - see Vite serve `http://localhost:5190`.
 2. Open `http://localhost:5190/` - see the NEAR credit app and bob's live demo position. The account chip lets you read alice or another account. The signed BTC price has a 90-second limit; its age is shown.
