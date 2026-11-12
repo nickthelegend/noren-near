@@ -6,17 +6,20 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, openSync, closeSyn
 import { resolve, join } from 'node:path';
 import { chromium } from 'playwright-core';
 import { actions } from 'near-api-js';
+import { stockPrices, stockAccount } from '../packages/sdk/src/stocks.ts';
 import { accountFor, loadDeployment, view, provider, fetchBtcSpot, signPrice } from './near-lib.ts';
 const root = resolve(import.meta.dirname, '..');
 const orchestration = resolve(root, '../../orchestration');
 const { withChromeLock } = await import(resolve(orchestration, 'chrome-lock.mjs'));
-const screenshots = join(orchestration, 'shots/noren-near/r3/qa-signer');
+const screenshots = join(orchestration, process.argv.includes('--stocks') ? 'shots/noren-near/stocks/qa-signer' : 'shots/noren-near/r3/qa-signer');
 const qaDir = join(root, '.near-build/qa-web');
 const RPC = 'https://test.rpc.fastnear.com', CAP = 300_000_000_000_000_000_000_000n;
 const args = process.argv.slice(2), keyIndex = args.indexOf('--key-file');
 const keyPath = resolve(root, keyIndex < 0 ? '.near-credentials/testnet.json' : args[keyIndex + 1] ?? '');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let captureDir = screenshots;
+let stockOracleError = '', stockQuotes = [], stockToken = '';
+const stockMode = process.argv.includes('--stocks');
 let stage = 'preflight', server, browser, ledger, run, reserved = 0n, initialNear, account, secret;
 const output = join(root, `deployments/qa-browser-${new Date().toISOString().slice(0, 10)}.json`);
 const save = () => { if (ledger) writeFileSync(output, JSON.stringify(ledger, null, 2) + '\n'); };
@@ -29,6 +32,7 @@ async function reserve(request) {
   check(request.receiverId.endsWith('.testnet'), 'Non-testnet receiver refused.');
   const gasPrice = BigInt((await rpc('gas_price', [null])).gas_price);
   const cost = BigInt(request.gas) * gasPrice * 2n + BigInt(request.deposit);
+  if (stockMode) { const setup = JSON.parse(readFileSync(join(root, 'deployments/stock-demo-2026-11-12.json'), 'utf8')); const setupBound = BigInt(setup.totalFeesYocto) + BigInt(setup.allocatedYocto); check(setupBound + BigInt(run.reservedYocto) + cost < 10n ** 24n, 'One-NEAR stock-task bound exhausted.'); }
   check(reserved + cost <= CAP, 'QA budget exhausted; no new transaction authorized.');
   reserved += cost; run.reservedYocto = (BigInt(run.reservedYocto) + cost).toString();
   run.attempts.push({ stage, ...request, maximumCostYocto: cost.toString() }); save();
@@ -65,21 +69,24 @@ function audit(dir, expectQa) {
   const markers = ['qa-signer', '__NOREN_QA_SIGNER__', '__norenQaAuthorize'];
   const all = files(dir), found = Object.fromEntries(markers.map(marker => [marker, all.some(f => f.includes(marker) || readFileSync(f).includes(marker))]));
   check(expectQa ? found['qa-signer'] : Object.values(found).every(v => !v), 'QA module build isolation failed.');
-  const chainMatches = Object.fromEntries(['Arc', 'Robinhood', 'CCTP', 'arc.io'].map(s => [s, all.some(f => readFileSync(f).includes(s))]));
+  const chainMatches = Object.fromEntries(['Arc', 'Robinhood', 'CCTP', 'arc.io'].map(s => [s, all.some(f => /\.(?:js|css|html)$/.test(f) && readFileSync(f).includes(s))]));
   check(Object.values(chainMatches).every(v => !v), 'Another-chain content in the build.');
   return { files: all.length, markers: found, chainMatches };
 }
 async function main() {
-  for (let i = 0; i < args.length; i++) { if (args[i] === '--key-file') { check(args[i + 1] && !args[i + 1].startsWith('--'), 'Supply a credential file path.'); i++; } else check(args[i] === '--skip-build', 'Use --key-file <path> and optional --skip-build.'); }
+  for (let i = 0; i < args.length; i++) { if (args[i] === '--key-file') { check(args[i + 1] && !args[i + 1].startsWith('--'), 'Supply a credential file path.'); i++; } else check(['--skip-build','--stocks'].includes(args[i]), 'Use --key-file <path> and optional --skip-build / --stocks.'); }
   const d = loadDeployment(); check(d?.network === 'testnet' && d.rpc === RPC, 'Testnet deployment and RPC required.');
   account = d.accounts.alice;
   check(account.endsWith('.testnet'), 'Named testnet signer required.');
   const c = { credit: d.accounts.credit, collateral: d.accounts.tbtc, usdc: d.accounts.tusdc };
   const balance = (token, who = account) => view(token, 'ft_balance_of', { account_id: who });
   const position = () => view(c.credit, 'position', { borrower: account });
+  stockToken = stockAccount('tTSLA', d.root);
+  if (stockMode) { try { stockQuotes = await stockPrices(); if (!stockQuotes.find(p => p.symbol==='tTSLA')?.fresh) stockOracleError = 'US-equity quotes are stale; market may be closed.'; } catch (e) { stockOracleError = e instanceof Error ? e.message : 'Pyth price source unavailable.'; } check(!stockOracleError.includes('429'), 'Pyth returned HTTP 429; stopped without further requests or writes.'); }
   const initial = await position(); check(initial.debt_usd6 === '0' && initial.collateral.length === 0, 'Demo account must begin debt-free with no locked collateral.');
   const state = await provider.viewAccount({ accountId: account }); initialNear = state.amount;
-  const before = { collateral: await balance(c.collateral), usdc: await balance(c.usdc), shop: await balance(c.usdc, d.accounts.shop) };
+  const before = { ...(stockMode ? { stock: await balance(stockToken) } : {}), collateral: await balance(c.collateral), usdc: await balance(c.usdc), shop: await balance(c.usdc, d.accounts.shop) };
+  if (stockMode) check(BigInt(before.stock) >= 100_000_000n, 'Demo test stock balance is low.');
   check(BigInt(before.collateral) >= 10000n && BigInt(before.usdc) >= 40000n, 'Test token balances low; stopped without spending.');
   const gasPrice = BigInt((await rpc('gas_price', [null])).gas_price);
   const planned = 700_000_000_000_000n * gasPrice * 2n + 5_000_000_000_000_000_000_000n;
@@ -90,7 +97,7 @@ async function main() {
   reserved = readdirSync(join(root, 'deployments')).filter(name => /^qa-browser-\d{4}-\d{2}-\d{2}\.json$/.test(name)).reduce((total, name) => {
     const previous = JSON.parse(readFileSync(join(root, 'deployments', name), 'utf8'));
     check(previous.network === 'testnet' && Array.isArray(previous.runs), 'Invalid prior QA budget ledger.');
-    return total + previous.runs.reduce((n, r) => n + BigInt(r.status === 'PASS' && r.budgetChargedYocto !== undefined ? r.budgetChargedYocto : r.reservedYocto ?? '0'), 0n);
+    return total + previous.runs.reduce((n, r) => n + BigInt(['PASS','BLOCKED_PRICE_SOURCE'].includes(r.status) && r.budgetChargedYocto !== undefined ? r.budgetChargedYocto : r.reservedYocto ?? '0'), 0n);
   }, 0n);
   check(reserved + planned <= CAP, 'Remaining recorded QA budget is too low; stopped without spending.');
   console.log('Preflight passed: funded testnet account, test tokens and budget below 0.3 NEAR.');
@@ -108,7 +115,7 @@ async function main() {
   check(secret && creds.relayerKey, 'Demo signer and relayer key required by file path.');
   let relayer;
   try { relayer = accountFor(account, secret); } catch { throw Error('Demo key could not be loaded.'); }
-  run = { startedAt: new Date().toISOString(), account, status: 'RUNNING', reservedYocto: '0', before, builds, attempts: [], transactions: [], screenshots: [], viewports: [] };
+  run = { stockMode, stockPriceSource: stockMode ? { error: stockOracleError || null, observations: stockQuotes } : undefined, startedAt: new Date().toISOString(), account, status: 'RUNNING', reservedYocto: '0', before, builds, attempts: [], transactions: [], screenshots: [], viewports: [] };
   captureDir = join(screenshots, run.startedAt.replace(/[^0-9A-Za-z]/g, '-')); mkdirSync(captureDir, { recursive: true });
   ledger.runs.push(run); save();
   const port = Array.from({ length: 700 }, (_, i) => 5300 + i).find(p => spawnSync('lsof', ['-nP', `-iTCP:${p}`, '-sTCP:LISTEN'], { stdio: 'ignore' }).status === 1);
@@ -136,10 +143,10 @@ async function main() {
         const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
         const p = await context.newPage(); p.setDefaultTimeout(75000);
         const failures = [], responseTasks = new Set(); let secretLeak = false;
-        const viewport = { width, status: 'RUNNING', failures, httpErrors: [] }; run.viewports.push(viewport); save();
+        const viewport = { width, status: 'RUNNING', failures, httpErrors: [], expectedPriceFailures: [] }; run.viewports.push(viewport); save();
         p.on('pageerror', () => { failures.push('page exception'); save(); });
-        p.on('console', m => { if (m.text().includes(secret)) secretLeak = true; if (m.type() === 'error') { failures.push('console error'); save(); } });
-        p.on('requestfailed', request => { const u = new URL(request.url()); failures.push({ type: 'failed request', url: u.origin + u.pathname, reason: request.failure()?.errorText }); save(); });
+        p.on('console', m => { if (m.text().includes(secret)) secretLeak = true; if (m.type() === 'error') { if (m.location().url?.includes('hermes.pyth.network') || m.text().includes('hermes.pyth.network')) { viewport.expectedPriceFailures.push({type:'console',reason:'Unauthenticated Hermes/CORS unavailable'}); return; } failures.push('console error'); save(); } });
+        p.on('requestfailed', request => { const u = new URL(request.url()); if(u.hostname==='hermes.pyth.network') {viewport.expectedPriceFailures.push({type:'network',url:u.origin+u.pathname,reason:request.failure()?.errorText});save();return;} failures.push({ type: 'failed request', url: u.origin + u.pathname, reason: request.failure()?.errorText }); save(); });
         p.on('response', response => {
           if (response.status() >= 400) { const u = new URL(response.url()); viewport.httpErrors.push({ status: response.status(), url: u.origin + u.pathname }); save(); }
           if (response.url() !== RPC && response.url() !== RPC + '/') return;
@@ -176,27 +183,55 @@ async function main() {
           await shot(p, `${name}-final`, width); save();
         }
         stage = `deposit ${width}`;
-        await p.getByRole('button', { name: /^Deposit collateral/ }).click(); await p.getByLabel('Test WBTC amount').fill('0.0001');
+        await p.getByRole('button', { name: /^Deposit collateral/ }).click(); await p.getByLabel('Collateral token').selectOption(c.collateral); await p.getByLabel('Test WBTC amount').fill('0.0001');
         await shot(p, 'deposit', width); await p.getByRole('button', { name: 'Deposit collateral', exact: true }).click(); await final('deposit');
         check((await position()).collateral.some(c => c.amount === '10000'), 'Collateral deposit not reflected on chain.');
         await p.getByRole('button', { name: 'Close', exact: true }).click();
         await p.getByRole('tab', { name: 'Credit', exact: true }).click();
-        await p.waitForFunction(() => document.querySelector('.nc-hero')?.textContent?.includes('0.0001 test WBTC')); await shot(p, 'position-deposited', width);
+        await p.waitForFunction(() => [...document.querySelectorAll('.nc-coins li')].some(el => el.textContent?.includes('test WBTC') && el.querySelector('.r b')?.textContent === '0.0001')); await shot(p, 'position-deposited', width);
+        if (stockMode) {
+          stage = `stock deposit ${width}`;
+          await p.getByRole('button',{name:/Change account/}).click();await p.getByRole('button',{name:/^Deposit collateral/}).click();await p.getByLabel('Collateral token').selectOption(stockToken);await p.getByLabel('Test TSLA amount').fill('1');await p.getByRole('button',{name:'Deposit collateral',exact:true}).click();await final('stock-deposit');await p.getByRole('button',{name:'Close',exact:true}).click();
+          check((await position()).collateral.some(c=>c.token===stockToken&&c.amount==='100000000'),'Stock deposit not reflected on chain.');await shot(p,'position-mixed',width);
+          // A queued Chrome run must not reuse a once-fresh observation from preflight.
+          if (!stockOracleError) { try { stockQuotes=await stockPrices(); if(!stockQuotes.find(p=>p.symbol==='tTSLA')?.fresh) stockOracleError='The original Pyth TSLA publication is older than 90 seconds; market may be closed.'; } catch(e) {stockOracleError=e instanceof Error?e.message:'Pyth price source unavailable.';} }
+          run.stockPriceSource={error:stockOracleError||null,observations:stockQuotes};save();
+          if (stockOracleError) {
+            stage = `stock borrow blocked ${width}`;
+            await p.getByRole('tab',{name:'Pay anyone',exact:true}).click();await p.locator('#nc-amt').fill('0.01');await p.getByRole('button',{name:'Borrow and pay shop',exact:true}).click();await p.getByRole('alert').filter({hasText:'A collateral price is stale'}).waitFor();await shot(p,'stock-price-blocked',width);
+            for (const [token,label,amount,name] of [[stockToken,'Test TSLA amount','1','stock-withdraw'],[c.collateral,'Test WBTC amount','0.0001','withdraw']]) {
+              stage = `${name} ${width}`;await p.getByRole('button',{name:/Change account/}).click();await p.getByRole('button',{name:/^Withdraw collateral/}).click();await p.getByLabel('Collateral token').selectOption(token);await p.getByLabel(label).fill(amount);await p.getByRole('button',{name:'Withdraw collateral',exact:true}).click();await final(name);await p.getByRole('button',{name:'Close',exact:true}).click();
+            }
+            await p.getByRole('tab',{name:'Credit',exact:true}).click();await p.waitForFunction(()=>document.querySelector('.nc-hero')?.textContent?.includes('No collateral'));await shot(p,'position-restored',width);
+            const restored=await position();check(restored.debt_usd6==='0'&&restored.collateral.length===0,'Blocked run left collateral or debt.');check(await balance(stockToken)===before.stock&&await balance(c.collateral)===before.collateral,'Token balances not restored.');check(await balance(c.usdc,d.accounts.shop)===before.shop,'A blocked draw unexpectedly paid the shop.');
+            check(!failures.length&&!secretLeak,`Unexpected browser errors in blocked-price flow: ${JSON.stringify(failures)}`);Object.assign(viewport,{status:'BLOCKED_PRICE_SOURCE',reason:stockOracleError,position:restored,overflow:false});save();await context.close();console.log(`${width}: real mixed-collateral deposits/withdrawals PASS; borrow BLOCKED by Pyth price source`);continue;
+          }
+        }
         stage = `price refresh ${width}`;
         const spot = await fetchBtcSpot(), { message: _, ...price } = signPrice(creds.relayerKey, c.credit, c.collateral, spot.priceUsd6, spot.timestampNs);
         await reserve({ receiverId: c.credit, gas: '30000000000000', deposit: '0' });
         const result = await relayer.signAndSendTransaction({ receiverId: c.credit, actions: [actions.functionCall('post_signed_price', price, 30_000_000_000_000n, 0n)], waitUntil: 'FINAL', throwOnFailure: false });
         run.transactions.push({ source: 'node price relayer', width, action: 'price', hash: result.transaction.hash, final: !result.status.Failure, explorer: `https://testnet.nearblocks.io/txns/${result.transaction.hash}` }); save();
         check(!result.status.Failure, 'Price refresh failed.');
+        if (stockMode) {
+          const quote=stockQuotes.find(p=>p.symbol==='tTSLA');check(quote?.fresh,'No fresh TSLA quote.');
+          const {message:_,...args}=signPrice(creds.relayerKey,c.credit,stockToken,BigInt(quote.priceUsd6),BigInt(quote.timestampNs),quote.source);
+          await reserve({receiverId:c.credit,gas:'30000000000000',deposit:'0'});
+          const tx=await relayer.signAndSendTransaction({receiverId:c.credit,actions:[actions.functionCall('post_signed_price',args,30_000_000_000_000n,0n)],waitUntil:'FINAL',throwOnFailure:false});run.transactions.push({source:'node Pyth relayer',width,action:'stock-price',hash:tx.transaction.hash,final:!tx.status.Failure,explorer:`https://testnet.nearblocks.io/txns/${tx.transaction.hash}`});save();check(!tx.status.Failure,'Stock price relay failed.');
+        }
         stage = `borrow ${width}`;
         await p.getByRole('tab', { name: 'Pay anyone', exact: true }).click(); await p.locator('#nc-amt').fill('0.01'); await p.locator('#nc-to').fill(d.accounts.shop);
         await p.getByRole('button', { name: 'Borrow and pay shop', exact: true }).click(); await final('borrow');
-        check(BigInt((await position()).debt_usd6) >= 10000n, 'Borrowed debt not reflected on chain.');
+        const drawn=await position();check(BigInt(drawn.debt_usd6) >= 10000n, 'Borrowed debt not reflected on chain.');check(BigInt(drawn.health_bps ?? '0') > 10000n, 'Borrowed position must remain healthy.');
         await p.getByRole('tab', { name: 'Credit', exact: true }).click();
         await p.waitForFunction(() => document.querySelector('.nc-hero .nc-tiles')?.textContent?.includes('$0.01')); await shot(p, 'position-borrowed', width);
         for (const [action, label] of [['repay', 'Repay credit'], ['withdraw', 'Withdraw collateral']]) {
+          if (stockMode && action==='withdraw') {
+            stage=`stock withdraw ${width}`;await p.getByRole('button',{name:/Change account/}).click();await p.getByRole('button',{name:/^Withdraw collateral/}).click();await p.getByLabel('Collateral token').selectOption(stockToken);await p.getByLabel('Test TSLA amount').fill('1');await p.getByRole('button',{name:'Withdraw collateral',exact:true}).click();await final('stock-withdraw');await p.getByRole('button',{name:'Close',exact:true}).click();
+          }
           stage = `${action} ${width}`;
           await p.getByRole('button', { name: /Change account/ }).click(); await p.getByRole('button', { name: new RegExp('^' + label) }).click();
+          if(action==='withdraw')await p.getByLabel('Collateral token').selectOption(c.collateral);
           await p.getByLabel(action === 'repay' ? 'Test USDC amount' : 'Test WBTC amount').fill(action === 'repay' ? '0.02' : '0.0001');
           await p.getByRole('button', { name: action === 'repay' ? 'Repay your credit' : 'Withdraw collateral', exact: true }).click(); await final(action);
           await p.getByRole('button', { name: 'Close', exact: true }).click();
@@ -204,6 +239,7 @@ async function main() {
         const after = await position();
         check(after.debt_usd6 === '0' && after.collateral.length === 0, 'Final position must be debt-free with no locked collateral.');
         check(await balance(c.collateral) === before.collateral, 'Collateral wallet balance not restored.');
+        if(stockMode)check(await balance(stockToken)===before.stock,'Stock wallet balance not restored.');
         check(BigInt(await balance(c.usdc, d.accounts.shop)) - BigInt(before.shop) === BigInt(width === 1440 ? 10000 : 20000), 'Shop did not receive the exact payments.');
         await p.waitForFunction(() => document.querySelector('.nc-hero')?.textContent?.includes('No collateral')); await shot(p, 'position-restored', width);
         await p.getByRole('tab', { name: 'Debt-free', exact: true }).click(); await shot(p, 'debt-free', width);
@@ -214,8 +250,8 @@ async function main() {
         Object.assign(viewport, { status: 'PASS', pageExceptions: 0, consoleErrors: 0, failedRequests: 0, overflow: false, position: after }); save();
         await context.close(); console.log(`${width}: real browser deposit, shop payment, repayment and withdrawal PASS`);
       }
-      run.after = { collateral: await balance(c.collateral), shop: await balance(c.usdc, d.accounts.shop), position: await position() };
-      run.status = 'PASS'; save();
+      run.after = { ...(stockMode ? {stock: await balance(stockToken)} : {}), collateral: await balance(c.collateral), shop: await balance(c.usdc, d.accounts.shop), position: await position() };
+      run.status = stockMode&&stockOracleError ? 'BLOCKED_PRICE_SOURCE' : 'PASS'; if(run.status!=='PASS')process.exitCode=2; save();
     } finally { await browser.close(); browser = undefined; await stopServer(); }
   });
 }
