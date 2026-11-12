@@ -2,7 +2,7 @@
 // (the NEAR testnet contract, the 1Click token catalog, Rhea's rate endpoint) or from the recorded
 // testnet transaction log, which links each step to the explorer.
 import { useCallback, useEffect, useState } from "react";
-import { nearView, rheaRates, supportedTokens, STOCK_FEEDS, stockAccount, stockPrices, type Rate, type Token } from "@noren/near-sdk";
+import { nearView, rheaRates, supportedTokens, STOCK_FEEDS, stockAccount, type Rate, type Token } from "@noren/near-sdk";
 import record from "../../../../deployments/testnet-2026-11-09.json";
 
 export type Step = { step: string; account: string; method?: string; hash: string; status: "success" | "rejected"; explorer: string; note?: string };
@@ -52,7 +52,6 @@ export const usePool = () => useLive(async (): Promise<Pool> => {
 }, [], 30_000);
 export const usePosition = (account: string) => useLive(() => nearView<Position>(CONTRACT, "position", { borrower: account }), [account], 30_000);
 export const useTokens = () => useLive<Token[]>(async () => (await supportedTokens()).filter((token) => token.blockchain === "near"), []);
-export const useStockPrices = () => useLive(() => stockPrices(), []);
 export const useRates = () => useLive<Rate[]>(() => rheaRates(), []);
 
 // ------------------------------------------------------------------ formatting

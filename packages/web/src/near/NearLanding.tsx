@@ -118,7 +118,7 @@ export function NearLanding() {
         <ol className="nl-how">
           {[
             { n: "01", a: "btc-coin" as Art3dKey, t: "Lock test stocks or BTC", s: ["testnet", "key"] as Status[], d: "Collateral counts only when a token contract calls ft_on_transfer on Noren. Test stocks are not real shares; test WBTC has no value. Mainnet deposits through 1Click still need an attribution adapter." },
-            { n: "02", a: "gauge" as Art3dKey, t: "See your limit", s: ["testnet"] as Status[], d: "Add each asset’s value × LTV: stocks 40%, BTC 50%. Coinbase BTC and Pyth US-equity prices keep their source timestamps and are signed by the relayer. Older than 90 s blocks borrowing; unavailable Pyth prices block stock draws." },
+            { n: "02", a: "gauge" as Art3dKey, t: "See your limit", s: ["testnet"] as Status[], d: "Add each asset’s value × LTV: stocks 40%, BTC 50%. Coinbase BTC and Yahoo Finance (or authorized Pyth) US-equity prices keep their source timestamps and are signed by the relayer. Older than 90 s blocks borrowing; closed-market or stale quotes block stock draws." },
             { n: "03", a: "card" as Art3dKey, t: "Pay anyone, anywhere", s: ["testnet", "key"] as Status[], d: "A draw pays test USDC straight to a merchant’s NEAR account. Any-chain execution still needs a funded mainnet account and a payout adapter." },
             { n: "04", a: "hourglass" as Art3dKey, t: "The debt melts", s: ["proj", "blocked"] as Status[], d: "A future Rhea adapter would turn earned yield into USDC for repayment. Today, only the contract’s yield input is sandbox-tested; the debt-free date is a projection." },
           ].map((x, i) => (
@@ -187,7 +187,7 @@ export function NearLanding() {
       <section className="nx-cta">
         <Art3d k="stall" size={150} />
         <h2>Run the cycle yourself.</h2>
-        <p>Six sandbox tests on a real nearcore node, recorded BTC payments, and live test stock contracts. Stock borrowing needs fresh Pyth prices; the public price endpoint currently requires authorization.</p>
+        <p>Six sandbox tests on a real nearcore node, recorded BTC payments, and live test stock contracts. Stock borrowing uses fresh Yahoo Finance quotes signed by Noren’s relayer, or authenticated Pyth when configured. Original publication times are preserved.</p>
         <pre className="mono">{`pnpm near:test\npnpm near:testnet\npnpm near:relay\npnpm near:stock-prices --check`}</pre>
         <div className="lx-ctas"><a className="lx-btn light" href="#/near/app">Open the credit app</a><a className="lx-btn dark" href="https://github.com/nickthelegend/noren/compare/main...near">Read the diff</a></div>
         <p className="nl-setup mono">Mainnet deposits, merchant payouts and harvests are unfinished.</p>

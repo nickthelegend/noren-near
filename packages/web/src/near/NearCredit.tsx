@@ -10,7 +10,7 @@ import { tokenUnits, walletError, type CreditAction } from "./credit-calls";
 import { CreditActionSheet, CreditReceipt, type Receipt, type RunAction } from "./CreditActions";
 import {
   COLLATERAL, COLLATERALS, CONTRACT, DEMO, HOME_COINS, RECORD, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
-  short, shortHash, units, usd6, useAssets, usePool, usePosition, useRates, useTokens, useStockPrices, type Position, type AssetView,
+  short, shortHash, units, usd6, useAssets, usePool, usePosition, useRates, useTokens, type Position, type AssetView,
 } from "./data";
 import "@fontsource-variable/urbanist";
 import "@fontsource/space-mono/400.css";
@@ -34,7 +34,6 @@ export function NearCredit() {
   const [manage, setManage] = useState<Exclude<CreditAction, "borrow"> | null>(null);
   const [collateral, setCollateral] = useState(COLLATERAL);
   const [quoting, setQuoting] = useState(false);
-  const stockQuotes = useStockPrices();
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [working, setWorking] = useState(false);
   const locked = useRef(false);
@@ -78,7 +77,7 @@ export function NearCredit() {
       <main className="nk-main">
         <div className="nk-home">
           <div className="nk-home-main">
-            {tab === "credit" && <CreditView account={account} pos={pos} btc={btc} assets={assets.data} stockError={stockQuotes.error} quotes={stockQuotes.data} go={go} tokens={tokens} deposit={() => openAction("deposit")} />}
+            {tab === "credit" && <CreditView account={account} pos={pos} btc={btc} assets={assets.data} go={go} tokens={tokens} deposit={() => openAction("deposit")} />}
             {tab === "pay" && <PayView account={account} pos={pos.data} wallet={wallet} connect={() => setPicking(true)} chooseOwn={() => choose(wallet.account)} run={run} working={working} receipt={receipt?.action === "borrow" ? receipt : null} />}
             {tab === "melt" && <MeltView account={account} pos={pos.data} posError={pos.error} aprBps={pool.data?.aprBps} rates={rates} />}
           </div>
@@ -130,7 +129,7 @@ function AccountForm({ current, onPick, wallet, onAction, busy }: { current: str
 
 // ------------------------------------------------------------------ credit
 type Live<T> = { data?: T; error?: string; loading: boolean; reload: () => void; at?: number };
-function CreditView({ account, pos, btc, assets, stockError, quotes, go, tokens, deposit }: { quotes?: import("@noren/near-sdk").StockPrice[]; assets?: AssetView[]; stockError?: string; deposit: () => void; account: string; pos: Live<Position>; btc?: { price_usd6: string; price_at_ns: string; price_fresh: boolean; ltv_bps: number; liq_bps: number }; go: (t: Tab) => void; tokens: Live<import("@noren/near-sdk").Token[]> }) {
+function CreditView({ account, pos, btc, assets, go, tokens, deposit }: { assets?: AssetView[]; deposit: () => void; account: string; pos: Live<Position>; btc?: { price_usd6: string; price_at_ns: string; price_fresh: boolean; ltv_bps: number; liq_bps: number }; go: (t: Tab) => void; tokens: Live<import("@noren/near-sdk").Token[]> }) {
   const p = pos.data;
   const wbtc = p?.collateral.find((c) => c.token === COLLATERAL);
   const debt = n6(p?.debt_usd6), coll = n6(p?.collateral_usd6), limit = n6(p?.credit_limit_usd6);
@@ -161,10 +160,10 @@ function CreditView({ account, pos, btc, assets, stockError, quotes, go, tokens,
         <div className="nk-card-h"><div><b>Your coins on every chain</b><p>Test stocks are not real shares. Signed-price credit: stocks 40% LTV, BTC 50%.</p></div><span className="nk-pill live">NEAR testnet</span></div>
         <ul className="nc-coins">
           {COLLATERALS.map(c => {
-            const asset = assets?.find(a => a.token === c.token), held = p?.collateral.find(a => a.token === c.token), observed = quotes?.find(q => q.symbol === c.symbol);
+            const asset = assets?.find(a => a.token === c.token), held = p?.collateral.find(a => a.token === c.token);
             return <li key={c.token} className={held ? 'here' : ''}>
               <Mark id={c.ticker} size={36} />
-              <span><b>{c.symbol} <small className="nk-pill">{c.stock ? 'test, not real shares' : 'testnet stand-in'}</small></b><small>{asset && BigInt(asset.price_usd6) > 0n ? `${usd6(asset.price_usd6)} · ${ago(nsToMs(asset.price_at_ns))} · ${asset.price_fresh ? 'fresh' : 'stale'}` : observed ? `${usd6(observed.priceUsd6)} · ${ago(observed.publishTime * 1000)} · Pyth observation, not yet relayed` : 'Awaiting a signed price'}</small><small>{asset ? `${asset.ltv_bps / 100}% LTV · ${asset.liq_bps / 100}% liquidation` : 'Not configured on this contract'}</small></span>
+              <span><b>{c.symbol} <small className="nk-pill">{c.stock ? 'test, not real shares' : 'testnet stand-in'}</small></b><small>{asset && BigInt(asset.price_usd6) > 0n ? `${usd6(asset.price_usd6)} · ${ago(nsToMs(asset.price_at_ns))} · ${asset.price_fresh ? 'fresh' : 'stale'}` : 'Awaiting a signed price'}</small><small>{c.stock ? asset?.source.includes('finance.yahoo.com') ? 'Yahoo Finance quote, signed by Noren’s relayer — testnet' : asset?.source.includes('pyth') ? 'Pyth Hermes quote, signed by Noren’s relayer — testnet' : 'Awaiting a signed equity quote' : 'Coinbase quote, signed by Noren’s relayer — testnet'}</small><small>{asset ? `${asset.ltv_bps / 100}% LTV · ${asset.liq_bps / 100}% liquidation` : 'Not configured on this contract'}</small></span>
               <span className="r"><b>{held ? units(held.amount, c.decimals) : '0'}</b><small>{held ? `${usd6(held.value_usd6)} locked` : 'nothing locked'}</small></span>
             </li>;
           })}
@@ -180,7 +179,6 @@ function CreditView({ account, pos, btc, assets, stockError, quotes, go, tokens,
           })}
         </ul>
         <p className="nc-setup"><Icon.lock /> BTC / ETH / SOL / ZEC mainnet routes are dry quotes — nothing moves on testnet. Credit deposits accept only the configured NEAR test tokens. NEAR positions and payments are public.</p>
-        {stockError && <p className="nk-err" role="alert">{stockError}</p>}
       </section>
     </>
   );
@@ -196,7 +194,7 @@ function Meter({ debt, coll, limit, liqBps, fresh }: { debt: number; coll: numbe
         <span className="mark ltv" style={{ left: pct(limit) }}><em>Limit</em></span>
         <span className="mark liq" style={{ left: `${liqBps / 100}%` }}><em>Liquidation</em></span>
       </div>
-      {!fresh && <p className="nc-fine">The relayer price is older than 90 s, so new borrowing is paused until the next signed post. Repaying always works.</p>}
+      {!fresh && <p className="nc-fine">The relayer price is older than 90 s, so new borrowing is paused until the next signed post. US-equity quotes stop updating outside regular market hours. Refresh the source price during trading; repaying always works.</p>}
     </section>
   );
 }
