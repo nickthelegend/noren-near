@@ -1,0 +1,36 @@
+{
+  "network": "testnet",
+  "budgetGroup": "equity-source-2026-11-12",
+  "startedAt": "2026-11-12T15:55:24.283Z",
+  "status": "FAILED",
+  "before": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [
+      {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "amount": "100000000",
+        "value_usd6": "389205000"
+      },
+      {
+        "token": "wbtc.fakes.testnet",
+        "amount": "10000",
+        "value_usd6": "7127249"
+      }
+    ],
+    "collateral_usd6": "396332249",
+    "credit_limit_usd6": "159245624",
+    "debt_usd6": "10000",
+    "available_usd6": "159235624",
+    "health_bps": "198878849",
+    "prices_fresh": false,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "reservedYocto": "0",
+  "allocatedYocto": "0",
+  "transactions": [],
+  "error": "The action did not complete. Check your wallet and any transaction link before trying again.",
+  "feesYocto": "0",
+  "budgetChargedYocto": "0",
+  "finishedAt": "2026-11-12T15:55:24.438Z"
+}

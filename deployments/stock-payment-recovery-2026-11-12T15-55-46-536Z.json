@@ -1,0 +1,84 @@
+{
+  "network": "testnet",
+  "budgetGroup": "equity-source-2026-11-12",
+  "startedAt": "2026-11-12T15:55:46.762Z",
+  "status": "PASS",
+  "before": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [
+      {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "amount": "100000000",
+        "value_usd6": "389205000"
+      },
+      {
+        "token": "wbtc.fakes.testnet",
+        "amount": "10000",
+        "value_usd6": "7127249"
+      }
+    ],
+    "collateral_usd6": "396332249",
+    "credit_limit_usd6": "159245624",
+    "debt_usd6": "10000",
+    "available_usd6": "159235624",
+    "health_bps": "198878849",
+    "prices_fresh": false,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "reservedYocto": "80200000000000000000001",
+  "allocatedYocto": "40000000000000000000001",
+  "transactions": [
+    {
+      "stage": "transfer owned testnet reserve to demo signer",
+      "account": "noren-near-mw9h22el.testnet",
+      "hash": "DjNT3QMAsdj8B7Q9fY2sw9FgruvLj5rq4vVuFXy6hj7q",
+      "final": true,
+      "feeYocto": "44636512500000000000",
+      "allocatedYocto": "40000000000000000000000",
+      "explorer": "https://testnet.nearblocks.io/txns/DjNT3QMAsdj8B7Q9fY2sw9FgruvLj5rq4vVuFXy6hj7q"
+    },
+    {
+      "stage": "repay interrupted browser debt",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "hash": "HCgGV8wsrjfsRsnHCSk5EwCHYcqVDVaWbV6CwA52Nerv",
+      "final": true,
+      "feeYocto": "685335943454700000000",
+      "allocatedYocto": "1",
+      "explorer": "https://testnet.nearblocks.io/txns/HCgGV8wsrjfsRsnHCSk5EwCHYcqVDVaWbV6CwA52Nerv"
+    },
+    {
+      "stage": "withdraw ttsla.noren-near-mw9h22el.testnet",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "hash": "GWMbYuT2PF3KhBPe7otVh3fv3tXdqhK1oREVmpBJgPKk",
+      "final": true,
+      "feeYocto": "625356859103800000000",
+      "allocatedYocto": "0",
+      "explorer": "https://testnet.nearblocks.io/txns/GWMbYuT2PF3KhBPe7otVh3fv3tXdqhK1oREVmpBJgPKk"
+    },
+    {
+      "stage": "withdraw wbtc.fakes.testnet",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "hash": "akjffikATxDTgB5dLnbcHD5Y8mzy3Q2A2oZbHLDySja",
+      "final": true,
+      "feeYocto": "650835966468500000000",
+      "allocatedYocto": "0",
+      "explorer": "https://testnet.nearblocks.io/txns/akjffikATxDTgB5dLnbcHD5Y8mzy3Q2A2oZbHLDySja"
+    }
+  ],
+  "after": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [],
+    "collateral_usd6": "0",
+    "credit_limit_usd6": "0",
+    "debt_usd6": "0",
+    "available_usd6": "0",
+    "health_bps": null,
+    "prices_fresh": true,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "feesYocto": "2006165281527000000000",
+  "budgetChargedYocto": "42006165281527000000001",
+  "finishedAt": "2026-11-12T15:56:08.894Z"
+}
