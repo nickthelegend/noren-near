@@ -2,7 +2,7 @@
 // (the NEAR testnet contract, the 1Click token catalog, Rhea's rate endpoint) or from the recorded
 // testnet transaction log, which links each step to the explorer.
 import { useCallback, useEffect, useState } from "react";
-import { nearView, rheaRates, supportedTokens, type Rate, type Token } from "@noren/near-sdk";
+import { nearView, rheaRates, supportedTokens, STOCK_FEEDS, stockAccount, stockPrices, type Rate, type Token } from "@noren/near-sdk";
 import record from "../../../../deployments/testnet-2026-11-09.json";
 
 export type Step = { step: string; account: string; method?: string; hash: string; status: "success" | "rejected"; explorer: string; note?: string };
@@ -11,6 +11,11 @@ export const RECORD = record as unknown as { root: string; updatedAt: string; ac
 
 export const CONTRACT = (import.meta.env.VITE_NEAR_TESTNET_CONTRACT as string | undefined) || RECORD.accounts.credit;
 export const COLLATERAL = RECORD.accounts.tbtc; // wbtc.fakes.testnet: public testnet WBTC standing in for bridged BTC
+export const COLLATERALS = [
+  { token: COLLATERAL, symbol: 'test WBTC', ticker: 'BTC', decimals: 8, stock: false },
+  ...STOCK_FEEDS.map(x => ({ token: stockAccount(x.symbol, RECORD.root), symbol: x.symbol, ticker: x.ticker, decimals: 8, stock: true })),
+];
+export const collateralMeta = (token: string) => COLLATERALS.find(x => x.token === token) ?? COLLATERALS[0];
 export const DEMO = { open: RECORD.accounts.bob, repaid: RECORD.accounts.alice, merchant: RECORD.accounts.shop };
 export const NEAR_USDC = "nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1";
 export const explorerAccount = (id: string) => `https://testnet.nearblocks.io/address/${id}`;
@@ -47,6 +52,7 @@ export const usePool = () => useLive(async (): Promise<Pool> => {
 }, [], 30_000);
 export const usePosition = (account: string) => useLive(() => nearView<Position>(CONTRACT, "position", { borrower: account }), [account], 30_000);
 export const useTokens = () => useLive<Token[]>(async () => (await supportedTokens()).filter((token) => token.blockchain === "near"), []);
+export const useStockPrices = () => useLive(() => stockPrices(), []);
 export const useRates = () => useLive<Rate[]>(() => rheaRates(), []);
 
 // ------------------------------------------------------------------ formatting
@@ -63,7 +69,7 @@ export function ago(ms: number) {
 export const nsToMs = (ns: string) => Number(BigInt(ns) / 1_000_000n);
 export const healthLabel = (bps: string | null) => bps === null ? "No debt" : `${(Number(bps) / 1e4).toFixed(2)}×`;
 
-/** NEAR-side representations in the live catalog; only test WBTC is accepted as collateral. */
+/** NEAR-side representations in the live catalog; configured TEST stock tokens and test WBTC are collateral. */
 export const HOME_COINS = [
   { symbol: "BTC", chain: "near", name: "Bitcoin", rhea: "nbtc.bridge.near" },
   { symbol: "ZEC", chain: "near", name: "Zcash", rhea: "zec.omft.near" },

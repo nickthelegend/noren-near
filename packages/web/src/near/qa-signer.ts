@@ -1,7 +1,7 @@
 // Deliberately lazy-loaded only by a QA-mode build. Never store or log injected credentials.
 import { Account, JsonRpcProvider, KeyPair, KeyPairSigner, type KeyPairString } from 'near-api-js';
 import type { InjectedWallet } from '@near-wallet-selector/core';
-import { CONTRACT, RECORD } from './data';
+import { CONTRACT, RECORD, COLLATERALS } from './data';
 import { accountValid } from './credit-calls';
 
 export const QA_SIGNER_MODULE = 'noren-qa-signer';
@@ -21,7 +21,7 @@ export function assertQaNetwork(config: Pick<QaConfig, 'accountId' | 'rpcUrl'>, 
 }
 export function assertQaTransaction(request: Request, accountId: string) {
   if (request.signerId && request.signerId !== accountId) throw Error('QA signer account mismatch.');
-  if (!request.receiverId?.endsWith('.testnet') || ![CONTRACT, RECORD.accounts.tbtc, RECORD.accounts.tusdc].includes(request.receiverId)) throw Error('QA signer refuses this receiver.');
+  if (!request.receiverId?.endsWith('.testnet') || ![CONTRACT, RECORD.accounts.tusdc, ...COLLATERALS.map(c => c.token)].includes(request.receiverId)) throw Error('QA signer refuses this receiver.');
   if (request.actions.length !== 1) throw Error('QA signer accepts one function call per transaction.');
   const action = request.actions[0];
   if (action.enum !== 'functionCall' || !action.functionCall) throw Error('QA signer accepts function calls only.');

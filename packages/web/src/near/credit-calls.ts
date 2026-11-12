@@ -30,7 +30,7 @@ export function walletError(e: unknown): string {
   if (/popup.*(?:block|failed)|open popup window/i.test(text)) return 'Your browser blocked the wallet window. Allow pop-ups for this site and try again.';
   if (/User closed the window|didn't complete the action|reject|denied|cancel/i.test(text)) return 'You closed the wallet without approving. Nothing new was sent. Try again when ready.';
   if (/No Meteor.*account/i.test(text)) return 'Meteor Wallet has no testnet account yet. Create one in Meteor and connect again.';
-  if (/ERR_STALE_PRICE/.test(text)) return 'The BTC price is stale. Ask the demo operator to refresh the price with pnpm near:relay, then try again.';
+  if (/ERR_STALE_PRICE/.test(text)) return 'A collateral price is stale. Ask the operator to refresh the price for each collateral asset with pnpm near:relay and pnpm near:stock-prices. Stock prices are blocked when the market is closed or Hermes is unavailable.';
   if (/NotEnoughBalance|insufficient.*balance|not.*enough.*balance|LackBalanceForState/i.test(text)) return 'Insufficient testnet NEAR for gas or storage. Top up your wallet and try again.';
   if (/TOKEN_BALANCE/.test(text)) return 'Insufficient test token balance. Get test tokens below or lower the amount.';
   if (/ERR_LTV|ERR_HEALTH/.test(text)) return 'This would exceed your credit limit. Repay some debt or add collateral first.';

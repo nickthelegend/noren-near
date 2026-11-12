@@ -2,14 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Icon, Logo } from "../brand";
 import { Mark } from "./marks";
 import { Art3d } from "./Art3d";
+import { BringQuotes } from "./BringQuotes";
 import { MeltChart } from "./Melt";
 import { useNearWallet, type NearWallet } from "./wallet";
 import { runCreditAction } from "./credit-runtime";
 import { tokenUnits, walletError, type CreditAction } from "./credit-calls";
 import { CreditActionSheet, CreditReceipt, type Receipt, type RunAction } from "./CreditActions";
 import {
-  COLLATERAL, CONTRACT, DEMO, HOME_COINS, RECORD, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
-  short, shortHash, units, usd6, useAssets, usePool, usePosition, useRates, useTokens, type Position,
+  COLLATERAL, COLLATERALS, CONTRACT, DEMO, HOME_COINS, RECORD, ago, explorerAccount, healthLabel, meltCurve, nsToMs,
+  short, shortHash, units, usd6, useAssets, usePool, usePosition, useRates, useTokens, useStockPrices, type Position, type AssetView,
 } from "./data";
 import "@fontsource-variable/urbanist";
 import "@fontsource/space-mono/400.css";
@@ -31,6 +32,9 @@ export function NearCredit() {
   const [picking, setPicking] = useState(false);
   const wallet = useNearWallet();
   const [manage, setManage] = useState<Exclude<CreditAction, "borrow"> | null>(null);
+  const [collateral, setCollateral] = useState(COLLATERAL);
+  const [quoting, setQuoting] = useState(false);
+  const stockQuotes = useStockPrices();
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [working, setWorking] = useState(false);
   const locked = useRef(false);
@@ -45,7 +49,7 @@ export function NearCredit() {
     if (!wallet.account) { setPicking(true); return false; }
     locked.current = true; setWorking(true); setReceipt({ action, state: 'approval', hashes: [] });
     try {
-      await runCreditAction(action, { credit: CONTRACT, collateral: COLLATERAL, usdc: RECORD.accounts.tusdc }, amount, recipient ?? wallet.account, {
+      await runCreditAction(action, { credit: CONTRACT, collateral, usdc: RECORD.accounts.tusdc }, amount, recipient ?? wallet.account, {
         account: wallet.account, sign: wallet.sign,
         onEvent: event => setReceipt(old => ({ action, state: event.state, hashes: event.hash && !old?.hashes.includes(event.hash) ? [...(old?.hashes ?? []), event.hash] : old?.hashes ?? [] })),
       });
@@ -74,7 +78,7 @@ export function NearCredit() {
       <main className="nk-main">
         <div className="nk-home">
           <div className="nk-home-main">
-            {tab === "credit" && <CreditView account={account} pos={pos} btc={btc} go={go} tokens={tokens} deposit={() => openAction("deposit")} />}
+            {tab === "credit" && <CreditView account={account} pos={pos} btc={btc} assets={assets.data} stockError={stockQuotes.error} quotes={stockQuotes.data} go={go} tokens={tokens} deposit={() => openAction("deposit")} />}
             {tab === "pay" && <PayView account={account} pos={pos.data} wallet={wallet} connect={() => setPicking(true)} chooseOwn={() => choose(wallet.account)} run={run} working={working} receipt={receipt?.action === "borrow" ? receipt : null} />}
             {tab === "melt" && <MeltView account={account} pos={pos.data} posError={pos.error} aprBps={pool.data?.aprBps} rates={rates} />}
           </div>
@@ -84,9 +88,10 @@ export function NearCredit() {
           </aside>
         </div>
       </main>
-      <p className="nk-foot">NEAR testnet only. Collateral is wbtc.fakes.testnet and the pool is usdc.fakes.testnet, public test tokens with no value that stand in for bridged BTC and NEAR USDC. Mainnet deposits, payouts and harvests are unfinished. <a href="#/near">About the NEAR edition</a></p>
+      <p className="nk-foot">NEAR testnet only. Test stocks are not real shares. Test WBTC and USDC are public tokens with no value. Mainnet deposits, payouts and harvests are unfinished. <a href="#/near">About the NEAR edition</a></p>
 
-      {manage && <CreditActionSheet key={manage} action={manage} wallet={wallet} busy={working} receipt={receipt} run={run} close={() => setManage(null)} />}
+      {quoting && <BringQuotes close={() => setQuoting(false)} />}
+      {manage && <CreditActionSheet key={`${manage}-${collateral}`} collateral={collateral} onCollateral={token => { setCollateral(token); setReceipt(null); }} quoteCoins={() => { setManage(null); setQuoting(true); }} action={manage} wallet={wallet} busy={working} receipt={receipt} run={run} close={() => setManage(null)} />}
       {picking && (
         <div className="nk-modal" role="dialog" aria-modal="true" aria-label="Choose a NEAR account" onClick={(e) => e.target === e.currentTarget && setPicking(false)}>
           <div className="nk-sheet">
@@ -111,7 +116,7 @@ function AccountForm({ current, onPick, wallet, onAction, busy }: { current: str
           <li><button type="button" onClick={() => onPick(wallet.account)}><span className="nk-ava" /><span><b>Your wallet position</b><small>{short(wallet.account)}</small></span></button></li>
           {([['deposit', 'Deposit collateral'], ['repay', 'Repay credit'], ['withdraw', 'Withdraw collateral']] as const).map(([action, title]) => <li key={action}><button type="button" disabled={busy} onClick={() => onAction(action)}><span className="nk-ava" /><span><b>{title}</b><small>Signed by your Meteor wallet</small></span></button></li>)}
         </>}
-        {!wallet.account && [{ id: DEMO.open, l: "Demo borrower with an open loan" }, { id: DEMO.repaid, l: "Demo borrower who repaid and withdrew" }].map((x) => (
+        {!wallet.account && [{ id: DEMO.open, l: "Demo borrower with an open loan" }, { id: DEMO.repaid, l: "Demo account with preissued test stocks" }].map((x) => (
           <li key={x.id}><button type="button" onClick={() => onPick(x.id)} aria-selected={current === x.id}><span className="nk-ava" aria-hidden /><span><b>{x.id.split(".")[0]}</b><small>{x.l}</small></span></button></li>
         ))}
       </ul>
@@ -125,18 +130,16 @@ function AccountForm({ current, onPick, wallet, onAction, busy }: { current: str
 
 // ------------------------------------------------------------------ credit
 type Live<T> = { data?: T; error?: string; loading: boolean; reload: () => void; at?: number };
-function CreditView({ account, pos, btc, go, tokens, deposit }: { deposit: () => void; account: string; pos: Live<Position>; btc?: { price_usd6: string; price_at_ns: string; price_fresh: boolean; ltv_bps: number; liq_bps: number }; go: (t: Tab) => void; tokens: Live<import("@noren/near-sdk").Token[]> }) {
+function CreditView({ account, pos, btc, assets, stockError, quotes, go, tokens, deposit }: { quotes?: import("@noren/near-sdk").StockPrice[]; assets?: AssetView[]; stockError?: string; deposit: () => void; account: string; pos: Live<Position>; btc?: { price_usd6: string; price_at_ns: string; price_fresh: boolean; ltv_bps: number; liq_bps: number }; go: (t: Tab) => void; tokens: Live<import("@noren/near-sdk").Token[]> }) {
   const p = pos.data;
   const wbtc = p?.collateral.find((c) => c.token === COLLATERAL);
   const debt = n6(p?.debt_usd6), coll = n6(p?.collateral_usd6), limit = n6(p?.credit_limit_usd6);
   return (
     <>
       <section className="nk-hero nc-hero" aria-live="polite">
-        <small>Credit limit · Noren on NEAR testnet</small>
+        <small>Keep your Tesla. Buy the thing.</small>
         <b><i>$</i>{p ? n6(p.credit_limit_usd6).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : pos.error ? "—" : "…"}</b>
-        <p>{pos.error ? `Could not read ${short(account)}: ${pos.error}` : !p ? "Reading the position view…" : wbtc
-          ? <>{units(wbtc.amount, 8)} test WBTC × {btc ? usd6(btc.price_usd6, 0) : "…"} relayer price × {btc ? btc.ltv_bps / 100 : 50}% LTV</>
-          : <>No collateral on Noren for {short(account)} yet.</>}</p>
+        <p>{pos.error ? `Could not read ${short(account)}: ${pos.error}` : !p ? "Reading the position view…" : p.collateral.length ? `${usd6(p.collateral_usd6)} in test stocks and BTC kept as collateral. Stocks: 40% LTV; BTC: 50%.` : `No collateral on Noren for ${short(account)} yet.`}</p>
         <div className="nc-tiles">
           <span><em>Collateral</em>{p ? usd6(p.collateral_usd6) : "—"}</span>
           <span><em>Owed</em>{p ? usd6(p.debt_usd6) : "—"}</span>
@@ -145,35 +148,39 @@ function CreditView({ account, pos, btc, go, tokens, deposit }: { deposit: () =>
         </div>
       </section>
 
-      {p && coll > 0 && <Meter debt={debt} coll={coll} limit={limit} liqBps={btc?.liq_bps ?? 6000} fresh={p.prices_fresh} />}
+      {p && coll > 0 && <Meter debt={debt} coll={coll} limit={limit} liqBps={Math.round(p.collateral.reduce((sum, c) => sum + n6(c.value_usd6) * (assets?.find(a => a.token === c.token)?.liq_bps ?? 0), 0) / coll)} fresh={p.prices_fresh} />}
 
       <div className="nk-actions nc-actions">
         <button className="primary" onClick={() => go("pay")}><i><Icon.arrow /></i><b>Pay anyone</b><small>On credit, any chain</small><Art3d k="card" size={56} alt="" /></button>
-        <button onClick={deposit}><i><Icon.layers /></i><b>Bring coins</b><small>Test WBTC on NEAR</small><Art3d k="btc-coin" size={56} alt="" /></button>
+        <button onClick={deposit}><i><Icon.layers /></i><b>Bring coins</b><small>Test stocks + BTC</small><Art3d k="btc-coin" size={56} alt="" /></button>
         <button onClick={() => go("melt")}><i><Icon.chart /></i><b>Debt-free date</b><small>Yield vs interest</small><Art3d k="calendar" size={56} alt="" /></button>
         <a href={explorerAccount(account)} target="_blank" rel="noreferrer"><i><Icon.ext /></i><b>Explorer</b><small>{short(account)}</small><Art3d k="receipt" size={56} alt="" /></a>
       </div>
 
       <section className="nk-card" id="coins">
-        <div className="nk-card-h"><div><b>Your coins on every chain</b><p>NEAR-side catalog prices. Preview at 50% LTV; only test WBTC is accepted here.</p></div><span className="nk-pill live">1Click</span></div>
+        <div className="nk-card-h"><div><b>Your coins on every chain</b><p>Test stocks are not real shares. Signed-price credit: stocks 40% LTV, BTC 50%.</p></div><span className="nk-pill live">NEAR testnet</span></div>
         <ul className="nc-coins">
-          <li className="here">
-            <Mark id="BTC" size={36} />
-            <span><b>Test WBTC <small className="nk-pill">testnet stand-in</small></b><small className="mono">{COLLATERAL}</small></span>
-            <span className="r"><b>{wbtc ? `${units(wbtc.amount, 8)}` : "0"}</b><small>{wbtc ? `${usd6(wbtc.value_usd6)} locked` : "nothing locked"}</small></span>
-          </li>
+          {COLLATERALS.map(c => {
+            const asset = assets?.find(a => a.token === c.token), held = p?.collateral.find(a => a.token === c.token), observed = quotes?.find(q => q.symbol === c.symbol);
+            return <li key={c.token} className={held ? 'here' : ''}>
+              <Mark id={c.ticker} size={36} />
+              <span><b>{c.symbol} <small className="nk-pill">{c.stock ? 'test, not real shares' : 'testnet stand-in'}</small></b><small>{asset && BigInt(asset.price_usd6) > 0n ? `${usd6(asset.price_usd6)} · ${ago(nsToMs(asset.price_at_ns))} · ${asset.price_fresh ? 'fresh' : 'stale'}` : observed ? `${usd6(observed.priceUsd6)} · ${ago(observed.publishTime * 1000)} · Pyth observation, not yet relayed` : 'Awaiting a signed price'}</small><small>{asset ? `${asset.ltv_bps / 100}% LTV · ${asset.liq_bps / 100}% liquidation` : 'Not configured on this contract'}</small></span>
+              <span className="r"><b>{held ? units(held.amount, c.decimals) : '0'}</b><small>{held ? `${usd6(held.value_usd6)} locked` : 'nothing locked'}</small></span>
+            </li>;
+          })}
           {HOME_COINS.map((c) => {
             const t = tokens.data?.find((x) => x.symbol === c.symbol && x.blockchain === c.chain);
             return (
               <li key={c.symbol}>
                 <Mark id={c.symbol} size={36} />
                 <span><b>{c.name}</b><small>{t ? <span className="mono">{t.assetId.replace("nep141:", "")}</span> : tokens.error ?? "Loading…"}</small></span>
-                <span className="r"><b>{t?.price ? `$${Math.round(t.price / 2).toLocaleString("en-US")}` : "—"}</b><small>credit per {c.symbol}</small></span>
+                <span className="r"><b>{t?.price ? `$${Math.round(t.price).toLocaleString("en-US")}` : "—"}</b><small>mainnet reference price</small></span>
               </li>
             );
           })}
         </ul>
-        <p className="nc-setup"><Icon.lock /> The any-chain collateral catalog is a preview. Bring coins deposits test WBTC on NEAR testnet. NEAR positions and payments are public.</p>
+        <p className="nc-setup"><Icon.lock /> BTC / ETH / SOL / ZEC mainnet routes are dry quotes — nothing moves on testnet. Credit deposits accept only the configured NEAR test tokens. NEAR positions and payments are public.</p>
+        {stockError && <p className="nk-err" role="alert">{stockError}</p>}
       </section>
     </>
   );
@@ -209,7 +216,7 @@ function PayView({ account, pos, wallet, connect, chooseOwn, run, working, recei
 
   return (
     <section className="nk-card">
-      <div className="nk-card-h"><div className="nc-h3d"><Art3d k="stall" size={56} /><div><b>Pay anyone, anywhere</b><p>Pay a shop from credit on NEAR testnet. Any-chain payouts are future work.</p></div></div><span className="nk-pill">{short(account)}</span></div>
+      <div className="nk-card-h"><div className="nc-h3d"><Art3d k="stall" size={56} /><div><b>Keep your Tesla. Buy the thing.</b><p>Pay a shop from mixed stock and BTC credit on NEAR testnet. Any-chain payouts are future work.</p></div></div><span className="nk-pill">{short(account)}</span></div>
       <div className="nk-band" role="radiogroup" aria-label="Where the merchant gets paid">
         <span>Merchant is on</span>
         <button type="button" role="radio" aria-checked="true" aria-pressed="true">NEAR</button>
@@ -234,8 +241,8 @@ function PayView({ account, pos, wallet, connect, chooseOwn, run, working, recei
             <button className="nk-cta" disabled={working || (!!wallet.account && wallet.account === account && (!valid || !recipientOk || in3 || !pos || pos.pending))} onClick={() => !wallet.account ? connect() : wallet.account !== account ? chooseOwn() : run('borrow', tokenUnits(amount, 6), to)}>{working ? 'Waiting for confirmation…' : !wallet.account ? 'Connect Meteor to pay' : wallet.account !== account ? 'Read your wallet position' : in3 ? 'Pay in 3 is a preview' : 'Borrow and pay shop'}</button>
             <CreditReceipt receipt={receipt} />
             <div className="nc-proof">
-              <b>This exact payment has run on testnet</b>
-              <p>alice drew 25 test USDC from her line and the contract paid it straight to {short(DEMO.merchant)}. Connect your wallet to make your own payment above. This recorded example was signed by <span className="mono">scripts/near-testnet.ts</span>.</p>
+              <b>Earlier BTC-backed payment (recorded)</b>
+              <p>In this earlier WBTC example, alice drew 25 test USDC from her line and the contract paid it straight to {short(DEMO.merchant)}. Connect your wallet to make your own payment above. This recorded example was signed by <span className="mono">scripts/near-testnet.ts</span>.</p>
               {paid && <a className="nk-btn" href={paid.explorer} target="_blank" rel="noreferrer">Open {shortHash(paid.hash)} <Icon.ext /></a>}
             </div>
           </>
@@ -249,7 +256,8 @@ function PayView({ account, pos, wallet, connect, chooseOwn, run, working, recei
 function MeltView({ account, pos, posError, aprBps, rates }: { account: string; pos?: Position; posError?: string; aprBps?: number; rates: Live<import("@noren/near-sdk").Rate[]> }) {
   const apy = rates.data?.find((r) => r.token === WBTC_RHEA)?.supply_apy;
   const debt = n6(pos?.debt_usd6), coll = n6(pos?.collateral_usd6);
-  const ready = pos && apy !== undefined && aprBps !== undefined;
+  const hasStocks = pos?.collateral.some(c => COLLATERALS.some(a => a.stock && a.token === c.token));
+  const ready = pos && !hasStocks && apy !== undefined && aprBps !== undefined;
   const m = ready ? meltCurve(debt, coll, Number(apy), aprBps!) : null;
   const yieldYr = ready ? coll * Number(apy) / 100 : 0, interestYr = ready ? debt * aprBps! / 10_000 : 0;
   const blocked = RECORD.blocked.find((b) => b.step === "harvest");
@@ -258,7 +266,8 @@ function MeltView({ account, pos, posError, aprBps, rates }: { account: string; 
       <section className="nk-card nc-melt">
         <div className="nk-card-h"><div><b>Debt-free on</b><p>{short(account)}, if the collateral earned Rhea’s live WBTC supply rate and every harvest paid the loan down.</p></div><span className="nk-pill warn">Projection</span></div>
         <div className="nk-pad">
-          <div className="nc-date-row"><strong className="nc-date">{posError || rates.error || (rates.data && apy === undefined) ? "Unavailable" : !ready ? "Reading…" : debt === 0 ? "Already debt-free" : m?.payoff ? m.payoff.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "Not at today’s rates"}</strong><Art3d k="calendar" size={96} /></div>
+          <div className="nc-date-row"><strong className="nc-date">{posError || rates.error || (rates.data && apy === undefined) ? "Unavailable" : hasStocks ? "No stock yield model" : !ready ? "Reading…" : debt === 0 ? "Already debt-free" : m?.payoff ? m.payoff.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) : "Not at today’s rates"}</strong><Art3d k="calendar" size={96} /></div>
+          {hasStocks && <p className="nc-fine">Test stocks have no yield adapter. No stock yield or repayment date is projected.</p>}
           {posError && <p className="nk-err">{posError}</p>}
           {rates.error && <p className="nk-err">Rhea rates: {rates.error}</p>}
           {ready && debt > 0 && <MeltChart debtUsd={debt} collateralUsd={coll} supplyApy={Number(apy)} aprBps={aprBps!} />}
