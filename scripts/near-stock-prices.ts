@@ -1,11 +1,12 @@
-import { stockPrices, stockAccount } from '../packages/sdk/src/stocks.ts';
+import { equityPrices } from './equity-source.ts';
+import { stockAccount } from '../packages/sdk/src/stocks.ts';
 import { accountFor, loadCreds, loadDeployment, provider, signPrice } from './near-lib.ts';
 import { actions } from 'near-api-js';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 const d=loadDeployment();if(!d||d.network!=='testnet')throw Error('NEAR testnet deployment required.');
-const prices=await stockPrices();
+const prices=await equityPrices();
 if(process.argv.includes('--check')){console.log(JSON.stringify(prices,null,2));process.exit(0);}
-const fresh=prices.filter(p=>p.fresh);if(!fresh.length)throw Error('US-equity quotes are older than 90 seconds. Market may be closed; no price was re-timestamped or sent.');
+const fresh=prices.filter(p=>p.fresh);if(!fresh.length)throw Error('US-equity market is closed or quotes are older than 90 seconds; no price was re-timestamped or sent.');
 const creds=loadCreds();if(!creds)throw Error('Operator credentials required by file path.');
 const file='deployments/stock-relay-'+new Date().toISOString().slice(0,10)+'.json';
 const ledger=existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{network:'testnet',steps:[],observations:[]};ledger.observations.push({at:new Date().toISOString(),prices});
