@@ -20,3 +20,15 @@ Nothing below is faked in the code, the app or the README. No mainnet transactio
 ## Testnet funding note
 
 The NEAR account helper returned HTTP 429 all session. The root account `noren-near-mw9h22el.testnet` was created through the `testnet` registrar with 4 NEAR from a shared testnet funder (the cap per project). That budget is why the testnet run uses Ref Finance's public test tokens instead of deploying two more token contracts.
+
+## R3 literal grep criterion
+
+The actual inherited-chain packages, screens, scripts/docs and retired deployment were removed from `near`. Install, NEAR builds/tests and the unchanged-UI checks pass; 0 NEAR was spent and no new testnet hash was created.
+
+**BLOCKED: exact substring-only acceptance.** The requested case-insensitive `arc` pattern also matches `NearCredit`, `nearcore`, `nk-search`, `fromCharCode`, the legitimate Rust `windows_aarch64_*` dependency names and binary bytes in the approved price-tag WebP. Seventeen output lines remain, including the intended README prior-work disclosure. These matches are not another-chain product code. The approved asset and exact dependency lock entries were preserved. A whole-word text audit finds only that disclosure:
+
+```sh
+git grep -n -i -w -E 'arc|robinhood|cctp|ccip' -- README.md packages/
+```
+
+No need to change product design or contract behavior was found. The remaining functional blockers above still apply: a fresh operator-signed price is required before borrowing; real yield harvesting and mainnet execution are unfinished. Details and executed counts: [FLOW-QA.md](FLOW-QA.md#r3-repository-cleanup-2026-11-12).

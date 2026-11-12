@@ -1,5 +1,47 @@
 # Full-flow QA — Noren on NEAR
 
+## R3 repository cleanup (2026-11-12)
+
+**DONE:** dead local links, NEAR-only tracked product/workspaces, truthful opening pitch and browser-signing report. **BLOCKED only on the literal substring-grep criterion:** its 17 output lines include legitimate `NearCredit`, `nearcore`, `nk-search`, `fromCharCode`, Rust `windows_aarch64_*` lock entries and binary bytes in the approved price-tag WebP, plus the intended prior-work disclosure. These are not inherited-chain integrations. Changing approved art or falsifying dependency names to silence that grep was not done. The whole-word text audit below returns only README's Prior work disclosure:
+
+```sh
+git grep -n -i -w -E 'arc|robinhood|cctp|ccip' -- README.md packages/
+```
+
+The requested non-NEAR packages, merchant/shop/server, legacy web screens, deployment tooling/docs and `deployments/5042002.json` were removed together in `d0cda51`. Four packages remain: `contract`, `sdk`, `mcp`, `web`. JavaScript workspaces are explicit; the lockfile was regenerated separately in `436bfc5`. Shared NEAR styling was retained under `near/app-base.css`; unused legacy style rules and obsolete web dependencies were removed. Films and sealed NEAR evidence were untouched. Earlier test history is on branch `main`.
+
+| Executed check | Result |
+| --- | --- |
+| `pnpm install --frozen-lockfile` after lock regeneration | **PASS** |
+| Test token and credit contract: `cargo near build non-reproducible-wasm --no-abi` in each crate | **PASS**, both Wasm builds; contract hash remains `a8436173b9eda1d03fe265f2c6d2369a24bb94d7503be1bf79a35eaf4c554cdc` |
+| `cargo test --manifest-path packages/contract/Cargo.toml --test sandbox -- --test-threads=1` | **PASS**, 5 executed, 0 failed against a local NEAR node |
+| SDK build and `pnpm --filter @noren/near-sdk test` | **PASS**, 6 executed, 0 failed |
+| MCP build and test with the deployed credit contract and bob's account | **PASS**, 2 executed, 0 failed; public read-only testnet calls |
+| `pnpm test` | **PASS**, 10 executed, 0 failed; current web credit/runtime/QA guard tests only |
+| `NODE_OPTIONS=--max-old-space-size=1536 pnpm --filter @noren/web build` after the frozen install | **PASS**, production typecheck and Vite build |
+| `pnpm near:browser` | **PASS**, 8 fresh read-only route/size checks at 1440/375; 0 page exceptions, failed requests or overflow |
+| Required tracked-Markdown absolute-path audit, excluding the submission worksheet | **PASS**, no output |
+| Exact case-insensitive substring source audit from the brief | **BLOCKED literal criterion**, the non-chain matches listed above remain; whole-word chain audit finds only Prior work |
+
+The first direct sandbox invocation selected the machine's Rust 1.94 and was rejected before running tests. A repository-local `rust-toolchain.toml` now pins installed Rust 1.95; the successful run above used that toolchain. The machine default was not changed. Free memory was 42–56% and system disk free was at least 6.7 GB before builds/browsers. Cargo builds were serialized after checking for other cargo processes.
+
+**Testnet NEAR spent: 0. New transaction hashes: none.** No credential file was opened. The real-transaction QA signer cycle below is older evidence and was not repeated for this cleanup. Local sandbox transactions do not spend public testnet funds. Both preview servers were used sequentially, never on 8787; every preview/browser started for this pass was closed.
+
+### R3 unchanged-UI evidence
+
+Six screens were captured before and after at 1440 × 900 and 375 × 900 under the shared orchestration Chrome lock. Eleven of twelve image pairs are pixel-identical. The remaining mobile landing pair differs only in the ambient canvas area: this is consistent with initial canvas sizing/font-load timing, and its implementation is byte-for-byte unchanged. Text, layout and approved 3D assets are unchanged. Public read responses and the displayed time were held fixed solely for the visual comparison; the separate eight-check browser gate used fresh live reads. No financial success was simulated.
+
+| Screen | Before | After |
+| --- | --- | --- |
+| credit | `before-credit-1440.png`, `before-credit-375.png` | `after-credit-1440.png`, `after-credit-375.png` |
+| account | `before-account-1440.png`, `before-account-375.png` | `after-account-1440.png`, `after-account-375.png` |
+| deposit | `before-deposit-1440.png`, `before-deposit-375.png` | `after-deposit-1440.png`, `after-deposit-375.png` |
+| pay | `before-pay-1440.png`, `before-pay-375.png` | `after-pay-1440.png`, `after-pay-375.png` |
+| debt-free | `before-debt-free-1440.png`, `before-debt-free-375.png` | `after-debt-free-1440.png`, `after-debt-free-375.png` |
+| about | `before-about-1440.png`, `before-about-375.png` | `after-about-1440.png`, `after-about-375.png` |
+
+The screenshots and `before.json`, `after.json`, `pixel-comparison.json`, `browser-gate.json` are under the orchestration shots directory for `noren-near/r3`, outside this repo. Screenshots were captured locally during QA and are not committed.
+
 ## QA signer: real browser transactions (2026-11-11 UTC)
 
 **PASS at 1440 × 900 and 375 × 900.** The unchanged browser controls connected the QA signer, deposited 0.0001 test WBTC, borrowed 0.01 test USDC directly to the shop, repaid 0.02 test USDC (excess refunded), and withdrew all collateral. Every action showed pending → FINAL and a NearBlocks receipt. The app position reflected the deposit, debt and restored zero-debt state. These are real browser-signed transactions, not transport fixtures or replayed receipts.
@@ -317,4 +359,3 @@ Still unfinished: real yield harvesting, mainnet cross-chain execution, and the 
 The final account-input regression also passed at both sizes: after connecting, the reader input follows the active wallet instead of retaining the earlier demo address. Before/after captures: `before-account-sync-1440.png` / `before-account-sync-375.png` / `after-connected-1440.png` / `after-connected-375.png`.
 
 Screenshots were captured locally during QA and are not committed.
-

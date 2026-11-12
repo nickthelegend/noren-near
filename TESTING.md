@@ -1,5 +1,17 @@
 # Test results
 
+## R3 current NEAR verification (2026-11-12)
+
+The current tree has only the NEAR contract, SDK, MCP and web packages. The old multi-chain suites are not installed or counted. `pnpm install --frozen-lockfile` passed after a separate lockfile regeneration. Rust is pinned locally to 1.95.0; both the test-token and credit Wasm builds passed.
+
+Executed and passed after cleanup: **5 sandbox tests, 6 SDK tests, 2 MCP tests (read-only live contract), 10 web tests**, plus **8 read-only production browser route/size checks** at 1440/375. SDK, MCP and production web builds passed. The sandbox suite used one test thread to limit RAM. An initial Rust 1.94 invocation was rejected before tests; the pinned-toolchain run passed. The gate no longer invokes removed destination quotes or inherited screens.
+
+The 12 before/after screenshot pairs preserve the approved UI: 11 are pixel-identical; the mobile landing differs only in its unchanged ambient canvas draw. Full methodology, filenames and the literal-grep exception are in [FLOW-QA.md](FLOW-QA.md#r3-repository-cleanup-2026-11-12). Screenshots were captured locally during QA and are not committed.
+
+**NEAR spent: 0. No new public testnet hashes.** No credentials were read and no public transaction command was run. Existing deployment evidence was not rewritten; only the explicitly requested retired deployment was deleted. Memory/disk checks passed and all started previews/browsers were closed.
+
+The exact substring grep still reports NEAR identifiers, Rust platform dependency names and bytes inside approved artwork. The whole-word audit finds only the prior-work disclosure. This literal acceptance exception is recorded in [BLOCKED.md](BLOCKED.md#r3-literal-grep-criterion).
+
 ## Real browser QA signer e2e
 
 Run on macOS with Node 22.22.2+, pnpm 10.29.2, installed Google Chrome and the shared Chrome-lock module at the path used in `scripts/near-browser-e2e.mjs`. No browser download is required; Playwright uses `channel: 'chrome'`.
@@ -12,7 +24,7 @@ pnpm test:e2e --key-file .near-credentials/testnet.json
 
 The path is an existing local credential file, never a key value. Default is `.near-credentials/testnet.json`; it must provide the existing demo sub-account signer and relayer key. Alice must start debt-free with no collateral locked, at least 0.0001 test WBTC, 0.04 test USDC and 0.09 usable testnet NEAR. Low funding stops the test before signing. Do not reset/delete the dated QA ledgers to bypass the aggregate 0.3 NEAR cap.
 
-The runner checks swap before each build, waits two minutes if free swap is below 500 MB, builds ordinary production plus an isolated QA output, and finds a free loopback port in 5300-5999 using lsof. It never uses 8787. The same browser is used under `withChromeLock`; all started previews, pages and the browser close in finally blocks. `--skip-build` is available only for reusing already-built outputs; both output audits still run.
+The runner checks memory and disk before each build/browser, waits while free memory is below 30%, stops below 5 GB free disk, builds ordinary production plus an isolated QA output, and finds a free loopback port in 5300-5999 using lsof. It never uses 8787. The same browser is used under `withChromeLock`; all started previews, pages and the browser close in finally blocks. `--skip-build` is available only for reusing already-built outputs; both output audits still run.
 
 The QA build needs both `--mode qa` and `VITE_QA_SIGNER=1`. A normal production build cannot include the adapter even if that flag is accidentally set. To inspect it without signing:
 
@@ -48,7 +60,7 @@ Ten unit tests passed: `pnpm exec vitest run packages/web/src/near/qa-signer.tes
 
 ## NEAR edition (2026-11-09)
 
-Recorded results from this branch, separate from the historical `main` figures below. These are dated runs, not current balance or transaction totals; later demo runs append to the deployment log. Nothing here uses a mocked client or a stubbed RPC: the contract tests run signed transactions on a real nearcore sandbox, and the testnet and quote checks hit the live networks.
+Recorded results from this branch; the earlier multi-chain figures are on branch `main`. These are dated runs, not current balance or transaction totals; later demo runs append to the deployment log. Nothing here uses a mocked client or a stubbed RPC: the contract tests run signed transactions on a real nearcore sandbox, and the testnet and quote checks hit the live networks.
 
 | Verification | Command | Result |
 | --- | --- | --- |
