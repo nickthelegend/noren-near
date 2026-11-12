@@ -1,6 +1,43 @@
 # Test results
 
-## R3 current NEAR verification (2026-11-12)
+## Test stock demo (2026-11-12)
+
+Latest results supersede the dated counts below. **30 tests passed:** 3 contract unit tests, 6 real nearcore sandbox tests, 9 SDK tests, 2 MCP tests (read-only live testnet contract) and 10 web tests. Credit Wasm, SDK, MCP and production web builds passed. Rust remains pinned to 1.95.0. The full final sandbox run used one test thread and passed all 6 cases in 95.46 seconds. The earlier new-case attempt exposed an underfunded test fixture; after correcting the fixture, the complete suite passed.
+
+- `pnpm near:test`: migration preserves v1 assets, collateral, loans, credits, LP balances, locks, installments and relayer key. Zero-amount withdrawn stock entries no longer poison fresh BTC credit. Mixed collateral gives $65 credit from $50 BTC at 50% plus $100 stock at 40%; over-borrow and forged prices fail, stale stock blocks a new draw, and a stock price drop makes health < 1 and liquidation succeed.
+- `pnpm --filter @noren/near-sdk build` and `pnpm --filter @noren/near-sdk test`: US-equity feed IDs, exact integer price scaling, original publication timestamps, closed-market staleness and explicit 401/429 failures. No timestamp is replaced with the local clock.
+- `pnpm test`: exact call builders, rollback/refund checks, FINAL polling, wallet errors and testnet/localhost QA signing guards.
+- `pnpm --filter @noren/near-mcp build` and its test command with `NOREN_LIVE_CONTRACT` / `NOREN_LIVE_ACCOUNT`: both real stdio/live-view checks passed.
+
+### Deployed state
+
+[Stock setup evidence](deployments/stock-demo-2026-11-12.json) records every setup transaction, including the first failed upgrade and its rollback, the successful upgrade + `migrate`, internal reserve transfers, three token issuances, credit storage registration and asset configuration. The public global FT implementation is pinned by immutable hash. Each test stock has 8 decimals and 100 preissued tokens for alice; metadata explicitly says TEST and not real shares. No external funding helper was called.
+
+Credit Wasm SHA-256: `3eb19fbcb542b53fb7f244f419c88022af6699576ddaf67eaaf24e4594719112`. Stocks: 40% LTV / 50% liquidation; BTC: 50% / 60%. Schema 2 preserves the original deployed credit account and positions. No real issuer shares were tokenized.
+
+### Run the stock browser path
+
+```sh
+pnpm test:e2e --stocks
+# Optional existing demo credential file path; never pass a private key:
+pnpm test:e2e --stocks --key-file .near-credentials/testnet.json
+```
+
+The runner builds ordinary production (even with the QA flag set) and isolated QA mode, verifies production excludes the signer/injection hooks, checks balances, then uses Chrome under the shared orchestration lock at 1440 and 375. Only the existing demo sub-account key enters an ephemeral localhost page via `addInitScript`; the relayer key stays in Node. No trace/HAR/video or credential copy is made. The same browser call pipeline signs the collateral actions and checks real FINAL receipts and on-chain positions. Screenshots are stored outside the repo in the orchestration shots directory under `noren-near/stocks/qa-signer`.
+
+The stock mode deposits 0.0001 test WBTC and 1 tTSLA. With fresh source quotes it relays BTC + TSLA, borrows/pays 0.01 test USDC, checks debt, repays and withdraws both tokens. With unavailable or old quotes it asserts the stale-price error **before a borrow submission**, withdraws both deposits and requires the original balances, zero debt and unchanged shop balance. This intentionally exits **2 (`BLOCKED_PRICE_SOURCE`)**, not PASS for a stock payment. The existing BTC-only mode remains `pnpm test:e2e`.
+
+Both modes retain the aggregate 0.3 NEAR QA cap across dated ledgers. Stock mode additionally checks this task's one-NEAR bound including setup fees and all setup allocations (even internal transfers, conservatively). Low balances stop signing. HTTP 429 at stock preflight stops the run. Reaching a browser lock does not make a preflight quote fresh: a previously fresh quote is re-read immediately before the draw path. Human Meteor approval remains a manual check.
+
+**Recorded stock browser result:** real WBTC + tTSLA deposit and withdrawal passed at 1440/375, with pending/final receipts and restored balances. Stock borrowing was refused before submission; shop balance unchanged. Eight browser transactions spent **0.004999678681768 NEAR**. The run intentionally exited 2 / `BLOCKED_PRICE_SOURCE`. Setup plus browser fees were **0.0335369134673732 NEAR**; the conservative task bound including setup allocations and full browser gas reservations was **0.3242872347856052 NEAR**, below 1. [Every hash and postcondition](deployments/qa-browser-2026-11-12.json). No new stock-backed payment or repayment is claimed. One earlier queued run was cancelled with zero calls authorized; its record remains.
+
+### Public data / production UI
+
+`pnpm near:stock-prices --check` performs no signing and currently stops at unauthenticated Hermes HTTP 401. Main, beta and legacy latest-price routes were checked. Public metadata identifies the equity feeds, but it is not a price. Current [Pyth documentation](https://docs.pyth.network/api-reference/hermes/latest-price-updates) requires API authorization. No key was supplied or used. The app shows an unavailable-price message (Chrome also observes a failed/CORS read) and retains any last signed timestamp; older than 90 seconds blocks borrowing. A completed stock-backed payment is **BLOCKED**, not inferred from sandbox or older BTC evidence.
+
+Production screenshots: 12 before captures and 22 after captures at 1440/375 under the shared Chrome lock. After captures include credit, account, BTC/stock deposit controls, Pay, Debt-free, About and actual BTC/ETH/SOL/ZEC 1Click dry-quote results. No page exceptions or horizontal overflow; the expected Hermes request failure is recorded. No fonts, colors, CSS/layout rules or artwork changed. Screenshots were captured locally during QA and are not committed. See [FLOW-QA.md](FLOW-QA.md#native-test-stock-flow-2026-11-12).
+
+## Earlier R3 NEAR tree cleanup (2026-11-12)
 
 The current tree has only the NEAR contract, SDK, MCP and web packages. The old multi-chain suites are not installed or counted. `pnpm install --frozen-lockfile` passed after a separate lockfile regeneration. Rust is pinned locally to 1.95.0; both the test-token and credit Wasm builds passed.
 

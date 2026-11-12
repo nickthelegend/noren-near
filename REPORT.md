@@ -5,10 +5,12 @@
 The original deployment counts and balances below describe the Nov 9 run. Browser signing and the repository scope were updated afterward. Later demo borrows append transactions to the deployment log and change bob's debt; read the app for the current position.
 
 - **NEAR testnet.** `noren_credit` is deployed at [`credit.noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/credit.noren-near-mw9h22el.testnet). One full cycle ran with signed transactions: an LP supplies test USDC, alice deposits test WBTC, a Coinbase BTC-USD price signed by Noren's relayer is verified on-chain, alice draws 25 USDC paid straight to a merchant, repays in full and withdraws her collateral. bob's 12 USDC loan is left open so the app has a live position. Three attacks were rejected on-chain (a forged deposit callback, a borrow with no price, a price signed by the wrong key). The original run has 28 recorded steps in `deployments/testnet-2026-11-09.json`; selected transactions are linked in the README.
-- **Sandbox.** 5/5 tests on a real nearcore sandbox cover the lifecycle, liquidation, Pay in 3, the harvester path and relayer forgery, tampering, staleness and replay.
+- **Tests (Nov 12).** Six tests on a real nearcore sandbox plus 3 contract unit tests cover the lifecycle, liquidation, Pay in 3, the harvester path and relayer forgery, tampering, staleness and replay.
 - **1Click.** Five timestamped `dry: true` quotes remain as SDK evidence. The current web app shows the NEAR-side catalog and exposes only NEAR testnet payment destinations; it does not execute mainnet routes.
 - **App.** `/` opens `#/near/app`; `#/near` explains the NEAR edition. The approved indigo components read NEAR testnet positions, the NEAR-side 1Click catalog and Rhea rates. Inherited routes redirect to the NEAR app.
 - **MCP.** `credit_status`, `quote_deposit`, `quote_spend` and `harvest_preview` over stdio; the live test reads the testnet contract.
+
+The Nov 12 upgrade preserves v1 state and adds schema version 2. TEST tTSLA/tNVDA/tAAPL are configured at 40% LTV / 50% liquidation; BTC remains 50% / 60%. Mixed-collateral, stale-price, forgery, over-borrow and liquidation checks pass. See [stock setup](deployments/stock-demo-2026-11-12.json). No real stock-backed shop payment is claimed while Pyth is unavailable.
 
 ## Browser signing and repository scope
 
@@ -25,7 +27,7 @@ The `near` tree now retains only the NEAR contract, SDK, MCP server, web app and
 
 ## Blocked
 
-Harvest on testnet (no real yield source); mainnet deposits, merchant payouts and origin-chain withdrawals (Setup required: NEAR_MAINNET_ACCOUNT); tokenised stocks (none in the catalog). Details and exact unblockers: `BLOCKED.md`.
+Harvest on testnet (no real yield source); mainnet deposits, merchant payouts and origin-chain withdrawals (Setup required: NEAR_MAINNET_ACCOUNT); stock-backed borrowing (Hermes public latest-price endpoints return HTTP 401; native TEST stocks are deployed but have no fresh signed price). Details and exact unblockers: `BLOCKED.md`.
 
 ## Commands
 

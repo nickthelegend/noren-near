@@ -1,5 +1,62 @@
 # Full-flow QA — Noren on NEAR
 
+## Native test stock flow (2026-11-12)
+
+**PARTIAL: native stock setup and real browser deposit/withdraw PASS; stock-backed borrowing/shop payment BLOCKED by the price source.** TEST tTSLA, tNVDA and tAAPL are deployed NEP-141 tokens, not real shares. The credit account was upgraded in place with a v1 → v2 migration. Stocks use 40% LTV / 50% liquidation; BTC uses 50% / 60%. No earlier-chain packages or RPCs were restored.
+
+The public Pyth feed catalogue identifies the three US-equity feeds, but latest-price requests return HTTP 401 without authorization. Current Pyth docs require an API key. The no-key constraint is preserved; no price or timestamp is substituted. Chrome reports the corresponding failed/CORS read, and the app shows an unavailable-price message. Last signed prices retain their age. A quote older than 90 seconds, including after market close, cannot open credit. See [exact blocker](BLOCKED.md) and [feed IDs / decoder](packages/sdk/src/stocks.ts).
+
+### Ordered browser flow and result
+
+| Step | Action | Result | Evidence at 1440 and 375 |
+| --- | --- | --- | --- |
+| 1 | Open `/` → `#/near/app`; understand the testnet-only stock/BTC credit model | **PASS** | `after-credit-1440.png`, `after-credit-375.png`; configured stock rows, TEST/not-real-share labels, 40% LTV / 50% liquidation and honest unavailable prices |
+| 2 | Open About (`#/near`) and the proof links | **PASS** | `after-about-1440.png`, `after-about-375.png`; requested Tesla hero uses existing type/styles; earlier payment proof is explicitly BTC-backed |
+| 3 | Account chip → connect → own position | **PASS with QA signer** | `connected-1440.png`, `connected-375.png`; real testnet signer injected only in the gated localhost QA build. Human Meteor approval remains manual. |
+| 4 | Bring coins → deposit 0.0001 test WBTC, choose tTSLA, deposit 1 | **PASS, real transactions** | `deposit-final-*`, `stock-deposit-pending-*`, `stock-deposit-final-*`; FINAL polling, NearBlocks links and both collateral balances checked on-chain |
+| 5 | See the mixed position | **PASS for deposit/position** | `position-mixed-1440.png`, `position-mixed-375.png`; both balances are real. Debt is zero, so health reads No debt. An unpriced stock is not assigned invented dollar value. |
+| 6 | Request 0.01 test USDC → Borrow and pay shop | **BLOCKED price source; safety guard PASS** | `stock-price-blocked-1440.png`, `stock-price-blocked-375.png`; plain refresh-price error before any borrow transaction. Shop balance remains unchanged. No stock-backed payment receipt, debt or live stock-loan health is claimed. |
+| 7 | Real stock borrow receipt / repay | **BLOCKED for this stock run** | Requires a fresh legitimate TSLA price. The earlier BTC lifecycle below remains dated evidence, not a substitute stock pass. Mixed-debt health, repayment and liquidation are verified in sandbox. |
+| 8 | Withdraw tTSLA and WBTC, check receipts and restored position | **PASS, real transactions** | `stock-withdraw-pending-*`, `stock-withdraw-final-*`, `withdraw-final-*`, `position-restored-*`; both token balances restored, debt 0, no pending operation, no locked collateral |
+| 9 | Bring coins → BTC / ETH / SOL / ZEC → mainnet dry quote | **PASS for four live dry quotes** | `after-dry-quote-btc-*`, `after-dry-quote-eth-*`, `after-dry-quote-sol-*`, `after-dry-quote-zec-*`; explicit “Mainnet dry quote — nothing moves on testnet”. No mainnet funds or testnet deposit. Real ZEC attribution remains [blocked](BLOCKED.md#exact-requirement-for-a-real-zec-deposit). |
+| 10 | Debt-free tab / other account controls | **PASS for production views; real yield BLOCKED** | `after-debt-free-*`, `after-account-*`, `after-stock-deposit-*`; stock positions have no yield model. Approved design components and artwork retained. |
+
+The wildcard `*` in screenshot names means `1440.png` and `375.png`. The production before/after images are in the orchestration shots directory under `noren-near/stocks`; the transaction screenshots are under `noren-near/stocks/qa-signer/2026-11-12T15-27-41-826Z`. Screenshots were captured locally during QA and are not committed.
+
+### Exact real browser transactions
+
+Run: `pnpm test:e2e --stocks --skip-build` after the production/QA builds and isolation audit. Exit **2**, status **BLOCKED_PRICE_SOURCE**, intentionally does not mark the full credit cycle PASS. A preceding run was cancelled before acquiring Chrome and before any authorization/transaction to include the queued-price freshness guard. Both entries remain in [qa-browser-2026-11-12.json](deployments/qa-browser-2026-11-12.json).
+
+| Width | Action | FINAL transaction |
+| --- | --- | --- |
+| 1440 | deposit | [FfAqzeV2Tc7JpvBHnCMHKAnQP9KYKL8etTmCDiGvDHLg](https://testnet.nearblocks.io/txns/FfAqzeV2Tc7JpvBHnCMHKAnQP9KYKL8etTmCDiGvDHLg) |
+| 1440 | stock-deposit | [9hhtYt7ZUQmrHGxjijsnkTNkBE2w52TC76ENAJTrv8DA](https://testnet.nearblocks.io/txns/9hhtYt7ZUQmrHGxjijsnkTNkBE2w52TC76ENAJTrv8DA) |
+| 1440 | stock-withdraw | [6k4mm5t3S2oGevHCUUcX68rvxZbDJFqMuSXbCeiDdVKq](https://testnet.nearblocks.io/txns/6k4mm5t3S2oGevHCUUcX68rvxZbDJFqMuSXbCeiDdVKq) |
+| 1440 | withdraw | [Cwn2SosTJ1NB4UjUtQbKNmDdjsADj2v8pfwe6rwZBfRa](https://testnet.nearblocks.io/txns/Cwn2SosTJ1NB4UjUtQbKNmDdjsADj2v8pfwe6rwZBfRa) |
+| 375 | deposit | [87TMWh4XUBW8QNFTCY9Kc7mAn2tPBpPLDSBD8nBSmxAv](https://testnet.nearblocks.io/txns/87TMWh4XUBW8QNFTCY9Kc7mAn2tPBpPLDSBD8nBSmxAv) |
+| 375 | stock-deposit | [8awsqz1tpb93xe2AnyaWitLTUwfTxtNDwTjZrPkBv3Jc](https://testnet.nearblocks.io/txns/8awsqz1tpb93xe2AnyaWitLTUwfTxtNDwTjZrPkBv3Jc) |
+| 375 | stock-withdraw | [9n1Faf33k9ABbqbhzLjcFgLZfJvxW2uE7uAzuTY9WFMh](https://testnet.nearblocks.io/txns/9n1Faf33k9ABbqbhzLjcFgLZfJvxW2uE7uAzuTY9WFMh) |
+| 375 | withdraw | [B4JmFrpJZuysTtkfeXJZ1xjDCLDPrPrk7fPtUGkGBGZK](https://testnet.nearblocks.io/txns/B4JmFrpJZuysTtkfeXJZ1xjDCLDPrPrk7fPtUGkGBGZK) |
+
+The browser run spent **0.004999678681768 testnet NEAR**. Setup fees were **0.0285372347856052 NEAR**, including the failed first upgrade; combined fees were **0.0335369134673732 NEAR**. The conservative task bound (setup fees + every setup allocation, including internal reserve transfers + full browser gas reservations) was **0.3242872347856052 NEAR**, below 1. No helper funding or mainnet transaction was requested. Every submitted setup transaction is in [stock-demo-2026-11-12.json](deployments/stock-demo-2026-11-12.json); both rejected and successful hashes are retained.
+
+### Checks and before/after screenshots
+
+**30 tests passed:** 3 contract unit, 6 sandbox, 9 SDK, 2 MCP, 10 web. Migration preserves previous pool/position state. The mixed sandbox case proves additive 50% BTC / 40% stock LTV, stale stock rejection, forgery rejection, over-borrow rejection and health below 1 after a price drop followed by liquidation. Zero-amount withdrawn stock entries no longer block fresh BTC credit. Credit Wasm, SDK/MCP and web production builds passed.
+
+12 before and 22 after production captures covered six existing screens plus the stock selector and four live quote results at each width. The real browser run added 34 captures including pending/final receipts and mixed/restored positions. No page exceptions, invalid `undefined`/`NaN` text or horizontal overflow. The expected Hermes CORS/network failure and its two console messages per real viewport are recorded separately; there were no other browser failures. No claim of zero network/console errors is made for unavailable Hermes.
+
+| Existing screen | Before (both widths) | After (both widths) |
+| --- | --- | --- |
+| Credit | `before-credit-1440.png`, `before-credit-375.png` | `after-credit-1440.png`, `after-credit-375.png` |
+| Account | `before-account-1440.png`, `before-account-375.png` | `after-account-1440.png`, `after-account-375.png` |
+| Deposit | `before-deposit-1440.png`, `before-deposit-375.png` | `after-deposit-1440.png`, `after-deposit-375.png`, `after-stock-deposit-1440.png`, `after-stock-deposit-375.png` |
+| Pay | `before-pay-1440.png`, `before-pay-375.png` | `after-pay-1440.png`, `after-pay-375.png` |
+| Debt-free | `before-debt-free-1440.png`, `before-debt-free-375.png` | `after-debt-free-1440.png`, `after-debt-free-375.png` |
+| About | `before-about-1440.png`, `before-about-375.png` | `after-about-1440.png`, `after-about-375.png` |
+
+No CSS/layout rules, fonts, colors or artwork changed. The existing list rows, action sheet, selector, buttons and typography carry the additions. Public read responses were captured for the original before views only; after views and financial assertions used fresh live reads, not replayed success. The production build contains no QA module/injection markers even with `VITE_QA_SIGNER=1`; only QA mode includes them. Literal `Arc`, `Robinhood`, `CCTP`, `arc.io` scans of production JS/CSS/HTML returned no matches. The earlier approved-art/binary substring caveat below still applies. All started previews and browsers closed; no push was performed.
+
 ## R3 repository cleanup (2026-11-12)
 
 **DONE:** dead local links, NEAR-only tracked product/workspaces, truthful opening pitch and browser-signing report. **BLOCKED only on the literal substring-grep criterion:** its 17 output lines include legitimate `NearCredit`, `nearcore`, `nk-search`, `fromCharCode`, Rust `windows_aarch64_*` lock entries and binary bytes in the approved price-tag WebP, plus the intended prior-work disclosure. These are not inherited-chain integrations. Changing approved art or falsifying dependency names to silence that grep was not done. The whole-word text audit below returns only README's Prior work disclosure:
