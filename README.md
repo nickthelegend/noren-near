@@ -130,6 +130,8 @@ Current before/after screenshots at 1440 and 375 are linked in [FLOW-QA.md](FLOW
 
 **Prior work.** Treat code from before Nov 1, 2026 as baseline. The available git history has no Noren commits before that date; its first commit is `5e6448e` on Nov 5, 2026 UTC. This does not establish when upstream libraries were written. The inherited Arc/Robinhood product was built Nov 5-7, before this NEAR port, and is excluded from this entry. It includes private checkout, merchant tooling, EVM credit, stock collateral, Aqua and Chainlink integrations, hosted demos and the earlier film. Its source remains on branch `main` and in git history. This branch contains only the NEAR edition and its shared visual components.
 
+**Other editions.** Noren also has an [Avalanche edition](https://noren-avax.vercel.app/), built on Nov 12, 2026. This NEAR submission covers only the NEAR-specific code built during Nov 1-14, 2026; Avalanche work is excluded.
+
 **Built in the window.** The Nov 9-11 NEAR work adds the Rust credit contract, signed testnet prices, NEP-141 collateral and merchant payouts, repayment and withdrawal, liquidation and Pay in 3, sandbox tests, the testnet deployment, 1Click dry quotes, the NEAR SDK/MCP tools, the NEAR pages, the live-borrow script, Meteor sign-in, browser credit actions and the NEAR-only entry. Yield harvesting is tested as a contract input in the sandbox; a real yield adapter is unfinished.
 
 The pre-NEAR baseline is `d91b739f84fbbf6fd72a626d183c64afbaf72c01` (Nov 7). Review locally with `git diff d91b739f84fbbf6fd72a626d183c64afbaf72c01...HEAD`, or use the [`main...near` comparison](https://github.com/nickthelegend/noren/compare/main...near) after the branch is published.

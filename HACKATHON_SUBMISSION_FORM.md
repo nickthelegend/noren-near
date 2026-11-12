@@ -17,6 +17,10 @@ Draft for Nick to review and enter in the [official form](https://nearhackathon.
 
 Idea character count: **1005** (plain text in the `idea` row; allowed: 20-2000).
 
+## Risks / disclosures
+
+Noren's [Avalanche edition](https://noren-avax.vercel.app/) was built on Nov 12, 2026. Only NEAR-specific code built during Nov 1-14, 2026 is submitted here; Avalanche work is excluded.
+
 ## X post draft
 
 The human posts this with the video attached. Draft text: **217 characters**, within 280.
