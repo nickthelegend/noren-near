@@ -2,9 +2,9 @@
 
 ## ETHGlobal surface port on NEAR (2026-11-13)
 
-**47 executed tests passed:** 4 Rust unit, 7 real local NEAR sandbox, 12 SDK, 2 equity-source, 2 live read-only MCP, 20 web/merchant. Frozen install, web typecheck and production build passed. Production excludes the QA module and both injection markers even with `VITE_QA_SIGNER=1`. The production text audit found no whole-word Arc, Robinhood, CCTP, CCIP or NYSE content.
+**51 executed tests passed:** 4 Rust unit, 7 real local NEAR sandbox, 12 SDK, 2 equity-source, 2 live read-only MCP, 24 web/merchant. Frozen install, web typecheck and production build passed. Production excludes the QA module and both injection markers even with `VITE_QA_SIGNER=1`. The production text audit found no whole-word Arc, Robinhood, CCTP, CCIP or NYSE content.
 
-The restored merchant/shop/app pass captured 78 screens at 1440/375 without unhandled page exceptions or horizontal overflow. It verified actual NEP-413 signatures, onboarding through one-time API keys, key revocation, all merchant tabs, the six app tabs, Aubelle bag-to-checkout, and empty/invalid states. Real 1-test-USDC payments finalized at each width and appeared in verified merchant receipts. [Evidence](deployments/ethglobal-browser-2026-11-13T07-03-34-762Z.json). New stock-sale/credit/installment browser proof awaits the next market opening; do not treat a sandbox receipt as a filmed testnet receipt.
+The restored merchant/shop/app pass captured 78 screens at 1440/375 without unhandled page exceptions or horizontal overflow. It verified actual NEP-413 signatures, onboarding through one-time API keys, key revocation, all merchant tabs, the six app tabs, Aubelle bag-to-checkout, and empty/invalid states. Real 1-test-USDC payments finalized at each width and appeared in verified merchant receipts. [Evidence](deployments/ethglobal-browser-2026-11-13T07-03-34-762Z.json). Native WBTC sale and receipt recovery passed at both widths. The restored app also completed a real BTC-backed 25-test-USDC shop payment, the first 49.333333-test-USDC Aubelle installment, repayment and withdrawal. New TEST-stock sale and stock-backed filming await the market opening; sandbox receipts are not filmed testnet receipts.
 
 To run the edition browser check, first build the isolated QA edition, then run one preview on a free port:
 
@@ -15,6 +15,12 @@ pnpm --filter @noren/web exec vite preview --host 127.0.0.1 --port 5395 --strict
 pnpm test:edition
 # Also signs one real 1-test-USDC invoice payment per width (0.1 NEAR cap):
 pnpm test:edition --live-usdc
+# Native WBTC sale, including receipt-network failure and same-hash recovery:
+pnpm test:edition --live-crypto --verify-retry
+# One real unpaid schedule; checks no merchant payment and no unfunded draw:
+pnpm test:edition --live-schedule --verify-retry
+# Full BTC-backed app/Aubelle credit cycle (only from a clean funded position):
+pnpm test:credit-edition
 ```
 
 The runner uses shared `withChromeLock`, reads the existing demo credential file only in Node, injects only into an ephemeral loopback QA page, keeps credentials out of screenshots/logs and records every payment hash in `deployments/ethglobal-browser-*.json`. API secrets are masked. It starts no server; stop the preview you started when done. A normal production build uses Meteor and cannot load the QA signer. Live quote reads and all native writes are testnet-only. The old `pnpm test:e2e` runner now opens the preserved `#/near/app` path.
@@ -22,6 +28,14 @@ The runner uses shared `withChromeLock`, reads the existing demo credential file
 Standalone merchant API for a future approved host: `pnpm near:merchant`. Set `PORT`, `NOREN_WEB_ORIGIN` to the exact approved web origin and `NOREN_DATA_FILE` to durable storage. Never run it alongside another local preview during this constrained QA. No wallet key belongs on this service. Local Vite already embeds the same service on its one port.
 
 Screenshots were captured locally during QA and are not committed. Before/after sets use `before-*`, `edition-*` and `after-*` under the orchestration shots folder's `noren-near/ethglobal-port/` directory.
+
+### Native checkout and installment follow-up
+
+The WBTC buyer flow and receipt-network interruption/reload passed at 1440/375 with 88 captures and no second payment. [Evidence](deployments/ethglobal-browser-2026-11-13T07-59-17-568Z.json). The first earlier sale had paid on-chain but exposed legacy test-USDC log handling; its original failed record and [same-hash recovery](deployments/ethglobal-receipt-recovery-2026-11-13.json) remain intact.
+
+A real three-draw schedule paid nothing and refused an unfunded first draw. [Schedule evidence](deployments/ethglobal-browser-2026-11-13T08-28-36-398Z.json). The restored app then completed a BTC-backed cycle: deposit 0.003 test WBTC, fresh relayer price, shop payment 25, Aubelle schedule 148, first draw 49.333333, repay all debt and withdraw the same BTC. The merchant gained exactly 74.333333 test USDC; health was 1.6644× and final debt/collateral were zero. Eight transactions, including the public test-token faucet, cost 0.0040072647773523 testnet NEAR. [Sealed record](deployments/ethglobal-credit-browser-2026-11-13T08-53-51-393Z.json).
+
+That record honestly retains `CHAIN_PASS_UI_FIX_REQUIRED`: its real partial order exposed incorrect awaiting-payment copy. The service now returns actual paid amounts; Aubelle shows 49.33 received / 98.67 due and keeps polling. Checkout resumes the existing schedule and offers the order-status link. A read-only follow-up passed four captures at 1440/375 with no new transaction: [partial-order evidence](deployments/ethglobal-partial-order-ui-2026-11-13.json). Future installments are not yet due; no early cancellation, settlement switch or automatic keeper is implemented. The 24 web/merchant tests include public order totals and partial-payment projection.
 
 ## Yahoo stock payment continuation (2026-11-12)
 

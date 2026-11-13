@@ -43,6 +43,8 @@ The native stock-only cycle is recorded in [stock-payment-2026-11-12T15-48-19-05
 
 The browser also completed the mixed tTSLA/BTC payment, repayment and withdrawal at 1440 and 375. Exact receipts, health and before/after screenshots: [FLOW-QA.md](FLOW-QA.md#yahoo-stock-payment-completion-2026-11-12).
 
+The restored app also completed a Nov 13 BTC-backed credit and installment cycle: [25 test USDC to the shop](https://testnet.nearblocks.io/txns/BGDHPES1sJDFDxYWRcwhVKBZk8h8gtMb3K13a1L3we5S), then [49.333333 to Aubelle as its first installment](https://testnet.nearblocks.io/txns/CuVRseXe1WMtpjVwrkjisKRen3CtchHpcydPukDs9vFz). Repayment cleared the debt and the same BTC returned. The order correctly remains partly paid; future draws are unpaid. [Evidence](deployments/ethglobal-credit-browser-2026-11-13T08-53-51-393Z.json).
+
 Mainnet cross-chain transfers and yield harvesting are unfinished. 1Click integration currently provides dry quotes. See [BLOCKED.md](BLOCKED.md) for the remaining work.
 
 ## NEAR HACKATHON edition

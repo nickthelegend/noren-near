@@ -1,4 +1,12 @@
-# Noren on NEAR: build report (Nov 9, updated Nov 12 2026)
+# Noren on NEAR: build report (Nov 9, updated Nov 13 2026)
+
+## Nov 13 native merchant edition
+
+The original landing, Merchant, Aubelle shop and six-tab app now run locally on NEAR testnet, with public payments explicitly labelled. The state-preserving schema-v3 upgrade adds a separate test-USDC buyer reserve for direct TEST-stock/test-WBTC sales. The native merchant service verifies actual wallet signatures and invoice-bound FINAL receipts; it does not hold wallet keys. Merchant metadata is off-chain. The workspace now includes this merchant service.
+
+**51 executed tests passed:** 4 Rust unit, 7 sandbox, 12 SDK, 2 equity-source, 2 live read-only MCP and 24 web/merchant. Real browser USDC and WBTC checkout passed at 1440/375. A full BTC-backed app cycle paid the shop 25, paid Aubelle's first installment 49.333333, repaid and restored the collateral. Its partial-order UI bug was fixed and checked read-only at both widths without repeating any transaction. Detailed evidence and screenshots: [FLOW-QA.md](FLOW-QA.md), [TESTING.md](TESTING.md).
+
+New TEST-stock filming waits for fresh regular-market prices. Human Meteor approval, private payments, yield, mainnet execution and automatic installment calls remain outside the demonstrated flow. No site has been hosted or branch pushed. The dated Nov 9–12 deployment descriptions below are historical; `/` now opens the restored landing and the legacy credit reader remains at `#/near/app`.
 
 ## What is live
 
@@ -16,7 +24,7 @@ The Nov 12 upgrade preserves v1 state and adds schema version 2. TEST tTSLA/tNVD
 
 Meteor testnet sign-in and browser deposit, borrow/pay, repay and withdraw are built. The gated QA signer completed real browser-signed cycles at 1440 and 375, with pending/final receipts and on-chain position checks: [qa-browser-2026-11-11.json](deployments/qa-browser-2026-11-11.json). Human Meteor approval remains a separate manual check. QA signing is excluded from ordinary production builds.
 
-The `near` tree now retains only the NEAR contract, SDK, MCP server, web app and shared visual assets. Earlier product code and its test history remain on branch `main`; films and sealed NEAR evidence were not changed. Current verification is recorded in [TESTING.md](TESTING.md) and [FLOW-QA.md](FLOW-QA.md).
+The `near` tree retains the NEAR contract, SDK, MCP server, merchant service, web app and shared visual assets. Earlier product code and its test history remain on branch `main`; films and sealed NEAR evidence were not changed. Current verification is recorded in [TESTING.md](TESTING.md) and [FLOW-QA.md](FLOW-QA.md).
 
 ## Fixes made in this pass (over the Codex build)
 
