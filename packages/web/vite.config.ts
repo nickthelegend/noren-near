@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { createMerchantService } from "../merchant/src/service";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -15,6 +16,10 @@ function envDir() {
 
 export default defineConfig({
   plugins: [react(), {
+    name: "near-merchant-api",
+    configureServer(server) { const api = createMerchantService(); server.middlewares.use(async (req, res, next) => { if (!await api.middleware(req, res)) next(); }); },
+    configurePreviewServer(server) { const api = createMerchantService(); server.middlewares.use(async (req, res, next) => { if (!await api.middleware(req, res)) next(); }); },
+  }, {
     name: "near-public-assets",
     generateBundle() {
       // Keep inherited screenshots, proving artifacts and chain logos out of this entry.

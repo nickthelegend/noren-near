@@ -23,3 +23,6 @@ packages/contract/test-token/target/
 !.env.example
 # Loom's local state (event log, attachments, machine config)
 .loom/
+
+# Local merchant metadata, session hashes and API-key hashes (no wallet keys).
+.near-data/
