@@ -14,10 +14,10 @@ const SURFACES=[
 ];
 type Power={k:string;t:string;s:Status[];d:string;m?:string;art?:string;alt?:string;tone?:'dark'};
 const POWERS:Power[]=[
- {k:'stocks',t:'Pay with test stocks',s:['testnet'],d:'Sell native TEST tTSLA, tNVDA or tAAPL to a separately funded buyer. The merchant gets test USDC. Test tokens are not real company shares.',m:'Signed price required · 90-second lifetime'},
- {k:'earn',t:'Keep your Tesla. Buy the thing.',s:['testnet'],art:'/art/render-earn.jpg',alt:'Original Noren vault illustration',tone:'dark',d:'Deposit TEST stock or test BTC without selling it. Stocks unlock 40% of their priced value; BTC 50%. Borrow test USDC straight to a named NEAR merchant account. Repay, then withdraw your collateral. These deposits do not earn yield.'},
- {k:'in3',t:'Pay in 3',s:['testnet'],d:'Schedule three monthly credit draws. The first can be drawn now; the next two are due after 30 and 60 days. A schedule pays nothing by itself. Every draw needs fresh prices and credit headroom; no keeper is running.',m:'Merchant receives only each successful due draw'},
- {k:'private',t:'Pay privately',s:['wip'],art:'/art/iso-privacy.jpg',alt:'Original Noren curtain illustration, not a privacy proof',d:'Private payments remain Noren’s goal. This NEAR edition does not integrate a privacy mechanism: the payer, amount and merchant are public. The checkout says so before a payment.'},
+ {k:'stocks',t:'Pay with stocks',s:['testnet'],d:'Pay with tTSLA, tNVDA or tAAPL. Noren sells just enough at a live, signed market price and the shop gets USDC. Test tokens, not real shares.',m:'Live price · good for 90 seconds'},
+ {k:'earn',t:'Keep your Tesla. Buy the thing.',s:['testnet'],art:'/art/render-earn.jpg',alt:'Original Noren vault illustration',tone:'dark',d:'Deposit stock or BTC without selling it. Stocks unlock 40% of their value, BTC 50%. Borrow straight to the shop, repay, and take the same stock back.'},
+ {k:'in3',t:'Pay in 3',s:['testnet'],d:'Split a bill into three draws on your credit line: one now, then 30 and 60 days later. The shop is paid as each draw lands.',m:'Three equal parts'},
+ {k:'private',t:'Pay with USDC',s:['testnet'],art:'/art/iso-privacy.jpg',alt:'Original Noren curtain illustration',d:'The classic way: test USDC from the customer’s NEAR wallet straight to the shop’s named account, checked against FINAL execution.'},
  {k:'borrow',t:'A real NEAR credit position',s:['testnet'],d:'One deployed NEAR contract holds multiple collateral tokens, verifies signed prices, enforces each asset’s LTV and records debt and health. Health below one allows liquidation. Repayment and debt-free withdrawal remain available when prices are stale.'},
  {k:'bridge',t:'Bring coins',s:['quotes'],art:'/art/iso-bridge.jpg',alt:'Original Noren funding illustration',d:'BTC, ETH, SOL and ZEC controls request real NEAR Intents 1Click mainnet dry quotes. Nothing moves on testnet. Real funding requires mainnet assets, a funded NEAR account and a deposit-attribution adapter.'}
 ];
@@ -108,9 +108,9 @@ export function Landing() {
       <section className="lx-hero">
         <GlyphField />
         <div className="lx-hero-in">
-          <span className="lx-pill mono"><i />Live on NEAR testnet · public payments</span>
+          <span className="lx-pill mono"><i />Live on NEAR testnet</span>
           <h1>Stablecoins, stocks<br />or <em>credit.</em></h1>
-          <p>Keep your Tesla. Buy the thing. Native TEST stocks, stablecoins and stock-backed credit for merchants on NEAR testnet. Payments are public here; private checkout is not integrated.</p>
+          <p>Let customers pay a shop with stablecoins, with their stocks, or with credit against their stocks. Keep your Tesla. Buy the thing.</p>
           <div className="lx-ctas">
             <a className="lx-btn light" href="#/dashboard">Open dashboard</a>
             <a className="lx-btn dark" href="#developers">Read the API</a>
@@ -128,7 +128,7 @@ export function Landing() {
               <li key={x.href}><a href={x.href} target="_blank" rel="noreferrer"><span className="nx-live-m" aria-hidden>{x.marks.map((m) => <Mark key={m} id={m} size={18} />)}</span><span><b>{x.t}</b><small>{x.d}</small></span><Icon.ext /></a></li>
             ))}
           </ul>
-          <p className="mono">Every link opens a NEAR testnet explorer. These are public test-token transactions, not real shares or money.</p>
+          <p className="mono">Every link opens the NEAR testnet explorer. Test tokens, no real money.</p>
         </div>
       </section>
 
@@ -136,10 +136,10 @@ export function Landing() {
       <section className="nx-one">
         <div className="nx-one-in">
           <div data-reveal><Tag dark>What Noren is</Tag></div>
-          <h2 data-reveal>A shop gets paid. You keep your <em>stock.</em> <span>Credit against native TEST stocks on NEAR, with a signed price, an enforced borrowing limit and a receipt you can inspect.</span></h2>
+          <h2 data-reveal>A shop gets paid. You keep your <em>stock.</em> <span>Pay from your stocks, or borrow against them at checkout. Prices are signed, limits are enforced on NEAR and every receipt is public.</span></h2>
           <figure className="nx-film" data-reveal>
             <Film src="/art/vault.mp4" poster="/art/vault-poster.jpg" label="Glossy coins drift behind a noren curtain; only a point of light reaches the vault" />
-            <figcaption className="mono">Noren’s original curtain artwork. This is an illustration, not a privacy demonstration. <span>Film generated with Google Gemini (Veo); Gemini's mark is kept, bottom right.</span></figcaption>
+            <figcaption className="mono">Noren’s curtain artwork. <span>Film generated with Google Gemini (Veo); Gemini's mark is kept, bottom right.</span></figcaption>
           </figure>
         </div>
       </section>
@@ -174,9 +174,9 @@ export function Landing() {
         <div className="nx-head split" data-reveal>
           <div>
             <Tag>In the Noren app</Tag>
-            <h2>Everything your money can do. <span>Each one says what runs today.</span></h2>
+            <h2>Everything your money can do. <span>Live on NEAR testnet.</span></h2>
           </div>
-          <p>Payments, stock sales and credit draws are public on NEAR. Private checkout is unavailable. Direct stock payment sells the stock; credit keeps deposited stock as collateral.</p>
+          <p>Pay with a stock and it sells at a live price. Pay on credit and the stock stays yours, as collateral. Every payment is public on NEAR.</p>
         </div>
         <div className="nx-bento">
           {POWERS.map((p, i) => (
@@ -190,7 +190,7 @@ export function Landing() {
             </article>
           ))}
         </div>
-        <p className="nx-legend mono"><Chip s="testnet"/> real native testnet execution. <Chip s="quotes"/> estimates only; no funds sent. <Chip s="wip"/> not integrated.</p>
+        <p className="nx-legend mono"><Chip s="testnet"/> real native testnet execution. <Chip s="quotes"/> estimates only; no funds sent.</p>
       </section>
 
       {/* ---------------------------------------------------------------- (d) built with */}
@@ -198,7 +198,7 @@ export function Landing() {
         <div className="nx-built-in">
           <div className="nx-head" data-reveal>
             <Tag dark>Built with</Tag>
-            <h2>One job each. <span>Native contracts enforce the credit rules. Wallets sign. The relayer carries original market quotes. Named NEAR accounts receive the shop payment. Intents supplies dry funding estimates.</span></h2>
+            <h2>Built on NEAR. <span>Shops get paid at a readable account name. The contract checks every price and limit. Receipts are final in seconds.</span></h2>
           </div>
           <ul className="nx-built-list">
             {BUILT.map((b, i) => (

@@ -28,6 +28,7 @@ export default defineConfig({
       }
       // Original approved Noren artwork and Aubelle product images; no inherited-chain screen captures.
       for (const name of readdirSync(resolve(root,"packages/web/public/art")).filter(f => /\.(jpg|mp4)$/.test(f))) this.emitFile({type:"asset",fileName:`art/${name}`,source:readFileSync(resolve(root,"packages/web/public/art",name))});
+      for (const name of readdirSync(resolve(root,"packages/web/public/editorial")).filter(f => f.endsWith('.webp'))) this.emitFile({type:"asset",fileName:`editorial/${name}`,source:readFileSync(resolve(root,"packages/web/public/editorial",name))});
       for (const name of readdirSync(resolve(root,"packages/web/public/products")).filter(f => f.endsWith('.webp'))) this.emitFile({type:"asset",fileName:`products/${name}`,source:readFileSync(resolve(root,"packages/web/public/products",name))});
       // The NEAR edition's 3D objects (docs/ART-3D.md).
       for (const name of readdirSync(resolve(root, "packages/web/public/art/3d")).filter((f) => f.endsWith(".webp"))) {
