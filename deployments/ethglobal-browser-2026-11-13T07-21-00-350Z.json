@@ -1,0 +1,283 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-13T07:21:00.350Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "liveUsdc": false,
+  "status": "PASS",
+  "screenshots": [
+    {
+      "name": "landing-api",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-landing-api-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "business",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-business-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-payout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "first-link",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-first-link-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-created",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-link-created-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "keys-once-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-keys-once-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-merchant-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "balances",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-balances-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payments-empty",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-payments-empty-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "links",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-links-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "developers",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-developers-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "webhooks-unavailable",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-webhooks-unavailable-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "events",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-events-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "settings",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-settings-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-created-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-key-created-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-revoked",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-key-revoked-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-builder",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-link-builder-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "landing-api",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-landing-api-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "business",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-business-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payout",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-payout-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "first-link",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-first-link-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-created",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-link-created-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "keys-once-redacted",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-keys-once-redacted-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-home",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-merchant-home-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "balances",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-balances-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payments-empty",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-payments-empty-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "links",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-links-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "developers",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-developers-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "webhooks-unavailable",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-webhooks-unavailable-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "events",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-events-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "settings",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-settings-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-created-redacted",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-key-created-redacted-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-revoked",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-key-revoked-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-builder",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-builder-link-builder-375.png",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "transactions": [],
+  "checks": [
+    {
+      "width": 1440,
+      "stage": "landing navigation",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 1440,
+      "merchantAuthenticated": true,
+      "invoiceId": "0x262d10c40eb87f2636f28efdb4882d93a7f1840e89058b157c3b3c80791f28e4"
+    },
+    {
+      "width": 1440,
+      "target": "builder",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "stage": "landing navigation",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 375,
+      "merchantAuthenticated": true,
+      "invoiceId": "0x7893d455aaa00a7f9a8d11d7ae99d26c75a3bd94a895dc56871f90aea222e6e0"
+    },
+    {
+      "width": 375,
+      "target": "builder",
+      "status": "PASS"
+    }
+  ],
+  "attempts": [],
+  "actualNearSpentYocto": "0",
+  "reservedYocto": "0"
+}

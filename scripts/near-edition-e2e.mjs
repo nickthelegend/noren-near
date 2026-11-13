@@ -24,6 +24,7 @@ async function shot(p,name,w){
  const path=join(dir,`${prefix}-${name}-${w}.png`);await p.screenshot({path,fullPage:true,mask:[p.locator('.ob-keys dd,.sd-secret')]});report.screenshots.push({name,width:w,path,...m});save();if(m.overflow){report.checks.push({name,width:w,overflowElements:await p.locator('body *').evaluateAll(els=>els.filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,15).map(e=>({tag:e.tagName,class:e.getAttribute('class'),right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width})))});save();}check(!m.overflow,'Horizontal overflow: '+name+' '+w);check(!m.bad,'Invalid visible copy: '+name);
 }
 await withChromeLock(async()=>{
+ while(Number(/free percentage: (\d+)/.exec(execFileSync('memory_pressure',{encoding:'utf8'}))?.[1]??0)<30)await sleep(30000);
  const lock=LOCK;const heart=setInterval(()=>{try{if(existsSync(lock))utimesSync(lock,new Date(),new Date())}catch{}},30000);
  const browser=await chromium.launch({channel:'chrome',headless:true});
  try{for(const w of (process.env.QA_WIDTH?[Number(process.env.QA_WIDTH)]:[1440,375])){
@@ -40,6 +41,10 @@ await withChromeLock(async()=>{
   for(const [name,path]of [['merchant-home','dashboard'],['balances','dashboard/balances'],['payments-empty','dashboard/payments'],['links','dashboard/links'],['developers','dashboard/developers'],['webhooks-unavailable','dashboard/developers/webhooks'],['events','dashboard/developers/events'],['settings','dashboard/settings']]){await p.evaluate(hash=>location.hash=hash,'#/'+path);await p.waitForTimeout(600);await shot(p,name,w)}
   await p.getByRole('button',{name:/Connect Aubelle/}).click();await p.waitForTimeout(500);
   await p.evaluate(()=>location.hash='#/dashboard/developers');await p.getByRole('button',{name:'Create secret key',exact:true}).click();await p.locator('.sd-secret').waitFor();await shot(p,'key-created-redacted',w);p.once('dialog',d=>d.accept());await p.getByRole('button',{name:'Revoke',exact:true}).last().click();await p.waitForTimeout(600);await shot(p,'key-revoked',w);
+  await p.evaluate(()=>location.hash='#/dashboard/links');await p.getByRole('button',{name:'Create payment link',exact:true}).first().click();await p.getByRole('dialog').waitFor();await shot(p,'link-builder',w);
+  if(process.env.QA_INVALID_AMOUNT==='1'){await p.locator('#cl-amt').fill('9'.repeat(400));check(await p.getByRole('button',{name:'Create link',exact:true}).isDisabled(),'Unsafe huge amount was accepted.');await shot(p,'link-builder-invalid',w);}
+  await p.getByRole('button',{name:'Cancel',exact:true}).click();
+  if(process.env.QA_TARGET==='builder'){check(errors.length===0,'Unhandled page exceptions.');report.checks.push({width:w,target:'builder',status:'PASS'});save();await context.close();continue;}
   await p.evaluate(hash=>location.hash=hash,new URL(checkout).hash);await p.getByRole('tab',{name:/Pay privately/}).click();await shot(p,'privacy-unavailable',w);await p.getByRole('tab',{name:/Pay with stocks/}).click();await shot(p,'stock-checkout',w);
   await p.getByRole('tab',{name:/Pay with USDC/}).click();await shot(p,'usdc-checkout',w);
   if(live){stage=`USDC checkout ${w}`;await p.getByRole('button',{name:'Pay 1.00 test USDC',exact:true}).click();await p.getByRole('heading',{name:'Paid with test USDC'}).waitFor({timeout:90000});const hash=new URL(await p.locator('.co-done a[href*="/txns/"]').getAttribute('href')).pathname.split('/').at(-1);report.transactions.push({width:w,stage,hash,explorer:`https://testnet.nearblocks.io/txns/${hash}`});save();await shot(p,'usdc-final-receipt',w);await p.evaluate(()=>location.hash='#/dashboard/payments');await p.getByRole('row').filter({hasText:'NEAR browser receipt'}).first().click();await shot(p,'merchant-paid-receipt',w)}

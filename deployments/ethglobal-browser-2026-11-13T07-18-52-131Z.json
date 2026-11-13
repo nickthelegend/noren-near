@@ -1,0 +1,12 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-13T07:18:52.131Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "liveUsdc": false,
+  "status": "INTERRUPTED",
+  "screenshots": [],
+  "transactions": [],
+  "checks": [],
+  "attempts": [],
+  "error": "Daemon restart while waiting for Chrome; no transaction authorized."
+}

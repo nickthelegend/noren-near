@@ -532,7 +532,7 @@ function CreateLink({ cfg, token, shop, onClose, onDone }: { cfg: Config; token:
   const [quote, setQuote] = useState<Quote | null>(null);
   const cur = currencies?.find((c) => c.code === currency);
   useEffect(() => { fetch(`${SERVER}/pricing/currencies`).then(async (r) => { if (!r.ok) throw new Error((await r.json().catch(() => null))?.error ?? `HTTP ${r.status}`); return r.json(); }).then((l) => setCurrencies((Array.isArray(l) ? l : l.currencies ?? []).filter((c: Currency) => c.code !== "USDC"))).catch((e) => setPriceErr(msgOf(e))); }, []);
-  const minor = useMemo(() => { const d = cur?.decimals ?? 2; const v = Number(amount || 0); return v > 0 ? BigInt(Math.round(v * 10 ** d)) : 0n; }, [amount, cur]);
+  const minor = useMemo(() => { const d = cur?.decimals ?? 2; const v = Number(amount || 0); return Number.isFinite(v) && Number.isFinite(v * 10 ** d) && v > 0 ? BigInt(Math.round(v * 10 ** d)) : 0n; }, [amount, cur]);
   const tRef = useRef<number>();
   useEffect(() => {
     setQuote(null); if (currency === "USDC" || minor <= 0n) return;
@@ -557,7 +557,7 @@ function CreateLink({ cfg, token, shop, onClose, onDone }: { cfg: Config; token:
         <div className="sd-builder-form">
           <label className="sd-label" htmlFor="cl-desc">Product or service</label>
           <input id="cl-desc" className="sd-input" maxLength={120} placeholder="Flat white" value={desc} onChange={(e) => setDesc(e.target.value)} autoFocus />
-          <p className="sd-help">Only you and the customer see this. It never goes on-chain.</p>
+          <p className="sd-help">Stored by the merchant service outside the chain. Anyone with this link can read it.</p>
           <label className="sd-label" htmlFor="cl-amt">Price</label>
           <div className="sd-input-money">
             <input id="cl-amt" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ""))} />
@@ -569,7 +569,7 @@ function CreateLink({ cfg, token, shop, onClose, onDone }: { cfg: Config; token:
           <p className="sd-help">Test USDC only. Fiat conversion is not integrated on NEAR.</p>
           <label className="sd-label">Link expires after</label>
           <div className="sd-seg full">{[15, 30, 60, 1440].map((m) => <button key={m} aria-pressed={mins === m} onClick={() => setMins(m)}>{m < 60 ? `${m} min` : m === 60 ? "1 hour" : "24 hours"}</button>)}</div>
-          {currency !== "USDC" && <p className="sd-help">The rate is locked until the link expires, like an FX quote. The customer's proof then fixes the USDC amount on-chain.</p>}
+          {currency !== "USDC" && <p className="sd-help">Fiat conversion is not integrated. Payments use public test USDC on NEAR.</p>}
           {err && <p className="sd-error" role="alert">{err}</p>}
         </div>
         <div className="sd-builder-preview" aria-label="Checkout preview">

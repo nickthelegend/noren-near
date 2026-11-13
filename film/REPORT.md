@@ -39,3 +39,7 @@ The first mobile pass exposed header overflow; shortening the existing network l
 Executed tests: 4 Rust unit + 7 sandbox + 12 SDK + 2 equity-source + 2 live read-only MCP + 20 web/merchant = 47 passed. Frozen install, web typecheck and production build pass. Ordinary production excludes all three QA signer markers even with the flag set; production JS/CSS/HTML contain no whole-word Arc, Robinhood, CCTP, CCIP or NYSE mentions. Static host rewrites are ready; publishing still needs Nick's approval, an approved persistent API host, VITE_NOREN_API and exact NOREN_WEB_ORIGIN. Nothing hosted or pushed.
 
 Remaining: new app stock-sale/credit/installment verification and fresh film transactions must wait for US market opening at 14:30 UTC Nov13. No closed-market price is re-timestamped. Current film preserved as versions/v2-stocks.mp4 and v2-stocks-share.mp4; native af_heart narration prepared, HyperFrames edit not rendered yet.
+
+### Payment-link boundary and film rehearsal
+
+Guarded non-finite amount previews so a 400-digit input cannot crash the form; Create link stays disabled. Corrected inherited description copy: anyone with the payment link can read its off-chain description. Before/after form captures exist at both widths; the focused after pass captured 36 screens with no transactions or page exceptions. A source-only filming rehearsal captured the actual website, merchant setup, Aubelle bag/checkout and app with zero chain transactions. No stock payment was fabricated while the market was closed. The full live shoot still waits for 14:30 UTC.
