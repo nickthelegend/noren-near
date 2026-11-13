@@ -1,0 +1,86 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-13T07:01:50.790Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "liveUsdc": false,
+  "status": "FAIL",
+  "screenshots": [
+    {
+      "name": "business",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-mobile-business-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payout",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-mobile-payout-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "first-link",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-mobile-first-link-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-created",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-mobile-link-created-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "keys-once-redacted",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-mobile-keys-once-redacted-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-home",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-mobile-merchant-home-375.png",
+      "overflow": true,
+      "bad": false
+    }
+  ],
+  "transactions": [],
+  "checks": [
+    {
+      "width": 375,
+      "merchantAuthenticated": true,
+      "invoiceId": "0x5f1cdaef144da8f81ae042bd75a10a5c3f3a6e05dfe826930d6b4d0448651b66"
+    },
+    {
+      "name": "merchant-home",
+      "width": 375,
+      "overflowElements": [
+        {
+          "tag": "DIV",
+          "class": "sd-top-r",
+          "right": 378.34375,
+          "width": 286.34375
+        },
+        {
+          "tag": "DIV",
+          "class": "sd-menu-wrap",
+          "right": 378.34375,
+          "width": 72.75
+        },
+        {
+          "tag": "BUTTON",
+          "class": "sd-btn primary sm",
+          "right": 378.34375,
+          "width": 72.75
+        }
+      ]
+    }
+  ],
+  "attempts": [],
+  "failedStage": "merchant sign-in",
+  "error": "Horizontal overflow: merchant-home 375"
+}

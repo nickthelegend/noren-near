@@ -22,10 +22,20 @@ Started 2026-11-13 on branch `near`. No hosting, push or other-repo changes are 
 
 ## Execution status
 
-Reference review and current-UI before captures are in progress. No product change or new transaction has been made for this port yet.
+Reference review and before captures are complete. The native buyer upgrade, merchant service and original UI port are implemented; validation below distinguishes live evidence from remaining market-window work.
 
 ## Native stock buyer and v3 credit upgrade
 
 Four Rust unit tests passed, including exact v2 state migration; the six existing sandbox scenarios passed, and the new seventh sandbox scenario passed after correcting its time advance (200 blocks did not expire 90 seconds). It verifies real stock-for-USDC payment, separate LP funds, full stock refund on merchant transfer failure, insufficient funds/slippage and stale-price refunds. The first deployed upgrade rolled back with LackBalanceForState; recorded reserve transfers between owned accounts allowed the atomic migration to finalize. Owner mint finalized; an SDK prepaid-gas balance check stopped the next funding call before broadcast. A temporary owned-account gas reserve then funded the separate buyer with 500 test USDC and was returned. No helper funding or mainnet transaction. Every successful and failed on-chain action is in deployments/market-*.json. Existing alice/bob collateral, credit limits, pending locks and LP pool matched across the upgrade.
 
 Merchant backend: five trust-boundary tests pass, including actual NEP-413 signature verification, one-use challenges, session/key scoping, invoice-bound final receipts and duplicate-hash rejection. Local store metadata is not called on-chain registration. Product UI is still being wired before it becomes the default route.
+
+## Original surface port and current validation
+
+Restored the original landing, Noren Merchant onboarding/dashboard, Aubelle catalogue/bag/checkout/order screens, and six-tab Noren app. Reused the original components, fonts, styles and artwork. Retired chain screenshots were replaced with original brand illustrations labelled as illustrations; no unrelated-chain package or RPC client was reintroduced. Existing native credit views remain under `#/near/app`. Merchant records are local service data; sign-in uses verified NEP-413 wallet messages. Private checkout, signed webhooks, fiat conversion and stock yield are explicitly unavailable.
+
+The first mobile pass exposed header overflow; shortening the existing network label fixed it. The signed-in regression captured 78 screens at 1440/375 with no page exceptions or horizontal overflow. It verified actual wallet signatures, store/link creation, one-time API keys (masked), key revocation, all merchant and customer tabs, Aubelle bag-to-checkout, and invalid/empty states. Real browser USDC payments finalized at both widths and appeared in merchant receipts: GTaxgYXVYPB8LTTy71q7smuing2EZZokiXsTz8tnBQJs and DbvFvmcxx7fx4Cq8SfFS6wyfcpA828ZJMbaSdQhxEvnC. Evidence: deployments/ethglobal-browser-2026-11-13T07-03-34-762Z.json. Screenshots were captured locally during QA and are not committed.
+
+Executed tests: 4 Rust unit + 7 sandbox + 12 SDK + 2 equity-source + 2 live read-only MCP + 20 web/merchant = 47 passed. Frozen install, web typecheck and production build pass. Ordinary production excludes all three QA signer markers even with the flag set; production JS/CSS/HTML contain no whole-word Arc, Robinhood, CCTP, CCIP or NYSE mentions. Static host rewrites are ready; publishing still needs Nick's approval, an approved persistent API host, VITE_NOREN_API and exact NOREN_WEB_ORIGIN. Nothing hosted or pushed.
+
+Remaining: new app stock-sale/credit/installment verification and fresh film transactions must wait for US market opening at 14:30 UTC Nov13. No closed-market price is re-timestamped. Current film preserved as versions/v2-stocks.mp4 and v2-stocks-share.mp4; native af_heart narration prepared, HyperFrames edit not rendered yet.

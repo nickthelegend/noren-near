@@ -19,7 +19,11 @@
     "near:stock-prices": "tsx scripts/near-stock-prices.ts",
     "near:stocks:setup": "node scripts/near-stock-setup.mjs",
     "near:stock-payment": "node scripts/near-stock-payment.mjs",
-    "test:equity-source": "node --test scripts/test/equity-source.test.mjs"
+    "test:equity-source": "node --test scripts/test/equity-source.test.mjs",
+    "dev:near": "pnpm --filter @noren/web exec vite --host 127.0.0.1 --port 5395 --strictPort",
+    "build:near": "pnpm --filter @noren/near-sdk build && pnpm --filter @noren/web build",
+    "test:edition": "node scripts/near-edition-e2e.mjs",
+    "near:merchant": "tsx packages/merchant/src/server.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

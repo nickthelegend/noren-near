@@ -22,7 +22,7 @@ export function creditCall(action: CreditAction, c: Contracts, amount: string, a
 export const storageCall = (token: string, account: string): Call => ({ receiverId: token, methodName: 'storage_deposit', args: { account_id: account, registration_only: true }, gas: '10000000000000', deposit: STORAGE_DEPOSIT });
 export function mintCall(token: string, account: string): Call {
   if (!['wbtc.fakes.testnet', 'usdc.fakes.testnet'].includes(token)) throw Error('Only the public fake test tokens can be minted here.');
-  return { receiverId: token, methodName: 'mint', args: { account_id: account, amount: token === 'wbtc.fakes.testnet' ? '10000' : '2000000' }, gas: '20000000000000', deposit: '0' };
+  return { receiverId: token, methodName: 'mint', args: { account_id: account, amount: token === 'wbtc.fakes.testnet' ? '10000' : '200000000' }, gas: '20000000000000', deposit: '0' };
 }
 export function walletError(e: unknown): string {
   const obj = e as { message?: string; type?: string };
@@ -32,8 +32,10 @@ export function walletError(e: unknown): string {
   if (/No Meteor.*account/i.test(text)) return 'Meteor Wallet has no testnet account yet. Create one in Meteor and connect again.';
   if (/ERR_STALE_PRICE/.test(text)) return 'A collateral price is stale. Ask the operator to refresh the price for each collateral asset with pnpm near:relay and pnpm near:stock-prices. Stock borrowing is paused outside regular US market hours or when the original quote is older than 90 seconds. Yahoo Finance is the no-key source; Pyth requires operator authorization.';
   if (/NotEnoughBalance|insufficient.*balance|not.*enough.*balance|LackBalanceForState/i.test(text)) return 'Insufficient testnet NEAR for gas or storage. Top up your wallet and try again.';
-  if (/TOKEN_BALANCE/.test(text)) return 'Insufficient test token balance. Get test tokens below or lower the amount.';
+  if (/TOKEN_BALANCE/.test(text)) return 'Insufficient test token balance. Lower the amount or obtain test tokens first.';
   if (/ERR_LTV|ERR_HEALTH/.test(text)) return 'This would exceed your credit limit. Repay some debt or add collateral first.';
+  if (/ERR_MARKET_LIQUIDITY/.test(text)) return 'The separate test USDC stock buyer cannot cover this sale. Lower the amount or ask the operator to fund it.';
+  if (/ERR_SLIPPAGE/.test(text)) return 'The stock quote changed. Refresh the price and review the amount before trying again.';
   if (/ERR_LIQUIDITY/.test(text)) return 'The test USDC pool cannot cover this payment. Lower the amount.';
   if (/ERR_PENDING/.test(text)) return 'An earlier action is still settling. Check its transaction before trying again.';
   if (/ERR_COLLATERAL/.test(text)) return 'You do not have that much collateral to withdraw.';

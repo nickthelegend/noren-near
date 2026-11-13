@@ -1,0 +1,10 @@
+{
+  "framework": null,
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm build:near",
+  "outputDirectory": "packages/web/dist",
+  "rewrites": [
+    {"source": "/shop/:path*", "destination": "/index.html"},
+    {"source": "/((?!api/|assets/|art/|logos/|products/|favicon).*)", "destination": "/index.html"}
+  ]
+}

@@ -1,0 +1,9 @@
+// Aubelle creates a checkout from its bag; the service re-prices the catalogue.
+const r = await fetch('/api/shop/checkout', {
+  method: 'POST', headers: {'content-type':'application/json'},
+  body: JSON.stringify({lines})
+});
+const {checkoutUrl} = await r.json();
+location.assign(checkoutUrl);
+// The order endpoint reconciles only invoice-bound FINAL NEAR receipts.
+// Private checkout and signed webhook delivery are not integrated on NEAR.

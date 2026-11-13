@@ -1,0 +1,7 @@
+import{useEffect,useState}from'react';import{Landing}from'./Landing';import{Dashboard}from'./Dashboard';import{Checkout}from'./Checkout';import{NorenApp}from'./app/NorenApp';import{Logo,Icon,useRoute}from'./ui';import'./styles.css';
+export function EditionRoot(){const route=useRoute();const[scrolled,setScrolled]=useState(false);useEffect(()=>{const on=()=>setScrolled(scrollY>24);addEventListener('scroll',on);return()=>removeEventListener('scroll',on)},[]);
+ if(route.page==='dashboard')return <Dashboard tab={route.tab} sub={route.sub}/>;
+ if(route.page==='pay')return <Checkout key={route.id} id={route.id}/>;
+ if(route.page==='app')return <NorenApp/>;
+ return <div className="site"><header className={`site-nav ${scrolled?'solid':''}`}><a className="site-brand" href="#/"><Logo/><span>Noren</span></a><nav className="mono"><a href="#/" className="hide-s">Home</a><a href="#developers" className="hide-s">Developers</a><a href="#/app" className="hide-s">Noren app</a><a href="#/dashboard">Noren Merchant</a><a href="/shop/" className="hide-s">Aubelle</a></nav><a className="lx-btn light sm" href="#/dashboard">Start<Icon.arrow/></a></header><Landing/><footer className="site-foot"><div className="site-brand"><Logo/><span>Noren</span></div><p>NEAR testnet · public payments. Private checkout is not integrated. Test stocks are not real shares.</p><span>NEAR edition · MIT</span></footer></div>
+}

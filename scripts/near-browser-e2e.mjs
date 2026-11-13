@@ -137,7 +137,7 @@ async function main() {
       stage = 'production baseline'; const productionOrigin = await serve(join(root, 'packages/web/dist'), port);
       for (const width of widths) {
         const p = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
-        await p.goto(productionOrigin); await p.waitForTimeout(1600); await shot(p, 'before-credit', width);
+        await p.goto(productionOrigin+'/#/near/app'); await p.waitForTimeout(1600); await shot(p, 'before-credit', width);
         await p.getByRole('button', { name: /Change account/ }).click(); await shot(p, 'before-account', width); await p.getByRole('button', { name: 'Close', exact: true }).click();
         await p.getByRole('tab', { name: 'Pay anyone', exact: true }).click(); await shot(p, 'before-pay', width); await p.close();
       }
@@ -166,7 +166,7 @@ async function main() {
           if (location.origin === origin) Object.defineProperty(window, '__NOREN_QA_SIGNER__', { value: { accountId, privateKey, rpcUrl }, configurable: true });
         }, { origin, accountId: account, privateKey: secret, rpcUrl: RPC });
         stage = `connect ${width}`;
-        await p.goto(origin); await p.getByRole('button', { name: /Change account/ }).click();
+        await p.goto(origin+'/#/near/app'); await p.getByRole('button', { name: /Change account/ }).click();
         await p.getByRole('button', { name: 'Connect Meteor Wallet', exact: true }).click();
         await p.getByRole('button', { name: 'Sign out of Meteor', exact: true }).waitFor();
         await p.waitForFunction(id => document.querySelector('input[placeholder="you.testnet"]')?.value === id, account);

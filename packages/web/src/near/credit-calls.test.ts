@@ -19,6 +19,7 @@ describe('wallet credit call safety', () => {
     expect(creditCall('withdraw', c, '10000', alice, shop).args).toEqual({ token: c.collateral, amount: '10000', recipient: alice });
     expect(() => creditCall('borrow', { ...c, credit: 'credit.near' }, '1', alice)).toThrow('testnet only');
     expect(() => mintCall('usdc.near', alice)).toThrow();
+    expect(mintCall('usdc.fakes.testnet', alice).args.amount).toBe('200000000');
   });
   it('does not report a refunded or rolled-back transfer as success', () => {
     const borrow = creditCall('borrow', c, '10000', alice, shop);
