@@ -1,13 +1,14 @@
 // Deliberately lazy-loaded only by a QA-mode build. Never store or log injected credentials.
-import { Account, JsonRpcProvider, KeyPair, KeyPairSigner, type KeyPairString } from 'near-api-js';
+import { Account, JsonRpcProvider, KeyPair, KeyPairSigner, actions, type KeyPairString } from 'near-api-js';
 import type { InjectedWallet } from '@near-wallet-selector/core';
 import { CONTRACT, RECORD, COLLATERALS } from './data';
-import { accountValid } from './credit-calls';
+import { accountValid, type Call } from './credit-calls';
+import { GASLESS_GAS, toWire } from './gasless';
 
 export const QA_SIGNER_MODULE = 'noren-qa-signer';
 export type QaConfig = { accountId: string; privateKey: string; rpcUrl: string };
 type Request = Parameters<InjectedWallet['signAndSendTransaction']>[0];
-type Reservation = { receiverId: string; gas: string; deposit: string };
+type Reservation = { receiverId: string; gas: string; deposit: string; gasless?: boolean };
 declare global {
   interface Window {
     __NOREN_QA_SIGNER__?: QaConfig;
@@ -60,8 +61,22 @@ export function createQaSigner() {
     } catch { throw Error('QA signer transaction failed. Check testnet activity before retrying.'); }
     finally { signing = false; }
   };
+  // NEP-366: sign a DelegateAction for one gasless test-USDC payment; Noren's relayer submits it and pays the gas.
+  const signDelegate = async (call: Call) => {
+    if (!connected || signing) throw Error('QA signer is disconnected or already signing.');
+    const reservation = assertQaTransaction({ signerId: accountId, receiverId: call.receiverId, actions: [{ enum: 'functionCall', functionCall: { methodName: call.methodName, args: new TextEncoder().encode(JSON.stringify(call.args)), gas: BigInt(call.gas), deposit: BigInt(call.deposit) } }] } as unknown as Request, accountId);
+    if (call.receiverId !== RECORD.accounts.tusdc || call.methodName !== 'ft_transfer' || BigInt(call.gas) > BigInt(GASLESS_GAS) || call.deposit !== '1') throw Error('QA signer signs gasless test-USDC payments only.');
+    signing = true;
+    try {
+      await window.__norenQaAuthorize!({ ...reservation, gasless: true });
+      const r = await signer.createSignedMetaTransaction({ receiverId: call.receiverId, actions: [actions.functionCall(call.methodName, call.args, BigInt(call.gas), BigInt(call.deposit))], blockHeightTtl: 120 });
+      return toWire(r.signedDelegate);
+    } catch { throw Error('QA signer could not sign the gasless payment.'); }
+    finally { signing = false; }
+  };
   return {
     id: QA_SIGNER_MODULE,
+    signDelegate,
     getAccounts,
     signMessage: async (payload: {message:string;nonce:Uint8Array;recipient:string}) => {
       if (!connected || payload.recipient !== location.host || !payload.message.startsWith('Sign in to Noren Merchant on NEAR testnet.')) throw Error('QA signer refuses this sign-in message.');

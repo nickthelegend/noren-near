@@ -3,6 +3,7 @@ import { Buffer } from 'buffer';
 import type { InjectedWallet, WalletSelector } from '@near-wallet-selector/core';
 import { CONTRACT } from './data';
 import { walletError, type Call, type Outcome } from './credit-calls.ts';
+import type { WireDelegate } from './gasless';
 export const METEOR = { id: 'meteor-wallet', name: 'Meteor Wallet' } as const;
 let selectorPromise: Promise<WalletSelector> | undefined;
 function selector() {
@@ -65,6 +66,16 @@ export function useNearWallet() {
     if (!result) throw Error('You closed the wallet without approving the message.');
     return result;
   }
-  return { account, ready, connecting, error, connect, disconnect, sign, signMessage };
+  // Gasless checkout needs a wallet that signs NEP-366 delegate actions. Meteor's wallet-selector module (10.1.4, the
+  // latest) throws "Method not supported" for signDelegateAction, so only the app's own test-key signer offers it.
+  const gasless = import.meta.env.MODE === 'qa' && import.meta.env.VITE_QA_SIGNER === '1';
+  async function signDelegate(call: Call): Promise<WireDelegate> {
+    const w = await signingWallet() as unknown as { getAccounts: () => Promise<{ accountId: string }[]>; signDelegate?: (call: Call) => Promise<WireDelegate> };
+    const current = (await w.getAccounts())[0]?.accountId;
+    if (!account || current !== account) throw Error('Account changed. Reconnect and check your position before signing.');
+    if (!gasless || typeof w.signDelegate !== 'function') throw Error('Your wallet cannot sign gasless payments yet. Pay with NEAR for gas instead.');
+    return w.signDelegate(call);
+  }
+  return { account, ready, connecting, error, connect, disconnect, sign, signMessage, gasless, signDelegate };
 }
 export type NearWallet = ReturnType<typeof useNearWallet>;
