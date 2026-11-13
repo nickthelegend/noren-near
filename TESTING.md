@@ -1,5 +1,28 @@
 # Test results
 
+## ETHGlobal surface port on NEAR (2026-11-13)
+
+**47 executed tests passed:** 4 Rust unit, 7 real local NEAR sandbox, 12 SDK, 2 equity-source, 2 live read-only MCP, 20 web/merchant. Frozen install, web typecheck and production build passed. Production excludes the QA module and both injection markers even with `VITE_QA_SIGNER=1`. The production text audit found no whole-word Arc, Robinhood, CCTP, CCIP or NYSE content.
+
+The restored merchant/shop/app pass captured 78 screens at 1440/375 without unhandled page exceptions or horizontal overflow. It verified actual NEP-413 signatures, onboarding through one-time API keys, key revocation, all merchant tabs, the six app tabs, Aubelle bag-to-checkout, and empty/invalid states. Real 1-test-USDC payments finalized at each width and appeared in verified merchant receipts. [Evidence](deployments/ethglobal-browser-2026-11-13T07-03-34-762Z.json). New stock-sale/credit/installment browser proof awaits the next market opening; do not treat a sandbox receipt as a filmed testnet receipt.
+
+To run the edition browser check, first build the isolated QA edition, then run one preview on a free port:
+
+```sh
+VITE_QA_SIGNER=1 pnpm --filter @noren/web exec vite build --mode qa --outDir ../../.near-build/ethglobal-qa --emptyOutDir
+pnpm --filter @noren/web exec vite preview --host 127.0.0.1 --port 5395 --strictPort --outDir ../../.near-build/ethglobal-qa
+# In another shell; uses that same preview, no second server:
+pnpm test:edition
+# Also signs one real 1-test-USDC invoice payment per width (0.1 NEAR cap):
+pnpm test:edition --live-usdc
+```
+
+The runner uses shared `withChromeLock`, reads the existing demo credential file only in Node, injects only into an ephemeral loopback QA page, keeps credentials out of screenshots/logs and records every payment hash in `deployments/ethglobal-browser-*.json`. API secrets are masked. It starts no server; stop the preview you started when done. A normal production build uses Meteor and cannot load the QA signer. Live quote reads and all native writes are testnet-only. The old `pnpm test:e2e` runner now opens the preserved `#/near/app` path.
+
+Standalone merchant API for a future approved host: `pnpm near:merchant`. Set `PORT`, `NOREN_WEB_ORIGIN` to the exact approved web origin and `NOREN_DATA_FILE` to durable storage. Never run it alongside another local preview during this constrained QA. No wallet key belongs on this service. Local Vite already embeds the same service on its one port.
+
+Screenshots were captured locally during QA and are not committed. Before/after sets use `before-*`, `edition-*` and `after-*` under the orchestration shots folder's `noren-near/ethglobal-port/` directory.
+
 ## Yahoo stock payment continuation (2026-11-12)
 
 **Stock-backed credit is live on NEAR testnet.** The native script deposited 1 TEST tTSLA, borrowed 25 test USDC directly to the shop, showed health 7.7869×, repaid and withdrew the same token. Mixed stock/BTC browser cycles also paid 25 at 1440 and 375 with real signatures, FINAL receipts and restored zero-debt positions. Test stocks are not real shares. Exact hashes and the final combined run are in [FLOW-QA.md](FLOW-QA.md#yahoo-stock-payment-completion-2026-11-12).

@@ -1,5 +1,30 @@
 # Full-flow QA — Noren on NEAR
 
+## Original Noren surfaces restored on NEAR (2026-11-13)
+
+The original merchant, Aubelle and app presentation now runs on the native NEAR layer. **78 signed-in captures passed at 1440 and 375**, without page exceptions or horizontal overflow. The first mobile header overflow was fixed by shortening its network label; components/styles/art were retained. Screenshots were captured locally during QA and are not committed. Files below live under the orchestration shots folder's `noren-near/ethglobal-port/` directory; `*` means both `1440.png` and `375.png`.
+
+| Step | Route and action | Status / screenshots |
+| --- | --- | --- |
+| 1 | `/` → understand stock sale versus credit, public-payment limits and API | **PASS** signed-out landing; `after-port-landing-*`. Developer anchor follow-up also passed at both widths (`final-landing-api-*`). |
+| 2 | `#/dashboard` → test-wallet sign-in, actual NEP-413 signature verification | **PASS**; `after-business-*`. No transaction is claimed for signing a message. Human Meteor approval stays manual. |
+| 3 | Name business → choose named testnet payout → create first link | **PASS**; `after-payout-*`, `after-first-link-*`, `after-link-created-*`. Store is a local service record. |
+| 4 | One-time API key → dashboard → create/revoke key | **PASS**; `after-keys-once-redacted-*`, `after-key-created-redacted-*`, `after-key-revoked-*`. Secrets masked. |
+| 5 | Merchant Home, Balances, Payments, Links, Developers, Events, Settings | **PASS**; `after-merchant-home-*`, `after-balances-*`, `after-payments-empty-*`, `after-links-*`, `after-developers-*`, `after-events-*`, `after-settings-*`. Settings connects Aubelle to the selected store. |
+| 6 | Hosted `#/pay/:invoice` → USDC payment → final receipt → merchant receipt | **PASS, real browser transactions**, one test USDC per width; `after-usdc-final-receipt-*`, `after-merchant-paid-receipt-*`. Exact hashes below. |
+| 7 | Hosted checkout privacy choice and malformed payment link | **PASS, honest unavailable/error states**; `after-privacy-unavailable-*`, `after-invalid-link-*`. No private payment is submitted. |
+| 8 | `/shop/` home → catalogue/filter → product/size → drawer/bag → checkout | **PASS**; `after-shop-home-*`, `after-shop-catalog-*`, `after-shop-filter-*`, `after-shop-product-*`, `after-shop-bag-drawer-*`, `after-shop-filled-bag-*`, `after-shop-hosted-checkout-*`. Server re-prices the catalogue. |
+| 9 | Aubelle empty bag, integration, missing product/order | **PASS**; `after-shop-empty-bag-*`, `after-shop-integration-*`, `after-shop-missing-product-*`, `after-shop-missing-order-*`. |
+| 10 | `#/app/home`, `/pay`, `/earn`, `/credit`, `/borrow`, `/swap` + wallet/profile | **PASS** live balances/positions and all six tabs; `after-app-{home,pay,earn,credit,borrow,swap}-*`, `after-wallet-profile-*`. No fictitious yield. |
+| 11 | Native TEST-stock sale at hosted checkout / Swap | **BLOCKED for new browser proof until market opening 14:30 UTC Nov13**. V3 buyer is deployed and funded separately; seven sandbox tests include sale/refund safety. Do not substitute old prices. |
+| 12 | Mixed stock/BTC deposit → credit invoice → schedule/due installment → repay/withdraw in restored app | **BLOCKED for new browser proof until fresh market quotes**. Existing native credit and earlier browser proof remain valid dated evidence below. Scheduling alone pays nothing; later draws are not automatic. |
+| 13 | Webhooks, refunds, fiat conversion, private/shielded payment, stock yield | **PASS unavailable labels; features not integrated**; `after-webhooks-unavailable-*` and relevant checkout/Earn screens. |
+| 14 | Intents BTC/ETH/SOL/ZEC dry quotes; preserved `#/near/app` and `#/near` | Existing NEAR paths retained; prior dry-quote proof below. Real mainnet funding remains **BLOCKED**. |
+
+Real USDC checkout hashes: [1440 GTaxgYXVYPB8LTTy71q7smuing2EZZokiXsTz8tnBQJs](https://testnet.nearblocks.io/txns/GTaxgYXVYPB8LTTy71q7smuing2EZZokiXsTz8tnBQJs), [375 DbvFvmcxx7fx4Cq8SfFS6wyfcpA828ZJMbaSdQhxEvnC](https://testnet.nearblocks.io/txns/DbvFvmcxx7fx4Cq8SfFS6wyfcpA828ZJMbaSdQhxEvnC). [Sealed browser evidence](deployments/ethglobal-browser-2026-11-13T07-03-34-762Z.json). Backend verifies FINAL execution, signer, invoice binding, payout, actual token transfer and duplicate use; the browser cannot simply mark an invoice paid.
+
+A final read-only regression added 76 captures at both widths, including the developer anchor, with no page exceptions or horizontal overflow. [Final route evidence](deployments/ethglobal-browser-2026-11-13T07-13-00-387Z.json). Production build and typecheck pass. QA signer/module markers are absent from production, even with the flag set. Whole-word production text audit: Arc, Robinhood, CCTP, CCIP, NYSE all absent. Static host rewrites are prepared; no site was published and no branch pushed.
+
 ## Yahoo stock payment completion (2026-11-12)
 
 **PASS: native stock-only payment plus a clean combined 1440/375 browser run.** “Keep your Tesla. Buy the thing.” is backed by real NEAR testnet transactions. Alice keeps 1 TEST tTSLA as collateral; the contract pays borrowed test USDC straight to the shop. Test stocks are not real shares.
