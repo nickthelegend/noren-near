@@ -24,7 +24,9 @@
     "build:near": "pnpm --filter @noren/near-sdk build && pnpm --filter @noren/web build",
     "test:edition": "node scripts/near-edition-e2e.mjs",
     "near:merchant": "tsx packages/merchant/src/server.ts",
-    "test:credit-edition": "node scripts/near-credit-edition-e2e.mjs"
+    "test:credit-edition": "node scripts/near-credit-edition-e2e.mjs",
+    "near:gasless:setup": "node scripts/near-gasless-setup.mjs",
+    "near:gasless": "tsx scripts/near-gasless.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

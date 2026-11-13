@@ -1,4 +1,5 @@
-/** Local merchant service. No private wallet key is read or held here. Every paid receipt is verified against FINAL NEAR execution. */
+/** Local merchant service. No shopper or merchant wallet key is read or held here; the only key is Noren's gas relayer,
+ * loaded by path in relayer.ts. Every paid receipt is verified against FINAL NEAR execution. */
 import { createHash, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -6,16 +7,17 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { JsonRpcProvider } from 'near-api-js';
 import { verifyMessage } from 'near-api-js/nep413';
 import { bySlug, MAX_QTY } from './catalog';
+import { checkRelayPolicy, loadGasRelayer, rebuildSigned, RELAY_ALLOWLIST, RELAY_LIMITS, utcDay, type GasRelayer, type RelayRecord, type WireDelegate } from './relayer';
 
 export const RPC = 'https://test.rpc.fastnear.com';
 export const CREDIT = 'credit.noren-near-mw9h22el.testnet';
 export const USDC = 'usdc.fakes.testnet';
 export const DEMO_SHOP = 'shop.noren-near-mw9h22el.testnet';
 const provider = new JsonRpcProvider({url:RPC});
-export type Invoice = {invoice:{invoiceId:string;merchant:string;amount:string;expiry:string};status:string;description:string;merchantName:string;createdAt:number;paidAt?:number;paymentTx?:string;method?:string;paidAmount:string;payments:{hash:string;amount:string;method:string;payer:string}[];metadata?:Record<string,string>;successUrl?:string;cancelUrl?:string;stock?:Record<string,string>;plan?:{owner:string;ids:number[];hash:string}};
+export type Invoice = {invoice:{invoiceId:string;merchant:string;amount:string;expiry:string};status:string;description:string;merchantName:string;createdAt:number;paidAt?:number;paymentTx?:string;method?:string;paidAmount:string;gasPaidBy?:string;payments:{hash:string;amount:string;method:string;payer:string;gasPaidBy?:string}[];metadata?:Record<string,string>;successUrl?:string;cancelUrl?:string;stock?:Record<string,string>;plan?:{owner:string;ids:number[];hash:string}};
 type Store = {id:string;name:string;payout:string;merchant:string;owner:string;publishableKey:string;keys:{id:string;prefix:string;hash:string;createdAt:number;revokedAt?:number}[];createdAt:number;registerTx?:string};
 type Session = {hash:string;address:string;expiresAt:number};
-type State = {stores:Store[];invoices:Invoice[];sessions:Session[];events:any[];orders:any[];usedTx:string[];shopMerchant?:string};
+type State = {stores:Store[];invoices:Invoice[];sessions:Session[];events:any[];orders:any[];usedTx:string[];shopMerchant?:string;relays?:RelayRecord[]};
 const now=()=>Math.floor(Date.now()/1000), hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 const testAccount=(s:unknown):s is string=>typeof s==='string'&&s.length<=64&&/^(?:[a-z0-9]+(?:[-_][a-z0-9]+)*\.)+testnet$/.test(s);
 const amount=(s:unknown)=>{if(typeof s!=='string'||!/^\d+$/.test(s)||BigInt(s)<=0n||BigInt(s)>2n**128n-1n)throw Error('Enter a positive amount in token units.');return s;};
@@ -23,7 +25,7 @@ const plain=(s:unknown,max:number)=>typeof s==='string'?s.trim().slice(0,max):''
 const safeUrl=(s:unknown)=>{if(!s)return undefined;try{const u=new URL(String(s));if(!['http:','https:'].includes(u.protocol))throw 0;return u.toString()}catch{throw Error('Return URL must use HTTP or HTTPS.')}};
 export const publicStore=(s:Store)=>({...s,keys:s.keys.map(({hash:_,...k})=>k)});
 const sameHash=(a:string,b:string)=>a.length===b.length&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
-export type Deps={file?:string|null;view?:(contract:string,method:string,args:any)=>Promise<any>;tx?:(tx:string,account:string)=>Promise<any>;verify?:typeof verifyMessage;account?:(id:string)=>Promise<any>};
+export type Deps={file?:string|null;view?:(contract:string,method:string,args:any)=>Promise<any>;tx?:(tx:string,account:string)=>Promise<any>;verify?:typeof verifyMessage;account?:(id:string)=>Promise<any>;relayer?:GasRelayer|null};
 export function createMerchantService(deps:Deps={}) {
  const file=deps.file===null?null:deps.file??process.env.NOREN_DATA_FILE??resolve(process.cwd(),'.near-data/merchant.json');
  let state:State=file&&existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{stores:[],invoices:[],sessions:[],events:[],orders:[],usedTx:[]};
@@ -32,6 +34,9 @@ export function createMerchantService(deps:Deps={}) {
  const view=deps.view??(async(contract,method,args)=>{const r=await provider.callFunction({contractId:contract,method,args});return r});
  const tx=deps.tx??(async(tx_hash,sender_account_id)=>{const r=await fetch(RPC,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:'merchant-receipt',method:'tx',params:{tx_hash,sender_account_id,wait_until:'FINAL'}}),signal:AbortSignal.timeout(15000)});const j=await r.json();if(!r.ok||j.error)throw Error('NEAR testnet could not confirm this receipt.');return j.result;});
  const verify=deps.verify??verifyMessage;
+ let relayerCache:GasRelayer|null|undefined=deps.relayer;
+ const relayer=()=>relayerCache===undefined?(relayerCache=loadGasRelayer(RPC)):relayerCache;
+ const relays=()=>state.relays??=[];
  const demo:Store={id:'aubelle',merchant:DEMO_SHOP,payout:DEMO_SHOP,owner:DEMO_SHOP,name:'Aubelle',publishableKey:'pk_test_aubelle_public_demo',keys:[],createdAt:1794182400};
  const store=(id:string)=>state.stores.find(s=>s.id===id||s.merchant===id)??(id===DEMO_SHOP||id==='aubelle'?demo:undefined);
  const session=(token:string)=>state.sessions.find(s=>sameHash(s.hash,hash(token))&&s.expiresAt>now());
@@ -45,9 +50,20 @@ export function createMerchantService(deps:Deps={}) {
   if(state.usedTx.includes(b.hash)){if(i.payments.some(p=>p.hash===b.hash))return i;throw Error('Transaction already belongs to another payment link.');}
   if(i.status==='paid')throw Error('This payment link is already paid.');
   if(i.status==='expired')throw Error('This payment link has expired.');
-  const result:any=await tx(b.hash,b.accountId);
+  // A gasless payment was signed (outer) by Noren's relayer; only hashes this service relayed are looked up that way.
+  const relayed=relays().find(r=>r.hash===b.hash&&r.status==='sent');
+  const result:any=await tx(b.hash,relayed?relayed.relayer:b.accountId);
   if(result.final_execution_status!=='FINAL'||result.status?.Failure||result.receipts_outcome?.some((r:any)=>r.outcome?.status?.Failure))throw Error('Payment is not a successful FINAL execution. Check the explorer before retrying.');
-  const transaction=result.transaction;
+  let transaction=result.transaction;const delegate=transaction?.actions?.[0]?.Delegate;
+  if(delegate){
+   const d=delegate.delegate_action;
+   if(!relayed||transaction.signer_id!==relayed.relayer||transaction.receiver_id!==b.accountId||transaction.actions.length!==1||d?.sender_id!==b.accountId||relayed.sender!==b.accountId||relayed.invoiceId!==i.invoice.invoiceId)throw Error('Relayed payment signer or sender does not match.');
+   const inner=(d.actions??[]).map((a:any)=>a.FunctionCall?a:{FunctionCall:a.NonDelegateAction?.FunctionCall??a.FunctionCall});
+   if(!RELAY_ALLOWLIST[d.receiver_id]?.includes(inner[0]?.FunctionCall?.method_name))throw Error('Relayed payment is not an allowlisted checkout call.');
+   // The inner call runs as its own receipt; require that receipt to have executed successfully on the token.
+   if(!(result.receipts_outcome??[]).some((r:any)=>r.outcome?.executor_id===d.receiver_id&&r.outcome?.status&&!r.outcome.status.Failure))throw Error('The relayed payment did not execute on the token contract.');
+   transaction={signer_id:d.sender_id,receiver_id:d.receiver_id,actions:inner};
+  }
   if(transaction?.signer_id!==b.accountId||transaction.actions?.length!==1)throw Error('Payment signer or actions do not match.');
   const action=transaction.actions[0].FunctionCall;if(!action)throw Error('Expected a NEAR function call.');
   const args=JSON.parse(Buffer.from(action.args,'base64').toString());const s=store(i.invoice.merchant)!;
@@ -78,7 +94,27 @@ export function createMerchantService(deps:Deps={}) {
   if(paid<=0n)throw Error('The payment has no value.');
   // Recheck after asynchronous RPC work to prevent simultaneous claims of one hash.
   if(state.usedTx.includes(b.hash)){if(i.payments.some(p=>p.hash===b.hash))return i;throw Error('Transaction already claimed.');}
-  state.usedTx.push(b.hash);i.paidAmount=String(BigInt(i.paidAmount)+paid);i.payments.push({hash:b.hash,amount:String(paid),method,payer:b.accountId});i.method=method;i.paymentTx=b.hash;i.stock=stock;i.paidAt=now();i.status=BigInt(i.paidAmount)>=BigInt(i.invoice.amount)?'paid':'partially_paid';event(i.status==='paid'?'payment.succeeded':'payment.partial',{invoiceId:i.invoice.invoiceId,merchant:s.merchant,amount:String(paid),transaction:b.hash,payer:b.accountId});save();return i;
+  state.usedTx.push(b.hash);i.paidAmount=String(BigInt(i.paidAmount)+paid);i.payments.push({hash:b.hash,amount:String(paid),method,payer:b.accountId,...(relayed?{gasPaidBy:relayed.relayer}:{})});if(relayed)i.gasPaidBy=relayed.relayer;i.method=method;i.paymentTx=b.hash;i.stock=stock;i.paidAt=now();i.status=BigInt(i.paidAmount)>=BigInt(i.invoice.amount)?'paid':'partially_paid';event(i.status==='paid'?'payment.succeeded':'payment.partial',{invoiceId:i.invoice.invoiceId,merchant:s.merchant,amount:String(paid),transaction:b.hash,payer:b.accountId});save();return i;
+ }
+ /** Relays one shopper-signed payment for an open invoice (NEP-366). The relayer signs the outer transaction and pays its gas. */
+ async function relay(b:any){
+  const r=relayer();if(!r)throw Error('Setup required: NOREN_GAS_RELAYER_FILE (a funded NEAR testnet relayer account). Pay with your own NEAR for gas instead.');
+  const i=invoice(String(b.invoiceId??''));const w=b.delegate as WireDelegate;
+  if(i.status==='paid')throw Error('This payment link is already paid.');if(i.status==='expired')throw Error('This payment link has expired.');if(i.plan)throw Error('This link is on a Pay-in-3 schedule.');
+  const s=store(i.invoice.merchant);if(!s)throw Error('Store not found.');
+  const remaining=BigInt(i.invoice.amount)-BigInt(i.paidAmount);
+  checkRelayPolicy(w,{invoiceId:i.invoice.invoiceId,payout:s.payout,remaining,height:await r.height(),relays:relays(),now:now()});
+  const signed=rebuildSigned(w);
+  // A failed inner transfer would still burn relayer gas and refund its 1 yoctoNEAR deposit to the shopper: check first.
+  let balance:bigint;try{balance=BigInt(await view(USDC,'ft_balance_of',{account_id:w.senderId})??'0')}catch{throw Error('NEAR testnet could not read your test USDC balance. Try again.')}
+  if(balance<remaining)throw Error('Not enough test USDC in this wallet for the amount due.');
+  let key;try{key=await r.accessKey(w.senderId,w.publicKey)}catch{throw Error('That key is not on this NEAR testnet account.')}
+  if(!key.fullAccess)throw Error('Sign gasless payments with a full-access key.');if(BigInt(w.nonce)<=key.nonce)throw Error('This signed payment was already used. Sign it again.');
+  const row:RelayRecord={hash:'',sender:w.senderId,invoiceId:i.invoice.invoiceId,relayer:r.accountId,at:now(),status:'pending'};relays().push(row);save();
+  try{const sent=await r.send(signed);row.hash=sent.hash;row.status=sent.ok?'sent':'failed';save();if(!sent.ok)throw Error(`The relayed payment failed on NEAR testnet (${sent.hash}). Nothing was charged to you; check the explorer.`);
+   event('relay.sent',{invoiceId:i.invoice.invoiceId,merchant:i.invoice.merchant,transaction:sent.hash,sender:w.senderId,relayer:r.accountId});save();
+   return{hash:sent.hash,relayer:r.accountId,sender:w.senderId,usedToday:relays().filter(x=>x.sender===w.senderId&&utcDay(x.at)===utcDay(now())).length,perUserPerDay:RELAY_LIMITS.perUserPerDay};
+  }catch(e){if(row.status==='pending'){row.status='failed';save()}throw e}
  }
  async function handle(path:string,method:string,b:any,token:string,recipient:string):Promise<any>{
   const parts=path.split('/').filter(Boolean).map(decodeURIComponent);
@@ -94,6 +130,8 @@ export function createMerchantService(deps:Deps={}) {
    const checkoutUrl=`${base}/#/pay/${i.invoice.invoiceId}`;state.orders.push({id,lines,totalCents,invoiceId:i.invoice.invoiceId,checkoutUrl,createdAt:now()});save();return{orderId:id,checkoutUrl};
   }
   if(parts[0]==='shop'&&parts[1]==='orders'&&parts[2]){const o=state.orders.find(o=>o.id===parts[2]);if(!o)throw Error('Order not found.');const i=invoice(o.invoiceId);return{...o,status:i.status==='paid'?'paid':i.status==='open'?'awaiting_payment':i.status,method:i.method,amount:i.invoice.amount,paidAmount:i.paidAmount,paymentTx:i.paymentTx,paidVia:'verified-near-receipt'}}
+  if(path==='/relay'&&method==='GET'){let r:GasRelayer|null=null,missing:string[]=[];try{r=relayer()}catch(e){missing=[e instanceof Error?e.message:'NOREN_GAS_RELAYER_FILE']}if(!r&&!missing.length)missing=['NOREN_GAS_RELAYER_FILE'];return{ready:!!r,relayer:r?.accountId??null,missing,allowlist:RELAY_ALLOWLIST,limits:{perUserPerDay:RELAY_LIMITS.perUserPerDay,globalPerDay:RELAY_LIMITS.globalPerDay,maxGas:String(RELAY_LIMITS.maxGas)}}}
+  if(path==='/relay'&&method==='POST')return relay(b);
   if(path==='/config')return{network:'testnet',chainId:'NEAR testnet',rpcUrl:RPC,merchant:DEMO_SHOP,deployment:{usdc:USDC,checkout:CREDIT},privacy:false};
   if(path==='/auth/nonce'&&method==='GET'){const id=randomUUID(),n={message:`Sign in to Noren Merchant on NEAR testnet.\nChallenge: ${id}`,recipient,nonce:randomBytes(32).toString('base64'),expiresAt:now()+300};nonces.set(id,n);for(const[k,v]of nonces)if(v.expiresAt<now())nonces.delete(k);return{challengeId:id,...n}}
   if(path==='/auth/near'&&method==='POST'){

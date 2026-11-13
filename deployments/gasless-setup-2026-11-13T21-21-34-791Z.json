@@ -1,0 +1,28 @@
+{
+  "network": "testnet",
+  "relayer": "relayer.noren-near-mw9h22el.testnet",
+  "shopper": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T21:21:34.792Z",
+  "steps": [
+    {
+      "step": "create-relayer",
+      "signer": "noren-near-mw9h22el.testnet",
+      "hash": "8LugurBPf61RrpS8RxKB9PTsRG7jU3vDwVJ8RkFvbhSW",
+      "ok": true,
+      "tokensBurnt": "7091964925000000000000",
+      "explorer": "https://testnet.nearblocks.io/txns/8LugurBPf61RrpS8RxKB9PTsRG7jU3vDwVJ8RkFvbhSW"
+    },
+    {
+      "step": "fund-relayer-from-shopper",
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "hash": "FK2rgue5BbYsag31zw7bwzPGVT86FNgWrMPxmtHVWwZd",
+      "ok": true,
+      "tokensBurnt": "44636512500000000000",
+      "explorer": "https://testnet.nearblocks.io/txns/FK2rgue5BbYsag31zw7bwzPGVT86FNgWrMPxmtHVWwZd"
+    }
+  ],
+  "before": {
+    "shopperNear": "84381096548630299999947",
+    "relayerNear": "0"
+  }
+}

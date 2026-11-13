@@ -1,0 +1,25 @@
+{
+  "network": "testnet",
+  "nep": "NEP-366 meta-transaction",
+  "shopper": "riya.noren-near-mw9h22el.testnet",
+  "merchantPayout": "shop.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T21:23:55.009Z",
+  "relayer": "relayer.noren-near-mw9h22el.testnet",
+  "limits": {
+    "perUserPerDay": 3,
+    "globalPerDay": 50,
+    "maxGas": "15000000000000"
+  },
+  "order": {
+    "orderId": "AUB-8CB24345",
+    "invoiceId": "0x9aebbf0784c295b652bc20d43212a0601f1aec0633f8b6098e575495736f64ee",
+    "amount": "148000000",
+    "description": "Aubelle order AUB-8CB24345: Amélie Gingham"
+  },
+  "before": {
+    "shopperNear": "0",
+    "shopperUsdc": "100000000",
+    "shopUsdc": "883394205",
+    "relayerNear": "44955363487500000000000"
+  }
+}

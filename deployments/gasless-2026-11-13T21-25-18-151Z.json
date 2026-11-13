@@ -1,0 +1,81 @@
+{
+  "network": "testnet",
+  "nep": "NEP-366 meta-transaction",
+  "shopper": "riya.noren-near-mw9h22el.testnet",
+  "merchantPayout": "shop.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T21:25:18.153Z",
+  "relayer": "relayer.noren-near-mw9h22el.testnet",
+  "limits": {
+    "perUserPerDay": 3,
+    "globalPerDay": 50,
+    "maxGas": "15000000000000"
+  },
+  "order": {
+    "orderId": "AUB-8A3A04D4",
+    "invoiceId": "0xaa2c557b20f2dca56ef2d4a1c5ca2d8a755a556b9ce36d985ec6f8e2cccb112b",
+    "amount": "148000000",
+    "description": "Aubelle order AUB-8A3A04D4: Amélie Gingham"
+  },
+  "before": {
+    "shopperNear": "0",
+    "shopperUsdc": "300000000",
+    "shopUsdc": "883394205",
+    "relayerNear": "44393078959012000000000"
+  },
+  "refusals": [
+    {
+      "case": "field edited after signing",
+      "error": "The payment signature does not verify for this account key."
+    },
+    {
+      "case": "second payment for a paid link",
+      "error": "This payment link is already paid."
+    }
+  ],
+  "relay": {
+    "hash": "5e7AGM8bzwDV1Tc2VPjQsCSYEq4MUZFvqAfF7oP5NJsU",
+    "relayer": "relayer.noren-near-mw9h22el.testnet",
+    "sender": "riya.noren-near-mw9h22el.testnet",
+    "usedToday": 1,
+    "perUserPerDay": 3
+  },
+  "merchantReceipt": {
+    "status": "paid",
+    "paidAmount": "148000000",
+    "method": "usdc",
+    "gasPaidBy": "relayer.noren-near-mw9h22el.testnet",
+    "paymentTx": "5e7AGM8bzwDV1Tc2VPjQsCSYEq4MUZFvqAfF7oP5NJsU"
+  },
+  "chain": {
+    "finality": "FINAL",
+    "outerSigner": "relayer.noren-near-mw9h22el.testnet",
+    "outerReceiver": "riya.noren-near-mw9h22el.testnet",
+    "outerAction": "Delegate",
+    "innerSender": "riya.noren-near-mw9h22el.testnet",
+    "innerReceiver": "usdc.fakes.testnet",
+    "innerMethod": "ft_transfer",
+    "usdcLogs": [
+      "Transfer 148000000 from riya.noren-near-mw9h22el.testnet to shop.noren-near-mw9h22el.testnet",
+      "Memo: noren:0xaa2c557b20f2dca56ef2d4a1c5ca2d8a755a556b9ce36d985ec6f8e2cccb112b"
+    ],
+    "tokensBurnt": "309555381982000000000"
+  },
+  "after": {
+    "shopperNear": "0",
+    "shopperUsdc": "152000000",
+    "shopUsdc": "1031394205",
+    "relayerNear": "44083523577029999999999"
+  },
+  "checks": {
+    "outerSignerIsRelayer": true,
+    "innerSenderIsShopper": true,
+    "shopperNearUnchanged": true,
+    "shopperNearIsZero": true,
+    "shopperPaidExactly": true,
+    "merchantReceivedExactly": true,
+    "relayerPaidGas": true,
+    "merchantVerified": true
+  },
+  "status": "PASS",
+  "finishedAt": "2026-11-13T21:25:26.502Z"
+}

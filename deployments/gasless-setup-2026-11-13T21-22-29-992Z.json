@@ -1,0 +1,70 @@
+{
+  "network": "testnet",
+  "relayer": "relayer.noren-near-mw9h22el.testnet",
+  "shopper": "riya.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T21:22:29.993Z",
+  "steps": [
+    {
+      "step": "create-shopper-zero-balance",
+      "signer": "noren-near-mw9h22el.testnet",
+      "hash": "GvMkgv4isSqNqeui9pihkFevf6M9M5PCzcn86boMhFdL",
+      "ok": true,
+      "tokensBurnt": "7091964925000000000000",
+      "explorer": "https://testnet.nearblocks.io/txns/GvMkgv4isSqNqeui9pihkFevf6M9M5PCzcn86boMhFdL"
+    },
+    {
+      "step": "shopper-usdc-storage",
+      "signer": "noren-near-mw9h22el.testnet",
+      "hash": "DYwsJE2L2UiAz3ZoUQHU7KVQzV6KorqSPvU3H5d87CFW",
+      "ok": true,
+      "tokensBurnt": "208837862988900000000",
+      "explorer": "https://testnet.nearblocks.io/txns/DYwsJE2L2UiAz3ZoUQHU7KVQzV6KorqSPvU3H5d87CFW"
+    },
+    {
+      "step": "mint-shopper-test-usdc",
+      "signer": "noren-near-mw9h22el.testnet",
+      "hash": "FmguTtmLS42hsSkJMqnC5qNFMmZ4Xkopmjf4cQRsyKyh",
+      "ok": true,
+      "tokensBurnt": "204645734080900000000",
+      "explorer": "https://testnet.nearblocks.io/txns/FmguTtmLS42hsSkJMqnC5qNFMmZ4Xkopmjf4cQRsyKyh"
+    },
+    {
+      "step": "return-alice-near",
+      "signer": "relayer.noren-near-mw9h22el.testnet",
+      "hash": "CZwNugogVoJw1pnhaqpDs1QTSz8HmDudXc3JqDYcCitn",
+      "ok": true,
+      "tokensBurnt": "44636512500000000000",
+      "explorer": "https://testnet.nearblocks.io/txns/CZwNugogVoJw1pnhaqpDs1QTSz8HmDudXc3JqDYcCitn"
+    }
+  ],
+  "after": {
+    "shopperNear": "0",
+    "shopperUsdc": "100000000",
+    "relayerNear": "24955363487500000000000",
+    "aliceNear": "59336460036130299999947"
+  },
+  "finishedAt": "2026-11-13T21:22:46.560Z",
+  "reset": {
+    "reason": "riya received 1 yoctoNEAR from the deposit refund of a failed relayed ft_transfer (she had 100 test USDC, the order was 148); recreated at 0 NEAR",
+    "steps": [
+      {
+        "step": "relayed-delete-riya",
+        "hash": "Ed5Sp7oK77HGwVRQCUcRMH3PfJonnnZdmWkxReGiz4U1",
+        "ok": true,
+        "explorer": "https://testnet.nearblocks.io/txns/Ed5Sp7oK77HGwVRQCUcRMH3PfJonnnZdmWkxReGiz4U1"
+      },
+      {
+        "step": "recreate-riya-zero-balance",
+        "hash": "5rgTPWDw1LsXEKyVDc3uKfUq3KdD96DHhSh4KS23xEEo",
+        "ok": true,
+        "explorer": "https://testnet.nearblocks.io/txns/5rgTPWDw1LsXEKyVDc3uKfUq3KdD96DHhSh4KS23xEEo"
+      },
+      {
+        "step": "mint-riya-test-usdc",
+        "hash": "Bi3zXSnRKb6jAxGFiWPzgiCZGMPiNh6Sk7g4WN7CEocH",
+        "ok": true,
+        "explorer": "https://testnet.nearblocks.io/txns/Bi3zXSnRKb6jAxGFiWPzgiCZGMPiNh6Sk7g4WN7CEocH"
+      }
+    ]
+  }
+}
