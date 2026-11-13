@@ -258,3 +258,36 @@ async fn mixed_stocks_ltv_staleness_forgery_and_liquidation() -> anyhow::Result<
     assert!(view_string(&stock,"ft_balance_of",json!({"account_id":s.liquidator.id()})).await?.parse::<u128>()?>0);
     Ok(())
 }
+
+#[tokio::test]
+async fn stock_checkout_is_a_real_sale_separate_from_credit_and_refunds_failures() -> anyhow::Result<()> {
+    let s = setup().await?;
+    // BTC-shaped test token stands in for an 8-decimal stock in this isolated sandbox.
+    transfer(&s.admin, &s.usdc, &s.credit, 30_000_000, json!({"kind":"market"})).await?;
+    price(&s, 100).await?;
+    transfer(&s.alice, &s.btc, &s.credit, 10_000_000, json!({"kind":"stock_pay","recipient":s.alice.id(),"invoice_id":"sandbox-sale-1","min_usdc":"10000000"})).await?;
+    assert_eq!(view_string(&s.usdc,"ft_balance_of",json!({"account_id":s.alice.id()})).await?,"10000000");
+    assert_eq!(view_string(&s.credit,"debt",json!({"borrower":s.alice.id()})).await?,"0");
+    let market: Value = s.credit.view("market_status").await?.json()?;
+    assert_eq!(market["liquidity_usd6"],"20000000");
+    assert_eq!(market["inventory"][0]["amount"],"10000000");
+    let pool: (String,String) = s.credit.view("pool_status").await?.json()?;
+    assert_eq!(pool,("0".into(),"0".into()));
+    // The attacker has no USDC token registration. Failed merchant transfer must refund all stock.
+    let before = view_string(&s.btc,"ft_balance_of",json!({"account_id":s.alice.id()})).await?;
+    transfer(&s.alice,&s.btc,&s.credit,10_000_000,json!({"kind":"stock_pay","recipient":s.oracle.id(),"invoice_id":"sandbox-failed","min_usdc":"10000000"})).await?;
+    assert_eq!(view_string(&s.btc,"ft_balance_of",json!({"account_id":s.alice.id()})).await?,before);
+    let restored: Value = s.credit.view("market_status").await?.json()?;
+    assert_eq!(restored["liquidity_usd6"],"20000000");
+    let pos: Value = s.credit.view("position").args_json(json!({"borrower":s.alice.id()})).await?.json()?;
+    assert_eq!(pos["pending"],false);
+    // Slippage, insufficient market funds and stale quotes all return the stock rather than accept it.
+    for (qty,min) in [(1_000_000,"2000000"),(30_000_000,"30000000")] {
+        let _ = transfer(&s.alice,&s.btc,&s.credit,qty,json!({"kind":"stock_pay","recipient":s.alice.id(),"invoice_id":"rejected","min_usdc":min})).await;
+        assert_eq!(view_string(&s.btc,"ft_balance_of",json!({"account_id":s.alice.id()})).await?,before);
+    }
+    s._worker.fast_forward(2000).await?;
+    let _ = transfer(&s.alice,&s.btc,&s.credit,1_000_000,json!({"kind":"stock_pay","recipient":s.alice.id(),"invoice_id":"stale","min_usdc":"1"})).await;
+    assert_eq!(view_string(&s.btc,"ft_balance_of",json!({"account_id":s.alice.id()})).await?,before);
+    Ok(())
+}
