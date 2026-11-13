@@ -333,7 +333,7 @@ function BagPage() {
 }
 
 // ---------------- Order confirmation ----------------
-const METHOD: Record<string, string> = { usdc: 'Noren · USDC on NEAR', private: 'Private checkout · not integrated on NEAR', stocks: 'Noren · stocks, paid in test USDC on NEAR testnet', credit: 'Noren · Pay in 3 / pay later on credit' };
+const METHOD: Record<string, string> = { usdc: 'Noren · USDC on NEAR', private: 'Private checkout · not integrated on NEAR', stocks: 'Noren · test stocks / WBTC, paid in test USDC on NEAR testnet', credit: 'Noren · Pay in 3 / pay later on credit' };
 const short = (s: string, n = 6) => s.length > 2 * n + 2 ? `${s.slice(0, n + 2)}…${s.slice(-n)}` : s;
 /**
  * The payment transaction, opened in a new tab: the NEAR testnet explorer when Noren runs on the public network, and
@@ -362,7 +362,7 @@ function OrderPage({ id }: { id: string }) {
     <section className="section order">
       <p className="eyebrow">Order {order.id}</p>
       <h1>{paid ? <>Thank you. <em>It's yours.</em></> : order.status === 'awaiting_payment' ? <>Waiting for <em>payment</em></> : <>Order <em>{order.status.replace('_', ' ')}</em></>}</h1>
-      <p className="lede">{paid ? (order.method === 'stocks' ? 'Your TEST stocks were sold and the shop received test USDC on NEAR. This is a demo; no goods are shipped.' : 'The shop received your public NEAR testnet payment. This is a demo; no goods are shipped.') : order.status === 'awaiting_payment' ? 'This page updates the moment Noren confirms the payment.' : 'This order was not paid.'}</p>
+      <p className="lede">{paid ? (order.method === 'stocks' ? 'Your selected test tokens were sold and the shop received test USDC on NEAR. This is a demo; no goods are shipped.' : 'The shop received your public NEAR testnet payment. This is a demo; no goods are shipped.') : order.status === 'awaiting_payment' ? 'This page updates the moment Noren confirms the payment.' : 'This order was not paid.'}</p>
       <div className="order-grid">
         <div className="order-card">
           <div className={`status status-${order.status}`}><i aria-hidden />{paid ? 'Paid' : order.status === 'awaiting_payment' ? 'Awaiting payment' : order.status.replace('_', ' ')}</div>

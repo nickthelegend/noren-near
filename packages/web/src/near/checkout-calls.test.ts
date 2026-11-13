@@ -18,3 +18,9 @@ describe('native invoice calls',()=>{
   expect(()=>checkoutCall('installment',p,account,{installment:-1})).toThrow('installment');
  });
 });
+
+it('sells configured native test WBTC with an integer quote, never an arbitrary token',()=>{
+ const asset={token:COLLATERALS[0].token,decimals:8,ltv_bps:5000,liq_bps:6000,price_usd6:'71000000000',price_at_ns:String(BigInt(Date.now())*1000000n),price_fresh:true,source:'relayer:https://api.exchange.coinbase.com/products/BTC-USD/ticker'};
+ expect(checkoutCall('stocks',p,account,{asset}).receiverId).toBe(COLLATERALS[0].token);
+ expect(()=>checkoutCall('stocks',p,account,{asset:{...asset,token:'unconfigured.testnet'}})).toThrow('configured');
+});

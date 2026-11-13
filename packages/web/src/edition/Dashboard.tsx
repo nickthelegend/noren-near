@@ -34,7 +34,7 @@ const METHOD: Record<Method, [string, string, (r?: Row) => JSX.Element]> = {
   usdc: ["USDC", "A direct USDC transfer from the customer's NEAR wallet, verified on-chain", () => <Mark id="USDC" size={16} />],
   private: ["Private · unavailable", "Private checkout is not integrated on NEAR testnet", () => <Mark id="KOHAKU" size={16} />],
   credit: ["Pay later", "Credit against NEP-141 test stocks or BTC, paid on NEAR testnet", () => <span className="sd-pm-ic round" aria-hidden><Icon.layers /></span>],
-  stocks: ["Pay with stocks or crypto", "TEST stocks sold to the separate test USDC buyer at a signed relayer price", (r) => <Mark id={stockSym(r?.stock?.asset) ?? "NEAR"} size={16} />],
+  stocks: ["Pay with stocks or crypto", "TEST stocks or test WBTC sold to the separate test USDC buyer at a signed relayer price", (r) => <Mark id={stockSym(r?.stock?.asset) ?? "NEAR"} size={16} />],
 };
 const PM = ({ r }: { r: Row }) => { const m = methodOf(r); if (!m) return <span className="sd-muted">–</span>; const [t, d, I] = METHOD[m]; return <span className={`sd-pm ${m}`} title={d}>{I(r)}{t}{m === "stocks" && stockSym(r.stock?.asset) && <span className="sd-muted">· {stockSym(r.stock?.asset)}</span>}</span>; };
 /** The settlement currency with its logo: USDC on NEAR testnet for stock payments, USDC on NEAR for the rest. */
@@ -285,7 +285,7 @@ function useBalance(cfg: Config) {
 function Balances({ rows, cfg, token }: { rows: Row[] | null; cfg: Config; token: string }) {
   const bal = useBalance(cfg);
   const r = rows ?? [];
-  const incoming = r.filter((x) => x.status === "open" || x.status === "draft").reduce((a, x) => a + (n6(x.invoice.amount)-n6(x.paidAmount)), 0);
+  const incoming = r.filter((x) => ['open','draft','partially_paid'].includes(x.status)).reduce((a, x) => a + Math.max(0,n6(x.invoice.amount)-n6(x.paidAmount)), 0);
   const ledger = useMemo(() => {
     const e: { at: number; type: string; amount: number; id: string; tx?: string; desc?: string; who: string }[] = [];
     for (const x of r) {
@@ -416,7 +416,7 @@ function PaymentPage({ id, rows, cfg, token, onDone, tick }: { id: string; rows:
   const credit = r.method === "credit", stock = r.method === "stocks";
   const steps: [string, number | string | undefined, ReactNode, boolean][] = stock ? [
     ["Payment link created", r.createdAt, r.description ? `“${r.description}”` : null, true],
-    ["Paid with Stock Tokens on NEAR testnet, USDC received", r.paidAt, r.paymentTx ? <><TxLink chain="near" hash={r.paymentTx} n={8} /> · NEAR stock buyer callback, gas paid by the customer</> : null, settled(r)],
+    ["Test tokens sold on NEAR testnet, test USDC received", r.paidAt, r.paymentTx ? <><TxLink chain="near" hash={r.paymentTx} n={8} /> · NEAR stock buyer callback, gas paid by the customer</> : null, settled(r)],
   ] : credit ? [
     ["Payment link created", r.createdAt, r.description ? `“${r.description}”` : null, true],
     ["Paid later from a credit line, USDC received", r.paidAt, r.paymentTx ? <><TxLink chain="near" cfg={cfg} hash={r.paymentTx} n={8} /> · Noren credit borrow / due installment, gas paid by the customer</> : null, settled(r)],

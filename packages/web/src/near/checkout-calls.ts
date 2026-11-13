@@ -15,7 +15,7 @@ export function checkoutCall(method:CheckoutMethod,p:Payment,account:string,opti
   return{...base,methodName:'pay_installment',args:{id:options.installment,invoice_id:p.id}};
  }
  const asset=options.asset;
- if(!asset||!COLLATERALS.some(x=>x.stock&&x.token===asset.token))throw Error('Only configured TEST stocks can be sold here.');
+ if(!asset||!COLLATERALS.some(x=>x.token===asset.token))throw Error('Only configured test stocks or test WBTC can be sold here.');
  const age=Date.now()-Number(BigInt(asset.price_at_ns)/1_000_000n);
  if(!asset.price_fresh||age<0||age>90000||BigInt(asset.price_usd6)<=0n)throw Error('ERR_STALE_PRICE');
  const quantity=(BigInt(p.amount)*10n**BigInt(asset.decimals)+BigInt(asset.price_usd6)-1n)/BigInt(asset.price_usd6);

@@ -34,7 +34,7 @@ export function Onboard({ cfg, session, onSession, onStore, onDone }: { cfg: Con
   const payTo = (payoutMode === "self" ? session?.address : payout) ?? "";
 
   const snippet = store ? `// server.ts — keep your API secret on the server
-const response = await fetch("${location.origin}${SERVER}/merchants/${store.merchant}/invoices", {
+const response = await fetch("${SERVER.startsWith('http')?SERVER:location.origin+SERVER}/merchants/${store.merchant}/invoices", {
   method: "POST",
   headers: {"content-type":"application/json", authorization: "Bearer " + process.env.NOREN_SECRET_KEY},
   body: JSON.stringify({amount:"12500000",description:"Order #1001"})

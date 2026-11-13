@@ -1,0 +1,784 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-13T07:59:17.568Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "liveUsdc": false,
+  "liveCrypto": true,
+  "status": "PASS",
+  "screenshots": [
+    {
+      "name": "landing-api",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-landing-api-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "business",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-business-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-payout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "first-link",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-first-link-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-created",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-link-created-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "keys-once-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-keys-once-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-merchant-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "balances",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-balances-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payments-empty",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-payments-empty-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "links",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-links-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "developers",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-developers-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "webhooks-unavailable",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-webhooks-unavailable-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "events",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-events-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "settings",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-settings-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-created-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-key-created-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-revoked",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-key-revoked-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-builder",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-link-builder-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "privacy-unavailable",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-privacy-unavailable-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "stock-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-stock-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "usdc-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-usdc-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "crypto-quote",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-crypto-quote-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "receipt-network-failure",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-receipt-network-failure-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "receipt-recovery-after-reload",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-receipt-recovery-after-reload-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "crypto-final-receipt",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-crypto-final-receipt-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-paid-receipt",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-merchant-paid-receipt-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-pay",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-pay-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-earn",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-earn-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-credit",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-credit-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-borrow",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-borrow-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-swap",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-swap-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "wallet-profile",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-wallet-profile-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "invalid-link",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-invalid-link-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-catalog",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-catalog-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-filter",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-filter-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-product",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-product-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-empty-bag",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-empty-bag-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-integration",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-integration-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-missing-product",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-missing-product-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-missing-order",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-missing-order-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-bag-drawer",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-bag-drawer-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-filled-bag",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-filled-bag-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-hosted-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-hosted-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "landing-api",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-landing-api-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "business",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-business-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payout",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-payout-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "first-link",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-first-link-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-created",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-link-created-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "keys-once-redacted",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-keys-once-redacted-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-home",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-merchant-home-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "balances",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-balances-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payments-empty",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-payments-empty-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "links",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-links-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "developers",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-developers-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "webhooks-unavailable",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-webhooks-unavailable-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "events",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-events-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "settings",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-settings-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-created-redacted",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-key-created-redacted-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-revoked",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-key-revoked-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-builder",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-link-builder-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "privacy-unavailable",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-privacy-unavailable-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "stock-checkout",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-stock-checkout-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "usdc-checkout",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-usdc-checkout-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "crypto-quote",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-crypto-quote-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "receipt-network-failure",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-receipt-network-failure-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "receipt-recovery-after-reload",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-receipt-recovery-after-reload-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "crypto-final-receipt",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-crypto-final-receipt-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-paid-receipt",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-merchant-paid-receipt-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-home",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-home-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-pay",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-pay-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-earn",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-earn-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-credit",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-credit-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-borrow",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-borrow-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-swap",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-app-swap-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "wallet-profile",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-wallet-profile-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "invalid-link",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-invalid-link-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-home",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-home-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-catalog",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-catalog-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-filter",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-filter-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-product",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-product-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-empty-bag",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-empty-bag-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-integration",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-integration-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-missing-product",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-missing-product-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-missing-order",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-missing-order-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-bag-drawer",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-bag-drawer-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-filled-bag",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-filled-bag-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-hosted-checkout",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-retry-shop-hosted-checkout-375.png",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "transactions": [
+    {
+      "width": 1440,
+      "source": "Node price relayer",
+      "stage": "BTC price",
+      "hash": "64hErbPkz396hrqM1sL8UdD7tfpkdWF8FzkAyhBQK7FT",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68546200000",
+        "timestamp_ns": "1794556769196000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "TXo/xdogfUpxyo+SJTgpTb7byZPeSpCXFMGaAWLCkA8ClEUitUJ9N7KG/LdEKbRAligh51yzHvpSkA4PwXNrDw=="
+      }
+    },
+    {
+      "width": 1440,
+      "source": "browser QA signer",
+      "stage": "WBTC checkout 1440",
+      "hash": "7p4nf873QF5KqLqrKcuCB3djtzcQndE5NDhkiSJwjvmF",
+      "explorer": "https://testnet.nearblocks.io/txns/7p4nf873QF5KqLqrKcuCB3djtzcQndE5NDhkiSJwjvmF",
+      "final": true
+    },
+    {
+      "width": 375,
+      "source": "Node price relayer",
+      "stage": "BTC price",
+      "hash": "Df5xtgdqJC9C6GDvUCMEfAiADDutipon48HsC5HS5EZr",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68528000000",
+        "timestamp_ns": "1794556805706000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "8Ei+URZP2LeTLGPgudtC78SWBPAzQHX9nMAZ0EfUyPlILyxNCWKRwcUT4wzuodCFyg3+lt/Hwt5K9GXFMWsZDg=="
+      }
+    },
+    {
+      "width": 375,
+      "source": "browser QA signer",
+      "stage": "WBTC checkout 375",
+      "hash": "EVWmUtG1WmFmgtUGTV7duDjp8jbxd1j41UdXkhNKDpaZ",
+      "explorer": "https://testnet.nearblocks.io/txns/EVWmUtG1WmFmgtUGTV7duDjp8jbxd1j41UdXkhNKDpaZ",
+      "final": true
+    }
+  ],
+  "checks": [
+    {
+      "width": 1440,
+      "stage": "landing navigation",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 1440,
+      "merchantAuthenticated": true,
+      "invoiceId": "0xc4b4b7c4ad286cb08b8d0e806bff45086e6129cf941a1d4968accda3e9f80fca"
+    },
+    {
+      "width": 1440,
+      "expected": "injected receipt-network failure; chain payment remains real"
+    },
+    {
+      "width": 1440,
+      "stage": "WBTC checkout 1440",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 1440,
+      "stage": "WBTC checkout 1440",
+      "consoleError": true
+    },
+    {
+      "width": 1440,
+      "stage": "WBTC checkout 1440",
+      "consoleError": true
+    },
+    {
+      "width": 1440,
+      "stage": "WBTC checkout 1440",
+      "consoleError": true
+    },
+    {
+      "width": 1440,
+      "pageErrors": [],
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "stage": "landing navigation",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 375,
+      "merchantAuthenticated": true,
+      "invoiceId": "0xf507d356e8c3a26ac20f635f216acfe26b0ecd9b99a7728c4c1626208d689270"
+    },
+    {
+      "width": 375,
+      "expected": "injected receipt-network failure; chain payment remains real"
+    },
+    {
+      "width": 375,
+      "stage": "WBTC checkout 375",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 375,
+      "stage": "WBTC checkout 375",
+      "consoleError": true
+    },
+    {
+      "width": 375,
+      "stage": "WBTC checkout 375",
+      "consoleError": true
+    },
+    {
+      "width": 375,
+      "stage": "WBTC checkout 375",
+      "consoleError": true
+    },
+    {
+      "width": 375,
+      "pageErrors": [],
+      "status": "PASS"
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "BTC price",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "WBTC checkout 1440",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "BTC price",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "WBTC checkout 375",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    }
+  ],
+  "actualNearSpentYocto": "2675850967324400000002",
+  "reservedYocto": "44000000000000000000002"
+}

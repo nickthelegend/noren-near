@@ -25,7 +25,7 @@ export const api={
  eventLog:(merchant:string,token:string)=>call<NorenEvent[]>(`/merchants/${merchant}/events`,{token}),
  events:()=>{const e=new EventTarget();const timer=setInterval(()=>e.dispatchEvent(new Event('message')),4000);return{addEventListener:(...args:Parameters<EventTarget['addEventListener']>)=>e.addEventListener(...args),close:()=>clearInterval(timer)}}
 };
-export const assetSym=(asset?:string)=>asset?.startsWith('ttsla.')?'TSLA':asset?.startsWith('tnvda.')?'NVDA':asset?.startsWith('taapl.')?'AAPL':undefined;
+export const assetSym=(asset?:string)=>asset==='wbtc.fakes.testnet'?'BTC':asset?.startsWith('ttsla.')?'TSLA':asset?.startsWith('tnvda.')?'NVDA':asset?.startsWith('taapl.')?'AAPL':undefined;
 export const usdc=(base?:string|bigint)=>base===undefined?'–':(Number(BigInt(base))/1e6).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 export const short=(s?:string,n=6)=>s?`${s.slice(0,n)}…${s.slice(-4)}`:'';
 export const secs=(v?:string|number)=>v===undefined||v===null||v===''?undefined:Number(v);
