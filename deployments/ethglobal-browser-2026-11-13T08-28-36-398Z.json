@@ -1,0 +1,422 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-13T08:28:36.398Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "liveUsdc": false,
+  "liveCrypto": false,
+  "liveSchedule": true,
+  "status": "PASS",
+  "screenshots": [
+    {
+      "name": "landing-api",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-landing-api-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "business",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-business-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-payout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "first-link",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-first-link-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-created",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-link-created-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "keys-once-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-keys-once-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-merchant-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "balances",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-balances-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payments-empty",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-payments-empty-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "links",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-links-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "developers",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-developers-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "webhooks-unavailable",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-webhooks-unavailable-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "events",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-events-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "settings",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-settings-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-created-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-key-created-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-revoked",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-key-revoked-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-builder",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-link-builder-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "privacy-unavailable",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-privacy-unavailable-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "stock-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-stock-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "usdc-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-usdc-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "stock-picker",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-stock-picker-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "receipt-network-failure",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-receipt-network-failure-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "receipt-network-failure",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-receipt-network-failure-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "receipt-recovery-after-reload",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-receipt-recovery-after-reload-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "scheduled-no-payment",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-scheduled-no-payment-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "scheduled-no-payment",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-scheduled-no-payment-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "unfunded-draw-blocked",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-unfunded-draw-blocked-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "schedule-final-receipt",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-schedule-final-receipt-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-paid-receipt",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-merchant-paid-receipt-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-app-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-pay",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-app-pay-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-earn",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-app-earn-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-credit",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-app-credit-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-borrow",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-app-borrow-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-swap",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-app-swap-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "wallet-profile",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-wallet-profile-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "invalid-link",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-invalid-link-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-catalog",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-catalog-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-filter",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-filter-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-product",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-product-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-empty-bag",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-empty-bag-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-integration",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-integration-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-missing-product",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-missing-product-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-missing-order",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-missing-order-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-bag-drawer",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-bag-drawer-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-filled-bag",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-filled-bag-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-hosted-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/schedule-shop-hosted-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "transactions": [
+    {
+      "width": 1440,
+      "source": "browser QA signer",
+      "stage": "Schedule checkout 1440",
+      "hash": "3obeQfK6UTWoagtByZhaV8PKHCiCeruAs2j45UaH9no1",
+      "explorer": "https://testnet.nearblocks.io/txns/3obeQfK6UTWoagtByZhaV8PKHCiCeruAs2j45UaH9no1",
+      "final": true
+    }
+  ],
+  "checks": [
+    {
+      "width": 1440,
+      "stage": "landing navigation",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 1440,
+      "merchantAuthenticated": true,
+      "invoiceId": "0x6b0b2fa5f75f8e0ee3cfd5f5b13ea00df2a9d17521d551fc6826f45a1ed8c91c"
+    },
+    {
+      "width": 1440,
+      "expected": "injected receipt-network failure; chain payment remains real"
+    },
+    {
+      "width": 1440,
+      "stage": "Schedule checkout 1440",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 1440,
+      "stage": "Schedule checkout 1440",
+      "consoleError": true
+    },
+    {
+      "width": 1440,
+      "stage": "Schedule checkout 1440",
+      "consoleError": true
+    },
+    {
+      "width": 1440,
+      "stage": "Schedule checkout 1440",
+      "consoleError": true
+    },
+    {
+      "width": 1440,
+      "pageErrors": [],
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "planIds": [
+        0,
+        1,
+        2
+      ],
+      "unpaid": true
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "Schedule checkout 1440",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    }
+  ],
+  "scheduleFunds": {
+    "before": "195060870",
+    "after": "195060870"
+  },
+  "actualNearSpentYocto": "202019469695600000000",
+  "reservedYocto": "6000000000000000000000"
+}

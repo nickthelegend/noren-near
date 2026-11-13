@@ -101,3 +101,11 @@ it('verifies the deployed test-USDC legacy transfer log with its exact invoice m
  tx.value.receipts_outcome[0].outcome.logs[1]='Memo: noren:'+id;
  const paid=await s.handle('/invoices/'+id+'/complete','POST',{accountId:'alice.testnet',hash:'6'.repeat(44)},'','localhost:5395');expect(paid.status).toBe('paid');expect(paid.paidAmount).toBe('1000273');
 });
+
+it('keeps an Aubelle installment order partial with exact paid and total units',async()=>{
+ const tx={value:null as any};const{s}=await authenticated(tx,async()=>['alice.testnet','shop.noren-near-mw9h22el.testnet','49333333',0,true]);
+ const order=await s.handle('/shop/checkout','POST',{lines:[{slug:'amelie-gingham',size:'S',qty:1}]},'','localhost:5395'),id=order.checkoutUrl.split('/pay/')[1];
+ tx.value={final_execution_status:'FINAL',status:{SuccessValue:Buffer.from('true').toString('base64')},transaction:{signer_id:'alice.testnet',receiver_id:'credit.noren-near-mw9h22el.testnet',actions:[{FunctionCall:{method_name:'pay_installment',args:Buffer.from(JSON.stringify({id:0,invoice_id:id})).toString('base64')}}]},receipts_outcome:[]};
+ await s.handle('/invoices/'+id+'/complete','POST',{accountId:'alice.testnet',hash:'7'.repeat(44)},'','localhost:5395');const result=await s.handle('/shop/orders/'+order.orderId,'GET',{},'','localhost:5395');
+ expect(result.status).toBe('partially_paid');expect(result.amount).toBe('148000000');expect(result.paidAmount).toBe('49333333');
+});

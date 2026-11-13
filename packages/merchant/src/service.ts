@@ -93,7 +93,7 @@ export function createMerchantService(deps:Deps={}) {
    const i=newInvoice(s,{amount:String(BigInt(totalCents)*10000n),description:`Aubelle order ${id}: ${lines.map((l:any)=>l.name).join(', ')}`.slice(0,120),metadata:{orderId:id},successUrl:`${base}/shop/#/order/${id}`,cancelUrl:`${base}/shop/#/bag`});
    const checkoutUrl=`${base}/#/pay/${i.invoice.invoiceId}`;state.orders.push({id,lines,totalCents,invoiceId:i.invoice.invoiceId,checkoutUrl,createdAt:now()});save();return{orderId:id,checkoutUrl};
   }
-  if(parts[0]==='shop'&&parts[1]==='orders'&&parts[2]){const o=state.orders.find(o=>o.id===parts[2]);if(!o)throw Error('Order not found.');const i=invoice(o.invoiceId);return{...o,status:i.status==='paid'?'paid':i.status==='open'?'awaiting_payment':i.status,method:i.method,paymentTx:i.paymentTx,paidVia:'verified-near-receipt'}}
+  if(parts[0]==='shop'&&parts[1]==='orders'&&parts[2]){const o=state.orders.find(o=>o.id===parts[2]);if(!o)throw Error('Order not found.');const i=invoice(o.invoiceId);return{...o,status:i.status==='paid'?'paid':i.status==='open'?'awaiting_payment':i.status,method:i.method,amount:i.invoice.amount,paidAmount:i.paidAmount,paymentTx:i.paymentTx,paidVia:'verified-near-receipt'}}
   if(path==='/config')return{network:'testnet',chainId:'NEAR testnet',rpcUrl:RPC,merchant:DEMO_SHOP,deployment:{usdc:USDC,checkout:CREDIT},privacy:false};
   if(path==='/auth/nonce'&&method==='GET'){const id=randomUUID(),n={message:`Sign in to Noren Merchant on NEAR testnet.\nChallenge: ${id}`,recipient,nonce:randomBytes(32).toString('base64'),expiresAt:now()+300};nonces.set(id,n);for(const[k,v]of nonces)if(v.expiresAt<now())nonces.delete(k);return{challengeId:id,...n}}
   if(path==='/auth/near'&&method==='POST'){

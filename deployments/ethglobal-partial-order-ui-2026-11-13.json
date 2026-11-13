@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "network": "testnet",
+  "source": "ethglobal-credit-browser-2026-11-13T08-53-51-393Z.json",
+  "order": "AUB-A65FBC1C",
+  "screens": [
+    {
+      "name": "after-partial-order",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/after-partial-order-1440.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "name": "after-final-partial-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/after-final-partial-checkout-1440.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "name": "after-partial-order",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/after-partial-order-375.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "name": "after-final-partial-checkout",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/after-final-partial-checkout-375.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": []
+    }
+  ],
+  "newTransactions": 0
+}

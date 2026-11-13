@@ -348,7 +348,7 @@ function OrderPage({ id }: { id: string }) {
   useEffect(() => {
     let stop = false, timer: number | undefined;
     const tick = async () => {
-      try { const o = await api.order(id); if (stop) return; setOrder(o); setError(null); if (o.status === 'paid') { bagActions.clear(); return; } if (o.status !== 'awaiting_payment') return; }
+      try { const o = await api.order(id); if (stop) return; setOrder(o); setError(null); if (o.status === 'paid') { bagActions.clear(); return; } if (!['awaiting_payment','partially_paid'].includes(o.status)) return; }
       catch (e: any) { if (!stop) setError(e.message); }
       if (!stop) timer = window.setTimeout(tick, 2000);
     };
@@ -357,23 +357,25 @@ function OrderPage({ id }: { id: string }) {
   }, [id]);
   if (error && !order) return <section className="section"><div className="empty"><h1>Order <em>not found</em></h1><p>{error}</p><a className="btn btn-dark" href="#/shop">Back to the shop</a></div></section>;
   if (!order) return <section className="section"><div className="empty"><p className="muted">Loading your order…</p></div></section>;
-  const paid = order.status === 'paid';
+  const paid = order.status === 'paid', partial = order.status === 'partially_paid';
+  const paidUnits=BigInt(order.paidAmount??'0'),totalUnits=BigInt(order.amount??String(order.totalCents*10000)),leftUnits=totalUnits>paidUnits?totalUnits-paidUnits:0n;
+  const dollars=(n:bigint)=>(Number(n)/1e6).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   return (
     <section className="section order">
       <p className="eyebrow">Order {order.id}</p>
-      <h1>{paid ? <>Thank you. <em>It's yours.</em></> : order.status === 'awaiting_payment' ? <>Waiting for <em>payment</em></> : <>Order <em>{order.status.replace('_', ' ')}</em></>}</h1>
-      <p className="lede">{paid ? (order.method === 'stocks' ? 'Your selected test tokens were sold and the shop received test USDC on NEAR. This is a demo; no goods are shipped.' : 'The shop received your public NEAR testnet payment. This is a demo; no goods are shipped.') : order.status === 'awaiting_payment' ? 'This page updates the moment Noren confirms the payment.' : 'This order was not paid.'}</p>
+      <h1>{paid ? <>Thank you. <em>It's yours.</em></> : partial ? <>Partly <em>paid</em></> : order.status === 'awaiting_payment' ? <>Waiting for <em>payment</em></> : <>Order <em>{order.status.replace('_', ' ')}</em></>}</h1>
+      <p className="lede">{paid ? (order.method === 'stocks' ? 'Your selected test tokens were sold and the shop received test USDC on NEAR. This is a demo; no goods are shipped.' : 'The shop received your public NEAR testnet payment. This is a demo; no goods are shipped.') : partial ? 'Part of this order is paid on NEAR. The rest has not been received. This demo ships no goods.' : order.status === 'awaiting_payment' ? 'This page updates the moment Noren confirms the payment.' : 'This order was not paid.'}</p>
       <div className="order-grid">
         <div className="order-card">
-          <div className={`status status-${order.status}`}><i aria-hidden />{paid ? 'Paid' : order.status === 'awaiting_payment' ? 'Awaiting payment' : order.status.replace('_', ' ')}</div>
+          <div className={`status status-${partial?'awaiting_payment':order.status}`}><i aria-hidden />{paid ? 'Paid' : order.status === 'awaiting_payment' ? 'Awaiting payment' : order.status.replace('_', ' ')}</div>
           <dl className="facts">
             <dt>Paid with</dt><dd>{paid || order.method ? METHOD[order.method ?? ''] ?? 'Noren' : 'Noren checkout'}</dd>
+            {(paid||partial)&&<><dt>Received so far</dt><dd>{dollars(paidUnits)} test USDC</dd><dt>Remaining due</dt><dd>{dollars(leftUnits)} test USDC</dd></>}
             <dt>Noren payment</dt><dd className="mono" title={order.invoiceId}>{short(order.invoiceId)}</dd>
             {order.paymentTx && <><dt>Transaction</dt><dd><TxLink hash={order.paymentTx} method={order.method} config={config} /></dd></>}
-            {order.paidVia === 'webhook' && <><dt>Confirmed by</dt><dd>NEAR receipt <span className="ok">✓ signature verified</span></dd></>}
-            {paid && order.paidVia !== 'webhook' && <><dt>Confirmed by</dt><dd>Noren API · matching FINAL NEAR execution</dd></>}
+            {(paid||partial) && <><dt>Confirmed by</dt><dd>Noren API · matching FINAL NEAR execution</dd></>}
           </dl>
-          {order.status === 'awaiting_payment' && <a className="btn btn-noren btn-wide" href={order.checkoutUrl}>Return to Noren checkout</a>}
+          {(order.status === 'awaiting_payment'||partial) && <a className="btn btn-noren btn-wide" href={order.checkoutUrl}>Return to Noren checkout</a>}
         </div>
         <div className="order-card">
           <ul className="order-lines">{order.lines.map((l: any) => <li key={`${l.slug}-${l.size}`}><img src={img(l.slug)} alt="" /><span><b>{l.name}</b><small>Size {l.size} · Qty {l.qty}</small></span><span>{usd(l.price * l.qty)}</span></li>)}</ul>
