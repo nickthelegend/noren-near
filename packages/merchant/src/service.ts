@@ -5,6 +5,7 @@ import { dirname, resolve } from 'node:path';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { JsonRpcProvider } from 'near-api-js';
 import { verifyMessage } from 'near-api-js/nep413';
+import { bySlug, MAX_QTY } from './catalog';
 
 export const RPC = 'https://test.rpc.fastnear.com';
 export const CREDIT = 'credit.noren-near-mw9h22el.testnet';
@@ -14,7 +15,7 @@ const provider = new JsonRpcProvider({url:RPC});
 export type Invoice = {invoice:{invoiceId:string;merchant:string;amount:string;expiry:string};status:string;description:string;merchantName:string;createdAt:number;paidAt?:number;paymentTx?:string;method?:string;paidAmount:string;payments:{hash:string;amount:string;method:string;payer:string}[];metadata?:Record<string,string>;successUrl?:string;cancelUrl?:string;stock?:Record<string,string>;plan?:{owner:string;ids:number[];hash:string}};
 type Store = {id:string;name:string;payout:string;merchant:string;owner:string;publishableKey:string;keys:{id:string;prefix:string;hash:string;createdAt:number;revokedAt?:number}[];createdAt:number;registerTx?:string};
 type Session = {hash:string;address:string;expiresAt:number};
-type State = {stores:Store[];invoices:Invoice[];sessions:Session[];events:any[];orders:any[];usedTx:string[]};
+type State = {stores:Store[];invoices:Invoice[];sessions:Session[];events:any[];orders:any[];usedTx:string[];shopMerchant?:string};
 const now=()=>Math.floor(Date.now()/1000), hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 const testAccount=(s:unknown):s is string=>typeof s==='string'&&s.length<=64&&/^(?:[a-z0-9]+(?:[-_][a-z0-9]+)*\.)+testnet$/.test(s);
 const amount=(s:unknown)=>{if(typeof s!=='string'||!/^\d+$/.test(s)||BigInt(s)<=0n||BigInt(s)>2n**128n-1n)throw Error('Enter a positive amount in token units.');return s;};
@@ -24,7 +25,7 @@ export const publicStore=(s:Store)=>({...s,keys:s.keys.map(({hash:_,...k})=>k)})
 const sameHash=(a:string,b:string)=>a.length===b.length&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
 export type Deps={file?:string|null;view?:(contract:string,method:string,args:any)=>Promise<any>;tx?:(tx:string,account:string)=>Promise<any>;verify?:typeof verifyMessage;account?:(id:string)=>Promise<any>};
 export function createMerchantService(deps:Deps={}) {
- const file=deps.file===null?null:deps.file??resolve(process.cwd(),'.near-data/merchant.json');
+ const file=deps.file===null?null:deps.file??process.env.NOREN_DATA_FILE??resolve(process.cwd(),'.near-data/merchant.json');
  let state:State=file&&existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{stores:[],invoices:[],sessions:[],events:[],orders:[],usedTx:[]};
  const nonces=new Map<string,{message:string;recipient:string;nonce:string;expiresAt:number}>();
  const save=()=>{if(!file)return;mkdirSync(dirname(file),{recursive:true,mode:0o700});writeFileSync(file+'.tmp',JSON.stringify(state),{mode:0o600});renameSync(file+'.tmp',file)};
@@ -73,6 +74,18 @@ export function createMerchantService(deps:Deps={}) {
  }
  async function handle(path:string,method:string,b:any,token:string,recipient:string):Promise<any>{
   const parts=path.split('/').filter(Boolean).map(decodeURIComponent);
+  if(path==='/shop/config'){const s=state.shopMerchant?store(state.shopMerchant):demo;return{ready:!!s,missing:s?[]:['NOREN_AUBELLE_STORE_ID'],webhookError:null,server:'/api',merchant:s?.merchant,checkoutBase:process.env.NOREN_WEB_ORIGIN??`http://${recipient}`}}
+  if(path==='/shop/fx')throw Error('Fiat conversion is not integrated; catalogue prices use test USDC only.');
+  if(path==='/shop/connect'&&method==='POST'){const s=access(String(b.merchant),token,true);state.shopMerchant=s.id;save();return{connected:true,merchant:s.merchant}}
+  if(path==='/shop/checkout'&&method==='POST'){
+   if(!Array.isArray(b.lines)||b.lines.length===0||b.lines.length>30)throw Error('Add a dress to your bag first.');
+   const lines=b.lines.map((l:any)=>{const p=bySlug(l.slug);if(!p||!p.sizes.includes(l.size)||p.soldOut?.includes(l.size)||!Number.isSafeInteger(l.qty)||l.qty<1||l.qty>MAX_QTY)throw Error('Check the product, size and quantity in your bag.');return{slug:p.slug,name:p.name,size:l.size,qty:l.qty,price:p.price}});
+   const totalCents=lines.reduce((a:number,l:any)=>a+l.price*l.qty,0),id='AUB-'+randomBytes(4).toString('hex').toUpperCase(),base=process.env.NOREN_WEB_ORIGIN??`http://${recipient}`;
+   const s=state.shopMerchant?store(state.shopMerchant):demo;if(!s)throw Error('The demo shop needs a connected merchant.');
+   const i=newInvoice(s,{amount:String(BigInt(totalCents)*10000n),description:`Aubelle order ${id}: ${lines.map((l:any)=>l.name).join(', ')}`.slice(0,120),metadata:{orderId:id},successUrl:`${base}/shop/#/order/${id}`,cancelUrl:`${base}/shop/#/bag`});
+   const checkoutUrl=`${base}/#/pay/${i.invoice.invoiceId}`;state.orders.push({id,lines,totalCents,invoiceId:i.invoice.invoiceId,checkoutUrl,createdAt:now()});save();return{orderId:id,checkoutUrl};
+  }
+  if(parts[0]==='shop'&&parts[1]==='orders'&&parts[2]){const o=state.orders.find(o=>o.id===parts[2]);if(!o)throw Error('Order not found.');const i=invoice(o.invoiceId);return{...o,status:i.status==='paid'?'paid':i.status==='open'?'awaiting_payment':i.status,method:i.method,paymentTx:i.paymentTx,paidVia:'verified-near-receipt'}}
   if(path==='/config')return{network:'testnet',chainId:'NEAR testnet',rpcUrl:RPC,merchant:DEMO_SHOP,deployment:{usdc:USDC,checkout:CREDIT},privacy:false};
   if(path==='/auth/nonce'&&method==='GET'){const id=randomUUID(),n={message:`Sign in to Noren Merchant on NEAR testnet.\nChallenge: ${id}`,recipient,nonce:randomBytes(32).toString('base64'),expiresAt:now()+300};nonces.set(id,n);for(const[k,v]of nonces)if(v.expiresAt<now())nonces.delete(k);return{challengeId:id,...n}}
   if(path==='/auth/near'&&method==='POST'){
@@ -110,7 +123,16 @@ export function createMerchantService(deps:Deps={}) {
  async function middleware(req:IncomingMessage,res:ServerResponse){
   const url=new URL(req.url??'/','http://localhost');if(!url.pathname.startsWith('/api/'))return false;
   res.setHeader('Cache-Control','no-store');res.setHeader('Content-Type','application/json');
-  const origin=req.headers.origin;const recipient=req.headers.host??'localhost';if(origin&&new URL(origin).host!==recipient){res.statusCode=403;res.end(JSON.stringify({error:'Cross-origin writes are not allowed.'}));return true}
+  const origin=req.headers.origin, host=req.headers.host??'localhost';
+  const allowed=process.env.NOREN_WEB_ORIGIN;
+  let recipient=host;
+  if(origin){
+   let u:URL;try{u=new URL(origin)}catch{res.statusCode=403;res.end(JSON.stringify({error:'Invalid origin.'}));return true}
+   if(u.host!==host&&origin!==allowed){res.statusCode=403;res.end(JSON.stringify({error:'Cross-origin requests require the exact NOREN_WEB_ORIGIN.'}));return true}
+   recipient=u.host;
+   res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Allow-Headers','content-type, authorization');res.setHeader('Access-Control-Allow-Methods','GET, POST, DELETE, OPTIONS');
+  }
+  if(req.method==='OPTIONS'){res.statusCode=204;res.end();return true}
   try{let data='';for await(const part of req){data+=part;if(data.length>32768)throw Error('Request too large.')}const b=data?JSON.parse(data):{};const token=(req.headers.authorization??'').replace(/^Bearer /,'');const path=url.pathname.slice(4);const result=await handle(path,req.method??'GET',b,token,recipient);res.end(JSON.stringify(result))}
   catch(e){const msg=e instanceof Error?e.message:'Request failed.';res.statusCode=/not found|Route not found/i.test(msg)?404:/Session required/.test(msg)?401:400;res.end(JSON.stringify({error:/^[A-Za-z][^\n]{0,200}$/.test(msg)?msg:'The NEAR service could not confirm this request. Check your transaction before retrying.'}))}
   return true;
