@@ -1,0 +1,39 @@
+{
+  "network": "testnet",
+  "status": "PASS",
+  "note": "Temporary transfer between owned demo accounts covers the SDK signing reserve; returned after funding. No helper funding.",
+  "transactions": [
+    {
+      "label": "Temporarily cover owner prepaid-gas reserve",
+      "account": "alice.noren-near-mw9h22el.testnet",
+      "receiverId": "noren-near-mw9h22el.testnet",
+      "hash": "9aWr2JU8JCpbRMJkfYdhQRqYnNngz1LZ4h7dVPSGtvCs",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/9aWr2JU8JCpbRMJkfYdhQRqYnNngz1LZ4h7dVPSGtvCs",
+      "feeYocto": "44636512500000000000"
+    },
+    {
+      "label": "Fund separate test-stock buyer with 500 test USDC",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "usdc.fakes.testnet",
+      "hash": "GL6WeVYB9e77BE4AwgxGo3RuiRRLW1KV57XQAeMeQCfJ",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/GL6WeVYB9e77BE4AwgxGo3RuiRRLW1KV57XQAeMeQCfJ",
+      "feeYocto": "637027920594100000000"
+    },
+    {
+      "label": "Restore demo account gas reserve",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "alice.noren-near-mw9h22el.testnet",
+      "hash": "3BSzZ5G7scMbZq6WhHsQFYF2REhz2JwGqD23mDa7J9fC",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/3BSzZ5G7scMbZq6WhHsQFYF2REhz2JwGqD23mDa7J9fC",
+      "feeYocto": "44636512500000000000"
+    }
+  ],
+  "market": {
+    "liquidity_usd6": "500000000",
+    "inventory": []
+  },
+  "finishedAt": "2026-11-13T06:21:02.003Z"
+}

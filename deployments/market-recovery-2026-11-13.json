@@ -1,0 +1,151 @@
+{
+  "network": "testnet",
+  "status": "STOPPED",
+  "reason": "Atomic upgrade rolled back: LackBalanceForState; additional owned reserve, no helper funding.",
+  "priorLedger": "market-upgrade-2026-11-13.json",
+  "transactions": [
+    {
+      "label": "Owned shop funds owner gas reserve",
+      "account": "shop.noren-near-mw9h22el.testnet",
+      "receiverId": "noren-near-mw9h22el.testnet",
+      "hash": "BwpHvfADNp7ki311eYMedHQ6Lmjnu4GpZYKtLbzZmfnV",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/BwpHvfADNp7ki311eYMedHQ6Lmjnu4GpZYKtLbzZmfnV",
+      "feeYocto": "44636512500000000000"
+    },
+    {
+      "label": "Owned root adds contract storage reserve",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "AHpjPJPMb3Cfj82HvbZzWUFmq6f7uSBxemzYqkJu8JHV",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/AHpjPJPMb3Cfj82HvbZzWUFmq6f7uSBxemzYqkJu8JHV",
+      "feeYocto": "44636512500000000000"
+    },
+    {
+      "label": "Owned bob adds contract storage reserve",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "HLQt7xL7p3V817WQ7YmjpV5uDA5MZjWjJH7qcMdMfdjA",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/HLQt7xL7p3V817WQ7YmjpV5uDA5MZjWjJH7qcMdMfdjA",
+      "feeYocto": "44636512500000000000"
+    },
+    {
+      "label": "Atomic v3 deployment and state migration",
+      "account": "credit.noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "2g6dVuoCt7YyVBrwRrUoMTvSgeEx7j7DCJhMZDEY1wfJ",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/2g6dVuoCt7YyVBrwRrUoMTvSgeEx7j7DCJhMZDEY1wfJ",
+      "feeYocto": "2752644639428500000000"
+    },
+    {
+      "label": "Mint 500 test USDC for isolated stock buyer",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "usdc.fakes.testnet",
+      "hash": "FAjAUd6pFztHLQMPZk7nxkr6SjveShC6fuioLnECGZ5E",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/FAjAUd6pFztHLQMPZk7nxkr6SjveShC6fuioLnECGZ5E",
+      "feeYocto": "204274808254000000000"
+    }
+  ],
+  "before": {
+    "config": {
+      "schema_version": 2,
+      "owner": "noren-near-mw9h22el.testnet",
+      "oracle": "price-oracle-wrapper.testnet",
+      "yield_source": "noren-near-mw9h22el.testnet",
+      "usdc": "usdc.fakes.testnet",
+      "apr_bps": 1000,
+      "relayer_key": "AsuM1Ql9xK+2EZqEbMwlSWtjP9H4NhLQ2uqPQrYcjkQ=",
+      "price_age_sec": 90,
+      "liq_buffer_bps": 1000,
+      "liq_bonus_bps": 500
+    },
+    "pool": [
+      "485000003",
+      "500000000"
+    ],
+    "alice": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "bob": {
+      "borrower": "bob.noren-near-mw9h22el.testnet",
+      "collateral": [
+        {
+          "token": "wbtc.fakes.testnet",
+          "amount": "500000",
+          "value_usd6": "357918700"
+        }
+      ],
+      "collateral_usd6": "357918700",
+      "credit_limit_usd6": "178959350",
+      "debt_usd6": "15014125",
+      "available_usd6": "163945225",
+      "health_bps": "143032",
+      "prices_fresh": false,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "after": {
+    "config": {
+      "schema_version": 3,
+      "owner": "noren-near-mw9h22el.testnet",
+      "oracle": "price-oracle-wrapper.testnet",
+      "yield_source": "noren-near-mw9h22el.testnet",
+      "usdc": "usdc.fakes.testnet",
+      "apr_bps": 1000,
+      "relayer_key": "AsuM1Ql9xK+2EZqEbMwlSWtjP9H4NhLQ2uqPQrYcjkQ=",
+      "price_age_sec": 90,
+      "liq_buffer_bps": 1000,
+      "liq_bonus_bps": 500
+    },
+    "pool": [
+      "485000003",
+      "500000000"
+    ],
+    "alice": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "bob": {
+      "borrower": "bob.noren-near-mw9h22el.testnet",
+      "collateral": [
+        {
+          "token": "wbtc.fakes.testnet",
+          "amount": "500000",
+          "value_usd6": "357918700"
+        }
+      ],
+      "collateral_usd6": "357918700",
+      "credit_limit_usd6": "178959350",
+      "debt_usd6": "15014125",
+      "available_usd6": "163945225",
+      "health_bps": "143032",
+      "prices_fresh": false,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "finishedAt": "2026-11-13T06:17:43.461Z",
+  "stoppedBeforeBroadcast": "V3 migration and mint succeeded. Owner balance was below the SDK prepaid-gas reserve for the following 80 Tgas funding call; it was not broadcast. Continued in market-funding-2026-11-13.json."
+}

@@ -11,7 +11,7 @@ export const CREDIT = 'credit.noren-near-mw9h22el.testnet';
 export const USDC = 'usdc.fakes.testnet';
 export const DEMO_SHOP = 'shop.noren-near-mw9h22el.testnet';
 const provider = new JsonRpcProvider({url:RPC});
-export type Invoice = {invoice:{invoiceId:string;merchant:string;amount:string;expiry:string};status:string;description:string;merchantName:string;createdAt:number;paidAt?:number;paymentTx?:string;method?:string;paidAmount:string;payments:{hash:string;amount:string;method:string;payer:string}[];metadata?:Record<string,string>;successUrl?:string;cancelUrl?:string;stock?:Record<string,string>};
+export type Invoice = {invoice:{invoiceId:string;merchant:string;amount:string;expiry:string};status:string;description:string;merchantName:string;createdAt:number;paidAt?:number;paymentTx?:string;method?:string;paidAmount:string;payments:{hash:string;amount:string;method:string;payer:string}[];metadata?:Record<string,string>;successUrl?:string;cancelUrl?:string;stock?:Record<string,string>;plan?:{owner:string;ids:number[];hash:string}};
 type Store = {id:string;name:string;payout:string;merchant:string;owner:string;publishableKey:string;keys:{id:string;prefix:string;hash:string;createdAt:number;revokedAt?:number}[];createdAt:number;registerTx?:string};
 type Session = {hash:string;address:string;expiresAt:number};
 type State = {stores:Store[];invoices:Invoice[];sessions:Session[];events:any[];orders:any[];usedTx:string[]};
@@ -29,7 +29,7 @@ export function createMerchantService(deps:Deps={}) {
  const nonces=new Map<string,{message:string;recipient:string;nonce:string;expiresAt:number}>();
  const save=()=>{if(!file)return;mkdirSync(dirname(file),{recursive:true,mode:0o700});writeFileSync(file+'.tmp',JSON.stringify(state),{mode:0o600});renameSync(file+'.tmp',file)};
  const view=deps.view??(async(contract,method,args)=>{const r=await provider.callFunction({contractId:contract,method,args});return r});
- const tx=deps.tx??(async(tx_hash,sender_account_id)=>provider.txStatus({txHash:tx_hash,accountId:sender_account_id,waitUntil:'FINAL'}));
+ const tx=deps.tx??(async(tx_hash,sender_account_id)=>{const r=await fetch(RPC,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:'merchant-receipt',method:'tx',params:{tx_hash,sender_account_id,wait_until:'FINAL'}}),signal:AbortSignal.timeout(15000)});const j=await r.json();if(!r.ok||j.error)throw Error('NEAR testnet could not confirm this receipt.');return j.result;});
  const verify=deps.verify??verifyMessage;
  const demo:Store={id:'aubelle',merchant:DEMO_SHOP,payout:DEMO_SHOP,owner:DEMO_SHOP,name:'Aubelle',publishableKey:'pk_test_aubelle_public_demo',keys:[],createdAt:1794182400};
  const store=(id:string)=>state.stores.find(s=>s.id===id||s.merchant===id)??(id===DEMO_SHOP||id==='aubelle'?demo:undefined);
@@ -38,7 +38,7 @@ export function createMerchantService(deps:Deps={}) {
  const addKey=(s:Store)=>{const secret='sk_test_'+randomBytes(32).toString('hex');const key={id:randomUUID(),prefix:secret.slice(0,16),hash:hash(secret),createdAt:now()};s.keys.push(key);return{secretKey:secret,key:{...key,hash:undefined}}};
  const event=(type:string,data:any)=>{state.events.push({id:randomUUID(),type,created:now(),data});};
  const newInvoice=(s:Store,b:any)=>{const value=amount(b.amount);const expiry=Number(b.expiry??now()+1800);if(!Number.isSafeInteger(expiry)||expiry<=now()||expiry>now()+30*86400)throw Error('Expiry must be within the next 30 days.');const metadata=b.metadata&&typeof b.metadata==='object'?Object.fromEntries(Object.entries(b.metadata).filter(([k,v])=>k.length<=64&&typeof v==='string'&&v.length<=256)):undefined;const row:Invoice={invoice:{invoiceId:'0x'+randomBytes(32).toString('hex'),merchant:s.merchant,amount:value,expiry:String(expiry)},status:'open',description:plain(b.description,120),merchantName:s.name,createdAt:now(),paidAmount:'0',payments:[],metadata,successUrl:safeUrl(b.successUrl),cancelUrl:safeUrl(b.cancelUrl)};state.invoices.push(row);event('invoice_created',{invoiceId:row.invoice.invoiceId,merchant:s.merchant});save();return row};
- function invoice(id:string){const i=state.invoices.find(i=>i.invoice.invoiceId===id);if(!i)throw Error('Payment link not found.');if(Number(i.invoice.expiry)<now()&&BigInt(i.paidAmount)<BigInt(i.invoice.amount))i.status='expired';return i;}
+ function invoice(id:string){const i=state.invoices.find(i=>i.invoice.invoiceId===id);if(!i)throw Error('Payment link not found.');if(Number(i.invoice.expiry)<now()&&BigInt(i.paidAmount)===0n&&!i.plan)i.status='expired';return i;}
  async function reconcile(i:Invoice,b:any){
   if(!testAccount(b.accountId)||typeof b.hash!=='string'||!/^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(b.hash))throw Error('Check the testnet transaction and account.');
   if(state.usedTx.includes(b.hash)){if(i.payments.some(p=>p.hash===b.hash))return i;throw Error('Transaction already belongs to another payment link.');}
@@ -95,7 +95,15 @@ export function createMerchantService(deps:Deps={}) {
    if(parts[2]==='events'){access(id,token);return state.events.filter(e=>e.data.merchant===s.merchant)}
    if(parts[2]==='webhooks'){access(id,token);if(method==='GET')return[];throw Error('Signed webhook delivery is not built for this local NEAR edition. Poll the invoice endpoint instead.');}
   }
-  if(parts[0]==='invoices'&&parts[1]){const i=invoice(parts[1]);if(parts[2]==='complete'&&method==='POST')return reconcile(i,b);if(parts[2])throw Error('This feature is not available on NEAR testnet.');return i}
+  if(parts[0]==='invoices'&&parts[1]){const i=invoice(parts[1]);if(parts[2]==='complete'&&method==='POST')return reconcile(i,b);if(parts[2]==='schedule'&&method==='POST'){
+    if(i.plan)return i;
+    if(!testAccount(b.accountId)||typeof b.hash!=='string'||state.usedTx.includes(b.hash)||i.status==='expired')throw Error('Check the schedule transaction.');
+    const r:any=await tx(b.hash,b.accountId),t=r.transaction,a=t?.actions?.[0]?.FunctionCall;
+    if(r.final_execution_status!=='FINAL'||r.status?.Failure||t?.receiver_id!==CREDIT||t.signer_id!==b.accountId||t.actions.length!==1||a?.method_name!=='schedule_pay_in_3')throw Error('Schedule has not finalized.');
+    const args=JSON.parse(Buffer.from(a.args,'base64').toString()),ids=JSON.parse(Buffer.from(r.status.SuccessValue??'','base64').toString()||'null');
+    if(args.invoice_id!==i.invoice.invoiceId||args.recipient!==store(i.invoice.merchant)!.payout||args.total!==String(BigInt(i.invoice.amount)-BigInt(i.paidAmount))||!Array.isArray(ids)||ids.length!==3||!ids.every(Number.isSafeInteger))throw Error('Schedule does not match this invoice.');
+    if(state.usedTx.includes(b.hash))throw Error('Schedule already claimed.');state.usedTx.push(b.hash);i.plan={owner:b.accountId,ids,hash:b.hash};save();return i;
+   }if(parts[2])throw Error('This feature is not available on NEAR testnet.');return i}
   if(path==='/pricing/currencies')return[{code:'USDC',name:'test USDC',symbol:'$',decimals:6}];
   throw Error('Route not found or unavailable on NEAR testnet.');
  }

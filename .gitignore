@@ -11,7 +11,9 @@ broadcast/
 .keys*.json
 artifacts/zk/
 data/
-deployments/
+deployments/*
+!deployments/market-*.json
+!deployments/ethglobal-*.json
 .DS_Store
 .claude/
 .near-credentials/

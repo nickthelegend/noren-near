@@ -1,0 +1,135 @@
+{
+  "network": "testnet",
+  "status": "STOPPED",
+  "wasmSha256": "e3d544a9541a9bc8e6bdf30aafe0ad7f66725e7310e00cb15f0acc10f37ef786",
+  "bytes": 352833,
+  "before": {
+    "config": {
+      "schema_version": 2,
+      "owner": "noren-near-mw9h22el.testnet",
+      "oracle": "price-oracle-wrapper.testnet",
+      "yield_source": "noren-near-mw9h22el.testnet",
+      "usdc": "usdc.fakes.testnet",
+      "apr_bps": 1000,
+      "relayer_key": "AsuM1Ql9xK+2EZqEbMwlSWtjP9H4NhLQ2uqPQrYcjkQ=",
+      "price_age_sec": 90,
+      "liq_buffer_bps": 1000,
+      "liq_bonus_bps": 500
+    },
+    "assets": [
+      {
+        "token": "taapl.noren-near-mw9h22el.testnet",
+        "decimals": 8,
+        "ltv_bps": 4000,
+        "liq_bps": 5000,
+        "price_usd6": "0",
+        "price_at_ns": "0",
+        "price_fresh": false,
+        "source": ""
+      },
+      {
+        "token": "tnvda.noren-near-mw9h22el.testnet",
+        "decimals": 8,
+        "ltv_bps": 4000,
+        "liq_bps": 5000,
+        "price_usd6": "0",
+        "price_at_ns": "0",
+        "price_fresh": false,
+        "source": ""
+      },
+      {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "decimals": 8,
+        "ltv_bps": 4000,
+        "liq_bps": 5000,
+        "price_usd6": "390620000",
+        "price_at_ns": "1794511253000000000",
+        "price_fresh": false,
+        "source": "relayer:https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+      },
+      {
+        "token": "wbtc.fakes.testnet",
+        "decimals": 8,
+        "ltv_bps": 5000,
+        "liq_bps": 6000,
+        "price_usd6": "71583740000",
+        "price_at_ns": "1794511253919000000",
+        "price_fresh": false,
+        "source": "relayer:https://api.exchange.coinbase.com/products/BTC-USD/ticker"
+      }
+    ],
+    "pool": [
+      "485000003",
+      "500000000"
+    ],
+    "alice": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "bob": {
+      "borrower": "bob.noren-near-mw9h22el.testnet",
+      "collateral": [
+        {
+          "token": "wbtc.fakes.testnet",
+          "amount": "500000",
+          "value_usd6": "357918700"
+        }
+      ],
+      "collateral_usd6": "357918700",
+      "credit_limit_usd6": "178959350",
+      "debt_usd6": "15014118",
+      "available_usd6": "163945232",
+      "health_bps": "143032",
+      "prices_fresh": false,
+      "pending": false,
+      "apr_bps": 1000
+    }
+  },
+  "transactions": [
+    {
+      "label": "Owned root funds upgrade storage",
+      "account": "noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "FFk9gtkpUsGsfjqfBB7foimhkfwc3jymSjFbKYQCJCzf",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/FFk9gtkpUsGsfjqfBB7foimhkfwc3jymSjFbKYQCJCzf",
+      "feeYocto": "44636512500000000000"
+    },
+    {
+      "label": "Owned bob funds upgrade storage",
+      "account": "bob.noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "FcmPcfv42YSjtzCkvQXtjGvdu8MyqqV1ed3dNFQuTTyZ",
+      "final": true,
+      "explorer": "https://testnet.nearblocks.io/txns/FcmPcfv42YSjtzCkvQXtjGvdu8MyqqV1ed3dNFQuTTyZ",
+      "feeYocto": "44636512500000000000"
+    },
+    {
+      "label": "Deploy v3 and migrate v2 credit state atomically",
+      "account": "credit.noren-near-mw9h22el.testnet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "hash": "HGERJ7bxE4MuG4ET6CyuAbfjr4dLCtpTZVcBpJpgCjb4",
+      "final": false,
+      "explorer": "https://testnet.nearblocks.io/txns/HGERJ7bxE4MuG4ET6CyuAbfjr4dLCtpTZVcBpJpgCjb4",
+      "feeYocto": "2752644639428500000000"
+    }
+  ],
+  "maximumGasAndStorageNEAR": 0.3,
+  "internalTransfersNEAR": 0.13,
+  "startedAt": "2026-11-13T06:14:55.752Z",
+  "finishedAt": "2026-11-13T06:15:08.122Z",
+  "failure": {
+    "code": "LackBalanceForState",
+    "additionalReserveYocto": "43205718283045900000041",
+    "rolledBack": true,
+    "schemaAfter": 2
+  }
+}

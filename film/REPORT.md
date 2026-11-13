@@ -23,3 +23,9 @@ Started 2026-11-13 on branch `near`. No hosting, push or other-repo changes are 
 ## Execution status
 
 Reference review and current-UI before captures are in progress. No product change or new transaction has been made for this port yet.
+
+## Native stock buyer and v3 credit upgrade
+
+Four Rust unit tests passed, including exact v2 state migration; the six existing sandbox scenarios passed, and the new seventh sandbox scenario passed after correcting its time advance (200 blocks did not expire 90 seconds). It verifies real stock-for-USDC payment, separate LP funds, full stock refund on merchant transfer failure, insufficient funds/slippage and stale-price refunds. The first deployed upgrade rolled back with LackBalanceForState; recorded reserve transfers between owned accounts allowed the atomic migration to finalize. Owner mint finalized; an SDK prepaid-gas balance check stopped the next funding call before broadcast. A temporary owned-account gas reserve then funded the separate buyer with 500 test USDC and was returned. No helper funding or mainnet transaction. Every successful and failed on-chain action is in deployments/market-*.json. Existing alice/bob collateral, credit limits, pending locks and LP pool matched across the upgrade.
+
+Merchant backend: five trust-boundary tests pass, including actual NEP-413 signature verification, one-use challenges, session/key scoping, invoice-bound final receipts and duplicate-hash rejection. Local store metadata is not called on-chain registration. Product UI is still being wired before it becomes the default route.
