@@ -1,5 +1,13 @@
 # Full-flow QA — Noren on NEAR
 
+## Stocks-first checkout and the live film run (2026-11-13, Claude)
+
+Checkout now offers four real ways to pay, stocks first: **Pay with stocks** (tTSLA/tNVDA/tAAPL or test BTC at a signed live price), **Pay with USDC**, **Pay later** (credit, stock kept) and **Pay in 3**. The unbuilt "Pay privately" tile was removed rather than shown disabled. The app Home shows USDC, stocks, locked collateral and credit; Earn previews the credit a deposit unlocks from the signed price. Aubelle's editorial hero images were restored and are emitted in the production build.
+
+Route captures (signed in with the QA signer, every transaction refused), no page exception and **no horizontal overflow at 1440 and 375** for all 11 routes: `/`, `/shop/`, `/shop/#/p/amelie-gingham`, `#/dashboard/onboard`, a paid `#/pay/:invoice` receipt, and `#/app` Home, Pay, Earn, Credit, Borrow, Swap. Files: orchestration shots folder `noren-near/claude/flow-{0..10}-{1440,375}.png`.
+
+The live film run (Nov 13, 15:24–15:36 UTC, US market open) exercised the whole product in one browser with real NEAR testnet transactions, 16 FINAL and successful; the table is in the README ("The film run") and the per-take stills are in `noren-near/claude-film/`. Ledgers: `deployments/near-film-2026-11-13T15-24-18-731Z.json` (STOPPED by the recorder's own reservation cap right after the stock sale; nothing was repeated) and `deployments/near-film-2026-11-13T15-31-08-438Z.json` (resumed, PASS, ending with zero debt and zero collateral). Two further STOPPED ledgers with 0 transactions record a Yahoo HTTP 429 and a dev-server restart.
+
 ## Original Noren surfaces restored on NEAR (2026-11-13)
 
 The original merchant, Aubelle and app presentation now runs on the native NEAR layer. **78 signed-in captures passed at 1440 and 375**, without page exceptions or horizontal overflow. The first mobile header overflow was fixed by shortening its network label; components/styles/art were retained. Screenshots were captured locally during QA and are not committed. Files below live under the orchestration shots folder's `noren-near/ethglobal-port/` directory; `*` means both `1440.png` and `375.png`.
