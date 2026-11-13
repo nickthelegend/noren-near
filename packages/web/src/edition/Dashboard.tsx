@@ -57,8 +57,9 @@ export function Dashboard({ tab, sub }: { tab: Tab; sub?: string }) {
   // A signed-in owner (NEP-413 session) acts on its own store; the legacy dev token acts on the dev merchant.
   const [session, setSession] = useState<Session | null>(readSession);
   const [stores, setStores] = useState<StoreView[] | null>(null);
+  const [onboarding, setOnboarding] = useState(false);
   const [storeId, setStoreId] = useState<string | null>(readStoreId);
-  useEffect(() => { if (!session) { setStores(null); return; } listStores(session.session).then(setStores).catch((e) => { if (/Session required/.test(msgOf(e))) { saveSession(null); setSession(null); } else setStores([]); }); }, [session, tab]);
+  useEffect(() => {let active=true;if(!session){setStores(null);return;}listStores(session.session).then(rows=>{if(!active)return;setStores(rows);if(rows.length&&tab!=='onboard')setOnboarding(false);}).catch(e=>{if(!active)return;if(/Session required/.test(msgOf(e))){saveSession(null);setSession(null);}else setStores([]);});return()=>{active=false};},[session,tab]);
   const store = stores?.find((x) => x.id === storeId) ?? stores?.[0] ?? null;
   const cfg = useMemo(() => (baseCfg && store ? { ...baseCfg, merchant: store.merchant } : baseCfg), [baseCfg, store]);
   const token = store && session ? session.session : devToken;
@@ -93,7 +94,6 @@ export function Dashboard({ tab, sub }: { tab: Tab; sub?: string }) {
     addEventListener("keydown", k); return () => removeEventListener("keydown", k);
   }, []);
 
-  const [onboarding, setOnboarding] = useState(false);
   const firstRun = !!baseCfg && (onboarding || tab === "onboard" || (!devToken && !session) || (!!session && stores !== null && stores.length === 0));
   if (firstRun && baseCfg) return (
     <div className="ob-page">

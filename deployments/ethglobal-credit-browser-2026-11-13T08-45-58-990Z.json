@@ -1,0 +1,34 @@
+{
+  "network": "testnet",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "status": "FAIL",
+  "startedAt": "2026-11-13T08:45:59.745Z",
+  "reservedYocto": "0",
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "near": "104002368633209899999959",
+    "btc": "995626",
+    "usdc": "49939997",
+    "shop": "195060870"
+  },
+  "transactions": [],
+  "attempts": [],
+  "screenshots": [],
+  "observations": [],
+  "errors": [],
+  "failedStage": "public test-USDC faucet",
+  "error": "locator.click: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Get 200 test USDC', exact: true })\u001b[22m\n",
+  "finishedAt": "2026-11-13T08:50:25.786Z",
+  "actualNearSpentYocto": "0"
+}

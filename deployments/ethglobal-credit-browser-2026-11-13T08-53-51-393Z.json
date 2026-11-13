@@ -1,0 +1,419 @@
+{
+  "network": "testnet",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "status": "CHAIN_PASS_UI_FIX_REQUIRED",
+  "startedAt": "2026-11-13T08:53:51.957Z",
+  "reservedYocto": "92000000000000000000002",
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "near": "104002368633209899999959",
+    "btc": "995626",
+    "usdc": "49939997",
+    "shop": "195060870"
+  },
+  "transactions": [
+    {
+      "source": "browser QA signer",
+      "stage": "public test-USDC faucet",
+      "hash": "5qrAGDUNGx91Sse6Cerb74oeDnUQCwRiSjy2jVDL7JeU",
+      "final": true
+    },
+    {
+      "source": "browser QA signer",
+      "stage": "deposit native test WBTC",
+      "hash": "EFodQeph5XaHYnxXDoLSZqjkNDz7r7frbP8czt2rpcmF",
+      "final": true
+    },
+    {
+      "source": "Node signed BTC quote",
+      "stage": "refresh BTC for credit",
+      "hash": "BYcR9yHhdcxou372FeMYpXBjfjv2JRdheWSQK6uj29uG",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68734210000",
+        "timestamp_ns": "1794560047619000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "EjeXYYjIUDiGRsQeEITlNIJEtgD4JrWG/SUzSBa0hL66TUPfRt6vFjbJa78zPbdd/H0AZhwVNd3erzKdAqEpCw=="
+      }
+    },
+    {
+      "source": "browser QA signer",
+      "stage": "app borrow and pay shop",
+      "hash": "BGDHPES1sJDFDxYWRcwhVKBZk8h8gtMb3K13a1L3we5S",
+      "final": true
+    },
+    {
+      "source": "browser QA signer",
+      "stage": "Aubelle real schedule",
+      "hash": "8cXtESwamgjjifRuVQGyNksFngLTJ7fEfMNeGGhw5NGw",
+      "final": true
+    },
+    {
+      "source": "browser QA signer",
+      "stage": "Aubelle due first draw",
+      "hash": "CuVRseXe1WMtpjVwrkjisKRen3CtchHpcydPukDs9vFz",
+      "final": true
+    },
+    {
+      "source": "browser QA signer",
+      "stage": "repay all credit",
+      "hash": "HzPtUnovMXkDWpbqoUYeNeYW87nfZ2scz9DkqpAdDPnv",
+      "final": true
+    },
+    {
+      "source": "browser QA signer",
+      "stage": "withdraw same collateral",
+      "hash": "HbqALLpSHr2CzGiVEDcxko6KwoZQx8ZWFa2hdcGTNhz6",
+      "final": true
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "public test-USDC faucet",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "20000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "4000000000000000000000"
+    },
+    {
+      "stage": "deposit native test WBTC",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "refresh BTC for credit",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "app borrow and pay shop",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "16000000000000000000000"
+    },
+    {
+      "stage": "Aubelle real schedule",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "Aubelle due first draw",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "16000000000000000000000"
+    },
+    {
+      "stage": "repay all credit",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "withdraw same collateral",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "60000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "12000000000000000000000"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "faucet-final",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/faucet-final-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "faucet-final",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/faucet-final-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "deposit-final",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/deposit-final-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "deposit-final",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/deposit-final-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "borrow-final",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/borrow-final-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "borrow-final",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/borrow-final-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-bag",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/shop-bag-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop-bag",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/shop-bag-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "schedule-final",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/schedule-final-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "schedule-final",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/schedule-final-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "draw-final",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/draw-final-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "draw-final",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/draw-final-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "before-partial-order",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/before-partial-order-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "before-partial-order",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/before-partial-order-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "repay-final",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/repay-final-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "repay-final",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/repay-final-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "withdraw-final",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/withdraw-final-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "withdraw-final",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/withdraw-final-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "position-restored",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/position-restored-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "position-restored",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/position-restored-375.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-partial-receipt",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/merchant-partial-receipt-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-partial-receipt",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-credit/merchant-partial-receipt-375.png",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "observations": [
+    "Partial order copy incorrectly says not paid; fix after retaining real before screenshots."
+  ],
+  "errors": [],
+  "borrowed": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [
+      {
+        "token": "wbtc.fakes.testnet",
+        "amount": "300000",
+        "value_usd6": "206202630"
+      }
+    ],
+    "collateral_usd6": "206202630",
+    "credit_limit_usd6": "103101315",
+    "debt_usd6": "25000000",
+    "available_usd6": "78101315",
+    "health_bps": "49488",
+    "prices_fresh": true,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "invoiceId": "0x3a3dfbc6c42cd686d1960228b56bd851b0c53b7ce3b768630c746effcd82043f",
+  "invoice": {
+    "invoice": {
+      "invoiceId": "0x3a3dfbc6c42cd686d1960228b56bd851b0c53b7ce3b768630c746effcd82043f",
+      "merchant": "cce7e48d-a50c-4d56-a356-09183e4af663",
+      "amount": "148000000",
+      "expiry": "1794561863"
+    },
+    "status": "open",
+    "description": "Aubelle order AUB-A65FBC1C: Amélie Gingham",
+    "merchantName": "Aubelle NEAR 1440",
+    "createdAt": 1794560063,
+    "paidAmount": "0",
+    "payments": [],
+    "metadata": {
+      "orderId": "AUB-A65FBC1C"
+    },
+    "successUrl": "http://127.0.0.1:5395/shop/#/order/AUB-A65FBC1C",
+    "cancelUrl": "http://127.0.0.1:5395/shop/#/bag"
+  },
+  "orderUrl": "http://127.0.0.1:5395/shop/#/order/AUB-A65FBC1C",
+  "planIds": [
+    3,
+    4,
+    5
+  ],
+  "partial": {
+    "invoice": {
+      "invoiceId": "0x3a3dfbc6c42cd686d1960228b56bd851b0c53b7ce3b768630c746effcd82043f",
+      "merchant": "cce7e48d-a50c-4d56-a356-09183e4af663",
+      "amount": "148000000",
+      "expiry": "1794561863"
+    },
+    "status": "partially_paid",
+    "description": "Aubelle order AUB-A65FBC1C: Amélie Gingham",
+    "merchantName": "Aubelle NEAR 1440",
+    "createdAt": 1794560063,
+    "paidAmount": "49333333",
+    "payments": [
+      {
+        "hash": "CuVRseXe1WMtpjVwrkjisKRen3CtchHpcydPukDs9vFz",
+        "amount": "49333333",
+        "method": "credit",
+        "payer": "alice.noren-near-mw9h22el.testnet"
+      }
+    ],
+    "metadata": {
+      "orderId": "AUB-A65FBC1C"
+    },
+    "successUrl": "http://127.0.0.1:5395/shop/#/order/AUB-A65FBC1C",
+    "cancelUrl": "http://127.0.0.1:5395/shop/#/bag",
+    "plan": {
+      "owner": "alice.noren-near-mw9h22el.testnet",
+      "ids": [
+        3,
+        4,
+        5
+      ],
+      "hash": "8cXtESwamgjjifRuVQGyNksFngLTJ7fEfMNeGGhw5NGw"
+    },
+    "method": "credit",
+    "paymentTx": "CuVRseXe1WMtpjVwrkjisKRen3CtchHpcydPukDs9vFz",
+    "paidAt": 1794560078
+  },
+  "drawn": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [
+      {
+        "token": "wbtc.fakes.testnet",
+        "amount": "300000",
+        "value_usd6": "206202630"
+      }
+    ],
+    "collateral_usd6": "206202630",
+    "credit_limit_usd6": "103101315",
+    "debt_usd6": "74333334",
+    "available_usd6": "28767981",
+    "health_bps": "16644",
+    "prices_fresh": true,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "after": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "btc": "995626",
+    "usdc": "175606661",
+    "shop": "269394203"
+  },
+  "finishedAt": "2026-11-13T08:54:59.963Z",
+  "actualNearSpentYocto": "4007264777352300000002"
+}
