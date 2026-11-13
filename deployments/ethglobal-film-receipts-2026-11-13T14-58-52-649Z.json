@@ -1,0 +1,88 @@
+{
+  "network": "testnet",
+  "status": "PASS",
+  "source": "ethglobal-film-2026-11-13T14-50-41-736Z.json",
+  "transactionsSent": 0,
+  "screens": [
+    {
+      "name": "stock-sale",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/stock-sale-1440.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "credit-payment",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/credit-payment-1440.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "first-installment",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/first-installment-1440.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "aubelle-paid-order",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/aubelle-paid-order-1440.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "stock-sale",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/stock-sale-375.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "credit-payment",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/credit-payment-375.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "first-installment",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/first-installment-375.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "aubelle-paid-order",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/receipts/aubelle-paid-order-375.png",
+      "overflow": false,
+      "bad": false,
+      "errors": [],
+      "failed": [],
+      "consoleErrors": []
+    }
+  ]
+}

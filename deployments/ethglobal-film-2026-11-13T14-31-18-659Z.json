@@ -1,0 +1,320 @@
+{
+  "network": "testnet",
+  "evidenceFile": "ethglobal-film-2026-11-13T14-31-18-659Z.json",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T14:31:19.064Z",
+  "status": "STOPPED",
+  "reservationCapYocto": "250000000000000000000000",
+  "actualSpendCapYocto": "30000000000000000000000",
+  "reservedYocto": "16000000000000000000001",
+  "stage": "usdc",
+  "takes": [
+    {
+      "id": "website",
+      "page": "app",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@c0ab9591f02d19c392cb413ea5235ead.webm",
+      "start": 0.173,
+      "end": 7.887,
+      "recordedAt": "2026-11-13T14:32:48.826Z"
+    },
+    {
+      "id": "merchant",
+      "page": "app",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@c0ab9591f02d19c392cb413ea5235ead.webm",
+      "start": 7.915,
+      "end": 25.525,
+      "recordedAt": "2026-11-13T14:33:06.464Z"
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 3.49,
+      "type": "move",
+      "stage": "website",
+      "x": 801.1171875,
+      "y": 565.3125
+    },
+    {
+      "page": "app",
+      "t": 3.94,
+      "type": "click",
+      "stage": "website"
+    },
+    {
+      "page": "app",
+      "t": 8.14,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 272.5
+    },
+    {
+      "page": "app",
+      "t": 8.592,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 9.09,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 260.296875
+    },
+    {
+      "page": "app",
+      "t": 9.543,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 10.306,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 363.296875
+    },
+    {
+      "page": "app",
+      "t": 10.759,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 11.189,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 380.5
+    },
+    {
+      "page": "app",
+      "t": 11.641,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 12.073,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 484.296875
+    },
+    {
+      "page": "app",
+      "t": 12.525,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 14.456,
+      "type": "move",
+      "stage": "merchant",
+      "x": 936.1953125,
+      "y": 547.296875
+    },
+    {
+      "page": "app",
+      "t": 14.908,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 15.323,
+      "type": "move",
+      "stage": "merchant",
+      "x": 700,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 15.775,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 16.257,
+      "type": "move",
+      "stage": "merchant",
+      "x": 985,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 16.709,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 18.339,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 347.296875
+    },
+    {
+      "page": "app",
+      "t": 18.791,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 19.206,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 514.5
+    },
+    {
+      "page": "app",
+      "t": 19.673,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 21.589,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 674.5
+    },
+    {
+      "page": "app",
+      "t": 22.042,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 22.973,
+      "type": "move",
+      "stage": "merchant",
+      "x": 364.140625,
+      "y": 525.765625
+    },
+    {
+      "page": "app",
+      "t": 23.425,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 26.223,
+      "type": "move",
+      "stage": "usdc",
+      "x": 381,
+      "y": 767.8359375
+    },
+    {
+      "page": "app",
+      "t": 26.673,
+      "type": "click",
+      "stage": "usdc"
+    },
+    {
+      "page": "app",
+      "t": 27.689,
+      "type": "move",
+      "stage": "usdc",
+      "x": 274,
+      "y": 741.78125
+    },
+    {
+      "page": "app",
+      "t": 28.141,
+      "type": "click",
+      "stage": "usdc"
+    },
+    {
+      "page": "app",
+      "t": 28.378,
+      "type": "wait-start",
+      "stage": "usdc",
+      "label": "usdc"
+    }
+  ],
+  "stills": [
+    {
+      "name": "website",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/website.png"
+    },
+    {
+      "name": "merchant",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/merchant.png"
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "usdc",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "browser QA signer",
+      "action": "usdc",
+      "hash": "9vcFVd8BKNff7Py9GVkSxs6CN4bKowYjKiXqicWeaCYc"
+    }
+  ],
+  "quotes": [],
+  "errors": [],
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "near": "99995103855857599999957",
+    "stock": "10000000000",
+    "btc": "995626",
+    "usdc": "175606661",
+    "shop": "269394203"
+  },
+  "preflightEquity": {
+    "symbol": "tTSLA",
+    "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+    "priceUsd6": "398720000",
+    "timestampNs": "1794580357000000000",
+    "publishTime": 1794580357,
+    "ageSeconds": 2,
+    "fresh": true,
+    "marketOpen": true,
+    "provider": "Yahoo Finance",
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+  },
+  "activeTake": {
+    "id": "usdc",
+    "page": "app",
+    "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@c0ab9591f02d19c392cb413ea5235ead.webm",
+    "start": 25.529,
+    "recordedAt": "2026-11-13T14:33:06.468Z",
+    "stoppedAt": "2026-11-13T14:34:50.058Z"
+  },
+  "usdcInvoiceURL": "http://127.0.0.1:5395/#/pay/0xca88024d951bf35be637ffdc38f75905a553f273d511227de15fdc7bb98237c7",
+  "failedStage": "usdc",
+  "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Final on NEAR testnet', { exact: true }) to be visible\u001b[22m\n",
+  "finishedAt": "2026-11-13T14:34:50.061Z",
+  "actualNearSpentYocto": "237904668555500000001"
+}

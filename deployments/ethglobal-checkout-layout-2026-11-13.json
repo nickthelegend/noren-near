@@ -1,0 +1,35 @@
+{
+  "status": "FIXED",
+  "network": "testnet",
+  "fixCommit": "ea4bf5c",
+  "change": "Restore the original .co grid container. No CSS, fonts, colors or artwork changed.",
+  "transactionsSent": 0,
+  "before": [
+    {
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/layout/before-1440.png",
+      "columnsSideBySide": false,
+      "overflow": false
+    },
+    {
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/layout/before-375.png",
+      "columnsSideBySide": false,
+      "overflow": false
+    }
+  ],
+  "after": [
+    {
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/layout/after-1440.png",
+      "columnsSideBySide": true,
+      "overflow": false
+    },
+    {
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/layout/after-375.png",
+      "columnsSideBySide": false,
+      "overflow": false
+    }
+  ]
+}

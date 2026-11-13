@@ -1,0 +1,2303 @@
+{
+  "network": "testnet",
+  "evidenceFile": "ethglobal-film-2026-11-13T14-50-41-736Z.json",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T14:31:19.064Z",
+  "status": "PASS",
+  "reservationCapYocto": "250000000000000000000000",
+  "actualSpendCapYocto": "30000000000000000000000",
+  "reservedYocto": "184000000000000000000005",
+  "stage": "dry-quote",
+  "takes": [
+    {
+      "id": "website",
+      "page": "app",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@c0ab9591f02d19c392cb413ea5235ead.webm",
+      "start": 0.173,
+      "end": 7.887,
+      "recordedAt": "2026-11-13T14:32:48.826Z"
+    },
+    {
+      "id": "merchant",
+      "page": "app",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@c0ab9591f02d19c392cb413ea5235ead.webm",
+      "start": 7.915,
+      "end": 25.525,
+      "recordedAt": "2026-11-13T14:33:06.464Z"
+    },
+    {
+      "id": "usdc-receipt-recovered",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 1.307,
+      "end": 5.966,
+      "recordedAt": "2026-11-13T14:51:29.466Z"
+    },
+    {
+      "id": "explorer-usdc",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 6.925,
+      "end": 10.206,
+      "recordedAt": "2026-11-13T14:51:33.768Z"
+    },
+    {
+      "id": "shop",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 10.315,
+      "end": 22.712,
+      "recordedAt": "2026-11-13T14:51:46.212Z"
+    },
+    {
+      "id": "app",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 33.172,
+      "end": 42.157,
+      "recordedAt": "2026-11-13T14:52:05.657Z"
+    },
+    {
+      "id": "stocks",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 42.772,
+      "end": 59.982,
+      "recordedAt": "2026-11-13T14:52:23.482Z"
+    },
+    {
+      "id": "explorer-stocks",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 60.822,
+      "end": 64.119,
+      "recordedAt": "2026-11-13T14:52:27.681Z"
+    },
+    {
+      "id": "shop-receipt",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 64.194,
+      "end": 67.12,
+      "recordedAt": "2026-11-13T14:52:30.620Z"
+    },
+    {
+      "id": "deposit-stock",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 69.017,
+      "end": 80.105,
+      "recordedAt": "2026-11-13T14:52:43.605Z"
+    },
+    {
+      "id": "explorer-deposit-stock",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 80.927,
+      "end": 84.204,
+      "recordedAt": "2026-11-13T14:52:47.766Z"
+    },
+    {
+      "id": "deposit-btc",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 84.277,
+      "end": 95.57,
+      "recordedAt": "2026-11-13T14:52:59.070Z"
+    },
+    {
+      "id": "explorer-deposit-btc",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 96.382,
+      "end": 99.655,
+      "recordedAt": "2026-11-13T14:53:03.217Z"
+    },
+    {
+      "id": "mixed-position",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 109.074,
+      "end": 113.021,
+      "recordedAt": "2026-11-13T14:53:16.521Z"
+    },
+    {
+      "id": "credit-invoice",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 113.024,
+      "end": 130.338,
+      "recordedAt": "2026-11-13T14:53:33.838Z"
+    },
+    {
+      "id": "explorer-credit",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 131.155,
+      "end": 134.436,
+      "recordedAt": "2026-11-13T14:53:37.998Z"
+    },
+    {
+      "id": "position-borrowed",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 134.509,
+      "end": 138.32,
+      "recordedAt": "2026-11-13T14:53:41.820Z"
+    },
+    {
+      "id": "schedule",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 143.128,
+      "end": 159.211,
+      "recordedAt": "2026-11-13T14:54:02.711Z"
+    },
+    {
+      "id": "explorer-schedule",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 160.026,
+      "end": 163.302,
+      "recordedAt": "2026-11-13T14:54:06.864Z"
+    },
+    {
+      "id": "draw",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 172.711,
+      "end": 183.528,
+      "recordedAt": "2026-11-13T14:54:27.028Z"
+    },
+    {
+      "id": "explorer-draw",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 184.353,
+      "end": 187.635,
+      "recordedAt": "2026-11-13T14:54:31.197Z"
+    },
+    {
+      "id": "repay",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 187.708,
+      "end": 196.633,
+      "recordedAt": "2026-11-13T14:54:40.133Z"
+    },
+    {
+      "id": "explorer-repay",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 197.427,
+      "end": 200.701,
+      "recordedAt": "2026-11-13T14:54:44.263Z"
+    },
+    {
+      "id": "withdraw-stock",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 200.773,
+      "end": 210.867,
+      "recordedAt": "2026-11-13T14:54:54.367Z"
+    },
+    {
+      "id": "explorer-withdraw-stock",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 211.668,
+      "end": 214.949,
+      "recordedAt": "2026-11-13T14:54:58.511Z"
+    },
+    {
+      "id": "withdraw-btc",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 215.021,
+      "end": 225.534,
+      "recordedAt": "2026-11-13T14:55:09.034Z"
+    },
+    {
+      "id": "explorer-withdraw-btc",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 226.347,
+      "end": 229.647,
+      "recordedAt": "2026-11-13T14:55:13.209Z"
+    },
+    {
+      "id": "restored",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 229.722,
+      "end": 232.935,
+      "recordedAt": "2026-11-13T14:55:16.435Z"
+    },
+    {
+      "id": "merchant-view",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 232.939,
+      "end": 244.776,
+      "recordedAt": "2026-11-13T14:55:28.276Z"
+    },
+    {
+      "id": "explorer-price-tsla-sale",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 245.616,
+      "end": 248.898,
+      "recordedAt": "2026-11-13T14:55:32.460Z"
+    },
+    {
+      "id": "explorer-price-btc-sale",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 249.334,
+      "end": 252.615,
+      "recordedAt": "2026-11-13T14:55:36.177Z"
+    },
+    {
+      "id": "explorer-price-tsla-credit",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 253.492,
+      "end": 256.766,
+      "recordedAt": "2026-11-13T14:55:40.328Z"
+    },
+    {
+      "id": "explorer-price-btc-credit",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 257.201,
+      "end": 260.525,
+      "recordedAt": "2026-11-13T14:55:44.087Z"
+    },
+    {
+      "id": "explorer-price-btc-plan",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 261.401,
+      "end": 264.711,
+      "recordedAt": "2026-11-13T14:55:48.273Z"
+    },
+    {
+      "id": "explorer-price-tsla-draw",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 265.117,
+      "end": 268.419,
+      "recordedAt": "2026-11-13T14:55:51.981Z"
+    },
+    {
+      "id": "explorer-price-btc-draw",
+      "page": "explorer-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@9150f6a62632c8c0ecdb411dc18e9692.webm",
+      "start": 269.333,
+      "end": 272.615,
+      "recordedAt": "2026-11-13T14:55:56.177Z"
+    },
+    {
+      "id": "dry-quote",
+      "page": "app-resume",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@edf9abd4b5e3fca3b96021d6b61c302a.webm",
+      "start": 272.691,
+      "end": 279.853,
+      "recordedAt": "2026-11-13T14:56:03.353Z"
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 3.49,
+      "type": "move",
+      "stage": "website",
+      "x": 801.1171875,
+      "y": 565.3125
+    },
+    {
+      "page": "app",
+      "t": 3.94,
+      "type": "click",
+      "stage": "website"
+    },
+    {
+      "page": "app",
+      "t": 8.14,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 272.5
+    },
+    {
+      "page": "app",
+      "t": 8.592,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 9.09,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 260.296875
+    },
+    {
+      "page": "app",
+      "t": 9.543,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 10.306,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 363.296875
+    },
+    {
+      "page": "app",
+      "t": 10.759,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 11.189,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 380.5
+    },
+    {
+      "page": "app",
+      "t": 11.641,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 12.073,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 484.296875
+    },
+    {
+      "page": "app",
+      "t": 12.525,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 14.456,
+      "type": "move",
+      "stage": "merchant",
+      "x": 936.1953125,
+      "y": 547.296875
+    },
+    {
+      "page": "app",
+      "t": 14.908,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 15.323,
+      "type": "move",
+      "stage": "merchant",
+      "x": 700,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 15.775,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 16.257,
+      "type": "move",
+      "stage": "merchant",
+      "x": 985,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 16.709,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 18.339,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 347.296875
+    },
+    {
+      "page": "app",
+      "t": 18.791,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 19.206,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 514.5
+    },
+    {
+      "page": "app",
+      "t": 19.673,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 21.589,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 674.5
+    },
+    {
+      "page": "app",
+      "t": 22.042,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 22.973,
+      "type": "move",
+      "stage": "merchant",
+      "x": 364.140625,
+      "y": 525.765625
+    },
+    {
+      "page": "app",
+      "t": 23.425,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 26.223,
+      "type": "move",
+      "stage": "usdc",
+      "x": 381,
+      "y": 767.8359375
+    },
+    {
+      "page": "app",
+      "t": 26.673,
+      "type": "click",
+      "stage": "usdc"
+    },
+    {
+      "page": "app",
+      "t": 27.689,
+      "type": "move",
+      "stage": "usdc",
+      "x": 274,
+      "y": 741.78125
+    },
+    {
+      "page": "app",
+      "t": 28.141,
+      "type": "click",
+      "stage": "usdc"
+    },
+    {
+      "page": "app",
+      "t": 28.378,
+      "type": "wait-start",
+      "stage": "usdc",
+      "label": "usdc"
+    },
+    {
+      "page": "app-resume",
+      "t": 0.427,
+      "type": "move",
+      "stage": "preflight",
+      "x": 900,
+      "y": 272.5
+    },
+    {
+      "page": "app-resume",
+      "t": 0.879,
+      "type": "click",
+      "stage": "preflight"
+    },
+    {
+      "page": "app-resume",
+      "t": 2.021,
+      "type": "move",
+      "stage": "usdc-receipt-recovered",
+      "x": 994,
+      "y": 304.4375
+    },
+    {
+      "page": "explorer-resume",
+      "t": 7.125,
+      "type": "move",
+      "stage": "explorer-usdc",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 12.519,
+      "type": "move",
+      "stage": "shop",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app-resume",
+      "t": 14.352,
+      "type": "move",
+      "stage": "shop",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app-resume",
+      "t": 14.803,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app-resume",
+      "t": 15.219,
+      "type": "move",
+      "stage": "shop",
+      "x": 1059.8046875,
+      "y": 500.671875
+    },
+    {
+      "page": "app-resume",
+      "t": 15.672,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app-resume",
+      "t": 16.304,
+      "type": "move",
+      "stage": "shop",
+      "x": 1220,
+      "y": 766
+    },
+    {
+      "page": "app-resume",
+      "t": 16.755,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app-resume",
+      "t": 17.185,
+      "type": "move",
+      "stage": "shop",
+      "x": 1134,
+      "y": 507.890625
+    },
+    {
+      "page": "app-resume",
+      "t": 17.637,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app-resume",
+      "t": 18.069,
+      "type": "move",
+      "stage": "shop",
+      "x": 887,
+      "y": 237.9765625
+    },
+    {
+      "page": "app-resume",
+      "t": 18.52,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app-resume",
+      "t": 21.136,
+      "type": "move",
+      "stage": "shop",
+      "x": 887,
+      "y": 342.34375
+    },
+    {
+      "page": "app-resume",
+      "t": 21.589,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app-resume",
+      "t": 31.869,
+      "type": "move",
+      "stage": "shop",
+      "x": 720,
+      "y": 340.1875
+    },
+    {
+      "page": "app-resume",
+      "t": 32.321,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app-resume",
+      "t": 33.352,
+      "type": "move",
+      "stage": "app",
+      "x": 510,
+      "y": 324.46875
+    },
+    {
+      "page": "app-resume",
+      "t": 36.187,
+      "type": "move",
+      "stage": "app",
+      "x": 742.6953125,
+      "y": 37.5
+    },
+    {
+      "page": "app-resume",
+      "t": 36.639,
+      "type": "click",
+      "stage": "app"
+    },
+    {
+      "page": "app-resume",
+      "t": 39.186,
+      "type": "move",
+      "stage": "app",
+      "x": 533.3125,
+      "y": 37.5
+    },
+    {
+      "page": "app-resume",
+      "t": 39.637,
+      "type": "click",
+      "stage": "app"
+    },
+    {
+      "page": "app-resume",
+      "t": 42.952,
+      "type": "move",
+      "stage": "stocks",
+      "x": 994,
+      "y": 657.921875
+    },
+    {
+      "page": "app-resume",
+      "t": 48.586,
+      "type": "move",
+      "stage": "stocks",
+      "x": 994,
+      "y": 742.3125
+    },
+    {
+      "page": "app-resume",
+      "t": 49.036,
+      "type": "click",
+      "stage": "stocks"
+    },
+    {
+      "page": "app-resume",
+      "t": 49.275,
+      "type": "wait-start",
+      "stage": "stocks",
+      "label": "stocks"
+    },
+    {
+      "page": "app-resume",
+      "t": 56.839,
+      "type": "wait-end",
+      "stage": "stocks",
+      "label": "stocks"
+    },
+    {
+      "page": "app-resume",
+      "t": 56.839,
+      "type": "result",
+      "stage": "stocks",
+      "label": "stocks"
+    },
+    {
+      "page": "app-resume",
+      "t": 57.035,
+      "type": "move",
+      "stage": "stocks",
+      "x": 994,
+      "y": 764.40625
+    },
+    {
+      "page": "explorer-resume",
+      "t": 61.023,
+      "type": "move",
+      "stage": "explorer-stocks",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 64.384,
+      "type": "move",
+      "stage": "shop-receipt",
+      "x": 994,
+      "y": 519.46875
+    },
+    {
+      "page": "app-resume",
+      "t": 64.837,
+      "type": "click",
+      "stage": "shop-receipt"
+    },
+    {
+      "page": "app-resume",
+      "t": 67.717,
+      "type": "move",
+      "stage": "shop-receipt",
+      "x": 720,
+      "y": 340.1875
+    },
+    {
+      "page": "app-resume",
+      "t": 68.17,
+      "type": "click",
+      "stage": "shop-receipt"
+    },
+    {
+      "page": "app-resume",
+      "t": 69.218,
+      "type": "move",
+      "stage": "deposit-stock",
+      "x": 720,
+      "y": 490.96875
+    },
+    {
+      "page": "app-resume",
+      "t": 69.67,
+      "type": "click",
+      "stage": "deposit-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 70.168,
+      "type": "move",
+      "stage": "deposit-stock",
+      "x": 720,
+      "y": 599.859375
+    },
+    {
+      "page": "app-resume",
+      "t": 70.619,
+      "type": "click",
+      "stage": "deposit-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 70.86,
+      "type": "wait-start",
+      "stage": "deposit-stock",
+      "label": "deposit-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 77.02,
+      "type": "wait-end",
+      "stage": "deposit-stock",
+      "label": "deposit-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 77.02,
+      "type": "result",
+      "stage": "deposit-stock",
+      "label": "deposit-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 77.217,
+      "type": "move",
+      "stage": "deposit-stock",
+      "x": 720,
+      "y": 582.015625
+    },
+    {
+      "page": "explorer-resume",
+      "t": 81.123,
+      "type": "move",
+      "stage": "explorer-deposit-stock",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 84.484,
+      "type": "move",
+      "stage": "deposit-btc",
+      "x": 720,
+      "y": 404.96875
+    },
+    {
+      "page": "app-resume",
+      "t": 84.935,
+      "type": "click",
+      "stage": "deposit-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 85.651,
+      "type": "move",
+      "stage": "deposit-btc",
+      "x": 720,
+      "y": 513.859375
+    },
+    {
+      "page": "app-resume",
+      "t": 86.103,
+      "type": "click",
+      "stage": "deposit-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 86.343,
+      "type": "wait-start",
+      "stage": "deposit-btc",
+      "label": "deposit-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 92.469,
+      "type": "wait-end",
+      "stage": "deposit-btc",
+      "label": "deposit-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 92.469,
+      "type": "result",
+      "stage": "deposit-btc",
+      "label": "deposit-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 92.667,
+      "type": "move",
+      "stage": "deposit-btc",
+      "x": 720,
+      "y": 581.609375
+    },
+    {
+      "page": "explorer-resume",
+      "t": 96.572,
+      "type": "move",
+      "stage": "explorer-deposit-btc",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 109.915,
+      "type": "move",
+      "stage": "mixed-position",
+      "x": 551.765625,
+      "y": 799.46875
+    },
+    {
+      "page": "app-resume",
+      "t": 113.716,
+      "type": "move",
+      "stage": "credit-invoice",
+      "x": 1326.359375,
+      "y": 150.578125
+    },
+    {
+      "page": "app-resume",
+      "t": 114.166,
+      "type": "click",
+      "stage": "credit-invoice"
+    },
+    {
+      "page": "app-resume",
+      "t": 114.6,
+      "type": "move",
+      "stage": "credit-invoice",
+      "x": 482.6328125,
+      "y": 296.203125
+    },
+    {
+      "page": "app-resume",
+      "t": 115.051,
+      "type": "click",
+      "stage": "credit-invoice"
+    },
+    {
+      "page": "app-resume",
+      "t": 116.949,
+      "type": "move",
+      "stage": "credit-invoice",
+      "x": 445.6328125,
+      "y": 421
+    },
+    {
+      "page": "app-resume",
+      "t": 117.401,
+      "type": "click",
+      "stage": "credit-invoice"
+    },
+    {
+      "page": "app-resume",
+      "t": 118.016,
+      "type": "move",
+      "stage": "credit-invoice",
+      "x": 1124.9765625,
+      "y": 609.59375
+    },
+    {
+      "page": "app-resume",
+      "t": 118.47,
+      "type": "click",
+      "stage": "credit-invoice"
+    },
+    {
+      "page": "app-resume",
+      "t": 119.399,
+      "type": "move",
+      "stage": "credit-invoice",
+      "x": 1101,
+      "y": 308.953125
+    },
+    {
+      "page": "app-resume",
+      "t": 119.852,
+      "type": "click",
+      "stage": "credit-invoice"
+    },
+    {
+      "page": "app-resume",
+      "t": 120.283,
+      "type": "move",
+      "stage": "credit-invoice",
+      "x": 994,
+      "y": 602.71875
+    },
+    {
+      "page": "app-resume",
+      "t": 120.735,
+      "type": "click",
+      "stage": "credit-invoice"
+    },
+    {
+      "page": "app-resume",
+      "t": 120.972,
+      "type": "wait-start",
+      "stage": "credit-invoice",
+      "label": "credit"
+    },
+    {
+      "page": "app-resume",
+      "t": 127.184,
+      "type": "wait-end",
+      "stage": "credit-invoice",
+      "label": "credit"
+    },
+    {
+      "page": "app-resume",
+      "t": 127.185,
+      "type": "result",
+      "stage": "credit-invoice",
+      "label": "credit"
+    },
+    {
+      "page": "app-resume",
+      "t": 127.4,
+      "type": "move",
+      "stage": "credit-invoice",
+      "x": 994,
+      "y": 687.8125
+    },
+    {
+      "page": "explorer-resume",
+      "t": 131.354,
+      "type": "move",
+      "stage": "explorer-credit",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 135.414,
+      "type": "move",
+      "stage": "position-borrowed",
+      "x": 551.765625,
+      "y": 799.46875
+    },
+    {
+      "page": "app-resume",
+      "t": 143.815,
+      "type": "move",
+      "stage": "schedule",
+      "x": 1326.359375,
+      "y": 150.578125
+    },
+    {
+      "page": "app-resume",
+      "t": 144.266,
+      "type": "click",
+      "stage": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 144.698,
+      "type": "move",
+      "stage": "schedule",
+      "x": 482.6328125,
+      "y": 296.203125
+    },
+    {
+      "page": "app-resume",
+      "t": 145.149,
+      "type": "click",
+      "stage": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 147.299,
+      "type": "move",
+      "stage": "schedule",
+      "x": 445.6328125,
+      "y": 421
+    },
+    {
+      "page": "app-resume",
+      "t": 147.749,
+      "type": "click",
+      "stage": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 148.281,
+      "type": "move",
+      "stage": "schedule",
+      "x": 1124.9765625,
+      "y": 609.59375
+    },
+    {
+      "page": "app-resume",
+      "t": 148.734,
+      "type": "click",
+      "stage": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 149.665,
+      "type": "move",
+      "stage": "schedule",
+      "x": 1101,
+      "y": 308.953125
+    },
+    {
+      "page": "app-resume",
+      "t": 150.118,
+      "type": "click",
+      "stage": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 150.548,
+      "type": "move",
+      "stage": "schedule",
+      "x": 1098.5,
+      "y": 435.53125
+    },
+    {
+      "page": "app-resume",
+      "t": 151,
+      "type": "click",
+      "stage": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 151.413,
+      "type": "move",
+      "stage": "schedule",
+      "x": 994,
+      "y": 602.71875
+    },
+    {
+      "page": "app-resume",
+      "t": 151.866,
+      "type": "click",
+      "stage": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 152.104,
+      "type": "wait-start",
+      "stage": "schedule",
+      "label": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 156.667,
+      "type": "wait-end",
+      "stage": "schedule",
+      "label": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 156.668,
+      "type": "result",
+      "stage": "schedule",
+      "label": "schedule"
+    },
+    {
+      "page": "app-resume",
+      "t": 156.865,
+      "type": "move",
+      "stage": "schedule",
+      "x": 994,
+      "y": 687.8125
+    },
+    {
+      "page": "explorer-resume",
+      "t": 160.22,
+      "type": "move",
+      "stage": "explorer-schedule",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 172.9,
+      "type": "move",
+      "stage": "draw",
+      "x": 994,
+      "y": 710.5625
+    },
+    {
+      "page": "app-resume",
+      "t": 173.353,
+      "type": "click",
+      "stage": "draw"
+    },
+    {
+      "page": "app-resume",
+      "t": 173.588,
+      "type": "wait-start",
+      "stage": "draw",
+      "label": "draw"
+    },
+    {
+      "page": "app-resume",
+      "t": 180.417,
+      "type": "wait-end",
+      "stage": "draw",
+      "label": "draw"
+    },
+    {
+      "page": "app-resume",
+      "t": 180.417,
+      "type": "result",
+      "stage": "draw",
+      "label": "draw"
+    },
+    {
+      "page": "app-resume",
+      "t": 180.613,
+      "type": "move",
+      "stage": "draw",
+      "x": 994,
+      "y": 582.65625
+    },
+    {
+      "page": "explorer-resume",
+      "t": 184.551,
+      "type": "move",
+      "stage": "explorer-draw",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 188.396,
+      "type": "move",
+      "stage": "repay",
+      "x": 720,
+      "y": 404.90625
+    },
+    {
+      "page": "app-resume",
+      "t": 188.849,
+      "type": "click",
+      "stage": "repay"
+    },
+    {
+      "page": "app-resume",
+      "t": 189.086,
+      "type": "wait-start",
+      "stage": "repay",
+      "label": "repay"
+    },
+    {
+      "page": "app-resume",
+      "t": 195.13,
+      "type": "wait-end",
+      "stage": "repay",
+      "label": "repay"
+    },
+    {
+      "page": "app-resume",
+      "t": 195.131,
+      "type": "result",
+      "stage": "repay",
+      "label": "repay"
+    },
+    {
+      "page": "app-resume",
+      "t": 195.33,
+      "type": "move",
+      "stage": "repay",
+      "x": 720,
+      "y": 582.0625
+    },
+    {
+      "page": "explorer-resume",
+      "t": 197.618,
+      "type": "move",
+      "stage": "explorer-repay",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 201.479,
+      "type": "move",
+      "stage": "withdraw-stock",
+      "x": 720,
+      "y": 490.96875
+    },
+    {
+      "page": "app-resume",
+      "t": 201.932,
+      "type": "click",
+      "stage": "withdraw-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 202.412,
+      "type": "move",
+      "stage": "withdraw-stock",
+      "x": 578,
+      "y": 654.859375
+    },
+    {
+      "page": "app-resume",
+      "t": 202.864,
+      "type": "click",
+      "stage": "withdraw-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 203.104,
+      "type": "wait-start",
+      "stage": "withdraw-stock",
+      "label": "withdraw-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 209.364,
+      "type": "wait-end",
+      "stage": "withdraw-stock",
+      "label": "withdraw-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 209.365,
+      "type": "result",
+      "stage": "withdraw-stock",
+      "label": "withdraw-stock"
+    },
+    {
+      "page": "app-resume",
+      "t": 209.563,
+      "type": "move",
+      "stage": "withdraw-stock",
+      "x": 720,
+      "y": 582.015625
+    },
+    {
+      "page": "explorer-resume",
+      "t": 211.867,
+      "type": "move",
+      "stage": "explorer-withdraw-stock",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 215.729,
+      "type": "move",
+      "stage": "withdraw-btc",
+      "x": 720,
+      "y": 404.96875
+    },
+    {
+      "page": "app-resume",
+      "t": 216.18,
+      "type": "click",
+      "stage": "withdraw-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 216.895,
+      "type": "move",
+      "stage": "withdraw-btc",
+      "x": 578,
+      "y": 568.859375
+    },
+    {
+      "page": "app-resume",
+      "t": 217.347,
+      "type": "click",
+      "stage": "withdraw-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 217.587,
+      "type": "wait-start",
+      "stage": "withdraw-btc",
+      "label": "withdraw-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 224.033,
+      "type": "wait-end",
+      "stage": "withdraw-btc",
+      "label": "withdraw-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 224.034,
+      "type": "result",
+      "stage": "withdraw-btc",
+      "label": "withdraw-btc"
+    },
+    {
+      "page": "app-resume",
+      "t": 224.23,
+      "type": "move",
+      "stage": "withdraw-btc",
+      "x": 720,
+      "y": 582.015625
+    },
+    {
+      "page": "explorer-resume",
+      "t": 226.548,
+      "type": "move",
+      "stage": "explorer-withdraw-btc",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 230.428,
+      "type": "move",
+      "stage": "restored",
+      "x": 551.765625,
+      "y": 799.46875
+    },
+    {
+      "page": "app-resume",
+      "t": 234.828,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 917.34375,
+      "y": 468.9375
+    },
+    {
+      "page": "app-resume",
+      "t": 237.26,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 917.34375,
+      "y": 468.9375
+    },
+    {
+      "page": "app-resume",
+      "t": 237.713,
+      "type": "click",
+      "stage": "merchant-view"
+    },
+    {
+      "page": "explorer-resume",
+      "t": 245.815,
+      "type": "move",
+      "stage": "explorer-price-tsla-sale",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer-resume",
+      "t": 249.532,
+      "type": "move",
+      "stage": "explorer-price-btc-sale",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer-resume",
+      "t": 253.682,
+      "type": "move",
+      "stage": "explorer-price-tsla-credit",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer-resume",
+      "t": 257.398,
+      "type": "move",
+      "stage": "explorer-price-btc-credit",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer-resume",
+      "t": 261.599,
+      "type": "move",
+      "stage": "explorer-price-btc-plan",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer-resume",
+      "t": 265.315,
+      "type": "move",
+      "stage": "explorer-price-tsla-draw",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer-resume",
+      "t": 269.532,
+      "type": "move",
+      "stage": "explorer-price-btc-draw",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app-resume",
+      "t": 273.38,
+      "type": "move",
+      "stage": "dry-quote",
+      "x": 667.6484375,
+      "y": 550.515625
+    },
+    {
+      "page": "app-resume",
+      "t": 273.834,
+      "type": "click",
+      "stage": "dry-quote"
+    },
+    {
+      "page": "app-resume",
+      "t": 274.244,
+      "type": "move",
+      "stage": "dry-quote",
+      "x": 752.3359375,
+      "y": 334.1875
+    },
+    {
+      "page": "app-resume",
+      "t": 274.698,
+      "type": "click",
+      "stage": "dry-quote"
+    },
+    {
+      "page": "app-resume",
+      "t": 275.126,
+      "type": "move",
+      "stage": "dry-quote",
+      "x": 720,
+      "y": 595.1875
+    },
+    {
+      "page": "app-resume",
+      "t": 275.58,
+      "type": "click",
+      "stage": "dry-quote"
+    }
+  ],
+  "stills": [
+    {
+      "name": "website",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/website.png"
+    },
+    {
+      "name": "merchant",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/merchant.png"
+    },
+    {
+      "name": "usdc-receipt-recovered",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/usdc-receipt-recovered.png"
+    },
+    {
+      "name": "explorer-usdc",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-usdc.png"
+    },
+    {
+      "name": "shop",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/shop.png"
+    },
+    {
+      "name": "app",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/app.png"
+    },
+    {
+      "name": "stocks",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/stocks.png"
+    },
+    {
+      "name": "explorer-stocks",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-stocks.png"
+    },
+    {
+      "name": "shop-receipt",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/shop-receipt.png"
+    },
+    {
+      "name": "deposit-stock",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/deposit-stock.png"
+    },
+    {
+      "name": "explorer-deposit-stock",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-deposit-stock.png"
+    },
+    {
+      "name": "deposit-btc",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/deposit-btc.png"
+    },
+    {
+      "name": "explorer-deposit-btc",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-deposit-btc.png"
+    },
+    {
+      "name": "mixed-position",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/mixed-position.png"
+    },
+    {
+      "name": "credit-invoice",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/credit-invoice.png"
+    },
+    {
+      "name": "explorer-credit",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-credit.png"
+    },
+    {
+      "name": "position-borrowed",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/position-borrowed.png"
+    },
+    {
+      "name": "schedule",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/schedule.png"
+    },
+    {
+      "name": "explorer-schedule",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-schedule.png"
+    },
+    {
+      "name": "draw",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/draw.png"
+    },
+    {
+      "name": "explorer-draw",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-draw.png"
+    },
+    {
+      "name": "repay",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/repay.png"
+    },
+    {
+      "name": "explorer-repay",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-repay.png"
+    },
+    {
+      "name": "withdraw-stock",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/withdraw-stock.png"
+    },
+    {
+      "name": "explorer-withdraw-stock",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-withdraw-stock.png"
+    },
+    {
+      "name": "withdraw-btc",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/withdraw-btc.png"
+    },
+    {
+      "name": "explorer-withdraw-btc",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-withdraw-btc.png"
+    },
+    {
+      "name": "restored",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/restored.png"
+    },
+    {
+      "name": "merchant-view",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/merchant-view.png"
+    },
+    {
+      "name": "explorer-price-tsla-sale",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-price-tsla-sale.png"
+    },
+    {
+      "name": "explorer-price-btc-sale",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-price-btc-sale.png"
+    },
+    {
+      "name": "explorer-price-tsla-credit",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-price-tsla-credit.png"
+    },
+    {
+      "name": "explorer-price-btc-credit",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-price-btc-credit.png"
+    },
+    {
+      "name": "explorer-price-btc-plan",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-price-btc-plan.png"
+    },
+    {
+      "name": "explorer-price-tsla-draw",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-price-tsla-draw.png"
+    },
+    {
+      "name": "explorer-price-btc-draw",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/explorer-price-btc-draw.png"
+    },
+    {
+      "name": "dry-quote",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-film/dry-quote.png"
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "usdc",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "shop",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "shop",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "stocks",
+      "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "deposit-stock",
+      "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "deposit-btc",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "explorer-deposit-btc",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "explorer-deposit-btc",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "credit-invoice",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "16000000000000000000000"
+    },
+    {
+      "stage": "position-borrowed",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "schedule",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "explorer-schedule",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "explorer-schedule",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "draw",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "16000000000000000000000"
+    },
+    {
+      "stage": "repay",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    },
+    {
+      "stage": "withdraw-stock",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "60000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "12000000000000000000000"
+    },
+    {
+      "stage": "withdraw-btc",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "60000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "12000000000000000000000"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "browser QA signer",
+      "action": "usdc",
+      "hash": "9vcFVd8BKNff7Py9GVkSxs6CN4bKowYjKiXqicWeaCYc",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/9vcFVd8BKNff7Py9GVkSxs6CN4bKowYjKiXqicWeaCYc?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tsla-sale",
+      "hash": "HK56CXAT34a9R2AU76mrGJ27McbtceDKwWJRj7DER8mB",
+      "final": true,
+      "args": {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "price_usd6": "392940000",
+        "timestamp_ns": "1794581477000000000",
+        "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d",
+        "signature": "q04uudhXx5H0XbY92gDNX35uNjuNPU6YK/pvUo0mEEa68dC9uBzfeNT9Ug1K6q+oJIKsCFzYTVN1Sos5sR1/BQ=="
+      },
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/HK56CXAT34a9R2AU76mrGJ27McbtceDKwWJRj7DER8mB?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-sale",
+      "hash": "BQtxaJCrZijkzSGbbR7xEUb8xJqUefwBoMcBCUxgTCtp",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68927330000",
+        "timestamp_ns": "1794581510163000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "2pmx5w84v2523n95qNLpNWC4dlRRBHUpSA97E8k5VWtcwvF++dzwNGeLdQBvqH0Mws9nFFWAFq+/laphNLlWCg=="
+      },
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/BQtxaJCrZijkzSGbbR7xEUb8xJqUefwBoMcBCUxgTCtp?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "stocks",
+      "hash": "6Lo2UftUBzxjJSEc4TAgspEHkQ2TNMXFiiQiRBjsPU6K",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/6Lo2UftUBzxjJSEc4TAgspEHkQ2TNMXFiiQiRBjsPU6K?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "deposit-stock",
+      "hash": "4zqHm78UTXdoAT9N9skiZLmMs7rnNXZUrXibYLSVQq89",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/4zqHm78UTXdoAT9N9skiZLmMs7rnNXZUrXibYLSVQq89?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "deposit-btc",
+      "hash": "FrjQ1rMvXbzTFVG4RMRxtuLCVZ9CAkzKLrv2ZNy2ZwuK",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/FrjQ1rMvXbzTFVG4RMRxtuLCVZ9CAkzKLrv2ZNy2ZwuK?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tsla-credit",
+      "hash": "343q4c4E7yms36gPcdJujCy1LRtzZYAoJbaZCaP6FMVd",
+      "final": true,
+      "args": {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "price_usd6": "393075000",
+        "timestamp_ns": "1794581572000000000",
+        "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d",
+        "signature": "JKJuEpvW9VaU+4O3fIzuj9dJWQ56Wjiq1H3WPvwz/8MGFITSDcAcX8bcjRJjLpyaNVuBrLiW4ljgJSbsMT+MCA=="
+      },
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/343q4c4E7yms36gPcdJujCy1LRtzZYAoJbaZCaP6FMVd?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-credit",
+      "hash": "GFUogVTQ6TT9sEMDwxdxR4hMGFXsq7boEGQEKw6WJhsm",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68930070000",
+        "timestamp_ns": "1794581588079000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "bm8g89VZAUc5oPx14Pw+bZ73TD8yW3sVSGjpAthqbRua2/CJWeBzV0kJOf77utV+xwhHHtmEht6lBK2dQZN+CQ=="
+      },
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/GFUogVTQ6TT9sEMDwxdxR4hMGFXsq7boEGQEKw6WJhsm?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "credit",
+      "hash": "BVXCWCnWQWoe32KPW4pray6a7jcc4tkQvLMe2E4DfiS8",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/BVXCWCnWQWoe32KPW4pray6a7jcc4tkQvLMe2E4DfiS8?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-plan",
+      "hash": "AmV6vcDXLSN4F64JaZ4nDwvubkXEyg9rfWFoBZFUgcmK",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68969820000",
+        "timestamp_ns": "1794581621144000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "Jxe4U0J2jSpfqe/CKOP+vTAoKC0QRqrzKT0BD26kaPEQpfUO8XoGW0xd7dPhebml/Ij2WG2cLiI0QxlkVXt2Bg=="
+      },
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/AmV6vcDXLSN4F64JaZ4nDwvubkXEyg9rfWFoBZFUgcmK?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "schedule",
+      "hash": "FAffgPbnjsQUDwyDJJ4dAFi3aQ6ViURWrVq45rGFCjxy",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/FAffgPbnjsQUDwyDJJ4dAFi3aQ6ViURWrVq45rGFCjxy?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tsla-draw",
+      "hash": "42ct27KVYqMsEf4CgRELvj78GRxszxsB12gzJRSpgYxj",
+      "final": true,
+      "args": {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "price_usd6": "393160000",
+        "timestamp_ns": "1794581640000000000",
+        "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d",
+        "signature": "WjIEKlj67KMsbUigBCE0T1vboIDexs4wAGcEAUouCVa4i55ac83AGdZCkfgvyVNLg1hvN/1FJyAlPqo2ZQLTBA=="
+      },
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/42ct27KVYqMsEf4CgRELvj78GRxszxsB12gzJRSpgYxj?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-draw",
+      "hash": "4mE3MsFWob1Lpksf2i42NWcNvLi7X7em2UXdfQ7dQy9j",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68998570000",
+        "timestamp_ns": "1794581651958000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "0pLiTd46PJu7bhA/4hSqtb71XNh/GvMjnsKZXKx6uOLNAdOycuiaa53BrsUL5Pskud1ZizT5Bfm36fR5UOO+Bw=="
+      },
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/4mE3MsFWob1Lpksf2i42NWcNvLi7X7em2UXdfQ7dQy9j?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "draw",
+      "hash": "E3iHko3XYEz1cxV9Ndbg7Z8G2mqe8UbbUC1cwXdNJuso",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/E3iHko3XYEz1cxV9Ndbg7Z8G2mqe8UbbUC1cwXdNJuso?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "repay",
+      "hash": "AHxKJEP7RWcobtjddrLWbMvRRo2uH85SDxMZ5zcJYAkA",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/AHxKJEP7RWcobtjddrLWbMvRRo2uH85SDxMZ5zcJYAkA?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "withdraw-stock",
+      "hash": "34rLNRTgovAjKtM3VHrudurfT8W9bL6z7bTuMW6m3rdT",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/34rLNRTgovAjKtM3VHrudurfT8W9bL6z7bTuMW6m3rdT?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "withdraw-btc",
+      "hash": "B8WzdKTQaPBozsB9ohSUdTAEPEwS6Etjfbu8LRQy1Ybw",
+      "final": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/B8WzdKTQaPBozsB9ohSUdTAEPEwS6Etjfbu8LRQy1Ybw?network=testnet"
+    }
+  ],
+  "quotes": [
+    {
+      "symbol": "tTSLA",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "priceUsd6": "392940000",
+      "timestampNs": "1794581477000000000",
+      "publishTime": 1794581477,
+      "ageSeconds": 5,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+    },
+    {
+      "symbol": "tTSLA",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "priceUsd6": "393075000",
+      "timestampNs": "1794581572000000000",
+      "publishTime": 1794581572,
+      "ageSeconds": 11,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+    },
+    {
+      "symbol": "tTSLA",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "priceUsd6": "393075000",
+      "timestampNs": "1794581572000000000",
+      "publishTime": 1794581572,
+      "ageSeconds": 11,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+    },
+    {
+      "symbol": "tTSLA",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "priceUsd6": "393160000",
+      "timestampNs": "1794581640000000000",
+      "publishTime": 1794581640,
+      "ageSeconds": 7,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+    }
+  ],
+  "errors": [],
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "near": "99995103855857599999957",
+    "stock": "10000000000",
+    "btc": "995626",
+    "usdc": "175606661",
+    "shop": "269394203"
+  },
+  "preflightEquity": {
+    "symbol": "tTSLA",
+    "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+    "priceUsd6": "392940000",
+    "timestampNs": "1794581477000000000",
+    "publishTime": 1794581477,
+    "ageSeconds": 5,
+    "fresh": true,
+    "marketOpen": true,
+    "provider": "Yahoo Finance",
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+  },
+  "usdcInvoiceURL": "http://127.0.0.1:5395/#/pay/0xca88024d951bf35be637ffdc38f75905a553f273d511227de15fdc7bb98237c7",
+  "failedStage": "usdc",
+  "actualNearSpentYocto": "7885299940023800000005",
+  "resumedFrom": "ethglobal-film-2026-11-13T14-31-18-659Z.json",
+  "resumedAt": "2026-11-13T14:50:42.194Z",
+  "resumeNotes": [
+    {
+      "reason": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Final on NEAR testnet', { exact: true }) to be visible\u001b[22m\n",
+      "source": "ethglobal-film-2026-11-13T14-31-18-659Z.json",
+      "alreadySent": "9vcFVd8BKNff7Py9GVkSxs6CN4bKowYjKiXqicWeaCYc"
+    }
+  ],
+  "interruptedTakes": [
+    {
+      "id": "usdc",
+      "page": "app",
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/project/work/raw/page@c0ab9591f02d19c392cb413ea5235ead.webm",
+      "start": 25.529,
+      "recordedAt": "2026-11-13T14:33:06.468Z",
+      "stoppedAt": "2026-11-13T14:34:50.058Z"
+    }
+  ],
+  "resumeMerchant": "2efec52f-1e71-4c64-85b6-2bcfabe192b0",
+  "stockInvoiceURL": "http://127.0.0.1:5395/#/pay/0x1ca77b4a464cadb435090a2702b3c60b196c14834ca3bcd64e52ace4012f6a7a",
+  "beforeCredit": {
+    "stock": "9962335216",
+    "btc": "995626"
+  },
+  "mixed": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [
+      {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "amount": "100000000",
+        "value_usd6": "393075000"
+      },
+      {
+        "token": "wbtc.fakes.testnet",
+        "amount": "10000",
+        "value_usd6": "6893007"
+      }
+    ],
+    "collateral_usd6": "399968007",
+    "credit_limit_usd6": "160676503",
+    "debt_usd6": "0",
+    "available_usd6": "160676503",
+    "health_bps": null,
+    "prices_fresh": true,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "creditInvoice": "0xdb1b09041567927370cee1e5bb94d667786da5691ac901bd160a644b782fe212",
+  "borrowed": {
+    "borrower": "alice.noren-near-mw9h22el.testnet",
+    "collateral": [
+      {
+        "token": "ttsla.noren-near-mw9h22el.testnet",
+        "amount": "100000000",
+        "value_usd6": "393075000"
+      },
+      {
+        "token": "wbtc.fakes.testnet",
+        "amount": "10000",
+        "value_usd6": "6893007"
+      }
+    ],
+    "collateral_usd6": "399968007",
+    "credit_limit_usd6": "160676503",
+    "debt_usd6": "25000000",
+    "available_usd6": "135676503",
+    "health_bps": "80269",
+    "prices_fresh": true,
+    "pending": false,
+    "apr_bps": 1000
+  },
+  "planInvoice": "0x0c1d5c0d6b202ff3cdce96bb1fc0df95e9638538da7871135dee3e228c81e87d",
+  "after": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "stock": "9962335216",
+    "btc": "995626",
+    "usdc": "139606656",
+    "shop": "453394205",
+    "shopGainUsd6": "184000002"
+  },
+  "invoiceReceipts": [
+    {
+      "invoice": {
+        "invoiceId": "0xca88024d951bf35be637ffdc38f75905a553f273d511227de15fdc7bb98237c7",
+        "merchant": "2efec52f-1e71-4c64-85b6-2bcfabe192b0",
+        "amount": "1000000",
+        "expiry": "1795185179"
+      },
+      "status": "paid",
+      "description": "Public test-USDC checkout",
+      "merchantName": "Aubelle",
+      "createdAt": 1794580379,
+      "paidAmount": "1000000",
+      "payments": [
+        {
+          "hash": "9vcFVd8BKNff7Py9GVkSxs6CN4bKowYjKiXqicWeaCYc",
+          "amount": "1000000",
+          "method": "usdc",
+          "payer": "alice.noren-near-mw9h22el.testnet"
+        }
+      ],
+      "method": "usdc",
+      "paymentTx": "9vcFVd8BKNff7Py9GVkSxs6CN4bKowYjKiXqicWeaCYc",
+      "paidAt": 1794580394
+    },
+    {
+      "invoice": {
+        "invoiceId": "0x1ca77b4a464cadb435090a2702b3c60b196c14834ca3bcd64e52ace4012f6a7a",
+        "merchant": "2efec52f-1e71-4c64-85b6-2bcfabe192b0",
+        "amount": "148000000",
+        "expiry": "1794583301"
+      },
+      "status": "paid",
+      "description": "Aubelle order AUB-93EBE917: Amélie Gingham",
+      "merchantName": "Aubelle",
+      "createdAt": 1794581501,
+      "paidAmount": "148000002",
+      "payments": [
+        {
+          "hash": "6Lo2UftUBzxjJSEc4TAgspEHkQ2TNMXFiiQiRBjsPU6K",
+          "amount": "148000002",
+          "method": "stocks",
+          "payer": "alice.noren-near-mw9h22el.testnet"
+        }
+      ],
+      "metadata": {
+        "orderId": "AUB-93EBE917"
+      },
+      "successUrl": "http://127.0.0.1:5395/shop/#/order/AUB-93EBE917",
+      "cancelUrl": "http://127.0.0.1:5395/shop/#/bag",
+      "method": "stocks",
+      "paymentTx": "6Lo2UftUBzxjJSEc4TAgspEHkQ2TNMXFiiQiRBjsPU6K",
+      "stock": {
+        "asset": "ttsla.noren-near-mw9h22el.testnet",
+        "assetIn": "37664784",
+        "usdcOut": "148000002",
+        "route": "NEAR testnet market buyer"
+      },
+      "paidAt": 1794581540
+    },
+    {
+      "invoice": {
+        "invoiceId": "0xdb1b09041567927370cee1e5bb94d667786da5691ac901bd160a644b782fe212",
+        "merchant": "2efec52f-1e71-4c64-85b6-2bcfabe192b0",
+        "amount": "25000000",
+        "expiry": "1794583401"
+      },
+      "status": "paid",
+      "description": "Keep your Tesla. Buy the thing.",
+      "merchantName": "Aubelle",
+      "createdAt": 1794581601,
+      "paidAmount": "25000000",
+      "payments": [
+        {
+          "hash": "BVXCWCnWQWoe32KPW4pray6a7jcc4tkQvLMe2E4DfiS8",
+          "amount": "25000000",
+          "method": "credit",
+          "payer": "alice.noren-near-mw9h22el.testnet"
+        }
+      ],
+      "method": "credit",
+      "paymentTx": "BVXCWCnWQWoe32KPW4pray6a7jcc4tkQvLMe2E4DfiS8",
+      "paidAt": 1794581610
+    },
+    {
+      "invoice": {
+        "invoiceId": "0x0c1d5c0d6b202ff3cdce96bb1fc0df95e9638538da7871135dee3e228c81e87d",
+        "merchant": "2efec52f-1e71-4c64-85b6-2bcfabe192b0",
+        "amount": "30000000",
+        "expiry": "1794583432"
+      },
+      "status": "partially_paid",
+      "description": "Three due draws · ten test USDC each",
+      "merchantName": "Aubelle",
+      "createdAt": 1794581632,
+      "paidAmount": "10000000",
+      "payments": [
+        {
+          "hash": "E3iHko3XYEz1cxV9Ndbg7Z8G2mqe8UbbUC1cwXdNJuso",
+          "amount": "10000000",
+          "method": "credit",
+          "payer": "alice.noren-near-mw9h22el.testnet"
+        }
+      ],
+      "plan": {
+        "owner": "alice.noren-near-mw9h22el.testnet",
+        "ids": [
+          6,
+          7,
+          8
+        ],
+        "hash": "FAffgPbnjsQUDwyDJJ4dAFi3aQ6ViURWrVq45rGFCjxy"
+      },
+      "method": "credit",
+      "paymentTx": "E3iHko3XYEz1cxV9Ndbg7Z8G2mqe8UbbUC1cwXdNJuso",
+      "paidAt": 1794581664
+    }
+  ],
+  "finishedAt": "2026-11-13T14:56:04.815Z"
+}
