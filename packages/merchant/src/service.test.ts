@@ -78,3 +78,26 @@ it('keeps a scheduled invoice unpaid and verifies each partial draw separately',
  tx.value=call('pay_installment',{id:2,invoice_id:id},false);
  await expect(s.handle('/invoices/'+id+'/complete','POST',{accountId:'alice.testnet',hash:'5'.repeat(44)},'','localhost:5395')).rejects.toThrow('not completed');
 });
+
+import {Readable} from 'node:stream';
+it('binds cross-origin sign-in to the exact approved web origin',async()=>{
+ const prior=process.env.NOREN_WEB_ORIGIN;process.env.NOREN_WEB_ORIGIN='https://judge.example';
+ try{
+  const s=createMerchantService({file:null});
+  async function request(origin:string,method='GET'){
+   const req=Object.assign(Readable.from([]),{url:'/api/auth/nonce',method,headers:{host:'api.example',origin}});let body='';const headers:Record<string,unknown>={};const res={statusCode:200,setHeader:(k:string,v:unknown)=>{headers[k]=v},end:(s='')=>{body=s}};
+   await s.middleware(req as any,res as any);return{status:res.statusCode,body:body?JSON.parse(body):null,headers};
+  }
+  expect((await request('https://attacker.example')).status).toBe(403);
+  const allowed=await request('https://judge.example');expect(allowed.status).toBe(200);expect(allowed.body.recipient).toBe('judge.example');expect(allowed.headers['Access-Control-Allow-Origin']).toBe('https://judge.example');
+  expect((await request('https://judge.example','OPTIONS')).status).toBe(204);
+ }finally{prior===undefined?delete process.env.NOREN_WEB_ORIGIN:process.env.NOREN_WEB_ORIGIN=prior;}
+});
+
+it('verifies the deployed test-USDC legacy transfer log with its exact invoice memo',async()=>{
+ const tx={value:null as any};const {s,r}=await authenticated(tx);const a=await invoice(s,r.secretKey,r.store.merchant),id=a.invoice.invoiceId;
+ tx.value={final_execution_status:'FINAL',status:{SuccessValue:Buffer.from(JSON.stringify('1455')).toString('base64')},transaction:{signer_id:'alice.testnet',receiver_id:'wbtc.fakes.testnet',actions:[{FunctionCall:{method_name:'ft_transfer_call',args:Buffer.from(JSON.stringify({receiver_id:'credit.noren-near-mw9h22el.testnet',amount:'1455',msg:JSON.stringify({kind:'stock_pay',recipient:'shop.testnet',invoice_id:id,min_usdc:'1000000'})})).toString('base64')}}]},receipts_outcome:[{outcome:{executor_id:USDC,status:{SuccessValue:''},logs:['Transfer 1000273 from credit.noren-near-mw9h22el.testnet to shop.testnet','Memo: wrong-invoice']}}]};
+ await expect(s.handle('/invoices/'+id+'/complete','POST',{accountId:'alice.testnet',hash:'6'.repeat(44)},'','localhost:5395')).rejects.toThrow('No matching');
+ tx.value.receipts_outcome[0].outcome.logs[1]='Memo: noren:'+id;
+ const paid=await s.handle('/invoices/'+id+'/complete','POST',{accountId:'alice.testnet',hash:'6'.repeat(44)},'','localhost:5395');expect(paid.status).toBe('paid');expect(paid.paidAmount).toBe('1000273');
+});

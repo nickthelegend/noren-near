@@ -43,3 +43,9 @@ Remaining: new app stock-sale/credit/installment verification and fresh film tra
 ### Payment-link boundary and film rehearsal
 
 Guarded non-finite amount previews so a 400-digit input cannot crash the form; Create link stays disabled. Corrected inherited description copy: anyone with the payment link can read its off-chain description. Before/after form captures exist at both widths; the focused after pass captured 36 screens with no transactions or page exceptions. A source-only filming rehearsal captured the actual website, merchant setup, Aubelle bag/checkout and app with zero chain transactions. No stock payment was fabricated while the market was closed. The full live shoot still waits for 14:30 UTC.
+
+### Real buyer receipt compatibility
+
+A real browser test-WBTC sale completed through the same native buyer while equities were closed: 1,455 token units sold, 1.000273 test USDC sent to the shop. The browser could not initially reconcile it because the deployed public test USDC emits legacy transfer/memo logs instead of NEP-297 JSON. Recovered the existing hash from public NEAR blocks, verified FINAL execution and the exact invoice memo, and reconciled that same payment without another transaction: GhYfbiud2tVrkgpmyY6sPRKVJFNqYojFDpDCJ2VemHwA. The price post was DgaJsnCN3dBe3ejMSFKJJsh8vdzr42QuZ3SYPWXNGgh7. Both are retained in the failed browser run plus the explicit receipt-recovery supplement; the failed record is not rewritten as a pass.
+
+The service now accepts either modern token events or the exact legacy transfer+memo pair from the hardcoded test-USDC executor. A regression rejects a mismatched memo. Nine merchant-service tests pass, including exact-origin NEP-413 challenges. UI refresh/retry protection is being tested separately with real payments and an explicitly injected receipt-network failure, never a fake successful chain result. The filmed TEST-Tesla sale still waits for market opening.

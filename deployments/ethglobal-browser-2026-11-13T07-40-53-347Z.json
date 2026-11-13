@@ -1,0 +1,208 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-13T07:40:53.347Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "liveUsdc": false,
+  "liveCrypto": true,
+  "status": "FAIL",
+  "screenshots": [
+    {
+      "name": "landing-api",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-landing-api-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "business",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-business-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-payout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "first-link",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-first-link-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-created",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-link-created-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "keys-once-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-keys-once-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-home",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-merchant-home-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "balances",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-balances-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "payments-empty",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-payments-empty-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "links",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-links-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "developers",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-developers-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "webhooks-unavailable",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-webhooks-unavailable-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "events",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-events-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "settings",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-settings-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-created-redacted",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-key-created-redacted-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "key-revoked",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-key-revoked-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "link-builder",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-link-builder-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "privacy-unavailable",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-privacy-unavailable-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "stock-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-stock-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "usdc-checkout",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-usdc-checkout-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "crypto-quote",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/crypto-crypto-quote-1440.png",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "transactions": [
+    {
+      "width": 1440,
+      "source": "Node price relayer",
+      "stage": "BTC price",
+      "hash": "DgaJsnCN3dBe3ejMSFKJJsh8vdzr42QuZ3SYPWXNGgh7",
+      "final": true,
+      "args": {
+        "token": "wbtc.fakes.testnet",
+        "price_usd6": "68747300000",
+        "timestamp_ns": "1794555666761000000",
+        "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+        "signature": "W/1z4hmQHlBjU2syPnsHakbggjbTi022mE/jIVg4m19oPYFdSBFQr6KP0AqOo3hwkANoE9fmD4zQqiZZGQAnAA=="
+      }
+    }
+  ],
+  "checks": [
+    {
+      "width": 1440,
+      "stage": "landing navigation",
+      "failedRequest": "127.0.0.1"
+    },
+    {
+      "width": 1440,
+      "merchantAuthenticated": true,
+      "invoiceId": "0xe73d66958caea6026c5822cd489bc9275fb4ad9049c2c04ee3288dd1caf3eee0"
+    },
+    {
+      "width": 1440,
+      "stage": "WBTC checkout 1440",
+      "consoleError": true
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "BTC price",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0",
+      "maximumCostYocto": "6000000000000000000000"
+    },
+    {
+      "stage": "WBTC checkout 1440",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1",
+      "maximumCostYocto": "16000000000000000000001"
+    }
+  ],
+  "failedStage": "WBTC checkout 1440",
+  "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('heading', { name: 'Paid with test crypto' }) to be visible\u001b[22m\n"
+}

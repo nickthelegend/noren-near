@@ -1,0 +1,40 @@
+{
+  "network": "testnet",
+  "startedAt": "2026-11-13T07:48:54.051Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "liveUsdc": false,
+  "liveCrypto": false,
+  "status": "PASS",
+  "screenshots": [
+    {
+      "name": "existing-sale-receipt",
+      "width": 1440,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-legacy-existing-sale-receipt-1440.png",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "existing-sale-receipt",
+      "width": 375,
+      "path": "/Volumes/Extreme SSD/Projects/grokbot/orchestration/shots/noren-near/ethglobal-port/before-legacy-existing-sale-receipt-375.png",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "transactions": [],
+  "checks": [
+    {
+      "width": 1440,
+      "target": "receipt",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "target": "receipt",
+      "status": "PASS"
+    }
+  ],
+  "attempts": [],
+  "actualNearSpentYocto": "0",
+  "reservedYocto": "0"
+}

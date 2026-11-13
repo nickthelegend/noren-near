@@ -60,11 +60,19 @@ export function createMerchantService(deps:Deps={}) {
    if(args.invoice_id!==i.invoice.invoiceId||JSON.parse(Buffer.from(result.status.SuccessValue??'','base64').toString()||'null')!==true)throw Error('Installment was not completed for this invoice.');
    const item=await view(CREDIT,'installment',{id:args.id});if(!item||item[0]!==b.accountId||item[1]!==s.payout||!item[4])throw Error('Installment owner or recipient does not match.');paid=BigInt(item[2]);method='credit';
   }else if(action.method_name==='ft_transfer_call'){
-   const m=JSON.parse(args.msg??'{}');const tokens=['ttsla','tnvda','taapl'].map(t=>`${t}.noren-near-mw9h22el.testnet`);
+   const m=JSON.parse(args.msg??'{}');const tokens=['wbtc.fakes.testnet',...['ttsla','tnvda','taapl'].map(t=>`${t}.noren-near-mw9h22el.testnet`)];
    if(!tokens.includes(transaction.receiver_id)||args.receiver_id!==CREDIT||m.kind!=='stock_pay'||m.recipient!==s.payout||m.invoice_id!==i.invoice.invoiceId)throw Error('Stock sale was not bound to this merchant invoice.');
    const used=JSON.parse(Buffer.from(result.status.SuccessValue??'','base64').toString()||'null');if(used!==args.amount)throw Error('Stock sale was refunded.');
    // Verify the actual USDC receipt log, rather than trusting a browser-supplied quote.
-   const transfers=(result.receipts_outcome??[]).filter((r:any)=>r.outcome?.executor_id===USDC).flatMap((r:any)=>(r.outcome.logs??[]).filter((l:string)=>l.startsWith('EVENT_JSON:')).map((l:string)=>JSON.parse(l.slice(11)))).filter((e:any)=>e.standard==='nep141'&&e.event==='ft_transfer').flatMap((e:any)=>e.data??[]).filter((x:any)=>x.old_owner_id===CREDIT&&x.new_owner_id===s.payout&&x.memo===`noren:${i.invoice.invoiceId}`);
+   const transfers=(result.receipts_outcome??[]).filter((r:any)=>r.outcome?.executor_id===USDC).flatMap((r:any)=>{
+    const logs:string[]=r.outcome.logs??[];
+    const modern=logs.filter(l=>l.startsWith('EVENT_JSON:')).map(l=>JSON.parse(l.slice(11))).filter((e:any)=>e.standard==='nep141'&&e.event==='ft_transfer').flatMap((e:any)=>e.data??[]);
+    if(modern.length)return modern;
+    // The deployed public test USDC predates NEP-297. Accept only its exact
+    // transfer + memo pair from the trusted USDC executor, never browser text.
+    if(!logs.includes(`Memo: noren:${i.invoice.invoiceId}`))return[];
+    return logs.flatMap(l=>{const m=/^Transfer ([0-9]+) from ([a-z0-9._-]+) to ([a-z0-9._-]+)$/.exec(l);return m?[{amount:m[1],old_owner_id:m[2],new_owner_id:m[3],memo:`noren:${i.invoice.invoiceId}`}]:[]});
+   }).filter((x:any)=>x.old_owner_id===CREDIT&&x.new_owner_id===s.payout&&x.memo===`noren:${i.invoice.invoiceId}`);
    if(transfers.length!==1)throw Error('No matching USDC merchant transfer was found.');paid=BigInt(amount(transfers[0].amount));method='stocks';stock={asset:transaction.receiver_id,assetIn:args.amount,usdcOut:String(paid),route:'NEAR testnet market buyer'};
   }else throw Error('This transaction is not a supported NEAR checkout payment.');
   if(paid<=0n)throw Error('The payment has no value.');
