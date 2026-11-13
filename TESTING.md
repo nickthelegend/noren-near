@@ -1,5 +1,16 @@
 # Test results
 
+## Gasless checkout, NEP-366 (2026-11-13)
+
+**40 vitest tests passed** (web + merchant; was 24): 16 new for the gas relayer — 7 policy (allowlist, invoice binding, gas/deposit caps, expiry, testnet-only, per-shopper and global daily caps, in-flight lock), signature rebuild against edits and other keys, the `/api/relay` route (stale nonce, function-call key, missing test USDC, Setup required, failed relay not counted as paid), relayed-receipt verification and refusal of a Delegate receipt the relayer didn't submit or whose inner transfer failed, plus the browser wire format verified byte for byte by the relayer. These unit tests touch no chain. Web typecheck passed. The Rust contract, sandbox, SDK, equity-source and MCP code are unchanged and were not rerun (their 27 results stand below).
+
+Live on NEAR testnet: `pnpm near:gasless` (PASS: outer signer = relayer, inner sender = shopper, shopper NEAR 0 → 0, exact USDC moved, merchant receipt verified, plus two refusals that spent no gas: a field edited after signing and a second payment for a paid link) and the browser film run through the hosted checkout (PASS). Both in [README](README.md#gasless-checkout-pay-in-usdc-with-0-near-nep-366-meta-transactions). Checkout screenshots before/after at 1440 and 375 (no overflow) are in the orchestration shots folder's `noren-near/gasless/`.
+
+```sh
+pnpm near:gasless:setup   # once: relayer account + zero-balance shopper (already done)
+pnpm near:gasless         # one live relayed payment through the real service code
+```
+
 ## ETHGlobal surface port on NEAR (2026-11-13)
 
 **51 executed tests passed:** 4 Rust unit, 7 real local NEAR sandbox, 12 SDK, 2 equity-source, 2 live read-only MCP, 24 web/merchant. Frozen install, web typecheck and production build passed. Production excludes the QA module and both injection markers even with `VITE_QA_SIGNER=1`. The production text audit found no whole-word Arc, Robinhood, CCTP, CCIP or NYSE content.
