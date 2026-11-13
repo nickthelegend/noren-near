@@ -2,6 +2,7 @@ packages:
   - packages/sdk
   - packages/mcp
   - packages/web
+  - packages/merchant
 
 packageExtensions:
   '@near-wallet-selector/core@10.1.4':

@@ -1,0 +1,1 @@
+{"name":"@noren/near-merchant","private":true,"type":"module","license":"MIT","scripts":{"test":"vitest run"},"dependencies":{"near-api-js":"7.3.1"}}
