@@ -1,0 +1,1275 @@
+{
+  "network": "testnet",
+  "evidenceFile": "near-film-2026-11-13T15-31-08-438Z.json",
+  "framesDir": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/claude/work/frames-2026-11-13T15-31-08-438Z",
+  "resumedFrom": "near-film-2026-11-13T15-24-18-731Z.json",
+  "usdcInvoiceURL": "http://127.0.0.1:5330/#/pay/0xadcafc8bbcf267402bfa90c76a943f133d7cba0c3a16dfd0c43a6dce5509f407",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T15:31:09.323Z",
+  "status": "PASS",
+  "reservedYocto": "204000000000000000000004",
+  "stage": "home-after",
+  "takes": [
+    {
+      "id": "app-home",
+      "page": "app",
+      "start": 1794583894.137,
+      "end": 1794583903.787
+    },
+    {
+      "id": "pay-usdc",
+      "page": "app",
+      "start": 1794583903.928,
+      "end": 1794583923.347
+    },
+    {
+      "id": "deposit",
+      "page": "app",
+      "start": 1794583925.495,
+      "end": 1794583940.314
+    },
+    {
+      "id": "explorer-deposit",
+      "page": "explorer",
+      "start": 1794583942.711,
+      "end": 1794583946.809
+    },
+    {
+      "id": "credit-tab",
+      "page": "app",
+      "start": 1794583946.865,
+      "end": 1794583957.034
+    },
+    {
+      "id": "pay-later",
+      "page": "app",
+      "start": 1794583965.409,
+      "end": 1794583986.646
+    },
+    {
+      "id": "explorer-pay-later",
+      "page": "explorer",
+      "start": 1794583988.853,
+      "end": 1794583992.711
+    },
+    {
+      "id": "pay-in-3",
+      "page": "app",
+      "start": 1794583994.331,
+      "end": 1794584014.805
+    },
+    {
+      "id": "draw-1",
+      "page": "app",
+      "start": 1794584022.353,
+      "end": 1794584033.133
+    },
+    {
+      "id": "explorer-draw-1",
+      "page": "explorer",
+      "start": 1794584035.358,
+      "end": 1794584039.273
+    },
+    {
+      "id": "repay",
+      "page": "app",
+      "start": 1794584042.139,
+      "end": 1794584067.554
+    },
+    {
+      "id": "explorer-repay",
+      "page": "explorer",
+      "start": 1794584069.689,
+      "end": 1794584073.547
+    },
+    {
+      "id": "withdraw",
+      "page": "app",
+      "start": 1794584073.611,
+      "end": 1794584088.964
+    },
+    {
+      "id": "swap",
+      "page": "app",
+      "start": 1794584096.656,
+      "end": 1794584113.283
+    },
+    {
+      "id": "dry-quote",
+      "page": "app",
+      "start": 1794584113.365,
+      "end": 1794584121.522
+    },
+    {
+      "id": "merchant-view",
+      "page": "app",
+      "start": 1794584126.017,
+      "end": 1794584138.155
+    },
+    {
+      "id": "home-after",
+      "page": "app",
+      "start": 1794584138.208,
+      "end": 1794584146.778
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794583891.32,
+      "type": "move",
+      "stage": "preflight",
+      "x": 720,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794583891.581,
+      "type": "click",
+      "stage": "preflight"
+    },
+    {
+      "page": "app",
+      "t": 1794583894.492,
+      "type": "move",
+      "stage": "app-home",
+      "x": 510,
+      "y": 277
+    },
+    {
+      "page": "app",
+      "t": 1794583896.694,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": 520
+    },
+    {
+      "page": "app",
+      "t": 1794583900.843,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": -520
+    },
+    {
+      "page": "app",
+      "t": 1794583905.135,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 603.203125,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794583905.396,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583906.989,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 720,
+      "y": 422.78125
+    },
+    {
+      "page": "app",
+      "t": 1794583907.251,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583907.598,
+      "type": "paste",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583908.949,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 720,
+      "y": 531.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583909.21,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583911.284,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 1101,
+      "y": 202
+    },
+    {
+      "page": "app",
+      "t": 1794583911.545,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583913.25,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 994,
+      "y": 400.75
+    },
+    {
+      "page": "app",
+      "t": 1794583913.511,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583913.849,
+      "type": "wait-start",
+      "stage": "pay-usdc",
+      "label": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583919.82,
+      "type": "wait-end",
+      "stage": "pay-usdc",
+      "label": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583925.854,
+      "type": "move",
+      "stage": "deposit",
+      "x": 720,
+      "y": 164
+    },
+    {
+      "page": "app",
+      "t": 1794583927.118,
+      "type": "move",
+      "stage": "deposit",
+      "x": 720,
+      "y": 472.78125
+    },
+    {
+      "page": "app",
+      "t": 1794583927.38,
+      "type": "click",
+      "stage": "deposit"
+    },
+    {
+      "page": "app",
+      "t": 1794583927.746,
+      "type": "type",
+      "stage": "deposit",
+      "value": "2"
+    },
+    {
+      "page": "app",
+      "t": 1794583928.551,
+      "type": "move",
+      "stage": "deposit",
+      "x": 720,
+      "y": 654.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583928.814,
+      "type": "click",
+      "stage": "deposit"
+    },
+    {
+      "page": "app",
+      "t": 1794583929.154,
+      "type": "wait-start",
+      "stage": "deposit",
+      "label": "deposit"
+    },
+    {
+      "page": "app",
+      "t": 1794583935.018,
+      "type": "wait-end",
+      "stage": "deposit",
+      "label": "deposit"
+    },
+    {
+      "page": "app",
+      "t": 1794583937.212,
+      "type": "move",
+      "stage": "deposit",
+      "x": 720,
+      "y": 164
+    },
+    {
+      "page": "explorer",
+      "t": 1794583943.305,
+      "type": "move",
+      "stage": "explorer-deposit",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794583948.1,
+      "type": "move",
+      "stage": "credit-tab",
+      "x": 742.6953125,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794583948.362,
+      "type": "click",
+      "stage": "credit-tab"
+    },
+    {
+      "page": "app",
+      "t": 1794583950.498,
+      "type": "scroll",
+      "stage": "credit-tab",
+      "dy": 560
+    },
+    {
+      "page": "app",
+      "t": 1794583954.387,
+      "type": "scroll",
+      "stage": "credit-tab",
+      "dy": -560
+    },
+    {
+      "page": "app",
+      "t": 1794583965.848,
+      "type": "move",
+      "stage": "pay-later",
+      "x": 951.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583966.109,
+      "type": "click",
+      "stage": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583966.882,
+      "type": "move",
+      "stage": "pay-later",
+      "x": 1059.8046875,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583967.144,
+      "type": "click",
+      "stage": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583968.782,
+      "type": "move",
+      "stage": "pay-later",
+      "x": 1220,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794583969.043,
+      "type": "click",
+      "stage": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583970.697,
+      "type": "move",
+      "stage": "pay-later",
+      "x": 1134,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794583970.959,
+      "type": "click",
+      "stage": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583972.349,
+      "type": "move",
+      "stage": "pay-later",
+      "x": 994,
+      "y": 380.34375
+    },
+    {
+      "page": "app",
+      "t": 1794583972.612,
+      "type": "click",
+      "stage": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583974.068,
+      "type": "move",
+      "stage": "pay-later",
+      "x": 887,
+      "y": 321.953125
+    },
+    {
+      "page": "app",
+      "t": 1794583974.328,
+      "type": "click",
+      "stage": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583976.748,
+      "type": "move",
+      "stage": "pay-later",
+      "x": 994,
+      "y": 509.53125
+    },
+    {
+      "page": "app",
+      "t": 1794583977.01,
+      "type": "click",
+      "stage": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583977.347,
+      "type": "wait-start",
+      "stage": "pay-later",
+      "label": "pay-later"
+    },
+    {
+      "page": "app",
+      "t": 1794583982.932,
+      "type": "wait-end",
+      "stage": "pay-later",
+      "label": "pay-later"
+    },
+    {
+      "page": "explorer",
+      "t": 1794583989.207,
+      "type": "move",
+      "stage": "explorer-pay-later",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794583994.881,
+      "type": "move",
+      "stage": "pay-in-3",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583995.141,
+      "type": "click",
+      "stage": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794583996.015,
+      "type": "move",
+      "stage": "pay-in-3",
+      "x": 1059.8046875,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583996.278,
+      "type": "click",
+      "stage": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794583997.915,
+      "type": "move",
+      "stage": "pay-in-3",
+      "x": 1220,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794583998.176,
+      "type": "click",
+      "stage": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794583999.849,
+      "type": "move",
+      "stage": "pay-in-3",
+      "x": 1134,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794584000.111,
+      "type": "click",
+      "stage": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794584001.563,
+      "type": "move",
+      "stage": "pay-in-3",
+      "x": 994,
+      "y": 380.34375
+    },
+    {
+      "page": "app",
+      "t": 1794584001.824,
+      "type": "click",
+      "stage": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794584003.283,
+      "type": "move",
+      "stage": "pay-in-3",
+      "x": 1101,
+      "y": 321.953125
+    },
+    {
+      "page": "app",
+      "t": 1794584003.546,
+      "type": "click",
+      "stage": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794584005.781,
+      "type": "move",
+      "stage": "pay-in-3",
+      "x": 994,
+      "y": 509.53125
+    },
+    {
+      "page": "app",
+      "t": 1794584006.042,
+      "type": "click",
+      "stage": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794584006.378,
+      "type": "wait-start",
+      "stage": "pay-in-3",
+      "label": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794584012.213,
+      "type": "wait-end",
+      "stage": "pay-in-3",
+      "label": "pay-in-3"
+    },
+    {
+      "page": "app",
+      "t": 1794584022.73,
+      "type": "move",
+      "stage": "draw-1",
+      "x": 994,
+      "y": 617.375
+    },
+    {
+      "page": "app",
+      "t": 1794584022.992,
+      "type": "click",
+      "stage": "draw-1"
+    },
+    {
+      "page": "app",
+      "t": 1794584023.328,
+      "type": "wait-start",
+      "stage": "draw-1",
+      "label": "draw-1"
+    },
+    {
+      "page": "app",
+      "t": 1794584029.447,
+      "type": "wait-end",
+      "stage": "draw-1",
+      "label": "draw-1"
+    },
+    {
+      "page": "explorer",
+      "t": 1794584035.772,
+      "type": "move",
+      "stage": "explorer-draw-1",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794584043.275,
+      "type": "move",
+      "stage": "repay",
+      "x": 551.765625,
+      "y": 404.71875
+    },
+    {
+      "page": "app",
+      "t": 1794584046.596,
+      "type": "move",
+      "stage": "repay",
+      "x": 1329.234375,
+      "y": 37
+    },
+    {
+      "page": "app",
+      "t": 1794584046.859,
+      "type": "click",
+      "stage": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794584048.318,
+      "type": "move",
+      "stage": "faucet",
+      "x": 1238,
+      "y": 229.75
+    },
+    {
+      "page": "app",
+      "t": 1794584048.58,
+      "type": "click",
+      "stage": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794584048.918,
+      "type": "wait-start",
+      "stage": "faucet",
+      "label": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794584053.529,
+      "type": "wait-end",
+      "stage": "faucet",
+      "label": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794584054.871,
+      "type": "move",
+      "stage": "repay",
+      "x": 1379,
+      "y": 99
+    },
+    {
+      "page": "app",
+      "t": 1794584055.134,
+      "type": "click",
+      "stage": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794584055.862,
+      "type": "move",
+      "stage": "repay",
+      "x": 720,
+      "y": 405.15625
+    },
+    {
+      "page": "app",
+      "t": 1794584056.124,
+      "type": "click",
+      "stage": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794584056.46,
+      "type": "wait-start",
+      "stage": "repay",
+      "label": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794584062.711,
+      "type": "wait-end",
+      "stage": "repay",
+      "label": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794584065.049,
+      "type": "move",
+      "stage": "repay",
+      "x": 551.765625,
+      "y": 112.71875
+    },
+    {
+      "page": "explorer",
+      "t": 1794584070.043,
+      "type": "move",
+      "stage": "explorer-repay",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794584074.81,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 668.640625,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794584075.072,
+      "type": "click",
+      "stage": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794584076.685,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 720,
+      "y": 472.78125
+    },
+    {
+      "page": "app",
+      "t": 1794584076.945,
+      "type": "click",
+      "stage": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794584077.297,
+      "type": "type",
+      "stage": "withdraw",
+      "value": "2"
+    },
+    {
+      "page": "app",
+      "t": 1794584078.061,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 578,
+      "y": 709.671875
+    },
+    {
+      "page": "app",
+      "t": 1794584078.321,
+      "type": "click",
+      "stage": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794584078.66,
+      "type": "wait-start",
+      "stage": "withdraw",
+      "label": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794584085.477,
+      "type": "wait-end",
+      "stage": "withdraw",
+      "label": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794584097.909,
+      "type": "move",
+      "stage": "swap",
+      "x": 906.765625,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794584098.169,
+      "type": "click",
+      "stage": "swap"
+    },
+    {
+      "page": "app",
+      "t": 1794584099.786,
+      "type": "move",
+      "stage": "swap",
+      "x": 720,
+      "y": 322.1875
+    },
+    {
+      "page": "app",
+      "t": 1794584100.048,
+      "type": "click",
+      "stage": "swap"
+    },
+    {
+      "page": "app",
+      "t": 1794584100.392,
+      "type": "type",
+      "stage": "swap",
+      "value": "0.1"
+    },
+    {
+      "page": "app",
+      "t": 1794584101.243,
+      "type": "move",
+      "stage": "swap",
+      "x": 720,
+      "y": 431.078125
+    },
+    {
+      "page": "app",
+      "t": 1794584101.504,
+      "type": "click",
+      "stage": "swap"
+    },
+    {
+      "page": "app",
+      "t": 1794584101.839,
+      "type": "wait-start",
+      "stage": "swap",
+      "label": "swap"
+    },
+    {
+      "page": "app",
+      "t": 1794584109.81,
+      "type": "wait-end",
+      "stage": "swap",
+      "label": "swap"
+    },
+    {
+      "page": "app",
+      "t": 1794584113.8,
+      "type": "move",
+      "stage": "dry-quote",
+      "x": 667.6484375,
+      "y": 532.328125
+    },
+    {
+      "page": "app",
+      "t": 1794584114.06,
+      "type": "click",
+      "stage": "dry-quote"
+    },
+    {
+      "page": "app",
+      "t": 1794584115.653,
+      "type": "move",
+      "stage": "dry-quote",
+      "x": 575.4765625,
+      "y": 334.1875
+    },
+    {
+      "page": "app",
+      "t": 1794584115.915,
+      "type": "click",
+      "stage": "dry-quote"
+    },
+    {
+      "page": "app",
+      "t": 1794584116.644,
+      "type": "move",
+      "stage": "dry-quote",
+      "x": 720,
+      "y": 595.1875
+    },
+    {
+      "page": "app",
+      "t": 1794584116.905,
+      "type": "click",
+      "stage": "dry-quote"
+    },
+    {
+      "page": "app",
+      "t": 1794584126.377,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 700,
+      "y": 300
+    },
+    {
+      "page": "app",
+      "t": 1794584129.349,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 917.3125,
+      "y": 371.1875
+    },
+    {
+      "page": "app",
+      "t": 1794584129.612,
+      "type": "click",
+      "stage": "merchant-view"
+    },
+    {
+      "page": "app",
+      "t": 1794584139.254,
+      "type": "move",
+      "stage": "home-after",
+      "x": 720,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794584139.515,
+      "type": "click",
+      "stage": "home-after"
+    },
+    {
+      "page": "app",
+      "t": 1794584141.763,
+      "type": "scroll",
+      "stage": "home-after",
+      "dy": 420
+    }
+  ],
+  "stills": [
+    {
+      "name": "app-home",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "pay-usdc",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "deposit",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "explorer-deposit",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "credit-tab",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "pay-later",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "explorer-pay-later",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "pay-in-3",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "draw-1",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "explorer-draw-1",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "repay",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "explorer-repay",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "withdraw",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "swap",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "dry-quote",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant-view",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "home-after",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "pay-usdc",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    },
+    {
+      "stage": "deposit",
+      "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    },
+    {
+      "stage": "credit-tab",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "pay-later",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "pay-in-3",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "pay-in-3",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "draw-1",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "faucet",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "20000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "repay",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    },
+    {
+      "stage": "withdraw",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "60000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "withdraw",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "swap",
+      "receiverId": "tnvda.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "browser QA signer",
+      "action": "pay-usdc",
+      "hash": "BBDGi1FbNerZN4p4RZ1ajJVv8AJ3t7RK43zt1qt6nDaL",
+      "final": true,
+      "ok": true
+    },
+    {
+      "source": "browser QA signer",
+      "action": "deposit",
+      "hash": "7MNe24KBovFaMbT3K3AArpaCRPP6JMnR43zkMPD1vZGD",
+      "final": true,
+      "ok": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/7MNe24KBovFaMbT3K3AArpaCRPP6JMnR43zkMPD1vZGD?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tTSLA-credit-tab",
+      "hash": "7xEXXrKVTkPbgEd5Ywq5DiBToarnHLto28EABC65mjrv",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "387830000",
+      "publishTime": 1794583951
+    },
+    {
+      "source": "browser QA signer",
+      "action": "pay-later",
+      "hash": "G7h5T9oU2EnBu8PeeWHR4pUATANUSwXwpTAmnoE4i23P",
+      "final": true,
+      "ok": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/G7h5T9oU2EnBu8PeeWHR4pUATANUSwXwpTAmnoE4i23P?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "pay-in-3",
+      "hash": "5DxjUkwWd2ip899fKNyznwi3qgXC2au4SnjkFJvos43N",
+      "final": true,
+      "ok": true
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tTSLA-pay-in-3",
+      "hash": "XVSiBn5TTG35owiwsRwz754rPWS6XLFQyU3MEvziV6E",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "388830000",
+      "publishTime": 1794584010
+    },
+    {
+      "source": "browser QA signer",
+      "action": "draw-1",
+      "hash": "DaukX4jK5HYv5s4kvzL3ySCSXcrHhUH7QxQ7Ztk57oUN",
+      "final": true,
+      "ok": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/DaukX4jK5HYv5s4kvzL3ySCSXcrHhUH7QxQ7Ztk57oUN?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "faucet",
+      "hash": "5ve3QGdQSBJSsjGuSZv5PKrh1YgdAAuhQyWiXqLPk3Jb",
+      "final": true,
+      "ok": true
+    },
+    {
+      "source": "browser QA signer",
+      "action": "repay",
+      "hash": "ELbAsHmagcLkkVB6q3nYtoaNMAR5N4mUfejYkBTZNNXf",
+      "final": true,
+      "ok": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/ELbAsHmagcLkkVB6q3nYtoaNMAR5N4mUfejYkBTZNNXf?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "withdraw",
+      "hash": "Cr7TSasiTET6UWGHv5vN5zA5yeDLSCKBUS7okp3g8vKY",
+      "final": true,
+      "ok": true
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tNVDA-withdraw",
+      "hash": "4kUyQ9bMPh2ZGhGCsAD275aQGJZCfWt6m3DmMDrBmo2y",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "159955000",
+      "publishTime": 1794584079
+    },
+    {
+      "source": "browser QA signer",
+      "action": "swap",
+      "hash": "Gyjdo5Pt6pXVaakKv1XGqFbEot5mXMeSxeLk9SKi9Cwn",
+      "final": true,
+      "ok": true
+    }
+  ],
+  "quotes": [
+    {
+      "symbol": "tTSLA",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "priceUsd6": "387830000",
+      "timestampNs": "1794583951000000000",
+      "publishTime": 1794583951,
+      "ageSeconds": 6,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+    },
+    {
+      "symbol": "tTSLA",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "priceUsd6": "388830000",
+      "timestampNs": "1794584010000000000",
+      "publishTime": 1794584010,
+      "ageSeconds": 5,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+    },
+    {
+      "symbol": "tNVDA",
+      "feedId": "b1073854ed24cbc755dc527418f52b7d271f6cc967bbf8d8129112b18860a593",
+      "priceUsd6": "159955000",
+      "timestampNs": "1794584079000000000",
+      "publishTime": 1794584079,
+      "ageSeconds": 10,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?interval=1m&range=1d"
+    }
+  ],
+  "errors": [],
+  "invoices": {
+    "stock": "http://127.0.0.1:5330/#/pay/0x1a9dfe23fa263d42e7d14da3aa4bde93532278a1b1bc07f5e90b3fb273e63d90",
+    "later": "http://127.0.0.1:5330/#/pay/0xb696d91dc912f72d08df734ca42a7a277558f9f3eb58b78300230a0ff8a27832",
+    "plan": "http://127.0.0.1:5330/#/pay/0x0b2d5795d7133c787affd87eac5d797c06f8abce111b31cf0e112641d9eddd45"
+  },
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "tsla": "9924080460",
+    "usdc": "139606656",
+    "shop": "601394205",
+    "near": "90284187340678299999951"
+  },
+  "after": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "tsla": "9924080460",
+    "usdc": "73602104",
+    "shop": "883394205",
+    "near": "84381096548630299999947"
+  },
+  "finishedAt": "2026-11-13T15:35:48.041Z",
+  "actualNearSpentYocto": "5903090792048000000004"
+}

@@ -1,0 +1,737 @@
+{
+  "network": "testnet",
+  "evidenceFile": "near-film-2026-11-13T15-24-18-731Z.json",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T15:24:19.647Z",
+  "status": "STOPPED",
+  "reservedYocto": "51000000000000000000001",
+  "stage": "pay-usdc",
+  "takes": [
+    {
+      "id": "website",
+      "page": "app",
+      "start": 1794583481.915,
+      "end": 1794583506.134
+    },
+    {
+      "id": "merchant",
+      "page": "app",
+      "start": 1794583507.45,
+      "end": 1794583533.266
+    },
+    {
+      "id": "shop",
+      "page": "app",
+      "start": 1794583535.311,
+      "end": 1794583551.155
+    },
+    {
+      "id": "stocks",
+      "page": "app",
+      "start": 1794583586.029,
+      "end": 1794583607.251
+    },
+    {
+      "id": "explorer-stocks",
+      "page": "explorer",
+      "start": 1794583609.531,
+      "end": 1794583613.444
+    },
+    {
+      "id": "app-home",
+      "page": "app",
+      "start": 1794583617.374,
+      "end": 1794583627.111
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794583482.799,
+      "type": "move",
+      "stage": "website",
+      "x": 980,
+      "y": 560
+    },
+    {
+      "page": "app",
+      "t": 1794583485.4,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 700
+    },
+    {
+      "page": "app",
+      "t": 1794583488.685,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 760
+    },
+    {
+      "page": "app",
+      "t": 1794583491.834,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 820
+    },
+    {
+      "page": "app",
+      "t": 1794583495.067,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 820
+    },
+    {
+      "page": "app",
+      "t": 1794583498.165,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 860
+    },
+    {
+      "page": "app",
+      "t": 1794583501.431,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 900
+    },
+    {
+      "page": "app",
+      "t": 1794583507.862,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 272.5
+    },
+    {
+      "page": "app",
+      "t": 1794583508.125,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583509.36,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 260.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583509.622,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583509.967,
+      "type": "type",
+      "stage": "merchant",
+      "value": "Aubelle"
+    },
+    {
+      "page": "app",
+      "t": 1794583511.009,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 363.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583511.27,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583511.972,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 380.5
+    },
+    {
+      "page": "app",
+      "t": 1794583512.234,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583512.92,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 484.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583513.183,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583513.525,
+      "type": "type",
+      "stage": "merchant",
+      "value": "shop.noren-near-mw9h22el.testnet"
+    },
+    {
+      "page": "app",
+      "t": 1794583515.99,
+      "type": "move",
+      "stage": "merchant",
+      "x": 936.1953125,
+      "y": 547.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583516.251,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583516.928,
+      "type": "move",
+      "stage": "merchant",
+      "x": 700,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583517.191,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583517.534,
+      "type": "type",
+      "stage": "merchant",
+      "value": "12"
+    },
+    {
+      "page": "app",
+      "t": 1794583518.277,
+      "type": "move",
+      "stage": "merchant",
+      "x": 985,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583518.539,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583518.879,
+      "type": "type",
+      "stage": "merchant",
+      "value": "Silk scrunchie set"
+    },
+    {
+      "page": "app",
+      "t": 1794583520.574,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 347.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583520.835,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583523.087,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 514.5
+    },
+    {
+      "page": "app",
+      "t": 1794583523.349,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583526.251,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 674.5
+    },
+    {
+      "page": "app",
+      "t": 1794583526.513,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583530.362,
+      "type": "move",
+      "stage": "merchant",
+      "x": 364.140625,
+      "y": 525.765625
+    },
+    {
+      "page": "app",
+      "t": 1794583530.625,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583535.737,
+      "type": "move",
+      "stage": "shop",
+      "x": 900,
+      "y": 520
+    },
+    {
+      "page": "app",
+      "t": 1794583537.338,
+      "type": "scroll",
+      "stage": "shop",
+      "dy": 620
+    },
+    {
+      "page": "app",
+      "t": 1794583542.844,
+      "type": "move",
+      "stage": "shop",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583543.105,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583543.962,
+      "type": "move",
+      "stage": "shop",
+      "x": 1059.8046875,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583544.225,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583545.961,
+      "type": "move",
+      "stage": "shop",
+      "x": 1220,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794583546.224,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583548.144,
+      "type": "move",
+      "stage": "shop",
+      "x": 1134,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794583548.407,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583584.727,
+      "type": "move",
+      "stage": "shop",
+      "x": 994,
+      "y": 380.34375
+    },
+    {
+      "page": "app",
+      "t": 1794583584.989,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583586.378,
+      "type": "move",
+      "stage": "stocks",
+      "x": 994,
+      "y": 442.140625
+    },
+    {
+      "page": "app",
+      "t": 1794583587.62,
+      "type": "move",
+      "stage": "stocks",
+      "x": 994,
+      "y": 561.140625
+    },
+    {
+      "page": "app",
+      "t": 1794583591.428,
+      "type": "move",
+      "stage": "stocks",
+      "x": 994,
+      "y": 741.734375
+    },
+    {
+      "page": "app",
+      "t": 1794583591.694,
+      "type": "click",
+      "stage": "stocks"
+    },
+    {
+      "page": "app",
+      "t": 1794583592.05,
+      "type": "wait-start",
+      "stage": "stocks",
+      "label": "stocks"
+    },
+    {
+      "page": "app",
+      "t": 1794583599.709,
+      "type": "wait-end",
+      "stage": "stocks",
+      "label": "stocks"
+    },
+    {
+      "page": "app",
+      "t": 1794583602.743,
+      "type": "move",
+      "stage": "stocks",
+      "x": 994,
+      "y": 519.46875
+    },
+    {
+      "page": "app",
+      "t": 1794583603.004,
+      "type": "click",
+      "stage": "stocks"
+    },
+    {
+      "page": "explorer",
+      "t": 1794583609.941,
+      "type": "move",
+      "stage": "explorer-stocks",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794583614.56,
+      "type": "move",
+      "stage": "explorer-stocks",
+      "x": 720,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794583614.82,
+      "type": "click",
+      "stage": "explorer-stocks"
+    },
+    {
+      "page": "app",
+      "t": 1794583617.729,
+      "type": "move",
+      "stage": "app-home",
+      "x": 510,
+      "y": 277
+    },
+    {
+      "page": "app",
+      "t": 1794583619.932,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": 520
+    },
+    {
+      "page": "app",
+      "t": 1794583624.127,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": -520
+    },
+    {
+      "page": "app",
+      "t": 1794583628.425,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 603.203125,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794583628.687,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583630.271,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 720,
+      "y": 422.78125
+    },
+    {
+      "page": "app",
+      "t": 1794583630.533,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583630.872,
+      "type": "paste",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583632.209,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 720,
+      "y": 531.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583632.471,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583634.525,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 1101,
+      "y": 202
+    },
+    {
+      "page": "app",
+      "t": 1794583634.787,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583636.525,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 994,
+      "y": 400.75
+    },
+    {
+      "page": "app",
+      "t": 1794583636.787,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583637.124,
+      "type": "wait-start",
+      "stage": "pay-usdc",
+      "label": "pay-usdc"
+    }
+  ],
+  "stills": [
+    {
+      "name": "website",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "stocks",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "explorer-stocks",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "app-home",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "shop",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "shop",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "shop",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "stocks",
+      "receiverId": "ttsla.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "Node price relayer",
+      "action": "price-tTSLA-shop",
+      "hash": "DZknCWDs946qV7jg4YrLY59Ls8aLVVe9jfnQe9xKS4KQ",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "386880000",
+      "publishTime": 1794583560
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tNVDA-shop",
+      "hash": "CQ5hf8CM8RfXpx5MPZMJL5MdePmw37vwtCcMv1t8BijD",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "159730000",
+      "publishTime": 1794583565
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-tAAPL-shop",
+      "hash": "EJecTiw5XEw9aAsdxBMKgxRwHZ5AxegoF3dYwuXfQ6xt",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "357485000",
+      "publishTime": 1794583566
+    },
+    {
+      "source": "browser QA signer",
+      "action": "stocks",
+      "hash": "3cC21a1F3H8buRGAn9gkmHLP2WUwNrjc8n7v7TWUABGW",
+      "final": true,
+      "ok": true,
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/3cC21a1F3H8buRGAn9gkmHLP2WUwNrjc8n7v7TWUABGW?network=testnet"
+    }
+  ],
+  "quotes": [
+    {
+      "symbol": "tTSLA",
+      "feedId": "16dad506d7db8da01c87581c87ca897a012a153557d4d578c3b9c9e1bc0632f1",
+      "priceUsd6": "386880000",
+      "timestampNs": "1794583560000000000",
+      "publishTime": 1794583560,
+      "ageSeconds": 3,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?interval=1m&range=1d"
+    },
+    {
+      "symbol": "tNVDA",
+      "feedId": "b1073854ed24cbc755dc527418f52b7d271f6cc967bbf8d8129112b18860a593",
+      "priceUsd6": "159730000",
+      "timestampNs": "1794583565000000000",
+      "publishTime": 1794583565,
+      "ageSeconds": 1,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?interval=1m&range=1d"
+    },
+    {
+      "symbol": "tAAPL",
+      "feedId": "49f6b65cb1de6b10eaf75e7c03ca029c306d0357e91b5311b175084a5ad55688",
+      "priceUsd6": "357485000",
+      "timestampNs": "1794583566000000000",
+      "publishTime": 1794583566,
+      "ageSeconds": 2,
+      "fresh": true,
+      "marketOpen": true,
+      "provider": "Yahoo Finance",
+      "source": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=1m&range=1d"
+    }
+  ],
+  "errors": [
+    {
+      "stage": "shop",
+      "type": "yahoo",
+      "message": "Yahoo Finance rate-limited the request (HTTP 429). Stop and retry later."
+    }
+  ],
+  "invoices": {
+    "stock": "http://127.0.0.1:5330/#/pay/0x1a9dfe23fa263d42e7d14da3aa4bde93532278a1b1bc07f5e90b3fb273e63d90"
+  },
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "tsla": "9962335216",
+    "usdc": "139606656",
+    "shop": "453394205",
+    "near": "92109803915833799999952"
+  },
+  "usdcInvoiceURL": "http://127.0.0.1:5330/#/pay/0xadcafc8bbcf267402bfa90c76a943f133d7cba0c3a16dfd0c43a6dce5509f407",
+  "activeTake": {
+    "id": "pay-usdc",
+    "page": "app",
+    "start": 1794583627.232
+  },
+  "failedStage": "pay-usdc",
+  "error": "page.waitForFunction: Timeout 120000ms exceeded.",
+  "finishedAt": "2026-11-13T15:29:17.542Z",
+  "actualNearSpentYocto": "1825616575155500000001"
+}

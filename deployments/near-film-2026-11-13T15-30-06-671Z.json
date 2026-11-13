@@ -1,0 +1,133 @@
+{
+  "network": "testnet",
+  "evidenceFile": "near-film-2026-11-13T15-30-06-671Z.json",
+  "framesDir": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-ethglobal/claude/work/frames-2026-11-13T15-30-06-671Z",
+  "resumedFrom": "near-film-2026-11-13T15-24-18-731Z.json",
+  "usdcInvoiceURL": "http://127.0.0.1:5330/#/pay/0xadcafc8bbcf267402bfa90c76a943f133d7cba0c3a16dfd0c43a6dce5509f407",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T15:30:07.547Z",
+  "status": "STOPPED",
+  "reservedYocto": "0",
+  "stage": "pay-usdc",
+  "takes": [
+    {
+      "id": "app-home",
+      "page": "app",
+      "start": 1794583812.389,
+      "end": 1794583822.117
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794583809.561,
+      "type": "move",
+      "stage": "preflight",
+      "x": 720,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794583809.822,
+      "type": "click",
+      "stage": "preflight"
+    },
+    {
+      "page": "app",
+      "t": 1794583812.757,
+      "type": "move",
+      "stage": "app-home",
+      "x": 510,
+      "y": 277
+    },
+    {
+      "page": "app",
+      "t": 1794583814.959,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": 520
+    },
+    {
+      "page": "app",
+      "t": 1794583819.132,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": -520
+    },
+    {
+      "page": "app",
+      "t": 1794583823.777,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 603.203125,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794583824.039,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583825.874,
+      "type": "move",
+      "stage": "pay-usdc",
+      "x": 720,
+      "y": 422.78125
+    },
+    {
+      "page": "app",
+      "t": 1794583826.137,
+      "type": "click",
+      "stage": "pay-usdc"
+    },
+    {
+      "page": "app",
+      "t": 1794583826.538,
+      "type": "paste",
+      "stage": "pay-usdc"
+    }
+  ],
+  "stills": [
+    {
+      "name": "app-home",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "attempts": [],
+  "transactions": [],
+  "quotes": [],
+  "errors": [],
+  "invoices": {
+    "stock": "http://127.0.0.1:5330/#/pay/0x1a9dfe23fa263d42e7d14da3aa4bde93532278a1b1bc07f5e90b3fb273e63d90"
+  },
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "tsla": "9924080460",
+    "usdc": "139606656",
+    "shop": "601394205",
+    "near": "90284187340678299999951"
+  },
+  "activeTake": {
+    "id": "pay-usdc",
+    "page": "app",
+    "start": 1794583822.414
+  },
+  "failedStage": "pay-usdc",
+  "error": "locator.waitFor: Target page, context or browser has been closed",
+  "finishedAt": "2026-11-13T15:30:27.446Z",
+  "actualNearSpentYocto": "0"
+}

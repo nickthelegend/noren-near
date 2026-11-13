@@ -1,0 +1,126 @@
+{
+ "voice": "af_heart",
+ "note": "Kokoro af_heart, as in the ETHGlobal film. 'say' is what the model reads (brand words spelled for it); 'text' is the script as written.",
+ "lines": [
+  {
+   "id": "website_0",
+   "text": "Your money is in stocks, but the shop wants dollars. So you sell first, and wait.",
+   "say": "Your money is in stocks, but the shop wants dollars. So you sell first, and wait."
+  },
+  {
+   "id": "website_1",
+   "text": "Noren lets a shop take stablecoins, stocks, or credit against your stocks. Live on NEAR.",
+   "say": "Noh-ren lets a shop take stablecoins, stocks, or credit against your stocks. Live on Near."
+  },
+  {
+   "id": "merchant_0",
+   "text": "Aubelle, a dress boutique, signs in to Noren Merchant with a NEAR wallet, and names the account that gets paid: shop dot noren.",
+   "say": "Oh-bell, a dress boutique, signs in to Noh-ren Merchant with a Near wallet, and names the account that gets paid: shop dot noh-ren."
+  },
+  {
+   "id": "merchant_1",
+   "text": "A first payment link, and an API key that's shown once.",
+   "say": "A first payment link, and an A P I key that's shown once."
+  },
+  {
+   "id": "shop_0",
+   "text": "Riya shops at Aubelle. The Amélie gingham, size small, and checkout with Noren.",
+   "say": "Riya shops at Oh-bell. The Amelie gingham, size small, and checkout with Noh-ren."
+  },
+  {
+   "id": "stocks_0",
+   "text": "Four ways to pay, and stocks come first. She pays with Tesla, at a live Yahoo Finance price, signed by Noren and checked by the contract on NEAR.",
+   "say": "Four ways to pay, and stocks come first. She pays with Tesla, at a live Yahoo Finance price, signed by Noh-ren and checked by the contract on Near."
+  },
+  {
+   "id": "stocks_1",
+   "text": "Noren sells just enough Tesla, and Aubelle gets a hundred and forty-eight dollars in USDC. Final in seconds.",
+   "say": "Noh-ren sells just enough Tesla, and Oh-bell gets a hundred and forty-eight dollars in U S D C. Final in seconds."
+  },
+  {
+   "id": "app_0",
+   "text": "In the Noren app, she sees her dollars, her stocks and her credit, all read live from NEAR.",
+   "say": "In the Noh-ren app, she sees her dollars, her stocks and her credit, all read live from Near."
+  },
+  {
+   "id": "pay_0",
+   "text": "She can pay any Noren link from here. Paste it, pay twelve dollars in USDC, done.",
+   "say": "She can pay any Noh-ren link from here. Paste it, pay twelve dollars in U S D C, done."
+  },
+  {
+   "id": "deposit_0",
+   "text": "But she'd rather keep her Tesla. She deposits two shares as collateral. No sale.",
+   "say": "But she'd rather keep her Tesla. She deposits two shares as collateral. No sale."
+  },
+  {
+   "id": "deposit_1",
+   "text": "Her credit line opens at forty percent of their value.",
+   "say": "Her credit line opens at forty percent of their value."
+  },
+  {
+   "id": "later_0",
+   "text": "Back at Aubelle, she picks the Juliette dress.",
+   "say": "Back at Oh-bell, she picks the Juliette dress."
+  },
+  {
+   "id": "later_1",
+   "text": "Aubelle is paid in full from her credit line, and the Tesla stays hers.",
+   "say": "Oh-bell is paid in full from her credit line, and the Tesla stays hers."
+  },
+  {
+   "id": "in3_0",
+   "text": "Her next order comes to three hundred and thirty-six dollars.",
+   "say": "Her next order comes to three hundred and thirty-six dollars."
+  },
+  {
+   "id": "in3_1",
+   "text": "The first draw pays Aubelle a third today. The other two are due in thirty and sixty days.",
+   "say": "The first draw pays Oh-bell a third today. The other two are due in thirty and sixty days."
+  },
+  {
+   "id": "repay_0",
+   "text": "When she's ready, she repays from the app, with a little interest,",
+   "say": "When she's ready, she repays from the app, with a little interest,"
+  },
+  {
+   "id": "repay_1",
+   "text": "and takes the same two shares back.",
+   "say": "and takes the same two shares back."
+  },
+  {
+   "id": "swap_0",
+   "text": "Swap sells a stock for USDC at the live price.",
+   "say": "Swap sells a stock for U S D C at the live price."
+  },
+  {
+   "id": "merchant_view_0",
+   "text": "Aubelle sees every payment in one place: the stock sale, the credit payment, the first installment. All in USDC, all final on NEAR.",
+   "say": "Oh-bell sees every payment in one place: the stock sale, the credit payment, the first installment. All in U S D C, all final on Near."
+  },
+  {
+   "id": "close_0",
+   "text": "Noren. Keep your stocks, and still buy the thing.",
+   "say": "Noh-ren. Keep your stocks, and still buy the thing."
+  },
+  {
+   "id": "intents_0",
+   "text": "NEAR Intents quotes what bitcoin from another chain would bring. A quote only; nothing moves.",
+   "say": "Near Intents quotes what bitcoin from another chain would bring. A quote only; nothing moves."
+  },
+  {
+   "id": "credit_0",
+   "text": "Credit shows the whole loop: deposit, pay the shop, repay, take the same stock back.",
+   "say": "Credit shows the whole loop: deposit, pay the shop, repay, take the same stock back."
+  },
+  {
+   "id": "later_mid",
+   "text": "This time, she chooses Pay later.",
+   "say": "This time, she chooses Pay later."
+  },
+  {
+   "id": "in3_mid",
+   "text": "She splits it in three, and the schedule is written on NEAR.",
+   "say": "She splits it in three, and the schedule is written on Near."
+  }
+ ]
+}

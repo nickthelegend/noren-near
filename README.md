@@ -25,6 +25,29 @@ Use Node 22.22.2+ and pnpm 10.29.2. Run locally; nothing has been newly hosted. 
 
 See [FLOW-QA.md](FLOW-QA.md) for the executed route checks and exact transaction evidence. [TESTING.md](TESTING.md) explains the isolated QA signer and live browser runners. Production builds exclude it. Positions and payments are public. Private checkout, mainnet execution, stock yield and automatic installments remain unfinished.
 
+## The film run: live on NEAR testnet (Nov 13, 15:24–15:36 UTC, US market open)
+
+The demo film (`noren-near-film.mp4`, 3:12) is cut from one live browser run of the whole product with the build-gated QA signer: Noren Merchant onboarding, the Aubelle shop paid with a stock at a live Yahoo Finance price, a payment link paid from the app, 2 tTSLA deposited as collateral, Pay later and Pay in 3 at Aubelle, repayment, withdrawal of the same shares, a stock swap and a NEAR Intents dry quote. All 16 transactions below are FINAL and successful; ledgers: [near-film-2026-11-13T15-24-18-731Z.json](deployments/near-film-2026-11-13T15-24-18-731Z.json) (stopped by a recorder budget guard after the stock sale; no payment was repeated) and [near-film-2026-11-13T15-31-08-438Z.json](deployments/near-film-2026-11-13T15-31-08-438Z.json) (resumed, PASS, position restored to zero debt and zero collateral). Recorder, edit list and voice script: [film/near-v5/](film/near-v5/).
+
+| Step | Transaction |
+| --- | --- |
+| Yahoo tTSLA price, signed by Noren’s relayer, posted on-chain | [DZknCWDs946qV7jg4YrLY59Ls8aLVVe9jfnQe9xKS4KQ](https://testnet.nearblocks.io/txns/DZknCWDs946qV7jg4YrLY59Ls8aLVVe9jfnQe9xKS4KQ) |
+| Yahoo tNVDA price posted | [CQ5hf8CM8RfXpx5MPZMJL5MdePmw37vwtCcMv1t8BijD](https://testnet.nearblocks.io/txns/CQ5hf8CM8RfXpx5MPZMJL5MdePmw37vwtCcMv1t8BijD) |
+| Yahoo tAAPL price posted | [EJecTiw5XEw9aAsdxBMKgxRwHZ5AxegoF3dYwuXfQ6xt](https://testnet.nearblocks.io/txns/EJecTiw5XEw9aAsdxBMKgxRwHZ5AxegoF3dYwuXfQ6xt) |
+| Aubelle order paid with stock: 0.38254756 tTSLA sold, shop gets 148.00 test USDC | [3cC21a1F3H8buRGAn9gkmHLP2WUwNrjc8n7v7TWUABGW](https://testnet.nearblocks.io/txns/3cC21a1F3H8buRGAn9gkmHLP2WUwNrjc8n7v7TWUABGW) |
+| Payment link paid from the app: 12.00 test USDC | [BBDGi1FbNerZN4p4RZ1ajJVv8AJ3t7RK43zt1qt6nDaL](https://testnet.nearblocks.io/txns/BBDGi1FbNerZN4p4RZ1ajJVv8AJ3t7RK43zt1qt6nDaL) |
+| Deposit 2 tTSLA as collateral | [7MNe24KBovFaMbT3K3AArpaCRPP6JMnR43zkMPD1vZGD](https://testnet.nearblocks.io/txns/7MNe24KBovFaMbT3K3AArpaCRPP6JMnR43zkMPD1vZGD) |
+| Fresh tTSLA price posted | [7xEXXrKVTkPbgEd5Ywq5DiBToarnHLto28EABC65mjrv](https://testnet.nearblocks.io/txns/7xEXXrKVTkPbgEd5Ywq5DiBToarnHLto28EABC65mjrv) |
+| Pay later: 158.00 test USDC to Aubelle from credit, stock kept | [G7h5T9oU2EnBu8PeeWHR4pUATANUSwXwpTAmnoE4i23P](https://testnet.nearblocks.io/txns/G7h5T9oU2EnBu8PeeWHR4pUATANUSwXwpTAmnoE4i23P) |
+| Pay in 3: schedule for a 336.00 order | [5DxjUkwWd2ip899fKNyznwi3qgXC2au4SnjkFJvos43N](https://testnet.nearblocks.io/txns/5DxjUkwWd2ip899fKNyznwi3qgXC2au4SnjkFJvos43N) |
+| Fresh tTSLA price posted | [XVSiBn5TTG35owiwsRwz754rPWS6XLFQyU3MEvziV6E](https://testnet.nearblocks.io/txns/XVSiBn5TTG35owiwsRwz754rPWS6XLFQyU3MEvziV6E) |
+| First installment: 112.00 test USDC to Aubelle | [DaukX4jK5HYv5s4kvzL3ySCSXcrHhUH7QxQ7Ztk57oUN](https://testnet.nearblocks.io/txns/DaukX4jK5HYv5s4kvzL3ySCSXcrHhUH7QxQ7Ztk57oUN) |
+| Public test-USDC faucet top-up for repayment | [5ve3QGdQSBJSsjGuSZv5PKrh1YgdAAuhQyWiXqLPk3Jb](https://testnet.nearblocks.io/txns/5ve3QGdQSBJSsjGuSZv5PKrh1YgdAAuhQyWiXqLPk3Jb) |
+| Repay 270.00 test USDC debt plus interest | [ELbAsHmagcLkkVB6q3nYtoaNMAR5N4mUfejYkBTZNNXf](https://testnet.nearblocks.io/txns/ELbAsHmagcLkkVB6q3nYtoaNMAR5N4mUfejYkBTZNNXf) |
+| Withdraw the same 2 tTSLA | [Cr7TSasiTET6UWGHv5vN5zA5yeDLSCKBUS7okp3g8vKY](https://testnet.nearblocks.io/txns/Cr7TSasiTET6UWGHv5vN5zA5yeDLSCKBUS7okp3g8vKY) |
+| Fresh tNVDA price posted | [4kUyQ9bMPh2ZGhGCsAD275aQGJZCfWt6m3DmMDrBmo2y](https://testnet.nearblocks.io/txns/4kUyQ9bMPh2ZGhGCsAD275aQGJZCfWt6m3DmMDrBmo2y) |
+| Swap 0.1 tNVDA for test USDC | [Gyjdo5Pt6pXVaakKv1XGqFbEot5mXMeSxeLk9SKi9Cwn](https://testnet.nearblocks.io/txns/Gyjdo5Pt6pXVaakKv1XGqFbEot5mXMeSxeLk9SKi9Cwn) |
+
 ## Live on NEAR testnet
 
 Credit contract: [`credit.noren-near-mw9h22el.testnet`](https://testnet.nearblocks.io/address/credit.noren-near-mw9h22el.testnet). Pool token: `usdc.fakes.testnet`. BTC collateral: `wbtc.fakes.testnet`. TEST stock collateral: `ttsla.noren-near-mw9h22el.testnet`, `tnvda.noren-near-mw9h22el.testnet`, `taapl.noren-near-mw9h22el.testnet`. All have no value; test stocks are not real shares.
@@ -49,7 +72,7 @@ Mainnet cross-chain transfers and yield harvesting are unfinished. 1Click integr
 
 ## NEAR HACKATHON edition
 
-**Track:** defi (primary), realworld (secondary). **Window:** 2026-11-01 to 2026-11-14 23:59 UTC. **What is judged:** only the NEAR integration on branch `near`. Review it locally with `git diff main...near`; this branch has not been pushed.
+**Track:** defi (primary), realworld (secondary). **Window:** 2026-11-01 to 2026-11-14 23:59 UTC. **What is judged:** only the NEAR integration on branch `near`. Review it with `git diff main...near`; the branch is pushed to the private `noren-near` repository.
 
 **What it is.** The contract `noren_credit` holds configured NEP-141 collateral and lets a borrower draw test USDC up to the sum of each asset's priced value times its LTV (stocks 40%, BTC 50%), paid straight to a merchant's NEAR account. The borrower repays, then withdraws the collateral. The SDK and saved evidence include NEAR Intents 1Click dry quotes. Bring-coins controls request mainnet dry quotes only; payments remain NEAR testnet-only. Supplying collateral to Rhea and harvesting yield to repay debt remain future work.
 

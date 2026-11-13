@@ -1,0 +1,395 @@
+{
+  "network": "testnet",
+  "evidenceFile": "near-film-2026-11-13T15-21-28-080Z.json",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-13T15:21:28.940Z",
+  "status": "STOPPED",
+  "reservedYocto": "0",
+  "stage": "shop",
+  "takes": [
+    {
+      "id": "website",
+      "page": "app",
+      "start": 1794583371.585,
+      "end": 1794583395.978
+    },
+    {
+      "id": "merchant",
+      "page": "app",
+      "start": 1794583397.39,
+      "end": 1794583422.974
+    },
+    {
+      "id": "shop",
+      "page": "app",
+      "start": 1794583424.864,
+      "end": 1794583440.78
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794583372.521,
+      "type": "move",
+      "stage": "website",
+      "x": 980,
+      "y": 560
+    },
+    {
+      "page": "app",
+      "t": 1794583375.123,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 700
+    },
+    {
+      "page": "app",
+      "t": 1794583378.473,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 760
+    },
+    {
+      "page": "app",
+      "t": 1794583381.656,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 820
+    },
+    {
+      "page": "app",
+      "t": 1794583384.891,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 820
+    },
+    {
+      "page": "app",
+      "t": 1794583388.057,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 860
+    },
+    {
+      "page": "app",
+      "t": 1794583391.323,
+      "type": "scroll",
+      "stage": "website",
+      "dy": 900
+    },
+    {
+      "page": "app",
+      "t": 1794583397.788,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 272.5
+    },
+    {
+      "page": "app",
+      "t": 1794583398.05,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583399.245,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 260.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583399.508,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583399.854,
+      "type": "type",
+      "stage": "merchant",
+      "value": "Aubelle"
+    },
+    {
+      "page": "app",
+      "t": 1794583400.858,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 363.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583401.119,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583401.897,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 380.5
+    },
+    {
+      "page": "app",
+      "t": 1794583402.158,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583402.832,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 484.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583403.094,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583403.434,
+      "type": "type",
+      "stage": "merchant",
+      "value": "shop.noren-near-mw9h22el.testnet"
+    },
+    {
+      "page": "app",
+      "t": 1794583405.872,
+      "type": "move",
+      "stage": "merchant",
+      "x": 936.1953125,
+      "y": 547.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583406.133,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583406.817,
+      "type": "move",
+      "stage": "merchant",
+      "x": 700,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583407.078,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583407.422,
+      "type": "type",
+      "stage": "merchant",
+      "value": "12"
+    },
+    {
+      "page": "app",
+      "t": 1794583408.146,
+      "type": "move",
+      "stage": "merchant",
+      "x": 985,
+      "y": 284.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583408.408,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583408.746,
+      "type": "type",
+      "stage": "merchant",
+      "value": "Silk scrunchie set"
+    },
+    {
+      "page": "app",
+      "t": 1794583410.39,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 347.296875
+    },
+    {
+      "page": "app",
+      "t": 1794583410.65,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583412.806,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 514.5
+    },
+    {
+      "page": "app",
+      "t": 1794583413.069,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583415.954,
+      "type": "move",
+      "stage": "merchant",
+      "x": 900,
+      "y": 674.5
+    },
+    {
+      "page": "app",
+      "t": 1794583416.214,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583420.071,
+      "type": "move",
+      "stage": "merchant",
+      "x": 364.140625,
+      "y": 525.765625
+    },
+    {
+      "page": "app",
+      "t": 1794583420.333,
+      "type": "click",
+      "stage": "merchant"
+    },
+    {
+      "page": "app",
+      "t": 1794583425.284,
+      "type": "move",
+      "stage": "shop",
+      "x": 900,
+      "y": 520
+    },
+    {
+      "page": "app",
+      "t": 1794583426.886,
+      "type": "scroll",
+      "stage": "shop",
+      "dy": 620
+    },
+    {
+      "page": "app",
+      "t": 1794583432.505,
+      "type": "move",
+      "stage": "shop",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583432.767,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583433.621,
+      "type": "move",
+      "stage": "shop",
+      "x": 1059.8046875,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794583433.884,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583435.587,
+      "type": "move",
+      "stage": "shop",
+      "x": 1220,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794583435.847,
+      "type": "click",
+      "stage": "shop"
+    },
+    {
+      "page": "app",
+      "t": 1794583437.77,
+      "type": "move",
+      "stage": "shop",
+      "x": 1134,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794583438.032,
+      "type": "click",
+      "stage": "shop"
+    }
+  ],
+  "stills": [
+    {
+      "name": "website",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "merchant",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "shop",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "attempts": [],
+  "transactions": [],
+  "quotes": [],
+  "errors": [],
+  "invoices": {
+    "stock": "http://127.0.0.1:5330/#/pay/0xdc7da580e70516542afeca3267c512ba9a8eaf61976225aeeea87af5b6c9d075"
+  },
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "tsla": "9962335216",
+    "usdc": "139606656",
+    "shop": "453394205",
+    "near": "92109803915833799999952"
+  },
+  "usdcInvoiceURL": "http://127.0.0.1:5330/#/pay/0x385542dab7655ef902c7be10d99cab6c44fe42c3b178c69adca0aa9dec4be407",
+  "failedStage": "shop",
+  "error": "Yahoo Finance rate-limited the request (HTTP 429). Stop and retry later.",
+  "finishedAt": "2026-11-13T15:24:01.522Z",
+  "actualNearSpentYocto": "0"
+}
