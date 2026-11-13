@@ -48,7 +48,7 @@ export type Outcome = { transaction?: { hash?: string }; transaction_outcome?: {
 export function verifyOutcome(result: Outcome, call: Call) {
   if (result.status?.Failure) throw Error(JSON.stringify(result.status.Failure));
   const value = result.status?.SuccessValue === undefined ? undefined : JSON.parse(atob(result.status.SuccessValue) || 'null');
-  if (['borrow', 'withdraw'].includes(call.methodName) && value !== true) throw Error('Token transfer did not complete; the contract restored your balance. Check the transaction link.');
+  if (['borrow', 'withdraw', 'pay_installment'].includes(call.methodName) && value !== true) throw Error('Token transfer did not complete; the contract restored your balance. Check the transaction link.');
   if (call.methodName === 'ft_transfer_call' && (typeof value !== 'string' || BigInt(value) <= 0n)) throw Error('Token transfer was refunded. Check the transaction link before trying again.');
-  if (call.methodName === 'ft_transfer_call' && JSON.parse(String(call.args.msg)).kind === 'collateral' && value !== call.args.amount) throw Error('Token transfer was not fully accepted. Check the transaction link.');
+  if (call.methodName === 'ft_transfer_call' && ['collateral', 'stock_pay'].includes(JSON.parse(String(call.args.msg)).kind) && value !== call.args.amount) throw Error('Token transfer was not fully accepted. Check the transaction link.');
 }

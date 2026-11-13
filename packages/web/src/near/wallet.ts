@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Buffer } from 'buffer';
 import type { InjectedWallet, WalletSelector } from '@near-wallet-selector/core';
 import { CONTRACT } from './data';
 import { walletError, type Call, type Outcome } from './credit-calls.ts';
@@ -25,7 +26,7 @@ export function useNearWallet() {
   useEffect(() => {
     let active = true, unsubscribe: (() => void) | undefined;
     if (import.meta.env.MODE === 'qa' && import.meta.env.VITE_QA_SIGNER === '1') {
-      qaWallet().then(() => active && setReady(true)).catch(e => active && setError(walletError(e)));
+      qaWallet().then(async w => { if (active) { setAccount((await w.getAccounts())[0]?.accountId ?? ''); setReady(true); } }).catch(e => active && setError(walletError(e)));
       return () => { active = false; };
     }
     selector().then(async s => {
@@ -41,7 +42,8 @@ export function useNearWallet() {
     try {
       const w = await signingWallet();
       await w.signIn({ contractId: CONTRACT, methodNames: [] });
-      setAccount((await w.getAccounts())[0]?.accountId ?? '');
+      const next = (await w.getAccounts())[0]?.accountId ?? '';
+      setAccount(next); return next;
     } catch (e) { setError(walletError(e)); }
     finally { setConnecting(false); }
   }
@@ -56,6 +58,13 @@ export function useNearWallet() {
     const { actionCreators } = await import('@near-wallet-selector/core');
     return await w.signAndSendTransaction({ signerId: account, receiverId: call.receiverId, actions: [actionCreators.functionCall(call.methodName, call.args, BigInt(call.gas), BigInt(call.deposit))] }) as Outcome | undefined;
   }
-  return { account, ready, connecting, error, connect, disconnect, sign };
+  async function signMessage(message: string, nonce: string, recipient: string) {
+    const w = await signingWallet();
+    if (!w.signMessage) throw Error('This wallet does not support NEP-413 message signing.');
+    const result = await w.signMessage({message, nonce: Buffer.from(nonce, 'base64'), recipient});
+    if (!result) throw Error('You closed the wallet without approving the message.');
+    return result;
+  }
+  return { account, ready, connecting, error, connect, disconnect, sign, signMessage };
 }
 export type NearWallet = ReturnType<typeof useNearWallet>;

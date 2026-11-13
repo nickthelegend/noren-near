@@ -26,7 +26,7 @@ export function assertQaTransaction(request: Request, accountId: string) {
   const action = request.actions[0];
   if (action.enum !== 'functionCall' || !action.functionCall) throw Error('QA signer accepts function calls only.');
   const { methodName, args, gas, deposit } = action.functionCall;
-  const allowed = request.receiverId === CONTRACT ? ['borrow', 'withdraw'] : ['ft_transfer_call', 'storage_deposit', 'mint'];
+  const allowed = request.receiverId === CONTRACT ? ['borrow', 'withdraw', 'schedule_pay_in_3', 'pay_installment'] : ['ft_transfer', 'ft_transfer_call', 'storage_deposit', 'mint'];
   if (!allowed.includes(methodName) || gas <= 0n || gas > 80_000_000_000_000n || deposit < 0n || deposit > 1_250_000_000_000_000_000_000n) throw Error('QA signer refuses this method or gas/deposit limit.');
   let values: Record<string, unknown>;
   try { values = JSON.parse(new TextDecoder().decode(args)); } catch { throw Error('QA signer requires JSON function arguments.'); }
@@ -63,6 +63,12 @@ export function createQaSigner() {
   return {
     id: QA_SIGNER_MODULE,
     getAccounts,
+    signMessage: async (payload: {message:string;nonce:Uint8Array;recipient:string}) => {
+      if (!connected || payload.recipient !== location.host || !payload.message.startsWith('Sign in to Noren Merchant on NEAR testnet.')) throw Error('QA signer refuses this sign-in message.');
+      const { signMessage } = await import('near-api-js/nep413');
+      const r = await signMessage({signerAccount: signer, payload});
+      return { accountId, publicKey: r.publicKey.toString(), signature: btoa(String.fromCharCode(...r.signature)) };
+    },
     signIn: async ({ contractId }: { contractId?: string }) => {
       if (contractId !== CONTRACT) throw Error('QA signer refuses another sign-in contract.');
       connected = true; return getAccounts();
