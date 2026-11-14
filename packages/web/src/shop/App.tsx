@@ -401,7 +401,7 @@ function OrderPage({ id }: { id: string }) {
   useEffect(() => {
     let stop = false, timer: number | undefined;
     const tick = async () => {
-      try { const o = await api.order(id); if (stop) return; setOrder(o); setError(null); if (o.status === 'paid') { bagActions.clear(); return; } if (!['awaiting_payment','partially_paid'].includes(o.status)) return; }
+      try { const o = await api.order(id); if (stop) return; setOrder(o); setError(null); if (o.status === 'paid' || o.status === 'partially_paid') bagActions.clear(); if (o.status === 'paid') return; if (!['awaiting_payment','partially_paid'].includes(o.status)) return; }
       catch (e: any) { if (!stop) setError(e.message); }
       if (!stop) timer = window.setTimeout(tick, 2000);
     };
