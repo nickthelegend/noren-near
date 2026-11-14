@@ -1,5 +1,5 @@
 // Original ETHGlobal landing components and artwork. NEAR claims come from the native contract and deployment evidence.
-import {useEffect,useRef,useState} from 'react';import{Icon}from'./ui';import{Mark}from'./logos';import'./landing.css';
+import {useEffect,useRef,useState} from 'react';import{Icon,Logo}from'./ui';import{Mark}from'./logos';import'./landing.css';
 type Status='live'|'wip'|'quotes'|'testnet'|'key'|'local';const STATUS:Record<Status,string>={live:'NEAR testnet',wip:'Not integrated',quotes:'Mainnet dry quote',testnet:'NEAR testnet',key:'Operator authorization',local:'Local service'};
 const Chip=({s}:{s:Status})=><span className={`nx-chip ${s} mono`}><i/>{STATUS[s]}</span>;
 const CODE:Record<string,{file:string;lines:[string,string][]}>={
@@ -99,6 +99,23 @@ function GlyphField() {
 
 const Tag = ({ children, dark }: { children: string; dark?: boolean }) => <span className={`lx-tag mono ${dark ? "dark" : ""}`}>■ {children}</span>;
 
+/** Klarna / Affirm facts are quoted from their own pages or filings (checked Nov 14 2026); [text, source number]. */
+const VS: { q: string; c: [string, number?][] }[] = [
+  { q: "Whose money pays the shop", c: [["Klarna's, after a soft credit check", 1], ["Affirm's, after an eligibility check; your rate depends on your credit", 2], ["A pool on NEAR, against stock or BTC you lock in the contract. No credit check"]] },
+  { q: "What it costs you", c: [["0% if paid on time; a late fee of up to $7", 1], ["0–36% APR; Pay in 4 at 0%", 2], ["10% APR on what you draw, fixed in the contract; no late fee"]] },
+  { q: "If things go wrong", c: [["Late fees, capped at 25% of the order", 1], ["No late fees; any interest is shown up front", 5], ["If your stock falls too far, part of it can be sold to repay the debt"]] },
+  { q: "Your stocks", c: [["Not part of it: to spend them, you sell first"], ["Not part of it: to spend them, you sell first"], ["Spend them directly, or keep them and borrow against them"]] },
+  { q: "What the shop pays", c: [["A per-sale merchant fee (a third-party guide quotes 3.29–5.99% + $0.30)", 3], ["A per-sale merchant fee, set per merchant agreement", 4], ["No Noren fee in this build; the shop gets the full amount"]] },
+  { q: "Proof of payment", c: [["The provider's own records"], ["The provider's own records"], ["Test USDC to the shop's NEAR account, final in seconds, on a public explorer"]] },
+];
+const VS_SOURCES = [
+  { t: "Klarna, Pay in 4 (US): payments, soft check, late fee", u: "https://www.klarna.com/us/pay-in-4/" },
+  { t: "Affirm, How it works: 0–36% APR, Pay in 4 at 0%", u: "https://www.affirm.com/how-it-works" },
+  { t: "Wise, Klarna for business: merchant fee ranges (third-party guide)", u: "https://wise.com/us/blog/klarna-for-business" },
+  { t: "Affirm Form 10-K (FY2021): merchant fees vary by agreement", u: "https://www.sec.gov/Archives/edgar/data/1820953/000182095321000102/afrm-20210630.htm" },
+  { t: "Affirm for business: no fees of any kind, not even late fees", u: "https://www.affirm.com/lp/business/brand/1" },
+];
+
 export function Landing() {
   const [tab, setTab] = useState<keyof typeof CODE>("link");
   const ref = useReveal();
@@ -142,6 +159,24 @@ export function Landing() {
             <figcaption className="mono">Noren’s curtain artwork. <span>Film generated with Google Gemini (Veo); Gemini's mark is kept, bottom right.</span></figcaption>
           </figure>
         </div>
+      </section>
+
+      {/* ---------------------------------------------------------------- versus pay-later apps (sourced) */}
+      <section className="nx-sec nx-vs" id="compare">
+        <div className="nx-head split" data-reveal>
+          <div><Tag>Versus pay-later apps</Tag>
+          <h2>Pay later, with your own stock behind it. <span>No credit check.</span></h2></div>
+          <p>Klarna and Affirm lend you their money after a credit check. Noren lends against stock or bitcoin you already hold, by rules in a contract anyone can read. They are real, regulated lenders; Noren on NEAR is a testnet build with test tokens. Each claim about them links to its source below.</p>
+        </div>
+        <div className="nx-vs-wrap" data-reveal>
+          <table className="nx-vs-t">
+            <thead><tr><th scope="col"><span className="sr">Question</span></th><th scope="col">Klarna <small>Pay in 4, US</small></th><th scope="col">Affirm <small>US</small></th><th scope="col" className="me"><span><Logo size={16} />Noren</span> <small>on NEAR testnet</small></th></tr></thead>
+            <tbody>
+              {VS.map((r) => <tr key={r.q}><th scope="row">{r.q}</th>{r.c.map((c, i) => <td key={i} className={i === 2 ? "me" : undefined} data-label={["Klarna", "Affirm", "Noren on NEAR"][i]}>{c[0]}{c[1] && <sup><a href={`#vs-${c[1]}`}>{c[1]}</a></sup>}</td>)}</tr>)}
+            </tbody>
+          </table>
+        </div>
+        <ol className="nx-vs-src mono">{VS_SOURCES.map((x, i) => <li key={x.u} id={`vs-${i + 1}`}><a href={x.u} target="_blank" rel="noreferrer">{x.t}</a></li>)}</ol>
       </section>
 
       {/* ---------------------------------------------------------------- (b) three surfaces */}
