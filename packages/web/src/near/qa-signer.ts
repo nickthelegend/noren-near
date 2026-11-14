@@ -4,9 +4,10 @@ import type { InjectedWallet } from '@near-wallet-selector/core';
 import { CONTRACT, RECORD, COLLATERALS } from './data';
 import { accountValid, type Call } from './credit-calls';
 import { GASLESS_GAS, toWire } from './gasless';
+import { requestApproval } from './qa-approval';
 
 export const QA_SIGNER_MODULE = 'noren-qa-signer';
-export type QaConfig = { accountId: string; privateKey: string; rpcUrl: string };
+export type QaConfig = { accountId: string; privateKey: string; rpcUrl: string; approve?: boolean };
 type Request = Parameters<InjectedWallet['signAndSendTransaction']>[0];
 type Reservation = { receiverId: string; gas: string; deposit: string; gasless?: boolean };
 declare global {
@@ -46,7 +47,12 @@ export function createQaSigner() {
   let signer: Account;
   try { signer = new Account(config.accountId, new JsonRpcProvider({ url: config.rpcUrl }), new KeyPairSigner(KeyPair.fromString(config.privateKey as KeyPairString))); }
   catch { throw Error('QA signer could not load the injected test key.'); }
-  const accountId = config.accountId;
+  const accountId = config.accountId, approve = config.approve === true; // approve: show the test wallet's Approve sheet before every signature
+  const ask = async (request: Request, extra: { gasless?: boolean } = {}) => {
+    if (!approve) return;
+    const fc = request.actions[0].functionCall!, values = JSON.parse(new TextDecoder().decode(fc.args));
+    await requestApproval({ accountId, receiverId: request.receiverId, methodName: fc.methodName, args: values, gas: fc.gas.toString(), deposit: fc.deposit.toString(), ...extra });
+  };
   config.privateKey = ''; // The SDK's signer is the only remaining owner in the page.
   let connected = false, signing = false;
   const getAccounts = async () => connected ? [{ accountId }] : [];
@@ -55,6 +61,7 @@ export function createQaSigner() {
     const reservation = assertQaTransaction(request, accountId);
     signing = true;
     try {
+      await ask(request);
       await window.__norenQaAuthorize!(reservation);
       // No retries here: the shared app pipeline observes the returned hash through FINAL.
       return await signer.signAndSendTransaction({ receiverId: reservation.receiverId, actions: request.actions, waitUntil: 'INCLUDED', throwOnFailure: false });
@@ -64,10 +71,12 @@ export function createQaSigner() {
   // NEP-366: sign a DelegateAction for one gasless test-USDC payment; Noren's relayer submits it and pays the gas.
   const signDelegate = async (call: Call) => {
     if (!connected || signing) throw Error('QA signer is disconnected or already signing.');
-    const reservation = assertQaTransaction({ signerId: accountId, receiverId: call.receiverId, actions: [{ enum: 'functionCall', functionCall: { methodName: call.methodName, args: new TextEncoder().encode(JSON.stringify(call.args)), gas: BigInt(call.gas), deposit: BigInt(call.deposit) } }] } as unknown as Request, accountId);
+    const delegated = { signerId: accountId, receiverId: call.receiverId, actions: [{ enum: 'functionCall', functionCall: { methodName: call.methodName, args: new TextEncoder().encode(JSON.stringify(call.args)), gas: BigInt(call.gas), deposit: BigInt(call.deposit) } }] } as unknown as Request;
+    const reservation = assertQaTransaction(delegated, accountId);
     if (call.receiverId !== RECORD.accounts.tusdc || call.methodName !== 'ft_transfer' || BigInt(call.gas) > BigInt(GASLESS_GAS) || call.deposit !== '1') throw Error('QA signer signs gasless test-USDC payments only.');
     signing = true;
     try {
+      await ask(delegated, { gasless: true });
       await window.__norenQaAuthorize!({ ...reservation, gasless: true });
       const r = await signer.createSignedMetaTransaction({ receiverId: call.receiverId, actions: [actions.functionCall(call.methodName, call.args, BigInt(call.gas), BigInt(call.deposit))], blockHeightTtl: 120 });
       return toWire(r.signedDelegate);
