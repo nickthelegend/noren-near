@@ -1,0 +1,582 @@
+{
+  "network": "testnet",
+  "film": "v8",
+  "evidenceFile": "near8-film-2026-11-14T11-31-51-254Z.json",
+  "framesDir": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/frames-2026-11-14T11-31-51-254Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "shopper": "riya.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-14T11:31:53.198Z",
+  "from": "buy-later",
+  "status": "STOPPED",
+  "reservedYocto": "22000000000000000000001",
+  "stage": "buy-btc",
+  "takes": [
+    {
+      "id": "buy-later",
+      "page": "app",
+      "start": 1794655956.138,
+      "end": 1794656018.477
+    },
+    {
+      "id": "explorer-buy-later",
+      "page": "explorer",
+      "start": 1794656020.227,
+      "end": 1794656029.942
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794655956.807,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 900,
+      "y": 420
+    },
+    {
+      "page": "app",
+      "t": 1794655959.608,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 80.8046875,
+      "y": 66.6640625
+    },
+    {
+      "page": "app",
+      "t": 1794655959.889,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655961.73,
+      "type": "scroll",
+      "stage": "buy-later",
+      "dy": 420
+    },
+    {
+      "page": "app",
+      "t": 1794655965.508,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 874,
+      "y": 237.9375
+    },
+    {
+      "page": "app",
+      "t": 1794655965.789,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655968.356,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655968.639,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655970.025,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 955.625,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655970.308,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655972.708,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 1180,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794655972.989,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655975.624,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 1128,
+      "y": 449.9921875
+    },
+    {
+      "page": "app",
+      "t": 1794655977.356,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 1128,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794655977.638,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655980.489,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 885,
+      "y": 398.953125
+    },
+    {
+      "page": "app",
+      "t": 1794655980.772,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655984.057,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 457.34375
+    },
+    {
+      "page": "app",
+      "t": 1794655984.34,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655991.657,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 510.3359375
+    },
+    {
+      "page": "app",
+      "t": 1794655994.291,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 586.53125
+    },
+    {
+      "page": "app",
+      "t": 1794655994.574,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655997.006,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 631,
+      "y": 343.953125
+    },
+    {
+      "page": "app",
+      "t": 1794656000.639,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 820.75,
+      "y": 628.109375
+    },
+    {
+      "page": "app",
+      "t": 1794656001.093,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794656001.831,
+      "type": "wait-start",
+      "stage": "buy-later",
+      "label": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794656008.398,
+      "type": "wait-end",
+      "stage": "buy-later",
+      "label": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794656011.721,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 406
+    },
+    {
+      "page": "app",
+      "t": 1794656014.339,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 547.375
+    },
+    {
+      "page": "app",
+      "t": 1794656014.634,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "explorer",
+      "t": 1794656020.886,
+      "type": "move",
+      "stage": "explorer-buy-later",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer",
+      "t": 1794656024.754,
+      "type": "move",
+      "stage": "explorer-buy-later",
+      "x": 364,
+      "y": 290
+    },
+    {
+      "page": "explorer",
+      "t": 1794656027.237,
+      "type": "move",
+      "stage": "explorer-buy-later",
+      "x": 721.328125,
+      "y": 290
+    },
+    {
+      "page": "app",
+      "t": 1794656032.737,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 900,
+      "y": 520
+    },
+    {
+      "page": "app",
+      "t": 1794656035.12,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 80.8046875,
+      "y": 66.6640625
+    },
+    {
+      "page": "app",
+      "t": 1794656035.403,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656037.246,
+      "type": "scroll",
+      "stage": "buy-btc",
+      "dy": 420
+    },
+    {
+      "page": "app",
+      "t": 1794656040.104,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 258,
+      "y": 651.65625
+    },
+    {
+      "page": "app",
+      "t": 1794656040.387,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656042.987,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 951.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794656043.267,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656044.636,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 955.625,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794656044.918,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656047.337,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1180,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794656047.619,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656050.204,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1128,
+      "y": 449.9921875
+    },
+    {
+      "page": "app",
+      "t": 1794656051.972,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1128,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794656052.255,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656055.069,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 833.0546875,
+      "y": 516.34375
+    },
+    {
+      "page": "app",
+      "t": 1794656056.935,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1019.328125,
+      "y": 637.140625
+    },
+    {
+      "page": "app",
+      "t": 1794656065.787,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 848.0625,
+      "y": 572.34375
+    },
+    {
+      "page": "app",
+      "t": 1794656066.07,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656069.769,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 457.34375
+    },
+    {
+      "page": "app",
+      "t": 1794656070.052,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656072.22,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 637.140625
+    },
+    {
+      "page": "app",
+      "t": 1794656076.554,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 688.515625
+    },
+    {
+      "page": "app",
+      "t": 1794656076.836,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656079.786,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 631,
+      "y": 348.875
+    },
+    {
+      "page": "app",
+      "t": 1794656083.452,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 820.75,
+      "y": 623.1875
+    },
+    {
+      "page": "app",
+      "t": 1794656083.905,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656084.643,
+      "type": "wait-start",
+      "stage": "buy-btc",
+      "label": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656093.98,
+      "type": "wait-end",
+      "stage": "buy-btc",
+      "label": "buy-btc"
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "buy-later",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "buy-later",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "buy-btc",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "buy-btc",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-buy-later",
+      "hash": "4u7eUDonLQPrCTvbzLnyrVnPDGiDtcY1AwT8gGsRyYaQ",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67071590000"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "buy-later",
+      "hash": "3xk6QpTWwoHmhy8SA2c2dUyUD3vSmFcFE1GAJ29c2vAv",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/3xk6QpTWwoHmhy8SA2c2dUyUD3vSmFcFE1GAJ29c2vAv?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-buy-btc",
+      "hash": "AMvynGWBM4sNHkhso3T7g9omJAcP1ckJ6DiUWyDYM7ym",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67094980000"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "buy-btc",
+      "hash": "GAbXymPFtbNbuVFZEv3M41MpiNtiawCAEwgHDFKGQsD2",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": false,
+      "signer": "alice.noren-near-mw9h22el.testnet"
+    }
+  ],
+  "errors": [],
+  "invoices": {
+    "buy-later": "http://127.0.0.1:5330/#/pay/0x37d6fd50d635ffd91ccc055679033e00cffbd74964086518ff99b302991a8516",
+    "buy-btc": "http://127.0.0.1:5330/#/pay/0x254294540af12810fa3058f065816440d5f2f55c4947ea840a48f5b48d306391"
+  },
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [
+        {
+          "token": "wbtc.fakes.testnet",
+          "amount": "700000",
+          "value_usd6": "470355550"
+        }
+      ],
+      "collateral_usd6": "470355550",
+      "credit_limit_usd6": "235177775",
+      "debt_usd6": "59333364",
+      "available_usd6": "175844411",
+      "health_bps": "47564",
+      "prices_fresh": false,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "wbtc": "560530",
+    "usdc": "260935193",
+    "shop": "1863394514",
+    "near": "120623768164603899999928",
+    "riyaUsdc": "150000000",
+    "riyaNear": "0",
+    "relayerNear": "21645808105517999999999"
+  },
+  "activeTake": {
+    "id": "buy-btc",
+    "page": "app",
+    "start": 1794656032.088
+  },
+  "failedStage": "buy-btc",
+  "error": "Transaction not successful FINAL: buy-btc",
+  "finishedAt": "2026-11-14T11:34:54.460Z",
+  "actualNearSpentYocto": "1961861275037700000001"
+}

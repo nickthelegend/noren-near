@@ -1,0 +1,978 @@
+{
+  "network": "testnet",
+  "film": "v8",
+  "evidenceFile": "near8-film-2026-11-14T11-25-47-349Z.json",
+  "framesDir": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/frames-2026-11-14T11-25-47-349Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "shopper": "riya.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-14T11:25:49.253Z",
+  "from": "deposit-1",
+  "status": "STOPPED",
+  "reservedYocto": "39000000000000000000002",
+  "stage": "buy-later",
+  "takes": [
+    {
+      "id": "deposit-1",
+      "page": "app",
+      "start": 1794655561.544,
+      "end": 1794655590.909
+    },
+    {
+      "id": "explorer-deposit-1",
+      "page": "explorer",
+      "start": 1794655592.679,
+      "end": 1794655596.861
+    },
+    {
+      "id": "deposit-2",
+      "page": "app",
+      "start": 1794655602.129,
+      "end": 1794655630.809
+    },
+    {
+      "id": "explorer-deposit-2",
+      "page": "explorer",
+      "start": 1794655632.507,
+      "end": 1794655635.691
+    },
+    {
+      "id": "credit-tab",
+      "page": "app",
+      "start": 1794655646.491,
+      "end": 1794655658.876
+    },
+    {
+      "id": "buy-in3",
+      "page": "app",
+      "start": 1794655661.129,
+      "end": 1794655760.293
+    },
+    {
+      "id": "explorer-buy-in3",
+      "page": "explorer",
+      "start": 1794655761.98,
+      "end": 1794655765.57
+    },
+    {
+      "id": "explorer-draw-1",
+      "page": "explorer",
+      "start": 1794655767.317,
+      "end": 1794655771.051
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794655558.197,
+      "type": "move",
+      "stage": "preflight",
+      "x": 661,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794655558.48,
+      "type": "click",
+      "stage": "preflight"
+    },
+    {
+      "page": "app",
+      "t": 1794655562.213,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 640,
+      "y": 164
+    },
+    {
+      "page": "app",
+      "t": 1794655564.595,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 672,
+      "y": 472.78125
+    },
+    {
+      "page": "app",
+      "t": 1794655564.877,
+      "type": "click",
+      "stage": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655565.228,
+      "type": "type",
+      "stage": "deposit-1",
+      "value": "0.0035"
+    },
+    {
+      "page": "app",
+      "t": 1794655567.145,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 651,
+      "y": 654.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655567.427,
+      "type": "click",
+      "stage": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655570.427,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 631,
+      "y": 330.796875
+    },
+    {
+      "page": "app",
+      "t": 1794655574.076,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 820.75,
+      "y": 595.265625
+    },
+    {
+      "page": "app",
+      "t": 1794655574.53,
+      "type": "click",
+      "stage": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655575.274,
+      "type": "wait-start",
+      "stage": "deposit-1",
+      "label": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655583.114,
+      "type": "wait-end",
+      "stage": "deposit-1",
+      "label": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655587.206,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 640,
+      "y": 164
+    },
+    {
+      "page": "explorer",
+      "t": 1794655593.357,
+      "type": "move",
+      "stage": "explorer-deposit-1",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794655598.79,
+      "type": "move",
+      "stage": "explorer-deposit-1",
+      "x": 661,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794655599.072,
+      "type": "click",
+      "stage": "explorer-deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655602.773,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 640,
+      "y": 164
+    },
+    {
+      "page": "app",
+      "t": 1794655605.156,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 672,
+      "y": 472.78125
+    },
+    {
+      "page": "app",
+      "t": 1794655605.438,
+      "type": "click",
+      "stage": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794655605.795,
+      "type": "type",
+      "stage": "deposit-2",
+      "value": "0.0035"
+    },
+    {
+      "page": "app",
+      "t": 1794655607.724,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 651,
+      "y": 654.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655608.007,
+      "type": "click",
+      "stage": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794655610.989,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 631,
+      "y": 330.796875
+    },
+    {
+      "page": "app",
+      "t": 1794655614.639,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 820.75,
+      "y": 595.265625
+    },
+    {
+      "page": "app",
+      "t": 1794655615.092,
+      "type": "click",
+      "stage": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794655615.831,
+      "type": "wait-start",
+      "stage": "deposit-2",
+      "label": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794655622.97,
+      "type": "wait-end",
+      "stage": "deposit-2",
+      "label": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794655627.105,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 640,
+      "y": 164
+    },
+    {
+      "page": "explorer",
+      "t": 1794655633.189,
+      "type": "move",
+      "stage": "explorer-deposit-2",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794655643.156,
+      "type": "move",
+      "stage": "explorer-deposit-2",
+      "x": 661,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794655643.438,
+      "type": "click",
+      "stage": "explorer-deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794655649.271,
+      "type": "move",
+      "stage": "credit-tab",
+      "x": 551.765625,
+      "y": 404.71875
+    },
+    {
+      "page": "app",
+      "t": 1794655651.674,
+      "type": "scroll",
+      "stage": "credit-tab",
+      "dy": 520
+    },
+    {
+      "page": "app",
+      "t": 1794655656.024,
+      "type": "scroll",
+      "stage": "credit-tab",
+      "dy": -520
+    },
+    {
+      "page": "app",
+      "t": 1794655661.921,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 900,
+      "y": 520
+    },
+    {
+      "page": "app",
+      "t": 1794655665.486,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 80.8046875,
+      "y": 66.6640625
+    },
+    {
+      "page": "app",
+      "t": 1794655665.769,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655667.61,
+      "type": "scroll",
+      "stage": "buy-in3",
+      "dy": 420
+    },
+    {
+      "page": "app",
+      "t": 1794655671.352,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 566,
+      "y": 237.9375
+    },
+    {
+      "page": "app",
+      "t": 1794655671.633,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655674.236,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655674.519,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655675.919,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 955.625,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655676.202,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655678.62,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 1180,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794655678.904,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655681.52,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 1128,
+      "y": 449.9921875
+    },
+    {
+      "page": "app",
+      "t": 1794655683.286,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 1128,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794655683.569,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655686.401,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 885,
+      "y": 312.390625
+    },
+    {
+      "page": "app",
+      "t": 1794655688.518,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 944,
+      "y": 650.34375
+    },
+    {
+      "page": "app",
+      "t": 1794655691.367,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 1095,
+      "y": 312.390625
+    },
+    {
+      "page": "app",
+      "t": 1794655691.649,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655694.134,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 885,
+      "y": 398.953125
+    },
+    {
+      "page": "app",
+      "t": 1794655694.417,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655697.217,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 1095,
+      "y": 398.953125
+    },
+    {
+      "page": "app",
+      "t": 1794655697.5,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655700.935,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 944,
+      "y": 457.34375
+    },
+    {
+      "page": "app",
+      "t": 1794655701.218,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655703.352,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 944,
+      "y": 510.3359375
+    },
+    {
+      "page": "app",
+      "t": 1794655706.168,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 944,
+      "y": 586.53125
+    },
+    {
+      "page": "app",
+      "t": 1794655706.451,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655708.617,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 631,
+      "y": 363.875
+    },
+    {
+      "page": "app",
+      "t": 1794655712.251,
+      "type": "move",
+      "stage": "buy-in3",
+      "x": 820.75,
+      "y": 638.1875
+    },
+    {
+      "page": "app",
+      "t": 1794655712.703,
+      "type": "click",
+      "stage": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655713.441,
+      "type": "wait-start",
+      "stage": "buy-in3",
+      "label": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655720.042,
+      "type": "wait-end",
+      "stage": "buy-in3",
+      "label": "buy-in3"
+    },
+    {
+      "page": "app",
+      "t": 1794655730.982,
+      "type": "move",
+      "stage": "draw-1",
+      "x": 944,
+      "y": 595.53125
+    },
+    {
+      "page": "app",
+      "t": 1794655733.066,
+      "type": "move",
+      "stage": "draw-1",
+      "x": 961,
+      "y": 694.375
+    },
+    {
+      "page": "app",
+      "t": 1794655733.349,
+      "type": "click",
+      "stage": "draw-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655736.316,
+      "type": "move",
+      "stage": "draw-1",
+      "x": 631,
+      "y": 372.953125
+    },
+    {
+      "page": "app",
+      "t": 1794655739.982,
+      "type": "move",
+      "stage": "draw-1",
+      "x": 820.75,
+      "y": 599.109375
+    },
+    {
+      "page": "app",
+      "t": 1794655740.435,
+      "type": "click",
+      "stage": "draw-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655741.175,
+      "type": "wait-start",
+      "stage": "draw-1",
+      "label": "draw-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655749.418,
+      "type": "wait-end",
+      "stage": "draw-1",
+      "label": "draw-1"
+    },
+    {
+      "page": "app",
+      "t": 1794655752.516,
+      "type": "move",
+      "stage": "draw-1",
+      "x": 944,
+      "y": 595.53125
+    },
+    {
+      "page": "app",
+      "t": 1794655756.164,
+      "type": "move",
+      "stage": "draw-1",
+      "x": 961,
+      "y": 577.375
+    },
+    {
+      "page": "app",
+      "t": 1794655756.447,
+      "type": "click",
+      "stage": "draw-1"
+    },
+    {
+      "page": "explorer",
+      "t": 1794655762.665,
+      "type": "move",
+      "stage": "explorer-buy-in3",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer",
+      "t": 1794655767.948,
+      "type": "move",
+      "stage": "explorer-draw-1",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794655773.732,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 900,
+      "y": 420
+    },
+    {
+      "page": "app",
+      "t": 1794655776.465,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 80.8046875,
+      "y": 66.6640625
+    },
+    {
+      "page": "app",
+      "t": 1794655776.748,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655778.588,
+      "type": "scroll",
+      "stage": "buy-later",
+      "dy": 420
+    },
+    {
+      "page": "app",
+      "t": 1794655782.348,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 874,
+      "y": 237.9375
+    },
+    {
+      "page": "app",
+      "t": 1794655782.63,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655785.231,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 887.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655785.514,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655786.931,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 955.625,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794655787.214,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655789.632,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 1180,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794655789.914,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655792.532,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 1128,
+      "y": 449.9921875
+    },
+    {
+      "page": "app",
+      "t": 1794655794.298,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 1128,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794655794.581,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655797.715,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 885,
+      "y": 398.953125
+    },
+    {
+      "page": "app",
+      "t": 1794655797.998,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655801.28,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 457.34375
+    },
+    {
+      "page": "app",
+      "t": 1794655801.562,
+      "type": "click",
+      "stage": "buy-later"
+    },
+    {
+      "page": "app",
+      "t": 1794655809.197,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 510.3359375
+    },
+    {
+      "page": "app",
+      "t": 1794655811.83,
+      "type": "move",
+      "stage": "buy-later",
+      "x": 944,
+      "y": 586.53125
+    },
+    {
+      "page": "app",
+      "t": 1794655812.113,
+      "type": "click",
+      "stage": "buy-later"
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "preflight",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "deposit-1",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    },
+    {
+      "stage": "deposit-2",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    },
+    {
+      "stage": "explorer-deposit-2",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "buy-in3",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "draw-1",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "draw-1",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "80000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "buy-later",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-preflight",
+      "hash": "8MAaoTvKn2qdTDwHe7i8ptYbLxHGx2TmjHfaCAicqoxD",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67190390000"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "deposit-1",
+      "hash": "877MYA6tXhS9j5ikyJGhmkEqUCFSiNK7nGcc81ZSUeQt",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/877MYA6tXhS9j5ikyJGhmkEqUCFSiNK7nGcc81ZSUeQt?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "deposit-2",
+      "hash": "8JZEhBfQYH9duY2bnsV26ojave3mVzbxB3LPLjHm5A5R",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/8JZEhBfQYH9duY2bnsV26ojave3mVzbxB3LPLjHm5A5R?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-explorer-deposit-2",
+      "hash": "2KbRmhixaGVF9HLxdyBsS1RCMtuyVwaV1jHfio7iLRjt",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67206250000"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "buy-in3",
+      "hash": "EMhfSkxzgqcend6cK99Ka4ZUSGvq7vVfQ7nEL19ntyVf",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/EMhfSkxzgqcend6cK99Ka4ZUSGvq7vVfQ7nEL19ntyVf?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-draw-1",
+      "hash": "BZV6uecbrcPdikpEgFGDVUWWaAwyHNoA1JFHgX7zWCUq",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67192370000"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "draw-1",
+      "hash": "5HgKMLeYjkRVhYTiYAvAP8RfN6xA48j6PPpcrr1w7QPG",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/5HgKMLeYjkRVhYTiYAvAP8RfN6xA48j6PPpcrr1w7QPG?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-buy-later",
+      "hash": "36zhwjKg3SiMkCxfSZek7gff94dmfd7KXeyaTxMbbFnf",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67193650000"
+    }
+  ],
+  "errors": [
+    {
+      "stage": "buy-later",
+      "type": "no approval sheet",
+      "message": "This would exceed your credit limit. Repay some debt or add collateral first."
+    }
+  ],
+  "invoices": {
+    "buy-in3": "http://127.0.0.1:5330/#/pay/0x7bacce887103c30fbd728ee394b53916f00b75a9f4602d87c37cf1e487af0f53",
+    "buy-later": "http://127.0.0.1:5330/#/pay/0xb8c589266222d1a9717a0576762444f76f257c30e0e7882320cc5fffa89c42d5"
+  },
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "wbtc": "1260530",
+    "usdc": "260935193",
+    "shop": "1804061181",
+    "near": "124007372140873599999930",
+    "riyaUsdc": "150000000",
+    "riyaNear": "0",
+    "relayerNear": "21645808105517999999999"
+  },
+  "activeTake": {
+    "id": "buy-later",
+    "page": "app",
+    "start": 1794655773.124
+  },
+  "failedStage": "buy-later",
+  "error": "locator.waitFor: Timeout 60000ms exceeded.\nCall log:\n  - waiting for locator('iframe[title=\"Noren checkout\"]').contentFrame().locator('[data-qa-approval]') to be visible\n",
+  "finishedAt": "2026-11-14T11:31:12.744Z",
+  "actualNearSpentYocto": "3383603976269700000002"
+}

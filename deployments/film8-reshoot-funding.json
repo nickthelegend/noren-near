@@ -1,0 +1,14 @@
+{
+ "txs": [
+  {
+   "what": "140 test USDC alice -> riya",
+   "hash": "9xU2ZHrfyStsyENTSZ9QgkXdE2LTBbuSWSjry48qit9V",
+   "ok": true
+  },
+  {
+   "what": "mint 200 test USDC to alice",
+   "hash": "BJpDzxWzxjTkGk5ncaFmcr4QYBKMi16ht9kYQXDhENE5",
+   "ok": true
+  }
+ ]
+}

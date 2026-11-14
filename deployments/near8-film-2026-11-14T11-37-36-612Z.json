@@ -1,0 +1,953 @@
+{
+  "network": "testnet",
+  "film": "v8",
+  "evidenceFile": "near8-film-2026-11-14T11-37-36-612Z.json",
+  "framesDir": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/frames-2026-11-14T11-37-36-612Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "shopper": "riya.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-14T11:37:38.497Z",
+  "from": "buy-btc",
+  "status": "PASS_WITH_PAGE_ERRORS",
+  "reservedYocto": "25000000000000000000002",
+  "stage": "landing-end",
+  "takes": [
+    {
+      "id": "buy-btc",
+      "page": "app",
+      "start": 1794656521.384,
+      "end": 1794656593.445
+    },
+    {
+      "id": "explorer-buy-btc",
+      "page": "explorer",
+      "start": 1794656595.182,
+      "end": 1794656599.371
+    },
+    {
+      "id": "buy-gasless",
+      "page": "riya",
+      "start": 1794656601.707,
+      "end": 1794656659.242
+    },
+    {
+      "id": "explorer-buy-gasless",
+      "page": "explorer",
+      "start": 1794656660.945,
+      "end": 1794656669.653
+    },
+    {
+      "id": "repay",
+      "page": "app",
+      "start": 1794656675.375,
+      "end": 1794656703.484
+    },
+    {
+      "id": "explorer-repay",
+      "page": "explorer",
+      "start": 1794656705.18,
+      "end": 1794656709.167
+    },
+    {
+      "id": "withdraw",
+      "page": "app",
+      "start": 1794656709.188,
+      "end": 1794656737.923
+    },
+    {
+      "id": "merchant-view",
+      "page": "app",
+      "start": 1794656740.404,
+      "end": 1794656769.054
+    },
+    {
+      "id": "landing-end",
+      "page": "app",
+      "start": 1794656772.218,
+      "end": 1794656779.111
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794656522.023,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 900,
+      "y": 520
+    },
+    {
+      "page": "app",
+      "t": 1794656524.422,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 80.8046875,
+      "y": 66.6640625
+    },
+    {
+      "page": "app",
+      "t": 1794656524.703,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656526.542,
+      "type": "scroll",
+      "stage": "buy-btc",
+      "dy": 420
+    },
+    {
+      "page": "app",
+      "t": 1794656529.388,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 258,
+      "y": 651.65625
+    },
+    {
+      "page": "app",
+      "t": 1794656529.668,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656532.27,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 951.625,
+      "y": 434.671875
+    },
+    {
+      "page": "app",
+      "t": 1794656532.553,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656533.955,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 955.625,
+      "y": 500.671875
+    },
+    {
+      "page": "app",
+      "t": 1794656534.237,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656536.654,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1180,
+      "y": 766
+    },
+    {
+      "page": "app",
+      "t": 1794656536.937,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656539.556,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1128,
+      "y": 449.9921875
+    },
+    {
+      "page": "app",
+      "t": 1794656541.322,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1128,
+      "y": 507.890625
+    },
+    {
+      "page": "app",
+      "t": 1794656541.605,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656544.419,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 833.0546875,
+      "y": 516.34375
+    },
+    {
+      "page": "app",
+      "t": 1794656546.319,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 1019.328125,
+      "y": 637.140625
+    },
+    {
+      "page": "app",
+      "t": 1794656554.736,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 848.0625,
+      "y": 572.34375
+    },
+    {
+      "page": "app",
+      "t": 1794656555.019,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656558.735,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 457.34375
+    },
+    {
+      "page": "app",
+      "t": 1794656559.017,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656561.202,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 637.140625
+    },
+    {
+      "page": "app",
+      "t": 1794656565.62,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 689.109375
+    },
+    {
+      "page": "app",
+      "t": 1794656565.903,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656568.902,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 631,
+      "y": 348.875
+    },
+    {
+      "page": "app",
+      "t": 1794656572.57,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 820.75,
+      "y": 623.1875
+    },
+    {
+      "page": "app",
+      "t": 1794656573.023,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656573.76,
+      "type": "wait-start",
+      "stage": "buy-btc",
+      "label": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656583.327,
+      "type": "wait-end",
+      "stage": "buy-btc",
+      "label": "buy-btc"
+    },
+    {
+      "page": "app",
+      "t": 1794656586.635,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 406
+    },
+    {
+      "page": "app",
+      "t": 1794656589.318,
+      "type": "move",
+      "stage": "buy-btc",
+      "x": 944,
+      "y": 578.96875
+    },
+    {
+      "page": "app",
+      "t": 1794656589.601,
+      "type": "click",
+      "stage": "buy-btc"
+    },
+    {
+      "page": "explorer",
+      "t": 1794656595.867,
+      "type": "move",
+      "stage": "explorer-buy-btc",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "riya",
+      "t": 1794656602.331,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 900,
+      "y": 420
+    },
+    {
+      "page": "riya",
+      "t": 1794656605.064,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 80.8046875,
+      "y": 66.6640625
+    },
+    {
+      "page": "riya",
+      "t": 1794656605.347,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656607.189,
+      "type": "scroll",
+      "stage": "buy-gasless",
+      "dy": 420
+    },
+    {
+      "page": "riya",
+      "t": 1794656610.964,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 874,
+      "y": 237.9375
+    },
+    {
+      "page": "riya",
+      "t": 1794656611.245,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656613.83,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 823.625,
+      "y": 434.671875
+    },
+    {
+      "page": "riya",
+      "t": 1794656614.112,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656615.532,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 955.625,
+      "y": 500.671875
+    },
+    {
+      "page": "riya",
+      "t": 1794656615.813,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656618.213,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 1180,
+      "y": 766
+    },
+    {
+      "page": "riya",
+      "t": 1794656618.496,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656621.063,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 1128,
+      "y": 449.9921875
+    },
+    {
+      "page": "riya",
+      "t": 1794656622.814,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 1128,
+      "y": 507.890625
+    },
+    {
+      "page": "riya",
+      "t": 1794656623.097,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656625.915,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 1095,
+      "y": 312.390625
+    },
+    {
+      "page": "riya",
+      "t": 1794656626.197,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656629.312,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 944,
+      "y": 457.34375
+    },
+    {
+      "page": "riya",
+      "t": 1794656629.593,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656632.561,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 909.8984375,
+      "y": 506.140625
+    },
+    {
+      "page": "riya",
+      "t": 1794656636.163,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 944,
+      "y": 607.90625
+    },
+    {
+      "page": "riya",
+      "t": 1794656636.445,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656638.88,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 749.53125,
+      "y": 567.1875
+    },
+    {
+      "page": "riya",
+      "t": 1794656642.463,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 820.75,
+      "y": 623.1875
+    },
+    {
+      "page": "riya",
+      "t": 1794656642.914,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656643.654,
+      "type": "wait-start",
+      "stage": "buy-gasless",
+      "label": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656649.472,
+      "type": "wait-end",
+      "stage": "buy-gasless",
+      "label": "buy-gasless"
+    },
+    {
+      "page": "riya",
+      "t": 1794656651.861,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 1042.3828125,
+      "y": 455.984375
+    },
+    {
+      "page": "riya",
+      "t": 1794656655.112,
+      "type": "move",
+      "stage": "buy-gasless",
+      "x": 944,
+      "y": 578.96875
+    },
+    {
+      "page": "riya",
+      "t": 1794656655.394,
+      "type": "click",
+      "stage": "buy-gasless"
+    },
+    {
+      "page": "explorer",
+      "t": 1794656661.631,
+      "type": "move",
+      "stage": "explorer-buy-gasless",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "explorer",
+      "t": 1794656664.097,
+      "type": "move",
+      "stage": "explorer-buy-gasless",
+      "x": 364,
+      "y": 290
+    },
+    {
+      "page": "explorer",
+      "t": 1794656666.548,
+      "type": "move",
+      "stage": "explorer-buy-gasless",
+      "x": 317.4921875,
+      "y": 613
+    },
+    {
+      "page": "app",
+      "t": 1794656671.33,
+      "type": "move",
+      "stage": "explorer-buy-gasless",
+      "x": 661,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794656671.613,
+      "type": "click",
+      "stage": "explorer-buy-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794656676.946,
+      "type": "move",
+      "stage": "repay",
+      "x": 551.765625,
+      "y": 405.3125
+    },
+    {
+      "page": "app",
+      "t": 1794656680.347,
+      "type": "move",
+      "stage": "repay",
+      "x": 661,
+      "y": 697.75
+    },
+    {
+      "page": "app",
+      "t": 1794656680.629,
+      "type": "click",
+      "stage": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794656683.63,
+      "type": "move",
+      "stage": "repay",
+      "x": 631,
+      "y": 330.796875
+    },
+    {
+      "page": "app",
+      "t": 1794656687.28,
+      "type": "move",
+      "stage": "repay",
+      "x": 820.75,
+      "y": 595.265625
+    },
+    {
+      "page": "app",
+      "t": 1794656687.733,
+      "type": "click",
+      "stage": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794656688.474,
+      "type": "wait-start",
+      "stage": "repay",
+      "label": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794656695.081,
+      "type": "wait-end",
+      "stage": "repay",
+      "label": "repay"
+    },
+    {
+      "page": "app",
+      "t": 1794656700.179,
+      "type": "move",
+      "stage": "repay",
+      "x": 551.765625,
+      "y": 405.3125
+    },
+    {
+      "page": "explorer",
+      "t": 1794656705.861,
+      "type": "move",
+      "stage": "explorer-repay",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794656710.779,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 668.640625,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794656711.061,
+      "type": "click",
+      "stage": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794656713.295,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 672,
+      "y": 492.375
+    },
+    {
+      "page": "app",
+      "t": 1794656713.578,
+      "type": "click",
+      "stage": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794656713.945,
+      "type": "type",
+      "stage": "withdraw",
+      "value": "0.007"
+    },
+    {
+      "page": "app",
+      "t": 1794656715.194,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 578,
+      "y": 729.265625
+    },
+    {
+      "page": "app",
+      "t": 1794656715.478,
+      "type": "click",
+      "stage": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794656718.477,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 631,
+      "y": 349.953125
+    },
+    {
+      "page": "app",
+      "t": 1794656722.143,
+      "type": "move",
+      "stage": "withdraw",
+      "x": 820.75,
+      "y": 576.109375
+    },
+    {
+      "page": "app",
+      "t": 1794656722.597,
+      "type": "click",
+      "stage": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794656723.339,
+      "type": "wait-start",
+      "stage": "withdraw",
+      "label": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794656733.068,
+      "type": "wait-end",
+      "stage": "withdraw",
+      "label": "withdraw"
+    },
+    {
+      "page": "app",
+      "t": 1794656741.06,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 900,
+      "y": 400
+    },
+    {
+      "page": "app",
+      "t": 1794656743.663,
+      "type": "scroll",
+      "stage": "merchant-view",
+      "dy": 420
+    },
+    {
+      "page": "app",
+      "t": 1794656747.662,
+      "type": "scroll",
+      "stage": "merchant-view",
+      "dy": -420
+    },
+    {
+      "page": "app",
+      "t": 1794656750.31,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 117.5,
+      "y": 183.96875
+    },
+    {
+      "page": "app",
+      "t": 1794656750.593,
+      "type": "click",
+      "stage": "merchant-view"
+    },
+    {
+      "page": "app",
+      "t": 1794656754.792,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 425,
+      "y": 322.1875
+    },
+    {
+      "page": "app",
+      "t": 1794656755.075,
+      "type": "click",
+      "stage": "merchant-view"
+    },
+    {
+      "page": "app",
+      "t": 1794656759.692,
+      "type": "move",
+      "stage": "merchant-view",
+      "x": 117.5,
+      "y": 150.96875
+    },
+    {
+      "page": "app",
+      "t": 1794656759.975,
+      "type": "click",
+      "stage": "merchant-view"
+    },
+    {
+      "page": "app",
+      "t": 1794656763.918,
+      "type": "scroll",
+      "stage": "merchant-view",
+      "dy": 360
+    },
+    {
+      "page": "app",
+      "t": 1794656773.209,
+      "type": "move",
+      "stage": "landing-end",
+      "x": 720,
+      "y": 600
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "buy-btc",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "buy-btc",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    },
+    {
+      "stage": "buy-gasless",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "15000000000000",
+      "deposit": "1",
+      "gasless": true
+    },
+    {
+      "stage": "repay",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    },
+    {
+      "stage": "withdraw",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "60000000000000",
+      "deposit": "0"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-buy-btc",
+      "hash": "8YEmeeoWYYKEGw5Z6D5RpT2MHbS1KQnjDxfNGkLhcrKy",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67200420000"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "buy-btc",
+      "hash": "zq3HH5XFdnM5YzzBZGgwTrFdjtMV4PMbdPze8dAo6Bu",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/zq3HH5XFdnM5YzzBZGgwTrFdjtMV4PMbdPze8dAo6Bu?network=testnet"
+    },
+    {
+      "source": "Noren gas relayer",
+      "action": "buy-gasless",
+      "hash": "D5BrfNKZVaRGRduwxnWUzf3EAPVMhPorrWoUWX9BvMzb",
+      "sender": "relayer.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "relayer.noren-near-mw9h22el.testnet",
+      "inner": "riya.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/D5BrfNKZVaRGRduwxnWUzf3EAPVMhPorrWoUWX9BvMzb?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "repay",
+      "hash": "5cGmRkqvG9SLXkTQehtnzuzvLSxDmZdwdhWLZrrDrx21",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/5cGmRkqvG9SLXkTQehtnzuzvLSxDmZdwdhWLZrrDrx21?network=testnet"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "withdraw",
+      "hash": "7ypgpnWgWGpbnSsRxhC9tctJyhhC8Bkj7C2NEKaXi3vH",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet"
+    }
+  ],
+  "errors": [
+    {
+      "stage": "withdraw",
+      "type": "console",
+      "message": "Warning: validateDOMNesting(...): %s cannot appear as a child of <%s>.%s%s%s Whitespace text nodes tr  Make sure you don't have any extra whitespace between tags on each line of your source code.  \n    at tr\n    at thead\n    at table\n    at"
+    }
+  ],
+  "invoices": {
+    "buy-btc": "http://127.0.0.1:5330/#/pay/0xc3a00d85c7ecb91a300482a48cc57388f650fecae573bdd1df2f41189271e7e0",
+    "buy-gasless": "http://127.0.0.1:5330/#/pay/0x31e8f2202e5ad7b9a1c53209ee5eda7dca0a295e97c41a60c34aabf03848810a"
+  },
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [
+        {
+          "token": "wbtc.fakes.testnet",
+          "amount": "700000",
+          "value_usd6": "469664860"
+        }
+      ],
+      "collateral_usd6": "469664860",
+      "credit_limit_usd6": "234832430",
+      "debt_usd6": "207333546",
+      "available_usd6": "27498884",
+      "health_bps": "13591",
+      "prices_fresh": false,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "wbtc": "560530",
+    "usdc": "260935193",
+    "shop": "2011394514",
+    "near": "117074765274042899999926",
+    "riyaUsdc": "150000000",
+    "riyaNear": "0",
+    "relayerNear": "21645808105517999999999"
+  },
+  "after": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "wbtc": "1025412",
+    "usdc": "53601361",
+    "shop": "2317394797",
+    "near": "114150466146521899999924",
+    "riyaUsdc": "2000000",
+    "riyaNear": "0",
+    "relayerNear": "21336252723535999999998"
+  },
+  "checks": {
+    "positionClean": true,
+    "riyaNearZero": true,
+    "allFinal": true
+  },
+  "finishedAt": "2026-11-14T11:46:21.248Z",
+  "actualNearSpentYocto": "2924299127521000000002"
+}

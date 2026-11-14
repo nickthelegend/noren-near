@@ -1,0 +1,434 @@
+{
+  "network": "testnet",
+  "film": "v8",
+  "evidenceFile": "near8-film-2026-11-14T10-33-55-104Z.json",
+  "framesDir": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/frames-2026-11-14T10-33-55-104Z",
+  "account": "alice.noren-near-mw9h22el.testnet",
+  "shopper": "riya.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-14T10:33:57.062Z",
+  "from": "app",
+  "status": "STOPPED",
+  "reservedYocto": "13000000000000000000001",
+  "stage": "deposit-2",
+  "takes": [
+    {
+      "id": "app-home",
+      "page": "app",
+      "start": 1794652823.194,
+      "end": 1794652834.158
+    },
+    {
+      "id": "faucet",
+      "page": "app",
+      "start": 1794652834.161,
+      "end": 1794652861.153
+    },
+    {
+      "id": "explorer-faucet",
+      "page": "explorer",
+      "start": 1794652862.904,
+      "end": 1794652866.459
+    },
+    {
+      "id": "deposit-1",
+      "page": "app",
+      "start": 1794652873.663,
+      "end": 1794652902.518
+    },
+    {
+      "id": "explorer-deposit-1",
+      "page": "explorer",
+      "start": 1794652904.203,
+      "end": 1794652908.108
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794652819.353,
+      "type": "move",
+      "stage": "preflight",
+      "x": 661,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794652819.636,
+      "type": "click",
+      "stage": "preflight"
+    },
+    {
+      "page": "app",
+      "t": 1794652823.571,
+      "type": "move",
+      "stage": "app-home",
+      "x": 318,
+      "y": 277
+    },
+    {
+      "page": "app",
+      "t": 1794652826.172,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": 520
+    },
+    {
+      "page": "app",
+      "t": 1794652830.905,
+      "type": "scroll",
+      "stage": "app-home",
+      "dy": -520
+    },
+    {
+      "page": "app",
+      "t": 1794652835.485,
+      "type": "move",
+      "stage": "faucet",
+      "x": 1329.234375,
+      "y": 37
+    },
+    {
+      "page": "app",
+      "t": 1794652835.768,
+      "type": "click",
+      "stage": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794652837.557,
+      "type": "move",
+      "stage": "faucet",
+      "x": 1238,
+      "y": 229.75
+    },
+    {
+      "page": "app",
+      "t": 1794652837.837,
+      "type": "click",
+      "stage": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794652840.061,
+      "type": "move",
+      "stage": "faucet",
+      "x": 631,
+      "y": 349.953125
+    },
+    {
+      "page": "app",
+      "t": 1794652843.432,
+      "type": "move",
+      "stage": "faucet",
+      "x": 820.75,
+      "y": 576.109375
+    },
+    {
+      "page": "app",
+      "t": 1794652843.885,
+      "type": "click",
+      "stage": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794652844.626,
+      "type": "wait-start",
+      "stage": "faucet",
+      "label": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794652852.518,
+      "type": "wait-end",
+      "stage": "faucet",
+      "label": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794652855.765,
+      "type": "move",
+      "stage": "faucet",
+      "x": 1379,
+      "y": 99
+    },
+    {
+      "page": "app",
+      "t": 1794652856.049,
+      "type": "click",
+      "stage": "faucet"
+    },
+    {
+      "page": "app",
+      "t": 1794652858.249,
+      "type": "move",
+      "stage": "faucet",
+      "x": 318,
+      "y": 277
+    },
+    {
+      "page": "explorer",
+      "t": 1794652863.356,
+      "type": "move",
+      "stage": "explorer-faucet",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794652874.062,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 640,
+      "y": 164
+    },
+    {
+      "page": "app",
+      "t": 1794652876.22,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 672,
+      "y": 472.78125
+    },
+    {
+      "page": "app",
+      "t": 1794652876.502,
+      "type": "click",
+      "stage": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794652876.856,
+      "type": "type",
+      "stage": "deposit-1",
+      "value": "0.0035"
+    },
+    {
+      "page": "app",
+      "t": 1794652878.583,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 651,
+      "y": 654.671875
+    },
+    {
+      "page": "app",
+      "t": 1794652878.865,
+      "type": "click",
+      "stage": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794652881.633,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 631,
+      "y": 330.796875
+    },
+    {
+      "page": "app",
+      "t": 1794652885.044,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 820.75,
+      "y": 595.265625
+    },
+    {
+      "page": "app",
+      "t": 1794652885.496,
+      "type": "click",
+      "stage": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794652886.236,
+      "type": "wait-start",
+      "stage": "deposit-1",
+      "label": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794652895.982,
+      "type": "wait-end",
+      "stage": "deposit-1",
+      "label": "deposit-1"
+    },
+    {
+      "page": "app",
+      "t": 1794652898.815,
+      "type": "move",
+      "stage": "deposit-1",
+      "x": 640,
+      "y": 164
+    },
+    {
+      "page": "explorer",
+      "t": 1794652904.603,
+      "type": "move",
+      "stage": "explorer-deposit-1",
+      "x": 252.65625,
+      "y": 240
+    },
+    {
+      "page": "app",
+      "t": 1794652908.915,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 640,
+      "y": 164
+    },
+    {
+      "page": "app",
+      "t": 1794652910.993,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 672,
+      "y": 472.78125
+    },
+    {
+      "page": "app",
+      "t": 1794652911.275,
+      "type": "click",
+      "stage": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794652911.621,
+      "type": "type",
+      "stage": "deposit-2",
+      "value": "0.0035"
+    },
+    {
+      "page": "app",
+      "t": 1794652913.317,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 651,
+      "y": 654.671875
+    },
+    {
+      "page": "app",
+      "t": 1794652913.599,
+      "type": "click",
+      "stage": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794652916.307,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 631,
+      "y": 330.796875
+    },
+    {
+      "page": "app",
+      "t": 1794652919.68,
+      "type": "move",
+      "stage": "deposit-2",
+      "x": 820.75,
+      "y": 595.265625
+    },
+    {
+      "page": "app",
+      "t": 1794652920.133,
+      "type": "click",
+      "stage": "deposit-2"
+    },
+    {
+      "page": "app",
+      "t": 1794652920.87,
+      "type": "wait-start",
+      "stage": "deposit-2",
+      "label": "deposit-2"
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "faucet",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "20000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "explorer-faucet",
+      "receiverId": "credit.noren-near-mw9h22el.testnet",
+      "gas": "30000000000000",
+      "deposit": "0"
+    },
+    {
+      "stage": "deposit-1",
+      "receiverId": "wbtc.fakes.testnet",
+      "gas": "80000000000000",
+      "deposit": "1"
+    }
+  ],
+  "transactions": [
+    {
+      "source": "browser QA signer",
+      "action": "faucet",
+      "hash": "3RewdawWdeD2RdVREung15vrgwPFWm3xhuuQvACLGLTa",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/3RewdawWdeD2RdVREung15vrgwPFWm3xhuuQvACLGLTa?network=testnet"
+    },
+    {
+      "source": "Node price relayer",
+      "action": "price-btc-explorer-faucet",
+      "hash": "AzMuQnouLYCwKufpewCr1yZEjnTk7Q4C8qbeXy6g3Cnc",
+      "final": true,
+      "ok": true,
+      "priceUsd6": "67205680000"
+    },
+    {
+      "source": "browser QA signer",
+      "action": "deposit-1",
+      "hash": "7eBSviaj9HQzDjaDZpJq182JLYHaKpshEwt8LLC2sN6z",
+      "sender": "alice.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "signer": "alice.noren-near-mw9h22el.testnet",
+      "explorerShown": true,
+      "explorerURL": "https://nearvalidate.org/txns/7eBSviaj9HQzDjaDZpJq182JLYHaKpshEwt8LLC2sN6z?network=testnet"
+    }
+  ],
+  "errors": [
+    {
+      "stage": "faucet",
+      "type": "console",
+      "message": "Failed to load resource: the server responded with a status of 408 (Request Timeout)"
+    }
+  ],
+  "invoices": {},
+  "before": {
+    "position": {
+      "borrower": "alice.noren-near-mw9h22el.testnet",
+      "collateral": [],
+      "collateral_usd6": "0",
+      "credit_limit_usd6": "0",
+      "debt_usd6": "0",
+      "available_usd6": "0",
+      "health_bps": null,
+      "prices_fresh": true,
+      "pending": false,
+      "apr_bps": 1000
+    },
+    "wbtc": "995626",
+    "usdc": "208268708",
+    "shop": "1290727538",
+    "near": "132023100677589899999935",
+    "riyaUsdc": "158000000",
+    "riyaNear": "0",
+    "relayerNear": "21955363487500000000000"
+  },
+  "activeTake": {
+    "id": "deposit-2",
+    "page": "app",
+    "start": 1794652908.535
+  },
+  "failedStage": "deposit-2",
+  "error": "No FINAL for deposit-2",
+  "finishedAt": "2026-11-14T10:44:31.515Z",
+  "actualNearSpentYocto": "1135514082267900000001"
+}
