@@ -6,7 +6,8 @@ import { resolve } from "node:path";
 import { Account, JsonRpcProvider, KeyPair, KeyPairSigner, type KeyPairString } from "near-api-js";
 
 export const root = resolve(import.meta.dirname, "..");
-export const RPC = "https://test.rpc.fastnear.com";
+/** NEAR testnet RPC; NEAR_RPC may name another public testnet endpoint. */
+export const RPC = process.env.NEAR_RPC ?? "https://test.rpc.fastnear.com";
 export const provider = new JsonRpcProvider({ url: RPC });
 export const credsDir = resolve(root, ".near-credentials");
 export const credsFile = resolve(credsDir, "testnet.json");

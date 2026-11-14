@@ -9,7 +9,8 @@ import { verifyMessage } from 'near-api-js/nep413';
 import { bySlug, MAX_QTY } from './catalog';
 import { checkRelayPolicy, loadGasRelayer, rebuildSigned, RELAY_ALLOWLIST, RELAY_LIMITS, utcDay, type GasRelayer, type RelayRecord, type WireDelegate } from './relayer';
 
-export const RPC = 'https://test.rpc.fastnear.com';
+/** NEAR testnet RPC. NEAR_RPC may name another public testnet endpoint (e.g. when FastNEAR rate-limits this machine). */
+export const RPC = process.env.NEAR_RPC ?? 'https://test.rpc.fastnear.com';
 export const CREDIT = 'credit.noren-near-mw9h22el.testnet';
 export const USDC = 'usdc.fakes.testnet';
 export const DEMO_SHOP = 'shop.noren-near-mw9h22el.testnet';
