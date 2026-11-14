@@ -43,6 +43,25 @@ A shopper can pay a Noren checkout in test USDC **without holding any NEAR for g
 
 **Two failed first attempts, kept as evidence:** the relayer first lacked balance for the upfront cost of 30 Tgas (cap lowered to 15 Tgas, nothing sent), then a relay paid a 148-dollar order from a wallet holding 100 test USDC; the inner transfer failed and its 1 yoctoNEAR deposit was refunded to the shopper. The relayer now checks the shopper's test-USDC balance before relaying, and the shopper account was deleted (through a relayed `DeleteAccount`, beneficiary the relayer) and recreated at exactly 0 NEAR.
 
+## Film v8 (Nov 14): Nick's order, with the Pay with Noren pop-up
+
+`noren-near-film.mp4` is now v8 (6:46). It runs in this order: landing (with a new, sourced **Klarna/Affirm comparison**), then **Noren Merchant** (sign in, store, payout, payment link, API keys, connect Aubelle), then the **Noren app** (home, test funds from the faucet, test BTC locked twice so the credit limit appears and then grows; US stocks are closed today, and the film says so). Next comes **Aubelle as a buyer**, four times, each through product → bag → **Pay with Noren**. That button now opens Noren's checkout in a pop-up over the shop instead of leaving it, with Pay in 3, Pay later, pay with stocks (Tesla is stale, so test BTC) and gasless USDC. The film then says plainly that NEAR payments are public and private checkout isn't built on NEAR. It ends with repay, the merchant dashboard and payouts. Every signature shows the test wallet's Approve sheet, then its NearValidate page. The recorder, edit list and voice script are in [film/near-v8/](film/near-v8/).
+
+| Transaction (all FINAL, successful) | Hash |
+| --- | --- |
+| Faucet: 200 test USDC to alice (the app's funds button) | [3RewdawWdeD2RdVREung15vrgwPFWm3xhuuQvACLGLTa](https://nearvalidate.org/txns/3RewdawWdeD2RdVREung15vrgwPFWm3xhuuQvACLGLTa?network=testnet) |
+| Lock 0.0035 test BTC as collateral | [877MYA6tXhS9j5ikyJGhmkEqUCFSiNK7nGcc81ZSUeQt](https://nearvalidate.org/txns/877MYA6tXhS9j5ikyJGhmkEqUCFSiNK7nGcc81ZSUeQt?network=testnet) |
+| Lock 0.0035 more: limit grows to $235.17 | [8JZEhBfQYH9duY2bnsV26ojave3mVzbxB3LPLjHm5A5R](https://nearvalidate.org/txns/8JZEhBfQYH9duY2bnsV26ojave3mVzbxB3LPLjHm5A5R?network=testnet) |
+| Aubelle pop-up: Pay in 3 schedule, Rosalie Rib Knit $178 | [EMhfSkxzgqcend6cK99Ka4ZUSGvq7vVfQ7nEL19ntyVf](https://nearvalidate.org/txns/EMhfSkxzgqcend6cK99Ka4ZUSGvq7vVfQ7nEL19ntyVf?network=testnet) |
+| First draw: 59.33 test USDC to the shop from credit | [5HgKMLeYjkRVhYTiYAvAP8RfN6xA48j6PPpcrr1w7QPG](https://nearvalidate.org/txns/5HgKMLeYjkRVhYTiYAvAP8RfN6xA48j6PPpcrr1w7QPG?network=testnet) |
+| Aubelle pop-up: Pay later, Amélie Gingham $148 | [3xk6QpTWwoHmhy8SA2c2dUyUD3vSmFcFE1GAJ29c2vAv](https://nearvalidate.org/txns/3xk6QpTWwoHmhy8SA2c2dUyUD3vSmFcFE1GAJ29c2vAv?network=testnet) |
+| Aubelle pop-up: pay with test BTC (Tesla stale, market closed), Juliette $158 | [zq3HH5XFdnM5YzzBZGgwTrFdjtMV4PMbdPze8dAo6Bu](https://nearvalidate.org/txns/zq3HH5XFdnM5YzzBZGgwTrFdjtMV4PMbdPze8dAo6Bu?network=testnet) |
+| Aubelle pop-up: gasless test USDC from Riya (0 NEAR), relayer-signed | [D5BrfNKZVaRGRduwxnWUzf3EAPVMhPorrWoUWX9BvMzb](https://nearvalidate.org/txns/D5BrfNKZVaRGRduwxnWUzf3EAPVMhPorrWoUWX9BvMzb?network=testnet) |
+| Repay 207.34 test USDC | [5cGmRkqvG9SLXkTQehtnzuzvLSxDmZdwdhWLZrrDrx21](https://nearvalidate.org/txns/5cGmRkqvG9SLXkTQehtnzuzvLSxDmZdwdhWLZrrDrx21?network=testnet) |
+| Withdraw the 0.007 test BTC (recorded, not in the cut) | [7ypgpnWgWGpbnSsRxhC9tctJyhhC8Bkj7C2NEKaXi3vH](https://nearvalidate.org/txns/7ypgpnWgWGpbnSsRxhC9tctJyhhC8Bkj7C2NEKaXi3vH?network=testnet) |
+
+Ledgers: `deployments/near8-film-2026-11-14T10-33-55-104Z.json` (faucet), `…T11-25-47-349Z.json`, `…T11-31-51-254Z.json`, `…T11-37-36-612Z.json` (PASS, position back to zero). One BTC sale attempt (`GAbXymPF…`) was refunded by the contract with `ERR_MARKET_LIQUIDITY`. The owner then added 300 test USDC to the stock-pay market off camera (`deployments/market-funding-film8.json`). Off-camera funding between Noren's own demo accounts: `deployments/film8-*.json`. FastNEAR rate-limited this machine during the shoot, so the recorder and the local merchant service read through `NEAR_RPC` (dRPC's public testnet endpoint, with FastNEAR as the fallback).
+
 ## Film v7 (Nov 14): every signature shown, then its explorer result
 
 `noren-near-film.mp4` is now v7 (3:27). The QA test wallet shows an **Approve transaction** sheet before it signs (network, signer, contract, method, plain-words arguments, attached deposit, gas or "Relayer pays the gas"; labelled "Test wallet"), and the film clicks Approve on camera, then opens the transaction on NearValidate. US stocks are closed, so the credit scenes were re-shot live with **test BTC** collateral (same signed-price path, Coinbase spot); the stock sale and its explorer result are kept from the Nov 13 run.

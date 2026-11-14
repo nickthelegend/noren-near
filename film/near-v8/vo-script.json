@@ -1,0 +1,186 @@
+{
+ "voice": "af_heart",
+ "note": "v8: Nick's Avalanche order on NEAR. Landing (v7 opening + comparison) -> Merchant -> app -> Aubelle as a buyer x4 (pop-up) -> privacy note -> repay, merchant, payouts. Numbers are filled from the live ledger.",
+ "lines": [
+  {
+   "id": "website_0",
+   "text": "Your money is in stocks, but the shop wants dollars. So you sell first, and wait.",
+   "say": "Your money is in stocks, but the shop wants dollars. So you sell first, and wait."
+  },
+  {
+   "id": "website_1",
+   "text": "Noren lets a shop take stablecoins, stocks, or credit against your stocks. Live on NEAR.",
+   "say": "Noh-ren lets a shop take stablecoins, stocks, or credit against your stocks. Live on Near."
+  },
+  {
+   "id": "vs_0",
+   "text": "Pay-later apps like Klarna and Affirm lend you their money, after a credit check. Noren lends against stock you already own, by rules in a contract on NEAR.",
+   "say": "Pay-later apps like Klarna and Affirm lend you their money, after a credit check. Noh-ren lends against stock you already own, by rules in a contract on Near."
+  },
+  {
+   "id": "vs_1",
+   "text": "Here's the honest side by side, with sources: no credit check, ten percent a year on what you draw, and the shop gets the full amount.",
+   "say": "Here's the honest side by side, with sources: no credit check, ten percent a year on what you draw, and the shop gets the full amount."
+  },
+  {
+   "id": "merch_0",
+   "text": "First, the shop. Aubelle, a dress boutique, signs in to Noren Merchant with a NEAR wallet. No transaction, no account.",
+   "say": "First, the shop. Oh-bell, a dress boutique, signs in to Noh-ren Merchant with a Near wallet. No transaction, no account."
+  },
+  {
+   "id": "merch_1",
+   "text": "It names the store, and the NEAR account that gets paid.",
+   "say": "It names the store, and the Near account that gets paid."
+  },
+  {
+   "id": "merch_2",
+   "text": "A first payment link. Then API keys: the secret is shown once, so it's covered here.",
+   "say": "A first payment link. Then A P I keys: the secret is shown once, so it's covered here."
+  },
+  {
+   "id": "merch_3",
+   "text": "Last, Aubelle connects its online shop. That's how a shop starts taking Noren.",
+   "say": "Last, Oh-bell connects its online shop. That's how a shop starts taking Noh-ren."
+  },
+  {
+   "id": "app_0",
+   "text": "Now the customer. Alice opens the Noren app: her dollars, her bitcoin and her credit, all read live from NEAR.",
+   "say": "Now the customer. Alice opens the Noh-ren app: her dollars, her bitcoin and her credit, all read live from Near."
+  },
+  {
+   "id": "faucet_0",
+   "text": "On testnet, she gets funds right in the app: two hundred test USDC. Before anything is signed, the test wallet shows what she's approving. She approves.",
+   "say": "On testnet, she gets funds right in the app: two hundred test U S D C. Before anything is signed, the test wallet shows what she's approving. She approves."
+  },
+  {
+   "id": "exp_0",
+   "text": "The explorer confirms it: success.",
+   "say": "The explorer confirms it: success."
+  },
+  {
+   "id": "dep_0",
+   "text": "US stocks are closed today, so she locks test bitcoin instead. Stocks work the same way. The wallet shows the lock, and she approves.",
+   "say": "US stocks are closed today, so she locks test bitcoin instead. Stocks work the same way. The wallet shows the lock, and she approves."
+  },
+  {
+   "id": "dep_1",
+   "text": "Her credit limit appears: about a hundred and eighteen dollars, half the bitcoin's value.",
+   "say": "Her credit limit appears: about a hundred and eighteen dollars, half the bitcoin's value."
+  },
+  {
+   "id": "dep_2",
+   "text": "She locks a little more, and the limit grows to about two hundred and thirty-five.",
+   "say": "She locks a little more, and the limit grows to about two hundred and thirty-five."
+  },
+  {
+   "id": "credit_0",
+   "text": "The bitcoin stays hers. It's locked, not sold.",
+   "say": "The bitcoin stays hers. It's locked, not sold."
+  },
+  {
+   "id": "in3_0",
+   "text": "Now the shop, as any buyer sees it. She picks the Rosalie knit, size small, adds it to her bag, and checks out.",
+   "say": "Now the shop, as any buyer sees it. She picks the Rosalie knit, size small, adds it to her bag, and checks out."
+  },
+  {
+   "id": "in3_1",
+   "text": "Pay with Noren opens Noren's checkout, right over the shop.",
+   "say": "Pay with Noh-ren opens Noh-ren's checkout, right over the shop."
+  },
+  {
+   "id": "in3_2",
+   "text": "Four ways to pay. With stocks: the last Tesla price is from Friday, so the market is closed. With USDC. Pay later. Or pay in three.",
+   "say": "Four ways to pay. With stocks: the last Tesla price is from Friday, so the market is closed. With U S D C. Pay later. Or pay in three."
+  },
+  {
+   "id": "in3_3",
+   "text": "She splits it in three. The wallet shows the schedule, and she approves.",
+   "say": "She splits it in three. The wallet shows the schedule, and she approves."
+  },
+  {
+   "id": "in3_4",
+   "text": "The first part pays Aubelle now, from her credit line. The other two are due in thirty and sixty days.",
+   "say": "The first part pays Oh-bell now, from her credit line. The other two are due in thirty and sixty days."
+  },
+  {
+   "id": "in3_5",
+   "text": "Back at Aubelle, the order shows partly paid.",
+   "say": "Back at Oh-bell, the order shows partly paid."
+  },
+  {
+   "id": "in3_6",
+   "text": "On the explorer: the schedule, then the first draw.",
+   "say": "On the explorer: the schedule, then the first draw."
+  },
+  {
+   "id": "later_0",
+   "text": "Next, the Amélie gingham. Same bag, same pop-up. This time, she pays later.",
+   "say": "Next, the Amelie gingham. Same bag, same pop-up. This time, she pays later."
+  },
+  {
+   "id": "later_1",
+   "text": "Aubelle gets all hundred and forty-eight dollars now, from her credit line. Her bitcoin stays locked.",
+   "say": "Oh-bell gets all hundred and forty-eight dollars now, from her credit line. Her bitcoin stays locked."
+  },
+  {
+   "id": "later_2",
+   "text": "Paid, and the shop has the order.",
+   "say": "Paid, and the shop has the order."
+  },
+  {
+   "id": "priv_0",
+   "text": "One honest note: on NEAR, these payments are public. Who paid, who got paid, and how much. Private checkout isn't built on NEAR.",
+   "say": "One honest note: on Near, these payments are public. Who paid, who got paid, and how much. Private checkout isn't built on Near."
+  },
+  {
+   "id": "btc_0",
+   "text": "A third dress. Pay with stocks. Tesla's price is stale, so she picks test bitcoin, at a fresh, signed price.",
+   "say": "A third dress. Pay with stocks. Tesla's price is stale, so she picks test bitcoin, at a fresh, signed price."
+  },
+  {
+   "id": "btc_1",
+   "text": "Noren sells just enough bitcoin, and Aubelle gets a hundred and fifty-eight dollars in USDC.",
+   "say": "Noh-ren sells just enough bitcoin, and Oh-bell gets a hundred and fifty-eight dollars in U S D C."
+  },
+  {
+   "id": "gas_0",
+   "text": "Riya, another shopper, has test USDC and no NEAR at all. She pays for the Amélie in USDC.",
+   "say": "Riya, another shopper, has test U S D C and no Near at all. She pays for the Amelie in U S D C."
+  },
+  {
+   "id": "gas_n",
+   "text": "The checkout sees she has no NEAR, and says it plainly: no NEAR needed for gas.",
+   "say": "The checkout sees she has no Near, and says it plainly: no Near needed for gas."
+  },
+  {
+   "id": "gas_1",
+   "text": "The wallet shows it too: the relayer pays the gas. She approves.",
+   "say": "The wallet shows it too: the relayer pays the gas. She approves."
+  },
+  {
+   "id": "gas_2",
+   "text": "On the explorer, Noren's relayer is the signer. Her payment rides inside, as a delegate action.",
+   "say": "On the explorer, Noh-ren's relayer is the signer. Her payment rides inside, as a delegate action."
+  },
+  {
+   "id": "repay_0",
+   "text": "Back in the app, Alice repays her credit: two hundred and seven dollars, interest included. She approves, and her debt goes to zero.",
+   "say": "Back in the app, Alice repays her credit: two hundred and seven dollars, interest included. She approves, and her debt goes to zero."
+  },
+  {
+   "id": "mv_0",
+   "text": "Aubelle sees every order in Noren Merchant: today's demo runs, paid in three, later, in bitcoin and in gasless USDC, and the ones left unpaid.",
+   "say": "Oh-bell sees every order in Noh-ren Merchant: today's demo runs, paid in three, later, in bitcoin and in gasless U S D C, and the ones left unpaid."
+  },
+  {
+   "id": "mv_1",
+   "text": "Payouts need no batch: each payment lands in the shop's own NEAR account, as USDC.",
+   "say": "Payouts need no batch: each payment lands in the shop's own Near account, as U S D C."
+  },
+  {
+   "id": "close_0",
+   "text": "Noren. Keep your coins, and still buy the thing.",
+   "say": "Noh-ren. Keep your coins, and still buy the thing."
+  }
+ ]
+}

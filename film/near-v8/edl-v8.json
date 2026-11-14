@@ -1,0 +1,532 @@
+{
+ "ledgers": {
+  "v7": "/Volumes/Extreme SSD/Projects/grokbot/projects/noren-near/deployments/near-film-2026-11-13T15-24-18-731Z.json",
+  "r1": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/ledger-run1.json",
+  "r6": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/ledger-run6.json",
+  "r7": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/ledger-run7.json",
+  "r9": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/ledger-run9.json",
+  "r10": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/ledger-run10.json",
+  "r11": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/ledger-run11.json",
+  "r12": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v8/work/ledger-run12.json"
+ },
+ "segments": [
+  {
+   "dir": "takes-run1",
+   "ledger": "v7",
+   "take": "website",
+   "in": 0.3,
+   "out": 13.6,
+   "vo": [
+    {
+     "id": "website_0",
+     "at": 0.5
+    },
+    {
+     "id": "website_1",
+     "at": 6.3
+    }
+   ]
+  },
+  {
+   "dir": "takes-r1",
+   "ledger": "r1",
+   "take": "landing",
+   "in": 9.8,
+   "out": 29.0,
+   "vo": [
+    {
+     "id": "vs_0",
+     "at": 0.4
+    },
+    {
+     "id": "vs_1",
+     "at": 10.6
+    }
+   ]
+  },
+  {
+   "dir": "takes-r1",
+   "ledger": "r1",
+   "take": "merchant",
+   "in": 0.3,
+   "out": 34.6,
+   "vo": [
+    {
+     "id": "merch_0",
+     "at": 0.3
+    },
+    {
+     "id": "merch_1",
+     "at": 8.8
+    },
+    {
+     "id": "merch_2",
+     "at": 18.5
+    },
+    {
+     "id": "merch_3",
+     "at": 28.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r6",
+   "ledger": "r6",
+   "take": "app-home",
+   "in": 0.0,
+   "out": 8.6,
+   "vo": [
+    {
+     "id": "app_0",
+     "at": 0.4
+    }
+   ]
+  },
+  {
+   "dir": "takes-r6",
+   "ledger": "r6",
+   "take": "faucet",
+   "in": 0.5,
+   "out": 10.6,
+   "vo": [
+    {
+     "id": "faucet_0",
+     "at": 0.3
+    }
+   ],
+   "vo_spill": true
+  },
+  {
+   "dir": "takes-r6",
+   "ledger": "r6",
+   "take": "faucet",
+   "in": 18.0,
+   "out": 23.5,
+   "vo": []
+  },
+  {
+   "dir": "takes-r6",
+   "ledger": "r6",
+   "take": "explorer-faucet",
+   "in": 0.0,
+   "out": 3.6,
+   "vo": [
+    {
+     "id": "exp_0",
+     "at": 0.6
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "deposit-1",
+   "in": 2.6,
+   "out": 13.4,
+   "vo": [
+    {
+     "id": "dep_0",
+     "at": 0.6
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "deposit-1",
+   "in": 21.3,
+   "out": 29.4,
+   "vo": [
+    {
+     "id": "dep_1",
+     "at": 1.2
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "explorer-deposit-1",
+   "in": 0.0,
+   "out": 4.2,
+   "vo": []
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "deposit-2",
+   "in": 5.3,
+   "out": 13.4,
+   "vo": []
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "deposit-2",
+   "in": 20.5,
+   "out": 28.7,
+   "vo": [
+    {
+     "id": "dep_2",
+     "at": 0.8
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "explorer-deposit-2",
+   "in": 0.0,
+   "out": 3.2,
+   "vo": []
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "credit-tab",
+   "in": 0.0,
+   "out": 7.0,
+   "vo": [
+    {
+     "id": "credit_0",
+     "at": 1.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "buy-in3",
+   "in": 0.3,
+   "out": 23.3,
+   "vo": [
+    {
+     "id": "in3_0",
+     "at": 0.5
+    },
+    {
+     "id": "in3_1",
+     "at": 19.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "buy-in3",
+   "in": 23.3,
+   "out": 37.6,
+   "vo": [
+    {
+     "id": "in3_2",
+     "at": 0.8
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "buy-in3",
+   "in": 43.0,
+   "out": 52.0,
+   "vo": [
+    {
+     "id": "in3_3",
+     "at": 1.5
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "buy-in3",
+   "in": 58.7,
+   "out": 61.8,
+   "vo": []
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "buy-in3",
+   "in": 69.0,
+   "out": 79.7,
+   "vo": [
+    {
+     "id": "in3_4",
+     "at": 2.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "buy-in3",
+   "in": 89.5,
+   "out": 99.2,
+   "vo": [
+    {
+     "id": "in3_5",
+     "at": 6.5
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "explorer-buy-in3",
+   "in": 0.0,
+   "out": 3.6,
+   "vo": [
+    {
+     "id": "in3_6",
+     "at": 0.3
+    }
+   ]
+  },
+  {
+   "dir": "takes-r10",
+   "ledger": "r10",
+   "take": "explorer-draw-1",
+   "in": 0.0,
+   "out": 3.7,
+   "vo": []
+  },
+  {
+   "dir": "takes-r11",
+   "ledger": "r11",
+   "take": "buy-later",
+   "in": 9.2,
+   "out": 22.2,
+   "vo": [
+    {
+     "id": "later_0",
+     "at": 0.5
+    }
+   ]
+  },
+  {
+   "dir": "takes-r11",
+   "ledger": "r11",
+   "take": "buy-later",
+   "in": 23.8,
+   "out": 26.2,
+   "vo": []
+  },
+  {
+   "dir": "takes-r11",
+   "ledger": "r11",
+   "take": "buy-later",
+   "in": 37.4,
+   "out": 45.6,
+   "vo": [
+    {
+     "id": "later_1",
+     "at": 1.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r11",
+   "ledger": "r11",
+   "take": "buy-later",
+   "in": 52.6,
+   "out": 60.9,
+   "vo": [
+    {
+     "id": "later_2",
+     "at": 1.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r11",
+   "ledger": "r11",
+   "take": "explorer-buy-later",
+   "in": 0.0,
+   "out": 9.7,
+   "vo": [
+    {
+     "id": "priv_0",
+     "at": 0.6
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-btc",
+   "in": 7.8,
+   "out": 16.0,
+   "vo": []
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-btc",
+   "in": 19.0,
+   "out": 21.6,
+   "vo": []
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-btc",
+   "in": 22.0,
+   "out": 36.0,
+   "vo": [
+    {
+     "id": "btc_0",
+     "at": 1.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-btc",
+   "in": 43.5,
+   "out": 52.0,
+   "vo": [
+    {
+     "id": "btc_1",
+     "at": 1.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-btc",
+   "in": 62.3,
+   "out": 70.2,
+   "vo": []
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "explorer-buy-btc",
+   "in": 0.0,
+   "out": 4.2,
+   "vo": []
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-gasless",
+   "in": 9.0,
+   "out": 22.0,
+   "vo": [
+    {
+     "id": "gas_0",
+     "at": 0.5
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-gasless",
+   "in": 25.0,
+   "out": 41.5,
+   "vo": [
+    {
+     "id": "gas_n",
+     "at": 0.3
+    },
+    {
+     "id": "gas_1",
+     "at": 10.8
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "buy-gasless",
+   "in": 48.0,
+   "out": 56.0,
+   "vo": []
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "explorer-buy-gasless",
+   "in": 0.0,
+   "out": 8.7,
+   "vo": [
+    {
+     "id": "gas_2",
+     "at": 0.5
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "repay",
+   "in": 0.3,
+   "out": 12.7,
+   "vo": [
+    {
+     "id": "repay_0",
+     "at": 1.0
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "repay",
+   "in": 19.5,
+   "out": 25.0,
+   "vo": []
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "explorer-repay",
+   "in": 0.0,
+   "out": 4.0,
+   "vo": []
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "merchant-view",
+   "in": 0.3,
+   "out": 14.3,
+   "vo": [
+    {
+     "id": "mv_0",
+     "at": 3.5
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "merchant-view",
+   "in": 20.0,
+   "out": 28.6,
+   "vo": [
+    {
+     "id": "mv_1",
+     "at": 0.4
+    }
+   ]
+  },
+  {
+   "dir": "takes-r12",
+   "ledger": "r12",
+   "take": "landing-end",
+   "in": 0.0,
+   "out": 6.9,
+   "vo": [
+    {
+     "id": "close_0",
+     "at": 2.0
+    }
+   ]
+  }
+ ]
+}

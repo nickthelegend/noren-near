@@ -1,0 +1,37 @@
+{
+ "at": "2026-11-14T11:35:30.095Z",
+ "txs": [
+  {
+   "what": "lend root prepaid gas",
+   "hash": "EGMQyRQGThQfAwmeZH8rRNoDwVuHXLHMqVPr91ywPFsJ",
+   "ok": true
+  },
+  {
+   "what": "owner adds 300 test USDC to the stock-pay market",
+   "hash": null,
+   "note": "RPC answered HTTP 500; root test-USDC fell 500 -> 200 and market liquidity rose (see market)"
+  },
+  {
+   "what": "return gas to alice",
+   "hash": "3EtQKjyNgNdJjYgn2J1g2FmkkpK9yFhJjLCptYxRzbAk",
+   "ok": true
+  }
+ ],
+ "market": {
+  "liquidity_usd6": "327003318",
+  "inventory": [
+   {
+    "token": "tnvda.noren-near-mw9h22el.testnet",
+    "amount": "10000000"
+   },
+   {
+    "token": "ttsla.noren-near-mw9h22el.testnet",
+    "amount": "75919540"
+   },
+   {
+    "token": "wbtc.fakes.testnet",
+    "amount": "239470"
+   }
+  ]
+ }
+}
