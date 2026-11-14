@@ -19,7 +19,12 @@ import { loadDeployment, loadCreds, accountFor, provider, view, signPrice, fetch
 const repo = '/Volumes/Extreme SSD/Projects/grokbot/projects/noren-near', APP = 'http://127.0.0.1:5330', FAST = 'https://test.rpc.fastnear.com';
 // FastNEAR rate-limits this machine (many agents share it); NEAR_RPC sends the run's RPC traffic, page and Node, to another public testnet endpoint.
 const RPC = process.env.NEAR_RPC ?? FAST;
-const reroute = async ctx => { if (RPC !== FAST) await ctx.route(FAST + '/**', r => r.continue({ url: RPC })); };
+const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'POST, GET, OPTIONS' };
+const reroute = async ctx => { if (RPC !== FAST) await ctx.route(FAST + '/**', async r => {
+  const q = r.request(); if (q.method() === 'OPTIONS') return r.fulfill({ status: 204, headers: CORS });
+  try { let status = 502, body = ''; for (const u of [RPC, FAST, 'https://archival-rpc.testnet.fastnear.com']) { const res = await fetch(u, { method: 'POST', headers: { 'content-type': 'application/json' }, body: q.postData() }); status = res.status; body = await res.text(); if (status < 400 && !/"code":\s*-429\b/.test(body) && !/Request Timeout|Too Many Requests/i.test(body)) break; } await r.fulfill({ status, headers: { ...CORS, 'content-type': 'application/json' }, body }); }
+  catch { await r.abort('failed').catch(() => {}); }
+}); };
 const require = createRequire(join(repo, 'package.json')), { chromium } = require('playwright-core'), { actions } = require('near-api-js');
 const d = loadDeployment(), account = d.accounts.alice, credit = d.accounts.credit, usdc = d.accounts.tusdc, shopAcct = d.accounts.shop, R0 = d.root, relayer = 'relayer.' + R0;
 const WBTC = 'wbtc.fakes.testnet';
@@ -34,6 +39,7 @@ const J = v => JSON.stringify(v, (k, x) => typeof x === 'bigint' ? String(x) : x
 const save = () => { if (R) { writeFileSync(file, J(R)); writeFileSync(join(WORK, 'live.json'), J(R)); } };
 const freePct = () => Number(/free percentage: (\d+)/.exec(execFileSync('memory_pressure', { encoding: 'utf8' }))?.[1] ?? 0);
 async function gate() { while (freePct() < 25) { console.log('Waiting for free memory.'); await sleep(20000); } }
+const retry = async (fn, n = 5) => { for (let k = 0; ; k++) { try { return await fn(); } catch (e) { if (k >= n) throw e; await new Promise(r => setTimeout(r, 1500 * (k + 1))); } } };
 const ft = async (t, id) => BigInt(await view(t, 'ft_balance_of', { account_id: id }));
 const nearOf = async id => BigInt((await provider.viewAccount({ accountId: id })).amount);
 const riyaId = 'riya.' + R0;
@@ -42,13 +48,13 @@ const snap = async () => ({ position: await view(credit, 'position', { borrower:
 // ---- budget guards for browser-signed transactions (testnet only)
 async function reserveAlice(q) {
   check(q.receiverId.endsWith('.testnet'), 'Testnet receiver required.');
-  const gp = BigInt((await provider.viewGasPrice()).gas_price), cost = BigInt(q.gas) * gp + BigInt(q.deposit);
-  const a = await provider.viewAccount({ accountId: account }); check(BigInt(a.amount) - BigInt(a.storage_usage) * 10n ** 19n > cost * 11n + 3n * 10n ** 21n, 'Low NEAR for prepaid gas.');
+  const gp = BigInt((await retry(() => provider.viewGasPrice())).gas_price), cost = BigInt(q.gas) * gp + BigInt(q.deposit);
+  const a = await retry(() => provider.viewAccount({ accountId: account })); check(BigInt(a.amount) - BigInt(a.storage_usage) * 10n ** 19n > cost * 11n + 3n * 10n ** 21n, 'Low NEAR for prepaid gas.');
   const used = BigInt(R.reservedYocto) + cost; check(used <= 400n * 10n ** 21n, 'Film reservation cap reached.'); R.reservedYocto = String(used); R.attempts.push({ stage, ...q }); save();
 }
 async function reserveRiya(q) {
   check(q.gasless === true && q.receiverId === usdc, 'Riya signs gasless test-USDC payments only.');
-  check(await nearOf(relayer) > 20n * 10n ** 21n, 'Relayer needs at least 0.02 NEAR.'); R.attempts.push({ stage, ...q }); save();
+  check(await retry(() => nearOf(relayer)) > 20n * 10n ** 21n, 'Relayer needs at least 0.02 NEAR.'); R.attempts.push({ stage, ...q }); save();
 }
 
 // ---- camera
@@ -61,7 +67,7 @@ async function camera(ctx, p, name) {
 const flushIndex = () => { for (const c of cams.values()) writeFileSync(join(c.dir, 'index.json'), JSON.stringify(c.list)); };
 
 // ---- hands. One pointer: the top page hides its own while the mouse is over the Noren pop-up's frame, which draws its own.
-const CURSOR = `(()=>{const top=window===window.top;const mk=()=>{if(document.getElementById('film-cursor')||!document.body)return;const n=document.createElement('div');n.id='film-cursor';n.style.cssText='position:fixed;left:-40px;top:-40px;width:26px;height:26px;pointer-events:none;z-index:2147483647;transition:transform .12s';n.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2.5l6.8 18.2 2.5-7.3 7.2-2.6z" fill="#fff" stroke="#101a3c" stroke-width="1.6" stroke-linejoin="round"/></svg>';document.body.append(n);addEventListener('mousemove',e=>{n.style.display='';n.style.left=e.clientX-4+'px';n.style.top=e.clientY-3+'px'},true);addEventListener('mousedown',()=>n.style.transform='scale(.82)',true);addEventListener('mouseup',()=>n.style.transform='',true);if(top)addEventListener('mouseout',e=>{if(e.relatedTarget&&e.relatedTarget.tagName==='IFRAME')n.style.display='none'},true);else document.addEventListener('mouseleave',()=>{n.style.display='none'})};if(document.readyState==='loading')addEventListener('DOMContentLoaded',mk);else mk();new MutationObserver(mk).observe(document,{childList:true,subtree:true})})()`;
+const CURSOR = `(()=>{const top=window===window.top;const mk=()=>{if(document.getElementById('film-cursor')||!document.body)return;const n=document.createElement('div');n.id='film-cursor';n.style.cssText='position:fixed;left:-40px;top:-40px;width:26px;height:26px;pointer-events:none;z-index:2147483647;transition:transform .12s';n.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2.5l6.8 18.2 2.5-7.3 7.2-2.6z" fill="#fff" stroke="#101a3c" stroke-width="1.6" stroke-linejoin="round"/></svg>';document.body.append(n);addEventListener('mousemove',e=>{n.style.display='';n.style.left=e.clientX-4+'px';n.style.top=e.clientY-3+'px'},true);addEventListener('mousedown',()=>n.style.transform='scale(.82)',true);addEventListener('mouseup',()=>n.style.transform='',true);let px=-99,py=-99;addEventListener('mousemove',e=>{px=e.clientX;py=e.clientY},true);if(top){const tick=()=>{let over=false;for(const f of document.querySelectorAll('iframe')){const r=f.getBoundingClientRect();if(px>=r.left&&px<=r.right&&py>=r.top&&py<=r.bottom)over=true}if(over)n.style.display='none';requestAnimationFrame(tick)};requestAnimationFrame(tick)}else document.addEventListener('mouseleave',()=>{n.style.display='none'})};if(document.readyState==='loading')addEventListener('DOMContentLoaded',mk);else mk();new MutationObserver(mk).observe(document,{childList:true,subtree:true})})()`;
 const REDACT = () => { const add = () => { if (!document.head || document.getElementById('film-redaction')) return; const s = document.createElement('style'); s.id = 'film-redaction'; s.textContent = '.ob-keys dd:nth-of-type(2),.sd-secret{position:relative!important;color:transparent!important;background:#101a3c!important;overflow:hidden!important}.ob-keys dd:nth-of-type(2)>*,.sd-secret>*{visibility:hidden!important}.ob-keys dd:nth-of-type(2)::after,.sd-secret::after{content:"secret key · redacted";position:absolute;inset:0;display:grid;place-items:center;color:#efe8db;font:500 14px monospace}'; document.head.append(s); }; new MutationObserver(add).observe(document, { childList: true, subtree: true }); add(); };
 const mouse = new Map();
 function ev(p, type, extra = {}) { R.events.push({ page: cams.get(p)?.name, t: Date.now() / 1000, type, stage, ...extra }); save(); }
@@ -79,13 +85,26 @@ async function glide(p, dy, ms = 1600) { const n = Math.max(1, Math.round(ms / 3
 async function open(p, url) { await p.goto('about:blank'); await p.goto(url); }
 async function hash(p, h) { await p.evaluate(h => location.hash = h, h); await sleep(800); }
 async function take(name, p, fn) { stage = name; R.stage = name; save(); await p.bringToFront(); const start = Date.now() / 1000; R.activeTake = { id: name, page: cams.get(p).name, start }; save(); await fn(); await sleep(900); const end = Date.now() / 1000; R.takes.push({ id: name, page: cams.get(p).name, start, end }); delete R.activeTake; flushIndex(); save(); console.log('take', name, (end - start).toFixed(1) + 's'); }
-async function connect(p, scope = p) { const b = scope.getByRole('button', { name: 'Connect Meteor Wallet', exact: true }); await sleep(700); if (await b.count() && await b.first().isVisible() && await b.first().isEnabled()) await click(p, b); await sleep(700); }
+// Connect the test wallet if the page asks for it; wait while the wallet is still loading (button disabled).
+async function connect(p, scope = p) {
+  const b = scope.getByRole('button', { name: 'Connect Meteor Wallet', exact: true }); await sleep(900);
+  for (let i = 0; i < 40; i++) { if (!await b.count() || !await b.first().isVisible()) return; if (await b.first().isEnabled()) { await click(p, b); await sleep(1200); continue; } await sleep(500); }
+  check(false, 'The wallet did not connect.');
+}
 const pop = p => p.frameLocator('iframe[title="Noren checkout"]');
 async function waitAny(p, fn, arg, timeout = 120000) { const t0 = Date.now(); for (;;) { for (const f of p.frames()) { try { if (await f.evaluate(fn, arg)) return; } catch {} } check(Date.now() - t0 < timeout, 'Timed out waiting on the page.'); await sleep(400); } }
 async function txStatus(h, sender) { const q = await fetch(RPC, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 'film', method: 'tx', params: { tx_hash: h, sender_account_id: sender, wait_until: 'FINAL' } }) }); const j = await q.json(); return { final: j.result?.final_execution_status === 'FINAL', ok: !!j.result && !j.result.status?.Failure && !j.result.receipts_outcome.some(r => r.outcome.status.Failure), signer: j.result?.transaction?.signer_id, inner: j.result?.transaction?.actions?.[0]?.Delegate?.delegate_action?.sender_id } }
 async function final(p, name, sender = account) {
   ev(p, 'wait-start', { label: name });
-  await waitAny(p, () => [...document.querySelectorAll('[role="status"],.co-done')].some(x => /final on NEAR testnet/i.test(x.textContent ?? '')));
+  // The page's own FINAL notice, or the chain saying FINAL for this stage's captured hash (then give the UI a moment).
+  const t0 = Date.now();
+  for (;;) {
+    let shown = false; for (const f of p.frames()) { try { if (await f.evaluate(() => [...document.querySelectorAll('[role="status"],.co-done')].some(x => /final on NEAR testnet/i.test(x.textContent ?? '')))) shown = true; } catch {} }
+    if (shown) break;
+    const mine = R.transactions.filter(x => x.action === name);
+    if (mine.length) { const st = await Promise.all(mine.map(x => txStatus(x.hash, x.sender ?? sender).catch(() => ({})))); if (st.every(x => x.final)) { await sleep(2500); break; } }
+    check(Date.now() - t0 < 150000, 'No FINAL for ' + name); await sleep(1500);
+  }
   await Promise.all([...tasks]); ev(p, 'wait-end', { label: name });
   const t = R.transactions.filter(x => x.action === name); check(t.length > 0, 'No transaction hash captured for ' + name);
   for (const x of t) Object.assign(x, await txStatus(x.hash, x.sender ?? sender)); save();
@@ -106,7 +125,7 @@ async function explorer(name, hold = 2600, extra) {
 }
 // Signed BTC price (Coinbase spot; the contract checks Noren's relayer signature). Sent from Node, off the pointer.
 async function freshBtc(maxAge = 40) {
-  const all = await view(credit, 'assets'); const a = all.find(x => x.token === WBTC);
+  const all = await retry(() => view(credit, 'assets')); const a = all.find(x => x.token === WBTC);
   if (a && a.price_fresh && Date.now() - Number(BigInt(a.price_at_ns) / 1000000n) < maxAge * 1000) return;
   const spot = await fetchBtcSpot(), creds = loadCreds(); const { message: _, ...args } = signPrice(creds.relayerKey, credit, WBTC, spot.priceUsd6, spot.timestampNs);
   await reserveAlice({ receiverId: credit, gas: '30000000000000', deposit: '0' });
@@ -177,14 +196,15 @@ const STEPS = [
     // How a customer gets funds on testnet: the app's faucet button mints 200 test USDC to her wallet.
     await take('faucet', app, async () => { await click(app, app.locator('.nk-chip')); await sleep(1000); await click(app, app.getByRole('button', { name: 'Get 200 test USDC', exact: true })); await approve(app); await final(app, 'faucet'); await sleep(1600); const c = app.getByRole('button', { name: 'Close', exact: true }); if (await c.count() && await c.first().isVisible()) await click(app, c); await sleep(1400); await point(app, app.locator('.nk-wallet-total')); await sleep(2000); });
     await explorer('faucet', 2200);
-    await freshBtc(60);
-    await hash(app, '#/app/earn'); await connect(app);
-    for (const n of ['deposit-1', 'deposit-2']) {
-      await take(n, app, async () => { await point(app, app.locator('.nk-hero')); await sleep(1200); await app.locator('#near-collateral').selectOption(WBTC); await sleep(500); await fill(app, app.locator('#near-token-amount'), '0.0035'); await sleep(600); await click(app, app.getByRole('button', { name: 'Deposit collateral', exact: true })); await approve(app); await final(app, n); await sleep(2200); await point(app, app.locator('.nk-hero')); await sleep(2800); });
-      await explorer(n, n === 'deposit-1' ? 2600 : 1600);
-      if (n === 'deposit-1') { await freshBtc(60); await app.bringToFront(); }
-    }
-    await take('credit-tab', app, async () => { await click(app, app.getByRole('tab', { name: 'Credit', exact: true })); await sleep(2400); await glide(app, 520, 1300); await sleep(2400); await glide(app, -520, 900); await sleep(600); });
+  }],
+  ...['deposit-1', 'deposit-2'].map(n => [n, async () => {
+    await freshBtc(60); await open(app, APP + '/#/app/earn'); await connect(app); await sleep(1500);
+    await take(n, app, async () => { await point(app, app.locator('.nk-hero')); await sleep(1200); await app.locator('#near-collateral').selectOption(WBTC); await sleep(500); await fill(app, app.locator('#near-token-amount'), '0.0035'); await sleep(600); await click(app, app.getByRole('button', { name: 'Deposit collateral', exact: true })); await approve(app); await final(app, n); await sleep(2200); await point(app, app.locator('.nk-hero')); await sleep(2800); });
+    await explorer(n, n === 'deposit-1' ? 2600 : 1600);
+  }]),
+  ['credit-tab', async () => {
+    await freshBtc(60); await open(app, APP + '/#/app/credit'); await connect(app); await sleep(1500);
+    await take('credit-tab', app, async () => { await sleep(1200); await point(app, app.getByText('Your position', { exact: true })); await sleep(2400); await glide(app, 520, 1300); await sleep(2400); await glide(app, -520, 900); await sleep(600); });
   }],
   ['buy-in3', async () => {
     await app.goto(APP + '/shop/'); await sleep(2200);
@@ -209,10 +229,10 @@ const STEPS = [
     await explorer('buy-in3', 2000); await explorer('draw-1', 2200);
   }],
   ['buy-later', async () => {
-    await app.goto(APP + '/shop/'); await sleep(2000);
+    await app.goto(APP + '/shop/'); await app.evaluate(() => localStorage.removeItem('aubelle.bag.v1')); await app.reload(); await sleep(2000);
     await take('buy-later', app, async () => {
-      await moveTo(app, 900, 420, 20); await sleep(800); await glide(app, 1180, 1500); await sleep(900);
-      const f = await buy(app, 'amelie-gingham', 'S', { fromHome: true });
+      await moveTo(app, 900, 420, 20); await sleep(1200);
+      const f = await buy(app, 'amelie-gingham', 'S');
       await click(app, f.getByRole('tab', { name: /^Pay later/ })); await sleep(1400); await connect(app, f); await freshBtc(50);
       await point(app, f.locator('.co-pay p.faint').filter({ hasText: /credit line/ })); await sleep(2000);
       await click(app, f.getByRole('button', { name: /^Pay .* test USDC on credit$/ })); await approve(app, f); await final(app, 'buy-later');
@@ -222,7 +242,7 @@ const STEPS = [
     await explorer('buy-later', 3200, async () => { await point(exp, exp.getByText('From', { exact: true })); await sleep(1800); await point(exp, exp.getByText('To', { exact: true })); await sleep(1800); });
   }],
   ['buy-btc', async () => {
-    await app.goto(APP + '/shop/'); await sleep(2000);
+    await app.goto(APP + '/shop/'); await app.evaluate(() => localStorage.removeItem('aubelle.bag.v1')); await app.reload(); await sleep(2000);
     await take('buy-btc', app, async () => {
       await moveTo(app, 900, 520, 20); await sleep(800);
       const f = await buy(app, 'juliette-puff', 'M');
@@ -240,8 +260,8 @@ const STEPS = [
     const b = ctxB.pages()[0] ?? await ctxB.newPage(); b.setDefaultTimeout(60000); hashCapture(b, riyaId); await camera(ctxB, b, 'riya');
     await b.goto(APP + '/shop/'); await sleep(2200);
     await take('buy-gasless', b, async () => {
-      await moveTo(b, 900, 420, 20); await sleep(800); await glide(b, 1180, 1500); await sleep(900);
-      const f = await buy(b, 'amelie-gingham', 'XS', { fromHome: true });
+      await moveTo(b, 900, 420, 20); await sleep(1200);
+      const f = await buy(b, 'amelie-gingham', 'XS');
       await click(b, f.getByRole('tab', { name: /^Pay with USDC/ })); await sleep(1200); await connect(b, f);
       await f.getByText('No NEAR needed for gas.').waitFor(); await sleep(800); await point(b, f.getByText('No NEAR needed for gas.')); await sleep(3000);
       await click(b, f.getByRole('button', { name: /^Pay .* test USDC$/ })); await approve(b, f, 'Relayer pays the gas');
@@ -284,7 +304,7 @@ async function main() {
   check(d.network === 'testnet', 'Testnet only.'); await gate();
   const before = await snap();
   if (!FROM) check(before.position.debt_usd6 === '0' && before.position.collateral.length === 0, 'Demo position is not clean.');
-  check(before.wbtc >= 980000n, 'alice needs ~0.0098 test WBTC.'); check(before.riyaNear === 0n && before.riyaUsdc >= 148_000_000n, 'Riya must hold 0 NEAR and >= 148 test USDC.');
+  check(before.wbtc >= (FROM ? 240000n : 980000n), 'alice needs enough test WBTC for the locks and the BTC payment.'); check(before.riyaNear === 0n && before.riyaUsdc >= 148_000_000n, 'Riya must hold 0 NEAR and >= 148 test USDC.');
   const relay = await (await fetch(APP + '/api/relay')).json(); check(relay.ready && relay.relayer === relayer, 'Relayer not ready on the dev server.');
   R = { network: 'testnet', film: 'v8', evidenceFile: file.split('/').at(-1), framesDir: FR, account, shopper: riyaId, startedAt: new Date().toISOString(), from: FROM ?? null, status: 'RUNNING', reservedYocto: '0', stage, takes: [], events: [], attempts: [], transactions: [], errors: [], invoices: {}, before }; save();
   const creds = loadCreds(); signer = accountFor(account, creds.subKey);
