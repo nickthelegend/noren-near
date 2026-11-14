@@ -1,0 +1,379 @@
+{
+ "ledgers": {
+  "r1": "/Volumes/Extreme SSD/Projects/grokbot/projects/noren-near/deployments/near-film-2026-11-13T15-24-18-731Z.json",
+  "r3": "/Volumes/Extreme SSD/Projects/grokbot/projects/noren-near/deployments/near-film-2026-11-13T15-31-08-438Z.json",
+  "c": "/Volumes/Extreme SSD/Projects/grokbot/projects/noren-near/deployments/near7-film-2026-11-14T00-26-34-083Z.json",
+  "g": "/Volumes/Extreme SSD/Projects/grokbot/projects/noren-near/deployments/gasless7-film-2026-11-14T00-04-16-606Z.json"
+ },
+ "segments": [
+  {
+   "dir": "takes-run1",
+   "ledger": "r1",
+   "take": "website",
+   "in": 0.3,
+   "out": 13.6,
+   "vo": [
+    {
+     "id": "website_0",
+     "at": 0.5
+    },
+    {
+     "id": "website_1",
+     "at": 6.3
+    }
+   ]
+  },
+  {
+   "dir": "takes-run1",
+   "ledger": "r1",
+   "take": "merchant",
+   "in": 0.3,
+   "out": 17.6,
+   "vo": [
+    {
+     "id": "merchant_0",
+     "at": 0.4
+    },
+    {
+     "id": "merchant_1",
+     "at": 12.6
+    }
+   ]
+  },
+  {
+   "dir": "takes-run1",
+   "ledger": "r1",
+   "take": "shop",
+   "in": 0.6,
+   "out": 15.6,
+   "vo_spill": true,
+   "vo": [
+    {
+     "id": "shop_0",
+     "at": 1.0
+    },
+    {
+     "id": "stocks_0",
+     "at": 13.6
+    }
+   ]
+  },
+  {
+   "dir": "takes-run1",
+   "ledger": "r1",
+   "take": "stocks",
+   "in": 0.0,
+   "out": 7.9
+  },
+  {
+   "dir": "takes-run1",
+   "ledger": "r1",
+   "take": "stocks",
+   "in": 12.9,
+   "out": 21.0,
+   "vo_spill": true,
+   "vo": [
+    {
+     "id": "stocks_1",
+     "at": 0.8
+    }
+   ]
+  },
+  {
+   "dir": "takes-run1",
+   "ledger": "r1",
+   "take": "explorer-stocks",
+   "in": 0.2,
+   "out": 3.6
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "app-home",
+   "in": 0.0,
+   "out": 6.0,
+   "vo": [
+    {
+     "id": "app_0",
+     "at": 0.3
+    }
+   ]
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-usdc",
+   "in": 5.2,
+   "out": 16.3,
+   "vo": [
+    {
+     "id": "usdc_0",
+     "at": 0.3
+    }
+   ],
+   "vo_spill": true
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-usdc",
+   "in": 20.0,
+   "out": 22.6,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "explorer-pay-usdc",
+   "in": 0.2,
+   "out": 3.9,
+   "vo": [
+    {
+     "id": "usdc_1",
+     "at": 0.4
+    }
+   ]
+  },
+  {
+   "dir": "takes-gasless",
+   "ledger": "g",
+   "take": "pay-gasless",
+   "in": 1.0,
+   "out": 5.2,
+   "vo": [
+    {
+     "id": "gasless_0",
+     "at": 0.0
+    }
+   ],
+   "vo_spill": true
+  },
+  {
+   "dir": "takes-gasless",
+   "ledger": "g",
+   "take": "pay-gasless",
+   "in": 8.4,
+   "out": 22.3,
+   "vo": [
+    {
+     "id": "gasless_1",
+     "at": 5.2
+    }
+   ]
+  },
+  {
+   "dir": "takes-gasless",
+   "ledger": "g",
+   "take": "pay-gasless",
+   "in": 26.5,
+   "out": 32.3,
+   "vo": [
+    {
+     "id": "gasless_2",
+     "at": 0.3
+    }
+   ]
+  },
+  {
+   "dir": "takes-gasless",
+   "ledger": "g",
+   "take": "explorer-gasless",
+   "in": 0.3,
+   "out": 6.9,
+   "vo": [
+    {
+     "id": "gasless_3",
+     "at": 0.3
+    }
+   ]
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "deposit",
+   "in": 1.0,
+   "out": 11.2,
+   "vo": [
+    {
+     "id": "deposit_0",
+     "at": 0.4
+    }
+   ]
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "deposit",
+   "in": 16.0,
+   "out": 19.8,
+   "vo": [
+    {
+     "id": "deposit_1",
+     "at": 0.0
+    }
+   ],
+   "vo_spill": true
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "explorer-deposit",
+   "in": 0.2,
+   "out": 3.9,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-later",
+   "in": 1.8,
+   "out": 6.4,
+   "vo": [
+    {
+     "id": "later_0",
+     "at": 0.3
+    }
+   ]
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-later",
+   "in": 8.8,
+   "out": 19.2,
+   "vo": [
+    {
+     "id": "later_mid",
+     "at": 0.2
+    },
+    {
+     "id": "later_1",
+     "at": 3.8
+    }
+   ]
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-later",
+   "in": 23.8,
+   "out": 29.4,
+   "vo": [
+    {
+     "id": "later_2",
+     "at": 0.2
+    }
+   ]
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "explorer-pay-later",
+   "in": 0.2,
+   "out": 3.9,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-in-3",
+   "in": 4.2,
+   "out": 6.4,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-in-3",
+   "in": 8.8,
+   "out": 19.6,
+   "vo": [
+    {
+     "id": "in3_0",
+     "at": 0.5
+    }
+   ]
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "pay-in-3",
+   "in": 22.8,
+   "out": 25.6,
+   "vo": [
+    {
+     "id": "in3_1",
+     "at": 0.2
+    }
+   ],
+   "vo_spill": true
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "explorer-pay-in-3",
+   "in": 0.2,
+   "out": 3.9,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "draw-1",
+   "in": 0.0,
+   "out": 6.9,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "draw-1",
+   "in": 11.2,
+   "out": 13.8,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "explorer-draw-1",
+   "in": 0.2,
+   "out": 3.9,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "repay",
+   "in": 19.0,
+   "out": 26.3,
+   "vo": [
+    {
+     "id": "repay_0",
+     "at": 0.0
+    }
+   ],
+   "vo_spill": true
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "repay",
+   "in": 29.8,
+   "out": 32.4,
+   "vo": []
+  },
+  {
+   "dir": "takes-credit",
+   "ledger": "c",
+   "take": "explorer-repay",
+   "in": 0.2,
+   "out": 3.7,
+   "vo": [
+    {
+     "id": "close_0",
+     "at": 0.3
+    }
+   ]
+  }
+ ]
+}

@@ -35,7 +35,7 @@ export function assertQaTransaction(request: Request, accountId: string) {
   for (const field of ['receiver_id', 'recipient', 'account_id', 'token']) {
     if (values[field] !== undefined && (typeof values[field] !== 'string' || !accountValid(values[field]) || !values[field].endsWith('.testnet'))) throw Error('QA signer refuses non-testnet argument accounts.');
   }
-  return { receiverId: request.receiverId, gas: gas.toString(), deposit: deposit.toString() };
+  return { receiverId: request.receiverId!, gas: gas.toString(), deposit: deposit.toString() };
 }
 export function createQaSigner() {
   if (import.meta.env.MODE !== 'qa' || import.meta.env.VITE_QA_SIGNER !== '1') throw Error('QA signer is disabled in this build.');
@@ -51,7 +51,7 @@ export function createQaSigner() {
   const ask = async (request: Request, extra: { gasless?: boolean } = {}) => {
     if (!approve) return;
     const fc = request.actions[0].functionCall!, values = JSON.parse(new TextDecoder().decode(fc.args));
-    await requestApproval({ accountId, receiverId: request.receiverId, methodName: fc.methodName, args: values, gas: fc.gas.toString(), deposit: fc.deposit.toString(), ...extra });
+    await requestApproval({ accountId, receiverId: request.receiverId!, methodName: fc.methodName, args: values, gas: fc.gas.toString(), deposit: fc.deposit.toString(), ...extra });
   };
   config.privateKey = ''; // The SDK's signer is the only remaining owner in the page.
   let connected = false, signing = false;

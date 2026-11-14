@@ -1,0 +1,131 @@
+{
+ "voice": "af_heart",
+ "note": "v7: v6 lines that still hold, plus new lines for the approval sheets (BTC-backed credit because US stocks are closed).",
+ "lines": [
+  {
+   "id": "website_0",
+   "text": "Your money is in stocks, but the shop wants dollars. So you sell first, and wait.",
+   "say": "Your money is in stocks, but the shop wants dollars. So you sell first, and wait."
+  },
+  {
+   "id": "website_1",
+   "text": "Noren lets a shop take stablecoins, stocks, or credit against your stocks. Live on NEAR.",
+   "say": "Noh-ren lets a shop take stablecoins, stocks, or credit against your stocks. Live on Near."
+  },
+  {
+   "id": "merchant_0",
+   "text": "Aubelle, a dress boutique, signs in to Noren Merchant with a NEAR wallet, and names the account that gets paid: shop dot noren.",
+   "say": "Oh-bell, a dress boutique, signs in to Noh-ren Merchant with a Near wallet, and names the account that gets paid: shop dot noh-ren."
+  },
+  {
+   "id": "merchant_1",
+   "text": "A first payment link, and an API key that's shown once.",
+   "say": "A first payment link, and an A P I key that's shown once."
+  },
+  {
+   "id": "shop_0",
+   "text": "Riya shops at Aubelle. The Am\u00e9lie gingham, size small, and checkout with Noren.",
+   "say": "Riya shops at Oh-bell. The Amelie gingham, size small, and checkout with Noh-ren."
+  },
+  {
+   "id": "stocks_0",
+   "text": "Four ways to pay, and stocks come first. She pays with Tesla, at a live Yahoo Finance price, signed by Noren and checked by the contract on NEAR.",
+   "say": "Four ways to pay, and stocks come first. She pays with Tesla, at a live Yahoo Finance price, signed by Noh-ren and checked by the contract on Near."
+  },
+  {
+   "id": "stocks_1",
+   "text": "Noren sells just enough Tesla, and Aubelle gets a hundred and forty-eight dollars in USDC. Final in seconds.",
+   "say": "Noh-ren sells just enough Tesla, and Oh-bell gets a hundred and forty-eight dollars in U S D C. Final in seconds."
+  },
+  {
+   "id": "app_0",
+   "text": "In the Noren app, she sees her dollars, her stocks and her credit, all read live from NEAR.",
+   "say": "In the Noh-ren app, she sees her dollars, her stocks and her credit, all read live from Near."
+  },
+  {
+   "id": "later_0",
+   "text": "Back at Aubelle, she picks the Juliette dress.",
+   "say": "Back at Oh-bell, she picks the Juliette dress."
+  },
+  {
+   "id": "merchant_view_0",
+   "text": "Aubelle sees every payment in one place: the stock sale, the credit payment, the first installment. All in USDC, all final on NEAR.",
+   "say": "Oh-bell sees every payment in one place: the stock sale, the credit payment, the first installment. All in U S D C, all final on Near."
+  },
+  {
+   "id": "later_mid",
+   "text": "This time, she chooses Pay later.",
+   "say": "This time, she chooses Pay later."
+  },
+  {
+   "id": "gasless_0",
+   "text": "Now from a wallet with no NEAR at all. She pastes Aubelle's link and pays twelve dollars in USDC.",
+   "say": "Now from a wallet with no Near at all. She pastes Oh-bell's link and pays twelve dollars in U S D C."
+  },
+  {
+   "id": "gasless_2",
+   "text": "Final on NEAR, and the network fee is paid by Noren.",
+   "say": "Final on Near, and the network fee is paid by Noh-ren."
+  },
+  {
+   "id": "gasless_3",
+   "text": "On NEAR, Noren's relayer is the signer. Her payment rides inside, as a delegate action.",
+   "say": "On Near, Noh-ren's relayer is the signer. Her payment rides inside, as a delegate action."
+  },
+  {
+   "id": "usdc_0",
+   "text": "Now she pays Aubelle's twelve-dollar link in USDC, from her own wallet. Before anything is signed, the test wallet shows what she is approving: who gets paid, and who pays the gas. She approves.",
+   "say": "Now she pays Oh-bell's twelve-dollar link in U S D C, from her own wallet. Before anything is signed, the test wallet shows what she is approving: who gets paid, and who pays the gas. She approves."
+  },
+  {
+   "id": "usdc_1",
+   "text": "The explorer confirms it: success.",
+   "say": "The explorer confirms it: success."
+  },
+  {
+   "id": "gasless_1",
+   "text": "No Near needed for gas. The wallet says it plainly: the relayer pays the gas. She approves.",
+   "say": "No Near needed for gas. The wallet says it plainly: the relayer pays the gas. She approves."
+  },
+  {
+   "id": "deposit_0",
+   "text": "But she'd rather keep her coins. Stocks are closed today, so she locks test bitcoin as collateral. The wallet shows the lock, and she approves.",
+   "say": "But she'd rather keep her coins. Stocks are closed today, so she locks test bitcoin as collateral. The wallet shows the lock, and she approves."
+  },
+  {
+   "id": "deposit_1",
+   "text": "Her credit line opens at about two hundred and fifty-eight dollars.",
+   "say": "Her credit line opens at about two hundred and fifty-eight dollars."
+  },
+  {
+   "id": "later_1",
+   "text": "The wallet shows a borrow of a hundred and fifty-eight dollars, paid straight to Aubelle. She approves.",
+   "say": "The wallet shows a borrow of a hundred and fifty-eight dollars, paid straight to Oh-bell. She approves."
+  },
+  {
+   "id": "later_2",
+   "text": "Aubelle is paid in full from her credit line, and her bitcoin stays hers.",
+   "say": "Oh-bell is paid in full from her credit line, and her bitcoin stays hers."
+  },
+  {
+   "id": "in3_0",
+   "text": "Her next order, the Rosalie knit, is a hundred and seventy-eight dollars. She splits it in three. The wallet shows the schedule, and she approves.",
+   "say": "Her next order, the Rosalie knit, is a hundred and seventy-eight dollars. She splits it in three. The wallet shows the schedule, and she approves."
+  },
+  {
+   "id": "in3_1",
+   "text": "The first draw pays Aubelle a third today, approved the same way. The other two are due in thirty and sixty days.",
+   "say": "The first draw pays Oh-bell a third today, approved the same way. The other two are due in thirty and sixty days."
+  },
+  {
+   "id": "repay_0",
+   "text": "When she's ready, she repays from the app, with a little interest. She approves, the debt goes to zero, and her bitcoin is free again.",
+   "say": "When she's ready, she repays from the app, with a little interest. She approves, the debt goes to zero, and her bitcoin is free again."
+  },
+  {
+   "id": "close_0",
+   "text": "Noren. Keep your coins, and still buy the thing.",
+   "say": "Noh-ren. Keep your coins, and still buy the thing."
+  }
+ ]
+}

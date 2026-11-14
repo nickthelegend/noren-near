@@ -1,0 +1,256 @@
+{
+  "network": "testnet",
+  "evidenceFile": "gasless7-film-2026-11-14T00-04-16-606Z.json",
+  "framesDir": "/Volumes/Extreme SSD/Projects/grokbot/videos/noren-near/film-v7/work/frames-gasless-2026-11-14T00-04-16-606Z",
+  "account": "riya.noren-near-mw9h22el.testnet",
+  "relayer": "relayer.noren-near-mw9h22el.testnet",
+  "startedAt": "2026-11-14T00:04:16.634Z",
+  "status": "PASS",
+  "stage": "preflight",
+  "takes": [
+    {
+      "id": "pay-gasless",
+      "page": "app",
+      "start": 1794614744.931,
+      "end": 1794614777.73
+    },
+    {
+      "id": "explorer-gasless",
+      "page": "explorer",
+      "start": 1794614780.233,
+      "end": 1794614787.411
+    }
+  ],
+  "events": [
+    {
+      "page": "app",
+      "t": 1794614742.092,
+      "type": "move",
+      "stage": "preflight",
+      "x": 621,
+      "y": 340.1875
+    },
+    {
+      "page": "app",
+      "t": 1794614742.355,
+      "type": "click",
+      "stage": "preflight"
+    },
+    {
+      "page": "app",
+      "t": 1794614746.141,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 603.203125,
+      "y": 37.5
+    },
+    {
+      "page": "app",
+      "t": 1794614746.404,
+      "type": "click",
+      "stage": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614748.034,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 632,
+      "y": 422.78125
+    },
+    {
+      "page": "app",
+      "t": 1794614748.296,
+      "type": "click",
+      "stage": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614748.654,
+      "type": "paste",
+      "stage": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614750.008,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 611,
+      "y": 531.671875
+    },
+    {
+      "page": "app",
+      "t": 1794614750.27,
+      "type": "click",
+      "stage": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614752.391,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 1101,
+      "y": 202
+    },
+    {
+      "page": "app",
+      "t": 1794614752.653,
+      "type": "click",
+      "stage": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614754.173,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 909.8984375,
+      "y": 395.75
+    },
+    {
+      "page": "app",
+      "t": 1794614757.206,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 610.3671875,
+      "y": 321.78125
+    },
+    {
+      "page": "app",
+      "t": 1794614759.239,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 904,
+      "y": 497.515625
+    },
+    {
+      "page": "app",
+      "t": 1794614759.5,
+      "type": "click",
+      "stage": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614761.859,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 732.296875,
+      "y": 531.34375
+    },
+    {
+      "page": "app",
+      "t": 1794614765.89,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 808.25,
+      "y": 586.140625
+    },
+    {
+      "page": "app",
+      "t": 1794614766.39,
+      "type": "click",
+      "stage": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614766.744,
+      "type": "wait-start",
+      "stage": "pay-gasless",
+      "label": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614772.633,
+      "type": "wait-end",
+      "stage": "pay-gasless",
+      "label": "pay-gasless"
+    },
+    {
+      "page": "app",
+      "t": 1794614774.025,
+      "type": "move",
+      "stage": "pay-gasless",
+      "x": 1023.765625,
+      "y": 388.984375
+    },
+    {
+      "page": "explorer",
+      "t": 1794614780.706,
+      "type": "move",
+      "stage": "explorer-gasless",
+      "x": 324,
+      "y": 290
+    },
+    {
+      "page": "explorer",
+      "t": 1794614782.928,
+      "type": "move",
+      "stage": "explorer-gasless",
+      "x": 1038.65625,
+      "y": 374
+    },
+    {
+      "page": "explorer",
+      "t": 1794614784.708,
+      "type": "move",
+      "stage": "explorer-gasless",
+      "x": 317.4921875,
+      "y": 613
+    }
+  ],
+  "stills": [
+    {
+      "name": "pay-gasless",
+      "overflow": false,
+      "bad": false
+    },
+    {
+      "name": "explorer-gasless",
+      "overflow": false,
+      "bad": false
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "pay-gasless",
+      "receiverId": "usdc.fakes.testnet",
+      "gas": "15000000000000",
+      "deposit": "1",
+      "gasless": true
+    }
+  ],
+  "transactions": [
+    {
+      "source": "Noren gas relayer",
+      "action": "pay-gasless",
+      "hash": "4nGKxsbYeVNf6GbonoEdY7TPYz15VAKaZenzHSZtUYxH",
+      "relayer": "relayer.noren-near-mw9h22el.testnet",
+      "sender": "riya.noren-near-mw9h22el.testnet",
+      "final": true,
+      "ok": true,
+      "outerSigner": "relayer.noren-near-mw9h22el.testnet",
+      "innerSender": "riya.noren-near-mw9h22el.testnet",
+      "explorerURL": "https://nearvalidate.org/txns/4nGKxsbYeVNf6GbonoEdY7TPYz15VAKaZenzHSZtUYxH?network=testnet"
+    }
+  ],
+  "errors": [],
+  "before": {
+    "riyaNear": "0",
+    "riyaUsdc": "140000000",
+    "shopUsdc": "1043394205",
+    "relayerNear": "43774032708775299999998"
+  },
+  "link": "http://127.0.0.1:5330/#/pay/0xc7c778f17a06d420d8871429703f0941f0e321d7ecaad72ddd1ce8cd49476952",
+  "after": {
+    "riyaNear": "0",
+    "riyaUsdc": "128000000",
+    "shopUsdc": "1055394205",
+    "relayerNear": "43464541840520599999997"
+  },
+  "checks": {
+    "riyaNearStillZero": true,
+    "riyaPaid12": true,
+    "shopGot12": true,
+    "relayerPaidGas": true
+  },
+  "finishedAt": "2026-11-14T00:06:33.099Z"
+}
