@@ -20,6 +20,7 @@ async function signingWallet() {
   if (import.meta.env.MODE === 'qa' && import.meta.env.VITE_QA_SIGNER === '1') return qaWallet();
   return (await selector()).wallet<InjectedWallet>(METEOR.id);
 }
+function ownGasRequested() { try { return sessionStorage.getItem('noren.qa.owngas') === '1'; } catch { return false; } }
 export function useNearWallet() {
   const [account, setAccount] = useState('');
   const [ready, setReady] = useState(false), [connecting, setConnecting] = useState(false);
@@ -68,7 +69,7 @@ export function useNearWallet() {
   }
   // Gasless checkout needs a wallet that signs NEP-366 delegate actions. Meteor's wallet-selector module (10.1.4, the
   // latest) throws "Method not supported" for signDelegateAction, so only the app's own test-key signer offers it.
-  const gasless = import.meta.env.MODE === 'qa' && import.meta.env.VITE_QA_SIGNER === '1';
+  const gasless = import.meta.env.MODE === 'qa' && import.meta.env.VITE_QA_SIGNER === '1' && !ownGasRequested(); // QA only: a test run can ask to pay its own gas
   async function signDelegate(call: Call): Promise<WireDelegate> {
     const w = await signingWallet() as unknown as { getAccounts: () => Promise<{ accountId: string }[]>; signDelegate?: (call: Call) => Promise<WireDelegate> };
     const current = (await w.getAccounts())[0]?.accountId;
