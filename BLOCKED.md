@@ -1,4 +1,4 @@
-# NEAR edition: blocked and setup-required items (updated 2026-11-12)
+# NEAR edition: blocked and setup-required items (updated 2026-11-12; still accurate on 2026-11-14)
 
 Nothing below is faked in the code, the app or the README. No mainnet transaction was sent.
 
