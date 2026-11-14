@@ -972,3 +972,12 @@ h1, h2, h3, .kpi b, .drawer-amt b, .co-amt, .lp-co-amt, .money.big input, .co-ba
 
 /* Functional fix: setup commands must remain inside a narrow viewport. */
 .setup pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Inside a shop's "Pay with Noren" pop-up: fit the frame instead of the window. */
+.co-embed { min-height: 100vh; }
+.co-embed .co { min-height: 100vh; }
+.co-embed .co-sum { padding: 40px 44px 24px 24px; }
+.co-embed .co-pay { padding-top: 34px; }
+.co-pay .kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 14px; margin: 14px 0 8px; padding: 10px 14px; border-radius: 14px; background: var(--paper); border: 1px solid var(--hair); font-size: 13.5px; }
+.co-pay .kv dt { padding: 5px 0; color: var(--muted); }
+.co-pay .kv dd { margin: 0; padding: 5px 0; text-align: right; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }

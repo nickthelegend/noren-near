@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { bySlug, PRODUCTS, usd, type Length, type Product, type Shade } from './catalog.ts';
 import { api, bagActions, bagCount, bagTotal, eur, go, setDrawer, useBag, useConfig, useDrawer, useFx, useRoute, type Config } from './store.ts';
 import integrationSource from './integration.txt?raw';
@@ -26,6 +26,7 @@ export function App() {
       <main id="main" tabIndex={-1}>{page}</main>
       <Footer />
       <Drawer />
+      <PopupHost />
     </>
   );
 }
@@ -251,19 +252,71 @@ function CheckoutButton() {
   const [fail, setFail] = useState<string | null>(null);
   const start = async () => {
     setBusy(true); setFail(null);
-    try { const { orderId, checkoutUrl } = await api.checkout(lines); try { sessionStorage.setItem('aubelle.lastOrder', orderId); } catch { /* ignore */ } location.href = checkoutUrl; }
-    catch (e: any) { setFail(e.message); setBusy(false); }
+    try { const { orderId, checkoutUrl } = await api.checkout(lines); try { sessionStorage.setItem('aubelle.lastOrder', orderId); } catch { /* ignore */ } setDrawer(false); openPopup({ orderId, url: checkoutUrl }); }
+    catch (e: any) { setFail(e.message); }
+    finally { setBusy(false); }
   };
   if (error) return <SetupNote title="The shop backend is not reachable" body={error} />;
   if (config && !config.ready) return <SetupRequired config={config} />;
   return (
     <>
       <button className="btn btn-noren btn-wide" onClick={start} disabled={busy || !config || lines.length === 0} aria-busy={busy}>
-        {busy ? 'Opening Noren…' : <>Checkout with <NorenMark /> <span className="noren-word">Noren</span></>}
+        {busy ? 'Opening Noren…' : <>Pay with <NorenMark /> <span className="noren-word">Noren</span></>}
       </button>
-      <p className="noren-note">Noren checkout: TEST stocks, test USDC or stock-backed credit / Pay in 3. Payments are public on NEAR testnet; private checkout is not integrated. No real goods are shipped.</p>
+      <p className="noren-note">Stocks, test USDC, pay later or pay in 3, in a Noren window over this page. Payments are public on NEAR testnet; private checkout is not integrated. No real goods are shipped.</p>
       {fail && <p className="error" role="alert">{fail}</p>}
     </>
+  );
+}
+
+// The open pop-up lives outside the bag drawer, so closing the drawer keeps it.
+type Pop = { orderId: string; url: string } | null;
+let popState: Pop = null; const popListeners = new Set<() => void>();
+const openPopup = (p: Pop) => { popState = p; popListeners.forEach(l => l()); };
+function PopupHost() {
+  const pop = useSyncExternalStore(cb => { popListeners.add(cb); return () => popListeners.delete(cb); }, () => popState);
+  return pop ? <NorenPopup key={pop.orderId} url={pop.url} orderId={pop.orderId} onClose={() => openPopup(null)} /> : null;
+}
+
+/**
+ * "Pay with Noren": Noren's hosted checkout in a pop-up over the shop, like a card network's checkout sheet.
+ * The checkout runs on Noren's origin inside the frame; it tells this page when the order is paid or the shopper
+ * wants to come back, and only messages from that frame and that origin are accepted.
+ */
+function NorenPopup({ url, orderId, onClose }: { url: string; orderId: string; onClose: () => void }) {
+  const [frame, setFrame] = useState<HTMLIFrameElement | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [paid, setPaid] = useState(false);
+  const origin = useMemo(() => { try { return new URL(url, location.href).origin; } catch { return null; } }, [url]);
+  const host = origin ? origin.replace(/^https?:\/\//, '') : 'Noren';
+  const finish = (to?: string) => { onClose(); go(to && /#\/order\//.test(to) ? to.slice(to.indexOf('#')) : `#/order/${orderId}`); };
+  useEffect(() => {
+    const on = (e: MessageEvent) => {
+      if (!frame || e.source !== frame.contentWindow || e.origin !== origin) return;
+      const m = e.data; if (!m || m.source !== 'noren-checkout') return;
+      if (m.type === 'paid') setPaid(true);
+      if (m.type === 'return') finish(m.url);
+      if (m.type === 'cancel') onClose();
+    };
+    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') paid ? finish() : onClose(); };
+    addEventListener('message', on); addEventListener('keydown', key); document.body.style.overflow = 'hidden';
+    return () => { removeEventListener('message', on); removeEventListener('keydown', key); document.body.style.overflow = ''; };
+  }, [frame, origin, paid]);
+  return (
+    <div className="np-wrap" role="dialog" aria-modal="true" aria-label="Pay with Noren">
+      <div className="np-scrim" onClick={() => paid ? finish() : onClose()} />
+      <div className="np-sheet">
+        <div className="np-bar">
+          <span className="np-brand"><NorenMark /><b>Noren</b><span className="np-sep" aria-hidden /> <span className="np-sub">Checkout for Aubelle</span></span>
+          <span className="np-host"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>{host}</span>
+          <button className="np-x" onClick={() => paid ? finish() : onClose()} aria-label={paid ? 'Close and see your order' : 'Close Noren checkout'}>×</button>
+        </div>
+        <div className="np-body">
+          {!loaded && <div className="np-load" aria-hidden><span className="np-spin" />Opening Noren…</div>}
+          <iframe ref={setFrame} src={url} title="Noren checkout" onLoad={() => setLoaded(true)} allow="clipboard-write" />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -375,7 +428,7 @@ function OrderPage({ id }: { id: string }) {
             {order.paymentTx && <><dt>Transaction</dt><dd><TxLink hash={order.paymentTx} method={order.method} config={config} /></dd></>}
             {(paid||partial) && <><dt>Confirmed by</dt><dd>Noren API · matching FINAL NEAR execution</dd></>}
           </dl>
-          {(order.status === 'awaiting_payment'||partial) && <a className="btn btn-noren btn-wide" href={order.checkoutUrl}>Return to Noren checkout</a>}
+          {(order.status === 'awaiting_payment'||partial) && <button className="btn btn-noren btn-wide" onClick={() => openPopup({ orderId: order.id, url: order.checkoutUrl })}>Return to Noren checkout</button>}
         </div>
         <div className="order-card">
           <ul className="order-lines">{order.lines.map((l: any) => <li key={`${l.slug}-${l.size}`}><img src={img(l.slug)} alt="" /><span><b>{l.name}</b><small>Size {l.size} · Qty {l.qty}</small></span><span>{usd(l.price * l.qty)}</span></li>)}</ul>

@@ -285,3 +285,29 @@ h1 em, h2 em { font-style: italic; color: var(--rose-deep); }
 .tx-link { display: inline-flex; align-items: center; gap: 5px; color: inherit; text-decoration: underline; text-decoration-color: rgba(0, 0, 0, .25); text-underline-offset: 3px; white-space: nowrap; }
 .tx-link:hover { text-decoration-color: currentColor; }
 .tx-link svg { opacity: .65; }
+
+/* ---------------- Pay with Noren: the pop-up (Noren's colours, not the shop's) ---------------- */
+.np-wrap { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; }
+.np-scrim { position: absolute; inset: 0; background: rgba(16, 20, 43, .46); backdrop-filter: blur(3px); animation: np-fade .25s var(--ease); }
+.np-sheet { position: relative; display: flex; flex-direction: column; width: min(1000px, 100%); height: min(704px, 100%); border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 40px 120px -20px rgba(16, 20, 43, .55), 0 0 0 1px rgba(16, 20, 43, .08); animation: np-rise .38s var(--ease); }
+.np-bar { display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 10px 0 18px; background: var(--noren); color: #efe8db; flex: none; }
+.np-brand { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; min-width: 0; }
+.np-brand b { font-weight: 600; letter-spacing: .01em; }
+.np-sep { width: 1px; height: 14px; background: rgba(239, 232, 219, .28); }
+.np-sub { color: rgba(239, 232, 219, .72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.np-host { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: rgba(239, 232, 219, .1); color: rgba(239, 232, 219, .8); font: 12px var(--mono); white-space: nowrap; }
+.np-x { width: 32px; height: 32px; border: 0; border-radius: 8px; background: transparent; color: #efe8db; font-size: 22px; line-height: 1; }
+.np-x:hover { background: rgba(239, 232, 219, .12); }
+.np-body { position: relative; flex: 1; min-height: 0; background: #fff; }
+.np-body iframe { display: block; width: 100%; height: 100%; border: 0; }
+.np-load { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 12px; color: var(--ink-2); font-size: 14px; }
+.np-spin { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); border-top-color: var(--noren); animation: np-spin .8s linear infinite; }
+@keyframes np-fade { from { opacity: 0; } }
+@keyframes np-rise { from { opacity: 0; transform: translateY(18px) scale(.985); } }
+@keyframes np-spin { to { transform: rotate(360deg); } }
+@media (max-width: 640px) {
+  .np-wrap { padding: 0; place-items: end stretch; }
+  .np-sheet { width: 100%; height: 94vh; border-radius: 16px 16px 0 0; }
+  .np-host { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .np-scrim, .np-sheet { animation: none; } }
